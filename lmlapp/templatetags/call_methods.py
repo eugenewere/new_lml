@@ -47,11 +47,17 @@ def experience_years(experience_id):
     date_to = experience.date_to
     diff = date_to-date_from
     if diff.days > 365:
-        day = str(int(diff.days/365)) + str(' Years')
-        return day
+        day = str(int(diff.days/365))
+        if int(day) > 1:
+            return day + str(' Years')
+        else:
+            return day + str(' Year')
     elif diff.days < 365:
-        day = str(int(diff.days/30)) + str(' Monthes')
-        return day
+        day = str(int(diff.days/30))
+        if int(day) > 1:
+            return day + str(" Month's")
+        else:
+            return day + str(' Month')
     else:
         return 0
 

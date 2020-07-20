@@ -115,6 +115,22 @@ Fonts
 .no-js #loader {
     display: none;
 }
+*::-webkit-scrollbar-track
+{
+	border: 1px solid #ffffff;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb
+{
+	background-color:  #1DBF73;
+}
 
 .js #loader {
     display: block;
@@ -1407,10 +1423,10 @@ outline:none;
 }
 .form-control {
     height:50px;
-    border: 1px solid #dde6ef;
+    border: 1px solid #b8bbbe !important;
 	margin-bottom:10px;
     box-shadow: none;
-    border-radius: 0;
+    border-radius: 5px;
     background: #fbfdff;
     font-size: 15px;
 	color:#445461;
@@ -3109,13 +3125,13 @@ overflow: visible;
     margin-right: 15px;
 }
 .ur-title {
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 .ur-location {
     margin-bottom: 5px;
 }
 .rateing i {
-    color: #d4d5dc;
+    color: #818182;
 }
 .rateing i.filled {
     color: #1DBF73;
@@ -8592,4 +8608,11 @@ a.cl-box.pink {
 }
 .dropdown-check-list.visible .items {
 	display: block;
+}
+.card-custom-border{
+	border: 1px solid #cacaca;
+	border-radius: 5px;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    border: 1px solid #abadaf !important;
 }

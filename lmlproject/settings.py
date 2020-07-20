@@ -33,10 +33,9 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
+
     'lmlappadmin.apps.LmlappadminConfig',
     'lmlapp.apps.LmlappConfig',
-
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,11 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sweetify',
-
+    # 'channels',
     'django.contrib.humanize',
-
-
-
 ]
 
 MIDDLEWARE = [
@@ -82,17 +78,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lmlproject.wsgi.application'
 
-ASGI_APPLICATION = 'lmlproject.routing.application'
-CHANNEL_LAYERS = {
-    'default': {
-         # "BACKEND": "asgi_redis.RedisChannelLayer",
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [('127.0.0.1', 6379)],
-            # "hosts": [('localhost', 6379)],
-        },
-    },
-    },
+# ASGI_APPLICATION = 'lmlproject.routing.application'
+# CHANNEL_LAYERS = {
+#     'default': {
+#          # "BACKEND": "asgi_redis.RedisChannelLayer",
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#             # "hosts": [('localhost', 6379)],
+#         },
+#     },
+#     },
 
 
 # Database

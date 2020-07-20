@@ -3,12 +3,13 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponse, JsonResponse, Http404
-from django.shortcuts import render, redirect, HttpResponseRedirect, render_to_response
+from django.shortcuts import render, redirect, HttpResponseRedirect
 import os
 from datetime import datetime
 import sweetify
 
-from rest_framework import status
+
+# from rest_framework import status
 
 
 from lmlapp.forms import *
@@ -48,7 +49,7 @@ def home(request):
 
 def signup(request):
 
-    if  request.is_ajax() and request.method=='POST' :
+    if request.is_ajax() and request.method=='POST' :
         qualifications = request.POST.getlist('qualifications')
         schools = request.POST.getlist('school')
         courses = request.POST.getlist('course')
@@ -168,7 +169,7 @@ def signup(request):
                 'results':'error',
                 'form':form1,
             }
-            return render_to_response('normal/signup/errors.html', data)
+            return JsonResponse(data)
 
 
 
@@ -458,7 +459,7 @@ def employee_personal_details_update(request):
 
 def employee_skills_update(request):
     if request.method == 'POST' and request.is_ajax():
-        skill_id =  request.POST['skill_id']
+        skill_id = request.POST['skill_id']
         skill = Skills.objects.filter(id=int(skill_id)).first()
         print(skill)
         if skill:
@@ -471,7 +472,7 @@ def employee_skills_update(request):
         else:
             data = {
                 'results': 'error',
-                'success': 'Error deleting skill'
+                'errortxt': 'Error Deleting Your Skill'
             }
             return JsonResponse(data, safe=False)
     data = {
@@ -564,7 +565,7 @@ def employee_experience_detail_delete(request):
         else:
             data = {
                 'results': 'error',
-                'success': 'Error deleting Experience'
+                'errortxt': 'Error Deleting Your Experience'
             }
             return JsonResponse(data, safe=False)
     data = {
@@ -578,7 +579,7 @@ def employee_education_detail_delete(request):
         education = Education.objects.filter(id=int(education_id)).first()
         print(education)
         if education:
-            # education.delete()
+            education.delete()
             data = {
                 'results': 'success',
                 'success': 'Education deleted'
@@ -587,7 +588,7 @@ def employee_education_detail_delete(request):
         else:
             data = {
                 'results': 'error',
-                'success': 'Error deleting Education'
+                'errortxt': 'Error Deleting Your Education'
             }
             return JsonResponse(data, safe=False)
     data = {
@@ -607,6 +608,7 @@ def employeedetails(request):
         'educations':educations,
         'experiences':experiences,
         'social':social,
+        'title':"Account Details"
     }
     return render(request, 'normal/account/candidate-detail.html', context)
 
@@ -648,7 +650,7 @@ def companysignup(request):
                 'results': 'success',
                 'success': 'Good job! You successfully Registered, just login'
             }
-            return JsonResponse(data, safe=False, status=status.HTTP_200_OK)
+            return JsonResponse(data, safe=False)
 
         else:
             formr = CompanyRegisterForm(request.POST, request.FILES)
@@ -663,7 +665,7 @@ def companysignup(request):
             }
             # return JsonResponse(context3, safe=False)
             # return render_to_response('normal/signup/errors.html', context)
-            return render_to_response('normal/signup/errors.html', context3)
+            return JsonResponse(context3)
 
             # return redirect('LML:companysignup',{'form':form, 'social':form2})
 
@@ -1098,7 +1100,7 @@ def dumb(request):
         context = {
 
         }
-        return JsonResponse(context, status=status.HTTP_200_OK)
+        return JsonResponse(context)
     context={
 
     }
@@ -1143,7 +1145,7 @@ def fetch_data_messages(request, customer_id):
     # content = loader.render_to_string('normal/dashboard/chatb.html', context )
 
     # html_data = render_to_string('normal/dashboard/employer-dash.html',context, request=request,)
-    return render_to_response('normal/dashboard/chatb.html', context)
+    return JsonResponse(context)
     # return JsonResponse(content)
     # return render(request, 'normal/dashboard/employer-dash.html', context)
 

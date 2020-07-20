@@ -9,10 +9,6 @@
                         <div class="bg" data-bg="{{ image.carousel_image.url }}"></div>
                     </div>
                 {% endfor %}
-{#               / <div class="slideshow-item">#}
-{#                    <div class="bg" data-bg="{% static 'assets/img/blog/banner-17.jpg' %}"></div>#}
-{#                </div>#}
-
             </div>
             <div class="overlay"></div>
             <div class="hero-section-wrap fl-wrap">
@@ -29,7 +25,7 @@
                                 <select name="region"  class="form-control choose-region">
                                     <option selected disabled class="text-muted"> Choose Region</option>
                                     {% for region in regions %}
-                                        <option value="{{ region.id }}">{{ region.region }}->({{ region.ward }})</option>
+                                        <option value="{{ region.id }}">{{ region.region|title }}->({{ region.ward|title }})</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -48,7 +44,7 @@
                                     <select name="category" id="choose-city" class="form-control choose-city">
                                         <option selected disabled class="text-muted"> Choose Category</option>
                                         {% for category in categories %}
-                                            <option value="{{ category.id }}">{{ category.category }}</option>
+                                            <option value="{{ category.id }}">{{ category.category|title }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -66,6 +62,12 @@
         <div class="clearfix"></div>
         <section class="first-feature">
             <div class="container">
+                 <div class="row">
+                    <div class="main-heading">
+                        <p>Our Offers</p>
+                        <h2>Browse For Your What You Like</h2>
+                    </div>
+                </div>
                 <div class="all-features">
                     <a href="">
                         <div class="col-md-3 col-sm-6 small-padding">
@@ -157,44 +159,44 @@
                 <div class="row">
                     {% for customer in customers %}
                         <div class="col-md-4 col-sm-6">
-                            <div class="paid-candidate-container">
-                            <div class="paid-candidate-box">
-                                <div class="dropdown">
-                                    <div class="btn-group fl-right">
-                                        {% if request.user|logged_in_company %}
-                                            <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
-                                            <div class="dropdown-menu pull-right animated flipInX">
-                                                {% csrf_token %}
-                                                {% if request|shortlisted:customer.id %}
-                                                    <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                {% else %}
-                                                    <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
-                                                {% endif %}
-                                            </div>
-                                        {% endif %}
+                            <div class="paid-candidate-container card-custom-border" >
+                                <div class="paid-candidate-box">
+                                    <div class="dropdown">
+                                        <div class="btn-group fl-right">
+                                            {% if request.user|logged_in_company %}
+                                                <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                <div class="dropdown-menu pull-right animated flipInX">
+                                                    {% csrf_token %}
+                                                    {% if request|shortlisted:customer.id %}
+                                                        <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                    {% else %}
+                                                        <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="paid-candidate-inner--box">
+                                        <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                        <div class="paid-candidate-box-detail">
+                                        <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                    </div>
+                                    <div class="paid-candidate-box-extra">
+                                        <ul>
+                                            {% for skill in customer.skillset %}
+                                            <li>{{skill.skill|truncatechars:7}}</li>
+                                            {% endfor %}
+                                            {% if customer.skillcount %}
+                                                <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                            {% endif %}
+                                        </ul>
+                                        <p>{{customer.biography|truncatechars:67}}.</p>
                                     </div>
                                 </div>
-                                <div class="paid-candidate-inner--box">
-                                    <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
-                                    <div class="paid-candidate-box-detail">
-                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
-                                </div>
-                                <div class="paid-candidate-box-extra">
-                                    <ul>
-                                        {% for skill in customer.skillset %}
-                                        <li>{{skill.skill|truncatechars:7}}</li>
-                                        {% endfor %}
-                                        {% if customer.skillcount %}
-                                            <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
-                                        {% endif %}
-                                    </ul>
-                                    <p>{{customer.biography|truncatechars:67}}.</p>
-                                </div>
+                                {% if request.user|logged_in_company %}
+                                <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                                {% endif %}
                             </div>
-                            {% if request.user|logged_in_company %}
-                            <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
-                            {% endif %}
-                        </div>
                         </div>
                     {% endfor %}
                     <div class="col-md-12 col-sm-12">
@@ -208,7 +210,8 @@
                 <div class="row">
                     <div class="main-heading">
                         <p>How We Work</p>
-                        <h2>Our Work <span>Process</span></h2></div>
+                        <h2>Our Work <span>Process</span></h2>
+                    </div>
                 </div>
                 <div class="col-md-4 col-sm-6">
                     <div class="work-process">
@@ -277,7 +280,7 @@
                             <div class="grid-slide-box">
                                 <div class="top-candidate-wrap style-2">
                                     <div style="margin: 0;" class="paid-candidate-container">
-                                        <div class="paid-candidate-box">
+                                        <div class="paid-candidate-box card-custom-border">
                                             <div class="dropdown">
                                                 <div class="btn-group fl-right">
                                                     {% if request.user|logged_in_company %}

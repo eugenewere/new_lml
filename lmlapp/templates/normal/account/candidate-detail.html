@@ -1,6 +1,9 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
 {% load call_methods %}
+ {% block title %}
+        <title>{{ title }}</title>
+ {% endblock %}
 {% block links %}
 
 
@@ -9,7 +12,7 @@
             <!-- Title Header Start -->
 			<section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-22.jpg' %});">
 				<div class="container">
-					<h1>Details</h1>
+					<h1>Account Details</h1>
 				</div>
 			</section>
 			<div class="clearfix"></div>
@@ -27,10 +30,12 @@
 								<img src="{{customer.profile_image.url}}" class="img-responsive" alt="" />
 							</div>
 							<div class="ur-caption">
-								<h4 class="ur-title text-capitalize">{{request.user.first_name}} {{request.user.last_name}} </h4>
-                                <p class="ur-location"><i class="ti-location-pin mrg-r-5"></i>{{customer.county.county}}</p>
-								<p class="ur-location"><i class="ti-location-pin mrg-r-5"></i>{{ customer.region.region }}->{{ customer.region.ward }} </p>
-								<span class="ur-designation " style=" text-transform: capitalize;">{% for skill in skills %}{{ skill }},{% endfor %}</span>
+								<h3 class="ur-title text-capitalize mb-4">{{request.user.first_name}} {{request.user.last_name}} </h3>
+                                <p class="ur-location"><i class="ti-location-pin mrg-r-5"></i> <b>County:</b> {{customer.county.county}}</p>
+								<p class="ur-location"><i class="ti-location-pin mrg-r-5"></i> <b>Region:</b> {{ customer.region.region }}->{{ customer.region.ward }} </p>
+                                {% if skills %}
+                                    <span class="ur-designation " style=" text-transform: capitalize;"> <b>Skills:</b> {% for skill in skills %}{{ skill }},{% endfor %}</span>
+                                {% endif %}
 								<div class="rateing" style="margin-top: 12px;">
                                     {% if social %}
 									    <a href="{{social}}"><i style="font-size: 20px;" class="fab fa-linkedin"></i></a>
@@ -82,12 +87,13 @@
 
 							<div class="row-bottom">
 								<h2 class="detail-title">Work & Experience</h2>
+                                <p>Experiences List.</p>
 								<ul class="trim-edu-list">
                                     {% for experience in experiences %}
                                         <li>
                                             <div class="trim-edu">
                                                 <h4 class="trim-edu-title text-capitalize">{{ experience.company_name }}<span class="title-est">Worked for {{ experience.id|experience_years|safe|escape }}</span></h4>
-                                                <strong class="text-capitalize">{{experience.position_held}}</strong>
+                                                <strong class="text-capitalize my-4">{{experience.position_held}}</strong>
                                                 <p>{{experience.experience}}.</p>
                                             </div>
                                         </li>
@@ -98,15 +104,21 @@
 
 							<div class="row-bottom">
 								<h2 class="detail-title">Skills</h2>
-								<p>Diverse of skills .</p>
+								<p>Skills List.</p>
 								<div class="ext-mrg row third-progress">
                                     <ul class="trim-edu-list">
                                         {% for skill in skills %}
                                             <li>
                                                 <div class="trim-edu">
-                                                    <h4 class="trim-edu-title text-capitalize">{{ skill.skill}}</h4>
-                                                    <div class="d-flex align-items-center"><strong>Referee</strong> <p>{{ skill.referee }}</p></div>
-                                                    <div class="d-flex align-items-center"><strong>Referee PhoneNumber</strong> <p>{{ skill.referee_phonenumber }}</p></div>
+                                                    <h4 class="trim-edu-title text-capitalize" style="text-decoration: underline;">{{ skill.skill}}</h4>
+                                                    <div style="display: flex;">
+                                                        <strong style="margin-right: 5px !important;">Referee: </strong>
+                                                        <p style="margin-left: 4px !important;"> {{ skill.referee }}</p>
+                                                    </div>
+                                                    <div style="display: flex;">
+                                                        <strong style="margin-right: 5px !important;">Referee PhoneNumber: </strong>
+                                                        <p style="margin-left: 4px !important;"> {{ skill.referee_phonenumber }}</p>
+                                                    </div>
 
                                                 </div>
                                             </li>
@@ -173,19 +185,6 @@
 													<h5>Job type</h5>
 													<span>{{customer.job_type}}</span>
 												</li>
-
-{#												<li>#}
-{#													<i class="ti-shield"></i>#}
-{#													<h5>Experience</h5>#}
-{#													<span>5 Years</span>#}
-{#												</li>#}
-
-{#												<li>#}
-{#													<i class="ti-book"></i>#}
-{#													<h5>Qualification</h5>#}
-{#													<span>Master Degree</span>#}
-{#												</li>#}
-
 											</ul>
 										</div>
 									</div>
@@ -213,7 +212,7 @@
 												</div>
 												<div class="form-group">
 													<label>Message</label>
-													<textarea name="message" class="form-control"></textarea>
+													<textarea rows="9" name="message" class="form-control"></textarea>
 												</div>
 												<button type="submit" class="btn btn-primary" style="border-radius: 140px;">Submit</button>
 											</form>

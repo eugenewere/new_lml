@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="detail-pic">
                                 <img src="{{customer.profile_image.url}}" class="img" alt="" />
-                                <a href="#" class="detail-edit" >
+                                <a href="javascript:void(0);" class="detail-edit" >
                                     <i class="fa fa-user fa-spin"></i>
                                 </a>
                             </div>
@@ -35,7 +35,7 @@
                             <div class="col-md-12 col-sm-12">
                                 <div class="advance-detail detail-desc-caption">
                                     <h4 class="text-capitalize">{{request.user.first_name}} {{request.user.last_name}}</h4>
-                                    <span class="designation text-capitalize">{% for skill in skills %}{{ skill }},{% endfor %}</span>
+                                    <span class="designation text-capitalize">{% for skill in skills %}{{ skill }}, {% endfor %}</span>
                                     <ul class="text-center">
                                         <li><strong class="j-view">{{ shortlist_count }}</strong>Shortlisted Times</li>
                                         <li><strong class="j-applied"></strong></li>
@@ -74,16 +74,34 @@
                 <div class="container">
                     <div class="col-md-12 col-sm-12">
                         <div class="full-card">
+                          {#                                        deleteerrormodal#}
+                          <div data-backdrop="static" data-keyboard="false" class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="exampleError" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p id="errorText"> </p>
+                                    <div class="container-fluid ">
+                                         <button style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;" type="button" class="btn btn-success btn-sm" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+{#                                        deleteerrormodal#}
                           <div class="deatil-tab-employ tool-tab">
                                 <ul class="nav simple nav-tabs" id="simple-design-tab">
-                                    <li class="active"><a href="#about">About</a></li>
-                                    <li><a href="#address">Address</a></li>
-                                    <li><a href="#settings">Personal Details</a></li>
-                                    <li><a href="#education">Educations</a></li>
-                                    <li><a href="#experience">Experiences</a></li>
-                                    <li><a href="#skills">Skills</a></li>
-{#                                    <li><a href="#messages">Messages <span class="info-bar">6</span></a></li>#}
-
+                                    <li class="active"><a data-toggle="pill" href="#about">About</a></li>
+                                    <li><a data-toggle="pill" href="#address">Address</a></li>
+                                    <li><a data-toggle="pill" href="#settings">Personal Details</a></li>
+                                    <li><a data-toggle="pill" href="#education">Educations</a></li>
+                                    <li><a data-toggle="pill" href="#experiencepanel">Experiences</a></li>
+                                    <li><a data-toggle="pill" href="#skills">Skills</a></li>
                                 </ul>
 
                                 <!-- Start All Sec -->
@@ -101,9 +119,7 @@
                                             <li><span>Country:</span>{{customer.country}}</li>
                                             <li><span>County:</span>{{customer.county.county}}</li>
                                             <li><span>Region:</span>{{ customer.region.region }}->{{ customer.region.ward }}</li>
-{#                                            <li><span>Zip:</span>520 548</li>#}
                                             <li><span>Telephone:</span>{{customer.phone_number}}</li>
-{#                                            <li><span>Fax:</span>(622) 123 456</li>#}
                                             <li><span>Email:</span>{{request.user.email}}</li>
                                         </ul>
                                     </div>
@@ -115,40 +131,69 @@
                                             <form action="{% url 'LML:employee_education_detail_update' %}" method="POST">
                                             {% csrf_token %}
                                                 {% for education in educations %}
-                                                    <div class="col-md-12">
-                                                    <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Education {{ education.qualifications }}
-                                                        <span  onclick="deleteEducation(this)" id="eeducation{{ education.id }}" data-education="{{ education.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" href="">Delete</span></h2>
+                                                    <div class="col-md-12 educount" id="educparent{{ education.id }}">
+                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="educationnn{{ education.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <p>Are you sure you want to delete Education in: <strong>{{ education.course|title }}</strong></p>
+                                                                <div class="container-fluid ">
+                                                                    <button onclick="deleteEducation(this);" data-education="{{ education.id }}" id="{{ education.id }}" data-parentt="educparent{{ education.id }}"  type="button"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                        <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Education {{ education.qualifications }}
+                                                        <span data-toggle="modal" data-target="#educationnn{{ education.id }}"  class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" href="">Delete</span></h2>
 
                                                         <script type = "text/javascript">
-                                                         function deleteEducation(e) {
-                                                            var confm  =  confirm('Are you sure you want to delete.');
-                                                             var k = e.id;
-                                                             var education_id = e.dataset.education;
-                                                             if(confm === true){
-                                                                $.ajax({
-                                                                method : 'POST',
-                                                                url :  "{% url 'LML:employee_education_detail_delete' %}",
-                                                                data : {
-                                                                    'education_id': education_id,
-                                                                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                },
-                                                                success : function(response){
-                                                                    console.log(response);
-                                                                    if (response.results ==='success'){
-                                                                        var $id =  document.getElementById(k).parentElement.parentElement;
-                                                                        $($id).toggle( "explode" );
-                                                                    }else {
-                                                                        console.log('error');
-                                                                    }
-                                                                },
-                                                                error : function(response){
-                                                                    console.log(response);
+                                                             function deleteEducation(e) {
 
-                                                                }
-                                                             });
+                                                                 var parentId = e.dataset.parentt;
+                                                                 var education_id = e.dataset.education;
+                                                                    $.ajax({
+                                                                    method : 'POST',
+                                                                    url :  "{% url 'LML:employee_education_detail_delete' %}",
+                                                                    data : {
+                                                                        'education_id': education_id,
+                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                    },
+                                                                    success : function(response){
+                                                                        console.log(response);
+                                                                        if (response.results ==='success'){
+                                                                           $('#educationnn'+ {{ education.id }} ).modal('hide');
+                                                                            $('body').removeClass('modal-open');
+                                                                            $('.modal-backdrop').remove();
+                                                                            $('#'+parentId).fadeOut(function () {
+                                                                                 $('#'+parentId).remove();
+                                                                                 if($('.educount').length === 0){
+                                                                                    $('#educupbtn').fadeOut();
+                                                                                 }
+                                                                            })
+                                                                        }else {
+                                                                             $('.massmodal').modal('hide');
+                                                                             $('body').removeClass('modal-open');
+                                                                             $('.modal-backdrop').remove();
+                                                                             setTimeout(function () {
+                                                                                $('#errorText').text(response['errortxt']);
+                                                                                $('#errorModal').modal('show')
+                                                                             },900)
+                                                                        }
+                                                                    },
+                                                                    error : function(response){
+                                                                        console.log(response);
+
+                                                                    }
+                                                                 });
                                                              }
-                                                         }
-                                                    </script>
+                                                        </script>
                                                     <div class="extra-field-box">
                                                         <div class="multi-box">
                                                             <div class="dublicat-box">
@@ -162,7 +207,7 @@
                                                                             <option {% if education.school == university %} selected {% endif %} value="{{ university }}">{{ university }}</option>
                                                                         {% endfor %}
                                                                     </select>
-                                                                    <div class="employer col-md-6 col-sm-12" style="width: 100%;">
+                                                                    <div class="employer col-md-6 col-sm-12" style="width: 100%; padding-left: 0 !important;">
                                                                         <label for="mfe{{ education.id }}">Registration Number</label>
                                                                         <input required name="reg_number" value="{{education.reg_number}}" id="mfe{{ education.id }}" type="text" class="form-control w-100" placeholder="Registration Number">
                                                                     </div>
@@ -230,7 +275,7 @@
                                                                      {% endif %}
 
 
-                                                                    <div id="" class="graduation col-md-12 col-sm-12">
+                                                                    <div id="" class="graduation col-md-12 col-sm-12" style="padding-left: 0">
                                                                         <label for="edu-start{{ education.id }}">Year of graduation</label>
 {#                                                                            <span class="input-group-addon"></span>#}
                                                                         <input name="graduation_date" value="{{ education.graduation_date|date:'Y-m-d' }}" type="date" id="edu-start{{ education.id }}" class="form-control">
@@ -241,7 +286,9 @@
                                                     </div>
                                                 {% endfor %}
                                                 <div class="col-sm-12">
-                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                    {% if educations %}
+                                                    <button type="submit" id="educupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                    {% endif %}
                                                 </div>
                                             </form>
                                         </div>
@@ -249,15 +296,34 @@
                                     <!-- End Friend List -->
 
                                     <!-- Start Friend List -->
-                                    <div id="experience" class="tab-pane fade">
+                                    <div id="experiencepanel" class="tab-pane fade">
                                         <div class="row">
                                             <form action="{% url 'LML:employee_experience_detail_update'  %}" method="POST">
                                                 {% csrf_token %}
                                                 {% for experience in experiences %}
-                                                    <div class="col-md-12 col-sm-12">
+                                                    <div class="col-md-12 col-sm-12 expcount" id="expparent{{ experience.id }}">
                                                         <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Experience {{ forloop.counter }}
-                                                            <span onclick="deleteExperience(this)" id="eexperience{{ experience.id }}" data-experience="{{ experience.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
+                                                            <span data-toggle="modal" data-target="#experience{{ experience.id }}" id="eexperience{{ experience.id }}" data-experience="{{ experience.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
                                                         </h2>
+                                                         <!-- Modal -->
+                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="experience{{ experience.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <p>Are you sure you want to delete Experience in: <strong>{{ experience.company_name|title }}</strong></p>
+                                                                <div class="container-fluid ">
+                                                                    <button onclick="deleteExp(this);" id="{{ experience.id }}" data-parentt="expparent{{ experience.id }}"  type="button"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
                                                         <div class="extra-field-box">
                                                             <div class="multi-box">
                                                                 <div class="dublicat-box">
@@ -287,13 +353,10 @@
                                                                         </div>
 
                                                                         <div class="employer col-md-12 col-sm-12 row">
-
                                                                             <div class="col-md-6 col-sm-12" >
                                                                                 <label for="exp-start{{ experience.id }}" class="">Date From</label>
                                                                                 <input required name="date_from" value="{{experience.date_from|date:'Y-m-d'}}" type="date" id="exp-start{{ experience.id }}" class="form-control">
-
                                                                             </div>
-
                                                                             <div class="employer col-md-6 col-sm-12">
                                                                                 <label for="exp-end{{ experience.id }}" class="">Date To</label>
                                                                                 <input required name="date_to" value="{{experience.date_to|date:'Y-m-d'}}" type="date" id="exp-end{{ experience.id }}" class="form-control">
@@ -302,21 +365,18 @@
 
                                                                         <div class="employer col-md-12 col-sm-12" >
                                                                             <label for="emplomsg{{ experience.id }}">Notes on the Experience</label>
-                                                                            <textarea required name="experience" id="emplomsg{{ experience.id }}" class="form-control textarea" placeholder="Optional notes on the experience">{{experience.experience}}</textarea>
+                                                                            <textarea style="max-width: 100%;" required name="experience" id="emplomsg{{ experience.id }}" class="form-control textarea" placeholder="Optional notes on the experience">{{experience.experience}}</textarea>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <script type = "text/javascript">
-                                                             function deleteExperience(e) {
-                                                                 console.log(e.dataset.experience);
+                                                             function deleteExp(e){
+                                                                 {#console.log(e.dataset.experience);#}
                                                                  var k = e.id;
-                                                                 var experience_id = e.dataset.experience;
-                                                                 var confm  =  confirm('Are you sure you want to delete.');
-                                                                 if(confm === true){
-
-
+                                                                 var parentId = e.dataset.parentt;
+                                                                 var experience_id = e.id;
                                                                  $.ajax({
                                                                     method : 'POST',
                                                                     url :  "{% url 'LML:employee_experience_detail_delete' %}",
@@ -325,13 +385,25 @@
                                                                         'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
                                                                     },
                                                                     success : function(response){
-
-
                                                                         if (response.results ==='success'){
-                                                                            var $id =  document.getElementById(k).parentElement.parentElement;
-                                                                            $( $id ).toggle( "explode" );
+                                                                            $('#experience'+ {{ experience.id }} ).modal('hide');
+                                                                            $('body').removeClass('modal-open');
+                                                                            $('.modal-backdrop').remove();
+                                                                            $('#'+parentId).fadeOut(function () {
+                                                                                 $('#'+parentId).remove();
+                                                                                 if($('.expcount').length === 0){
+                                                                                    $('#expupbtn').fadeOut();
+                                                                                 }
+                                                                            })
+
                                                                         }else {
-                                                                            console.log('error');
+                                                                             $('.massmodal').modal('hide');
+                                                                             $('body').removeClass('modal-open');
+                                                                             $('.modal-backdrop').remove();
+                                                                             setTimeout(function () {
+                                                                                $('#errorText').text(response['errortxt']);
+                                                                                $('#errorModal').modal('show')
+                                                                             },900)
                                                                         }
                                                                     },
                                                                     error : function(response){
@@ -339,13 +411,14 @@
 
                                                                     }
                                                                  });
-                                                                 }
                                                              }
                                                         </script>
                                                     </div>
                                                 {% endfor %}
                                                 <div class="col-sm-12">
-                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                    {% if experiences %}
+                                                        <button type="submit" id="expupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                    {% endif %}
                                                 </div>
                                             </form>
                                         </div>
@@ -355,13 +428,34 @@
                                     <!-- Start Friend List -->
                                     <div id="skills" class="tab-pane fade">
                                         <div class="row">
+
                                             <form action="{% url 'LML:employee_skills_detail_update' %}" method="POST">
                                                 {% csrf_token %}
                                                 {% for skill in skills %}
-                                                 <div class="col-sm-12" id="skillparent{{ skill.id }}">
-                                                   <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Skill {{ skill.skill }}
-                                                       <span onclick="deleteSkill(this)" id="{{ skill.id }}"   class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
+                                                 <div class="col-sm-12 skillcount" id="skillparent{{ skill.id }}">
+                                                   <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">{{ skill.skill|title }}
+                                                       <span  data-toggle="modal" data-target="#skill{{ skill.id }}"   class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
                                                    </h2>
+                                                     <!-- Modal -->
+                                                    <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="skill{{ skill.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                      <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                            <p>Are you sure you want to delete skill: <strong>{{ skill.skill|title }}</strong></p>
+                                                            <div class="container-fluid ">
+                                                                <button id="{{ skill.id }}" data-parentt="skillparent{{ skill.id }}"  type="button" onclick="deleteSkill(this)"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+
                                                    <div class="extra-field-box">
                                                         <div class="multi-box">
                                                             <div class="dublicat-box">
@@ -385,39 +479,53 @@
                                                 </div>
                                                  <script type = "text/javascript">
                                                      function deleteSkill(e) {
-                                                         var k = e.parent;
+                                                         var parentId = e.dataset.parentt;
                                                          var skill_id = e.id;
-                                                         var confm  =  confirm('Are you sure you want to delete.');
-                                                         if(confm === true){
                                                             $.ajax({
-                                                            method : 'POST',
-                                                            url :  "{% url 'LML:employee_skills_update' %}",
-                                                            data : {
-                                                                'skill_id': skill_id,
-                                                                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                            },
-                                                            success : function(response){
-                                                                console.log(response);
-                                                                if (response.results ==='success'){
-                                                                    var $id =  document.getElementById(skill_id).parentElement.parentElement;
-                                                                    $( $id ).toggle( "explode" );
-                                                                }else {
-                                                                    console.log('error');
-                                                                }
-                                                            },
-                                                            error : function(response){
-                                                                console.log(response);
+                                                                method : 'POST',
+                                                                url :  "{% url 'LML:employee_skills_update' %}",
+                                                                data : {
+                                                                    'skill_id': skill_id,
+                                                                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                },
+                                                                success : function(response){
+                                                                    if (response.results ==='success'){
+                                                                        console.log(response);
+                                                                        $('#skill'+ {{ skill.id }} ).modal('hide');
+                                                                        $('body').removeClass('modal-open');
+                                                                        $('.modal-backdrop').remove();
+                                                                        $('#'+parentId).fadeOut(function () {
+                                                                             $('#'+parentId).remove();
+                                                                             if($('.skillcount').length === 0){
+                                                                                $('#skillbtn').fadeOut();
+                                                                             }
+                                                                        })
+                                                                    }else {
 
-                                                            }
-                                                         });
-                                                         }
+                                                                         $('.massmodal').modal('hide');
+                                                                         $('body').removeClass('modal-open');
+                                                                         $('.modal-backdrop').remove();
+                                                                         setTimeout(function () {
+                                                                            $('#errorText').text(response['errortxt']);
+                                                                            $('#errorModal').modal('show')
+                                                                         },900)
+                                                                        console.log(response);
+                                                                    }
+                                                                },
+                                                                error : function(response){
+                                                                    console.log(response);
+
+                                                                }
+                                                             });
                                                      }
                                                 </script>
                                                 {% endfor %}
 {#                                                extra#}
 
                                                 <div class="col-sm-12">
-                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                    {% if skills %}
+                                                        <button type="submit" id="skillbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                    {% endif %}
                                                 </div>
                                             </form>
                                         </div>
@@ -444,7 +552,7 @@
                                                             </a>
                                                             <input value="{{customer.profile_image}}" style="position: relative; visibility: hidden" onchange="readURL(this)" type="file" name="profile_image" id="upload-pic" class="inputfile" />
                                                             <script>
-                                                            function readURL(input) {
+                                                                function readURL(input) {
 
                                                                 if (input.files && input.files[0]) {
                                                                     var reader = new FileReader();
@@ -569,11 +677,12 @@
 
                                             <div class="col-sm-12 col-md-12">
                                                 <h2 class="detail-title mrg-top-20">Social Profile</h2>
-                                                <div class="col-md-12 col-sm-12">
+                                                <div class="col-md-12 col-sm-12 " style="display: flex;">
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
                                                         <input name="account_url" value="{{ social.account_url }}" type="text" class="form-control" placeholder="Linkedin Link">
                                                     </div>
+                                                    <button style="padding: 12px 15px; height: 50px; border-radius: 6px;" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                                                 </div>
                                             </div>
 
@@ -587,15 +696,26 @@
                                     <!-- End Settings -->
                                 </div>
                                 <!-- Start All Sec -->
-                            </div>
                         </div>
                     </div>
+                </div>
 
             </section>
             <!-- Candidate Profile End -->
+
+
 {% endblock content %}
 {% block script %}
+    <script>
+        $(document).ready(function(){
+            $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
 
-
-
-{% endblock script %}
+                localStorage.setItem('activeTab', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab');
+            if(activeTab){
+                $('#simple-design-tab a[href="' + activeTab + '"]').tab('show');
+            }
+        });
+    </script>
+{% endblock script%}
