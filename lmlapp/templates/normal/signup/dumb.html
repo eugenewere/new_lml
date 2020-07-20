@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form class="d_form" action="{% url 'LML:dumb' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="fileupload">
+    <button type="submit">Jisajilishe</button>
+</form>
+
+
+{#<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>#}
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.min.js' %}"></script>
+
+        <script type="text/javascript" src="{% static 'assets/plugins/js/bootstrap.min.js' %}"></script>
+<script>
+
+        $(document).ready(function(){
+            {#console.log(document.getElementById('employeeform'))#}
+           $(".d_form").submit(function(e){
+                e.preventDefault();
+                {#spinner.show();#}
+                var csrf = $("input[name=csrfmiddlewaretoken]").val();
+                var image    = $('input[type="file"]')[0].files[0];
+                var serializedData = $(this).serialize();
+
+                var serial_image = "&profile_image=" + image;
+                var csrfmiddleware = '&csrfmiddlewaretoken='+ csrf;
+
+                var new_form_data = new FormData(this);
+                {#console.log(this);#}
+                console.log(new_form_data);
+
+                $.ajax({
+                    method : 'POST',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data : new_form_data,
+                    enctype: 'multipart/form-data',
+                    url :  $(".d_form").attr('action'),
+                    success : function(response){
+
+                        if (response.results === 'success') {
+                            swal.fire({
+                                title: "Success!",
+                                text: response.success,
+                                type: "success",
+                                confirmButtonText: "Continue",
+                            });
+                            $("#employeeform")[0].reset();
+                        }
+                        if(response.results === 'error') {
+                            swal.fire({
+                                title: "Error!",
+                                text: "Form Is Invalid",
+                                type: "error",
+                                confirmButtonText: "Retry"
+                            });
+
+                            for(x in response['form']){
+                               $("#error_div").load(" #error_div").html(
+                                   '<div class="alert alert-danger alert-dismissable"> <br> <h4>Please fix the following errors</h4>' +
+                                   response["form"][x]
+                                   + '</div>'
+
+                               );
+                            }
+
+
+                        }
+
+                    },
+                    error : function(response){
+                        console.log(response);
+
+                    }
+                });
+           });
+        });
+    </script>
+</body>
+</html>

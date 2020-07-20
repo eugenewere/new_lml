@@ -1,0 +1,350 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block content %}
+        <section class="slide-banner scroll-con-sec hero-section" data-scrollax-parent="true" id="sec1">
+            <div class="slideshow-container">
+                {% for image in images %}
+                    <div class="slideshow-item">
+                        <div class="bg" data-bg="{{ image.carousel_image.url }}"></div>
+                    </div>
+                {% endfor %}
+{#               / <div class="slideshow-item">#}
+{#                    <div class="bg" data-bg="{% static 'assets/img/blog/banner-17.jpg' %}"></div>#}
+{#                </div>#}
+
+            </div>
+            <div class="overlay"></div>
+            <div class="hero-section-wrap fl-wrap">
+                <div class="container">
+                    <div class="intro-item fl-wrap">
+                        <div class="caption text-center cl-white">
+                            <h2>Discover over 10,000 employees </h2>
+                            <p></p>
+                            <p>Explore top rated employees all over kenya</p>
+                        </div>
+                        <form class="form-horizontal" action="{% url 'LML:all_employees' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="col-md-3 no-padd">
+                                <select name="region"  class="form-control choose-region">
+                                    <option selected disabled class="text-muted"> Choose Region</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.region }}->({{ region.ward }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-3 no-padd">
+                                <div class="input-group">
+                                    <select name="county" id="" class="form-control choose-city">
+                                        <option selected disabled class="text-muted"> Choose County</option>
+                                        {% for county in counties %}
+                                            <option value="{{ county.id }}">{{ county.county }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padd">
+                                <div class="input-group">
+                                    <select name="category" id="choose-city" class="form-control choose-city">
+                                        <option selected disabled class="text-muted"> Choose Category</option>
+                                        {% for category in categories %}
+                                            <option value="{{ category.id }}">{{ category.category }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 no-padd">
+                                <div class="input-group">
+                                    <button type="submit" class="btn btn-primary full-width">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <section class="first-feature">
+            <div class="container">
+                <div class="all-features">
+                    <a href="">
+                        <div class="col-md-3 col-sm-6 small-padding">
+                            <div class="job-feature">
+                                <div class="feature-icon"><i class="fa fa-desktop"></i></div>
+                                <div class="feature-caption">
+                                    <h5>Engineering</h5>
+                                    <p>Are you looking for engineers?.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <div class="col-md-3 col-sm-6 small-padding">
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-mobile"></i></div>
+                            <div class="feature-caption">
+                                <h5>Construction</h5>
+                                <p>get construction specialists here.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 small-padding">
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-lightbulb-o"></i></div>
+                            <div class="feature-caption">
+                                <h5>Medicine</h5>
+                                <p>get certified practitioners here today.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 small-padding">
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-file-text"></i></div>
+                            <div class="feature-caption">
+                                <h5>Education</h5>
+                                <p>Hire part/full time teachers here today.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 small-padding">
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-hdd-o"></i></div>
+                            <div class="feature-caption">
+                                <h5>IT</h5>
+                                <p>are you looking for a technician?</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 small-padding" >
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-bullhorn"></i></div>
+                            <div class="feature-caption">
+                                <h5>Sales & Marketing</h5>
+                                <p>Get the best sales team from here today</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 small-padding">
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-credit-card"></i></div>
+                            <div class="feature-caption">
+                                <h5>Accountant</h5>
+                                <p>over 10,000+ certified accountants.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 small-padding">
+                        <div class="job-feature">
+                            <div class="feature-icon"><i class="fa fa-user"></i></div>
+                            <div class="feature-caption">
+                                <h5>Management / HR</h5>
+                                <p>Don't be left out get the best from here</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="gray-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="main-heading">
+                            <p>Expert Candidates</p>
+                            <h2>Hire Premium <span>Employees</span></h2></div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for customer in customers %}
+                        <div class="col-md-4 col-sm-6">
+                            <div class="paid-candidate-container">
+                            <div class="paid-candidate-box">
+                                <div class="dropdown">
+                                    <div class="btn-group fl-right">
+                                        {% if request.user|logged_in_company %}
+                                            <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                            <div class="dropdown-menu pull-right animated flipInX">
+                                                {% csrf_token %}
+                                                {% if request|shortlisted:customer.id %}
+                                                    <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                {% else %}
+                                                    <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="paid-candidate-inner--box">
+                                    <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                    <div class="paid-candidate-box-detail">
+                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                </div>
+                                <div class="paid-candidate-box-extra">
+                                    <ul>
+                                        {% for skill in customer.skillset %}
+                                        <li>{{skill.skill|truncatechars:7}}</li>
+                                        {% endfor %}
+                                        {% if customer.skillcount %}
+                                            <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                        {% endif %}
+                                    </ul>
+                                    <p>{{customer.biography|truncatechars:67}}.</p>
+                                </div>
+                            </div>
+                            {% if request.user|logged_in_company %}
+                            <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                            {% endif %}
+                        </div>
+                        </div>
+                    {% endfor %}
+                    <div class="col-md-12 col-sm-12">
+                        <div class="text-center"><a href="{% url 'LML:all_premium_employees' %}" class="btn btn-primary">Load More</a></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="wp-process home-three">
+            <div class="container">
+                <div class="row">
+                    <div class="main-heading">
+                        <p>How We Work</p>
+                        <h2>Our Work <span>Process</span></h2></div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="work-process">
+                        <div class="work-process-icon"><span class="icon-search"></span></div>
+                        <div class="work-process-caption">
+                            <h4>Search for Employee</h4>
+                            <p>Search For the employee you need for your job</p>
+                        </div>
+                    </div>
+                    <div class="work-process">
+                        <div class="work-process-icon"><span class="icon-mobile"></span></div>
+                        <div class="work-process-caption">
+                            <h4>Find Employee</h4>
+                            <p>Get to choose the right skills you need </p>
+                        </div>
+                    </div>
+                    <div class="work-process">
+                        <div class="work-process-icon"><span class="icon-profile-male"></span></div>
+                        <div class="work-process-caption">
+                            <h4>Shortlist Employee</h4>
+                            <p>Shortlist the employees you would like to view their profile</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 hidden-sm"><img src="{% static 'assets/img/blog/wp-iphonem.png' %}" class="img-responsive" alt="" /></div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="work-process">
+                        <div class="work-process-icon"><span class="icon-layers"></span></div>
+                        <div class="work-process-caption">
+                            <h4>Subscribe to a plan</h4>
+                            <p>subscribe to a plan based on the number of people you would like to view their profile</p>
+                        </div>
+                    </div>
+                    <div class="work-process">
+                        <div class="work-process-icon"><span class="icon-wallet"></span></div>
+                        <div class="work-process-caption">
+                            <h4>complete payment</h4>
+                            <p>We accept M-pesa payments and are working on other modes of payment</p>
+                        </div>
+                    </div>
+{#                    <div class="work-process">#}
+{#                        <div class="work-process-icon"><span class="icon-happy"></span></div>#}
+{#                        <div class="work-process-caption">#}
+{#                            <h4>Contact us</h4>#}
+{#                            <p>Co</p>#}
+{#                        </div>#}
+{#                    </div>#}
+                </div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <section class="gray-bg">
+            <div class="container">
+                <div class="row" data-aos="fade-up">
+                    <div class="col-md-12">
+                        <div class="main-heading">
+                            <p>Hire Experts</p>
+                            <h2>Hire Experts <span>Personnel</span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-slide">
+                        {% for customer in all_customers %}
+                            <!-- Single Freelancer -->
+                            <div class="grid-slide-box">
+                                <div class="top-candidate-wrap style-2">
+                                    <div style="margin: 0;" class="paid-candidate-container">
+                                        <div class="paid-candidate-box">
+                                            <div class="dropdown">
+                                                <div class="btn-group fl-right">
+                                                    {% if request.user|logged_in_company %}
+                                                        <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                        <div class="dropdown-menu pull-right animated flipInX">
+                                                            {% csrf_token %}
+                                                            {% if request|shortlisted:customer.id %}
+                                                                <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                            {% else %}
+                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="paid-candidate-inner--box">
+                                                <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                <div class="paid-candidate-box-detail">
+                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                            </div>
+                                            <div class="paid-candidate-box-extra">
+                                                <ul>
+                                                    {% for skill in customer.skillset %}
+                                                    <li>{{skill.skill|truncatechars:7}}</li>
+                                                    {% endfor %}
+                                                    {% if customer.skillcount %}
+                                                        <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                                    {% endif %}
+                                                </ul>
+                                                <p>{{customer.biography|truncatechars:67}}.</p>
+                                            </div>
+                                        </div>
+                                        {% if request.user|logged_in_company %}
+                                        <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <section class="call-to-act" style="padding: 100px 0;">
+            <div class="" style="margin-bottom: 20px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content:space-evenly;">
+                   <meta name="viewport" content="width=device-width" initial-scale="1">
+                    <div class="col-md-5 col-sm-12 no-padd bl-dark m" style=" border-radius: 10px;  box-shadow: 10px 10px 20px black;" content="width=device-width">
+                    <div class="call-to-act-caption">
+                        <h2>LET EMPLOYERS VIEW YOUR PROFILE ANYWHERE ANYTIME</h2>
+                        <h3>you might just find your next employer here today</h3>
+                        {% if not request.user.is_authenticated %}
+                        <a href="{% url 'LML:signup' %}" class="btn bat-call-to-act">Sign up with us</a>
+                        {% endif %}
+                    </div>
+                </div>
+                    <div class="col-md-1 "></div>
+                    <div class="col-md-5 col-sm-12 no-padd gr-dark" style=" border-radius: 10px;  box-shadow: 10px 10px 20px black;" content="width=device-width">
+                    <div class="call-to-act-caption" >
+                        <h2>NO NEED TO CARRY YOUR RESUME FROM ONE OFFICE TO ANOTHER</h2>
+                        <h3>you have the skills...let them find you with ease</h3>
+                        {% if not request.user.is_authenticated %}
+                        <a href="{% url 'LML:signup' %}" class="btn bat-call-to-act">Sign up with us</a>{% endif %}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </section>
+{% endblock content %}

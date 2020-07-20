@@ -1,0 +1,122 @@
+{% extends 'admin/layout.html' %}
+{% load static %}
+{% load humanize %}
+{% block links %}
+<script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+{% endblock %}
+{% block content %}
+       <div class="dashboard-wrapper ml-0">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Company Pricing</h2>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Company</li>
+                                        <li class="breadcrumb-item active" aria-current="page">Pricing</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- basic table  -->
+                    <!-- ============================================================== -->
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <button type="button" class="btn btn-success " data-toggle="modal" data-target="#exampleModal">
+                              Add Pricing
+                            </button>
+                            <div class="card">
+                                <h5 class="card-header">Pricing</h5>
+
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Pricing (Kshs)</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for price in pricings %}
+                                                <tr>
+                                                    <th scope="row">{{ forloop.counter }}</th>
+                                                    <th  scope="row">{{ price.title|title }}</th>
+                                                    <th scope="row">{{ price.price|intcomma }}</th>
+                                                    <th scope="row">{{ price.description|safe|escape }}</th>
+                                                    <th scope="row">
+                                                        <a href="" class="btn btn-success rounded btn-sm" >Edit</a>
+                                                        <a href="" class="btn btn-danger rounded btn-sm">Delete</a>
+                                                    </th>
+
+                                                </tr>
+                                             {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- ============================================================== -->
+                    <!-- end basic table  -->
+                    <!-- ============================================================== -->
+                    <!-- Modal -->
+                    <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Pricing</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form method="post" action="">
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Title</label>
+                                    <input required name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Price</label>
+                                    <input required name="price" type="number" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter Price">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Description</label>
+                                    <textarea required class="form-control" name="description" id="exampleInputEmail3" cols="30" rows="10"></textarea>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-success rounded">Save changes</button>
+                              </div>
+                         </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+{% endblock content %}
+{% block script %}
+    <script>
+        CKEDITOR.replace('description',{
+              removePlugins: [  'Image', ],
+         } );
+    </script>
+{% endblock script %}

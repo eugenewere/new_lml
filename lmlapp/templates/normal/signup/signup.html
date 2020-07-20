@@ -1,0 +1,698 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% block links %}
+    <style type="text/css">
+        #signuploader {
+            display: none;
+            position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          background: rgba(0,0,0,0.75) ;
+          z-index: 10000;
+
+
+          
+        }
+    </style>
+{% endblock links %}
+{% block content %}
+    <div id="signuploader">
+        <img style="height: 152px; top: 50%; left: 50%; position: absolute;transform: translate(-50%, -50%);" src="{% static 'assets/img/avatar/CorruptOldfashionedGuineapig-small.gif' %}" alt="">
+    </div>
+           <section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %});">
+				<div class="container">
+					<h1>Sign up</h1>
+                   <h3 style="margin-bottom: 38px; color: white; " > Are you an employer? <a style="color: white;" href="{% url 'LML:companysignup' %}">click here </a></h3>
+				</div>
+			</section>
+
+    <div class="clearfix"></div>
+    <!-- Header Title End -->
+    <form id="employeeform" action="{% url 'LML:signup' %}"  method="POST" enctype="multipart/form-data" >
+
+        {% csrf_token %}
+{#        <! -- General Detail Start -->#}
+        <div class="section detail-desc">
+            <div class="container">
+                <div class="ur-detail-wrap create-kit padd-bot-0">
+
+                    <div class="row">
+                        <div class="detail-pic js">
+                            <div class="box companybox">
+                                <input required style="position: relative;" onchange="readURL(this)" type="file"
+                                       name="profile_image" id="upload-pic" class="inputfile"/>
+                                <label for="upload-pic"><i class="fa fa-picture-o" aria-hidden="true"></i><span
+                                        style="margin-left:11px; color: white; text-align: center;">Upload Your Picture</span></label>
+                                <img class="blah" id="blah"
+                                     style="position: absolute;top: 0; left: 0; bottom: 0; right: 0; visibility:hidden;width: 167px; height: 174px"
+                                     src="{% static 'assets/img/client-1.jpg' %}" alt="">
+                            </div>
+                            <div id="disclaimer" class="disclaimer disclaimer-animated " >
+                                Upload Profile
+                            </div>
+                        </div>
+                    </div>
+                <div id="error_div">
+                        {% include 'normal/signup/errors.html' %}
+                </div>
+
+                    <div class="row bottom-mrg">
+                        <div class="add-feild">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group " style="margin-bottom: 8px">
+                                    <label for="firstname"></label>
+                                    <input required name="first_name" id="firstname" type="text" class="form-control"
+                                           placeholder="First Name" style="margin-bottom:0;">
+                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                        First name as it appears in id.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <label for="lastname"></label>
+                                    <input required name="last_name" id="lastname" type="text" class="form-control"
+                                           placeholder="Last Name" style="margin-bottom:0;">
+                                    <small id="lastname" class="form-text text-muted">
+                                        Last name as it appears in id.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <label for="gender"></label>
+                                    <select required name="gender" id="gender" class="form-control input-lg" style="margin-bottom:0">
+                                        <option selected disabled>Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <small id="gender" class="form-text text-muted">
+                                        Gender.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <label for="email"></label>
+                                    <input required name="email" id="email" type="email" class="form-control"
+                                           placeholder="Your Email" style="margin-bottom:0">
+                                    <small id="email" class="form-text text-muted">
+                                        johndoe@example.com .
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <label for="usename"></label>
+                                    <input required name="username" id="username" type="text" class="form-control"
+                                           placeholder="Your Username" style="margin-bottom:0">
+                                    <small id="usename" class="form-text text-muted">
+                                        Username.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <label for="phonnumber"></label>
+                                    <input required name="phone_number" id="phonnumber" type="tel" class="form-control"
+                                           placeholder="Phone Number" style="margin-bottom:0">
+                                    <small id="phonnumber" class="form-text text-muted">
+                                        07xxxxxxxxx.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 0">
+                                    {#                                            <span class="input-group-addon">Date From</span>#}
+                                    <span class="input-group-addon orangebg"><i class="fa fa-calendar"></i> Date Of Birth</span>
+                                    <input id="dateofbirth" required name="date_of_birth" style="margin-bottom:0" type="date"
+                                           class="form-control">
+                                </div>
+                                <small id="dob" class="dob form-text text-muted" style="margin-bottom: 8px">
+                                    Date Of Birth
+                                </small>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <select required name="marital_status" id="maritalstatus"  class="marital form-control input-lg"
+                                            style="margin-bottom: 0">
+                                        <option selected>Marital status</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Devorced">Devorced</option>
+                                    </select>
+                                    <small id="marital" class="form-text text-muted">
+                                        Marital status.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="input-group" style="margin-bottom: 8px">
+                                    <select id="job_type" required name="job_type"  class="marital2 form-control input-lg"
+                                            style="margin-bottom: 0">
+                                        <option selected>Choose Job Type</option>
+                                        <option value="Full Time">Full Time</option>
+                                        <option value="Part Time">Part Time</option>
+                                        <option value="Internship">Internship</option>
+                                        <option value="Freelancer">Freelancer</option>
+                                    </select>
+                                    <small id="marital" class="form-text text-muted">
+                                        Job Type.
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-sm-12" style="margin-top: 10px;">
+                                <div style=" display: block !important;" class="input-group">
+                                    <select required name="category" id="category"  class="choose-category form-control input-lg">
+                                        <option {% if not form.category.value %} selected{% else %}disabled{% endif %} >
+                                            Work Categories
+                                        </option>
+                                        {% for category in categories %}
+                                            <option  {% if form.category.value == category.id %} selected {% endif %} value="{{ category.id }}"><span class="text-capitalize">{{ category.category }}</span></option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                    Work Category.
+                                </small>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12" style="margin-top: 20px;">
+                                <h4 class="text-muted">Do you have any disablity</h4>
+                                <div style="display: flex;">
+                                    <div class="custom-control custom-radio custom-control-inline"
+                                         style="margin-right: 20px;">
+                                        <input onclick="openDisability()" type="radio" class="disability_choice custom-control-input"
+                                               id="customRadio" name="disability_status" value="DISABLED">
+                                        <label class="custom-control-label" for="customRadio">Yes</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input onclick="closeDisability()" type="radio" class="disability_choice custom-control-input"
+                                               id="customRadio2" name="disability_status" value="NOT_DISABLED">
+                                        <label class="custom-control-label" for="customRadio2">No</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-sm-12" style="padding: 0;">
+                                    <label for="disability"></label>
+                                    <textarea name="disability" style="display:none;" id="disability" class="des form-control" placeholder="What type of disability"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padd">
+                        <div class="detail pannel-footer">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="detail-pannel-footer-btn pull-right">
+                                    {#										<a href="#" class="footer-btn choose-cover">Choose Cover Image</a>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- General Detail End -->
+
+        <!-- full detail SetionStart-->
+        <section class="full-detail">
+            <div class="container">
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Location Information</h2>
+                    <div class="row col-sm-12 col-md-12">
+                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <select id="country" required name="country" class="choose-city form-control input-lg">
+                                    <option  disabled>Country</option>
+                                    <option selected value="Kenya">Kenya</option>
+                                </select>
+                            </div>
+                            <small id="lastname" class="form-text text-muted" style="margin-bottom: 8px;">
+                                eg: Kenya
+                            </small>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <select required name="county"  class="choose-city form-control input-lg">
+                                    <option selected>County</option>
+                                    {% for county in counties %}
+                                        <option value="{{ county.id}}">{{ county.county }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <small id="lastname" class="form-text text-muted" style="margin-bottom: 8px;">
+                                eg: Nairobi, Kisumu.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="row col-sm-12 col-md-12">
+                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                <select id="region" required name="region" class="choose-region form-control input-lg">
+                                    <option selected disabled>Sub-County And Respective Ward</option>
+                                    {% for region in regions %}
+                                        <option value="{{ region.id }}">{{ region.region }}->({{ region.ward }})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <small id="lastname" class="form-text text-muted">
+                                eg Langata.
+                            </small>
+                        </div>
+                        <div class="col-md-6 col-sm-6 " style="margin-bottom: 8px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <input name="landmark" id="landmark" type="text" class="form-control"
+                                       placeholder="Landmark">
+
+                            </div>
+                            <small id="phonnumber" class="form-text text-muted">
+                                eg Nearest road/School/Market/.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Education</h2>
+                    <div class="extra-field-box">
+                        <div class="multi-box" >
+                            <div class="dublicat-box" >
+                                <div class="col-md-12 col-sm-12 row duplicate">
+                                    <h4 style="margin: 20px 0;" class="text-muted">Choose your qualification</h4>
+
+                                        <div class=" me" style="padding: 0;" >
+                                            <select id="0" required name="qualifications" onchange="showEducation(this);" class=" qualifications form-control input-lg">
+                                                <option selected disabled="disabled">Qualifications</option>
+                                                <option value="Phd">Phd</option>
+                                                <option value="Masters">Masters</option>
+                                                <option value="Bachelor">Bachelor</option>
+                                                <option value="Diploma">Diploma</option>
+                                                <option value="Certificate">Certificate</option>
+                                            </select>
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="uni col-md-12 col-sm-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-university"></i></span>
+                                                    <select name="school" class="school choose-university form-control input-lg">
+                                                        <option selected disabled="disabled">School</option>
+                                                        {% for university in unis %}
+                                                            <option value="{{ university }}">{{ university }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="phd col-md-12 col-sm-12">
+                                                <div class="input-group col-md-4 col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                    <select name="course" class="course choose-phd form-control input-lg">
+                                                        <option selected disabled="disabled">Qualification, e.g. Phd in Arts</option>
+                                                        {% for phd in phds %}
+                                                            <option value="{{ phd }}">{{ phd }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="masters col-md-12 col-sm-12">
+                                                <div class="input-group col-md-4 col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                    <select name="course" class="course masters choose-masters form-control input-lg">
+                                                        <option selected disabled="disabled">Qualification, e.g. Masters in
+                                                            Arts
+                                                        </option>
+                                                        {% for master in masters %}
+                                                            <option value="{{ master }}">{{ master }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="bachelor col-md-12 col-sm-12">
+                                                <div class="input-group col-md-4 col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                    <select name="course" class="course choose-bachelor form-control input-lg">
+                                                        <option selected disabled="disabled">Qualification, e.g. Bachelor in
+                                                            Arts
+                                                        </option>
+                                                        {% for bachelor in bachelors %}
+                                                            <option value="{{ bachelor }}">{{ bachelor }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="diploma col-md-12 col-sm-12">
+                                                <div class="input-group col-md-4 col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                    <select name="course" class="course choose-diploma form-control input-lg">
+                                                        <option selected disabled="disabled">Qualification, e.g. Diploma in
+                                                            Arts
+                                                        </option>
+                                                        {% for diploma in diplomas %}
+                                                            <option value="{{ diploma }}">{{ diploma }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="certificate col-md-12 col-sm-12">
+                                                <div class="input-group col-md-4 col-sm-12">
+                                                    <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                    <select name="course" class="course choose-certificate form-control input-lg">
+                                                        <option selected disabled="disabled">Qualification, e.g. Certificate in Arts </option>
+                                                        {% for cert in certificates %}
+                                                            <option value="{{ cert }}">{{ cert }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div style=" display:none; padding: 0; margin-top: 10px; " class="date col-md-12 col-sm-12">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Year of graduation</span>
+                                                    <input name="graduation_date" type="date" class="form-control edu-start">
+                                                </div>
+                                            </div>
+                                            <div style=" display:none; padding: 0; margin-top: 10px; " class="reg_no col-md-12 col-sm-12">
+                                                 <div class="input-group">
+                                                    <span class="input-group-addon">Registration number</span>
+                                                    <input name="reg_number" type="text" class="form-control regno">
+                                                 </div>
+                                             </div>
+
+                                    </div>
+                                </div>
+                                <button type="button" class="btn remove-field">Remove</button>
+                            </div>
+                        </div>
+                    <button type="button" class="add-field">Add field</button>
+                    </div>
+
+                </div>
+
+                    <div class="row bottom-mrg extra-mrg">
+                        <h2 class="detail-title">Brief description about yourself</h2>
+                        <div class="col-md-12 col-sm-12">
+                            <label style="width: 100%;">
+                                <textarea required name="biography" class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row bottom-mrg extra-mrg">
+                        <h2 class="detail-title">Add Experience</h2>
+                        <div class="extra-field-box">
+                            <div class="multi-box">
+                                <div class="dublicat-box">
+                                    <div class="col-md-12 col-sm-12">
+                                        <label>Have you ever been employed</label>
+                                        <div style="display: flex;">
+                                            <div class="custom-control custom-radio custom-control-inline"
+                                                 style="margin-right: 20px;">
+                                                <input onclick="showEmployment()" type="radio" class="custom-control-input" id="customRadioz" name="example" value="customEx">
+                                                <label class="custom-control-label" for="customRadioz">Yes</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input onclick="hideEmployment()" type="radio" class="custom-control-input" id="customRadiox" name="example" value="customEx">
+                                                <label class="custom-control-label" for="customRadio2x">No</label>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:8px; display: none;" id="employer"
+                                             class="employerwrapper col-md-12 col-sm-12">
+                                            <label for="emplo">Company Employer Name</label>
+                                            <input name="employer_name" style="margin-bottom: 0;" id="emplo" type="text" class="form-control" placeholder="Employer's Name">
+                                            <small id="lastname" class="form-text text-muted">
+                                                eg John doe.
+                                            </small>
+                                        </div>
+                                        <div style="margin-top: 8px; display: none;" id="employercompany"
+                                             class="employerwrapper col-md-12 col-sm-12">
+                                            <label for="emplocomp">Company Name</label>
+                                            <input name="company_name" style="margin-bottom: 0;" id="emplocomp" type="text" class="form-control" placeholder="Employer's Company">
+                                            <small id="lastname" class="form-text text-muted">
+                                                eg abc company.
+                                            </small>
+                                        </div>
+                                        <div style="margin-top: 8px; display: none;" id="employercompany"
+                                             class="employerwrapper col-md-12 col-sm-12">
+                                            <label for="emplocompemail">Company email</label>
+                                            <input name="company_email" style="margin-bottom: 0;" id="emplocompemail" type="email" class="form-control" placeholder="Employer's email">
+                                            <small id="lastname" class="form-text text-muted">
+                                                eg abc.example.org abc.example.com .
+                                            </small>
+                                        </div>
+                                        <div style="margin-top: 8px; display: none;" id="employercompany"
+                                             class="employerwrapper col-md-12 col-sm-12">
+                                            <label for="emplocomp4n">Company Phone</label>
+                                            <input name="company_phone" style="margin-bottom: 0;" id="emplocomp4n" type="text" class="form-control" placeholder="Employer's Phonenumber">
+                                            <small id="lastname" class="form-text text-muted">
+                                                eg 07********.
+                                            </small>
+                                        </div>
+                                        <div class="employerwrapper col-md-12 col-sm-12"
+                                             style="margin-top:8px; display: none;">
+                                            <label for="kke">Position Held</label>
+                                            <input name="position_held" id="kke" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
+                                        </div>
+                                        <div class="employerwrapper col-md-12 col-sm-12"
+                                             style="margin-top:8px; display: none;">
+                                            <h4>Date</h4>
+                                            <div class="col-md-6 col-sm-6">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Date From</span>
+                                                    <input name="date_from" type="date" id="exp-start" class="exp-start form-control">
+                                                </div>
+                                            </div>
+
+                                            <div class="employerwrapper col-md-6 col-sm-6"
+                                                 style="margin-top:8px; display: none;">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">Date To</span>
+                                                    <input name="date_to" type="date" id="exp-end" class="exp-end form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="employerwrapper col-md-12 col-sm-12"
+                                             style="margin-top:8px; display: none;">
+                                            <label for="emplomsg"></label>
+                                            <textarea name="experience" id="emplomsg" class="form-control textarea" placeholder="Optional notes on the experience"></textarea>
+                                        </div>
+                                    </div>
+                                    <button style="display: none;" id="clonebutton1" type="button" class="employer btn remove-field">Remove</button>
+                                </div>
+                            </div>
+                            <button style="display: none;" id="clonebutton2" type="button" class="employer add-field">Add</button>
+                        </div>
+                    </div>
+
+                    <div class="row bottom-mrg extra-mrg">
+                        <h2 class="detail-title">Add Skills</h2>
+                        <div class="extra-field-box">
+                            <div class="multi-box">
+                                <div class="dublicat-box">
+
+                                    <div class="col-md-12 col-sm-12 " style="margin-bottom: 2px;">
+                                        <div class="input-group" style="margin-bottom: 2px;">
+                                            <span class="input-group-addon"><i class="fas fa-hand-paper"></i></span>
+                                            <input required name="skill" type="text" class="form-control"
+                                                   placeholder="Skills, e.g. Css, Html...">
+                                        </div>
+                                        <small id="lastname" class="form-text text-muted">
+                                            eg Art and craft.
+                                        </small>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 ">
+                                        <div class="input-group" style="margin-bottom: 8px;">
+                                            <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                                            <input required name="referee" id="ref" type="text" class="form-control"
+                                                   placeholder="Referee Name">
+                                        </div>
+                                        <small id="lastname" class="form-text text-muted">
+                                            eg Referee Name.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 ">
+                                        <div class="input-group" style="margin-bottom: 8px;">
+                                            <span class="input-group-addon"><i class="fas fa-mobile-phone"></i></span>
+                                            <input required name="referee_phonenumber" id="refh" type="text"
+                                                   class="form-control" placeholder="Referee Phone Number">
+                                        </div>
+                                        <small id="lastnamehh" class="form-text text-muted">
+                                            eg Referee Phone Number.
+                                        </small>
+                                    </div>
+                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                        <button type="button" class="btn remove-field">Remove</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                                <button type="button" class=" btn add-field">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row bottom-mrg extra-mrg">
+                        <h2 class="detail-title">Social Profile</h2>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                                <input name="account_url" type="text" class="form-control" placeholder="Linkedin Link">
+                            </div>
+                            <small id="lastname" class="form-text text-muted">
+                                Your Linkedin Handle.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="row bottom-mrg extra-mrg">
+                        <h2 class="detail-title">Password</h2>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                <input required name="password1" type="password" class="form-control" autocomplete="off"
+                                       placeholder="Password">
+                            </div>
+                            <div class="help-block list-unstyled text-muted">
+                                {{ form.password1.help_text }}
+                            </div>
+                            {% if form.password1.errors %}
+                                <div class="alert alert-danger errorlist text-danger">
+                                    {{ form.password1.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
+                                <input required name="password2" type="password" class="form-control"
+                                       placeholder="Confirm Password">
+                            </div>
+                            <div class="help-block list-unstyled text-muted">
+                                {{ form.password2.help_text }}
+                            </div>
+                            {% if form.password2.errors %}
+                                <div class="alert alert-danger errorlist">{{ form.password2.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row bottom-mrg extra-mrg text-center">
+                            <div class="col-md-12 col-sm-12 mrg-top-25">
+                                <div class="custom-control custom-radio custom-control-inline"
+                                     style="margin-right: 20px;">
+                                    <label class="custom-control-label" for="customRadio"></label>
+                                    <span>
+                                         <input type="checkbox" class="custom-control-input customRadio"
+                                                id="termschecks" name="example" value="">
+                                         Agree to terms and conditions <a href="{% url 'LML:termsandconditons' %}">Terms</a>
+                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row bottom-mrg extra-mrg">
+                            <div class="col-md-12">
+                                <button  id="submitbutton" type="submit" class="submitbutton btn btn-success btn-primary small-btn">Submit
+                                </button>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row text-right" style="">
+                                       Create as an Employer instead<a href="{% url 'LML:signup_initial' %}">click
+                                       here</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </form>
+    <!-- full detail SetionStart-->
+{% endblock content %}
+{% block script %}
+    {#            <script type="text/javascript" src="{% static 'assets/js/js.js' %}"></script>#}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
+    <script>
+
+        var list = document.getElementsByClassName('list1');
+        for (i = 0; i < list.length; i++) {
+            var anchor = list[i].getElementsByClassName('anchor');
+            for (a = 0; a < anchor.length; a++) {
+                $(anchor[i]).on('click', function (e) {
+                    list[i].classList.add('visible');
+                    if (list[i].hasClass('visible')) {
+                        list[i].removeClass('visible');
+                    } else {
+                        list[i].classList.add('visible');
+                    }
+                });
+                $(anchor[i]).on('blur', function (e) {
+                    list[i].removeClass('visible');
+                });
+            }
+        }
+
+
+    </script>
+    <script>
+
+        $(document).ready(function(){
+           var spinner = $('#signuploader');
+           $("#employeeform").submit(function(e){
+                e.preventDefault();
+                spinner.show();
+                var new_form_data = new FormData(this);
+                $.ajax({
+                    method : 'POST',
+                    processData: false,
+                    contentType: false,
+                    cache: false,
+                    data : new_form_data,
+                    enctype: 'multipart/form-data',
+                    url :  $("#employeeform").attr('action'),
+                    success : function(response){
+                        spinner.hide();
+                        if (response.results === 'success') {
+                            $("#employeeform")[0].reset();
+                            swal.fire({
+                                title: "Success!",
+                                text: response.success,
+                                type: "success",
+                                confirmButtonText: "Continue",
+                            });
+                            setTimeout(function () {
+                                window.location = {% url 'LML:payment' %};
+                            }, 5000)
+                        }
+                        else {
+                            $('#error_div').html(response);
+                            $('html, body').animate({ scrollTop: 0 }, 'slow');
+                            setTimeout(function () {
+                                swal.fire({
+                                    title: "Error!",
+                                    text: "Form Is Invalid. Please fix the above errors",
+                                    type: "error",
+                                    confirmButtonText: "Retry"
+                                });
+                            },2000);
+
+
+                        }
+
+                    },
+                    error : function(response){
+                        console.log(response);
+                        spinner.hide();
+
+                    }
+                });
+           });
+        });
+    </script>
+
+{% endblock script %}

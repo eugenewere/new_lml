@@ -1,0 +1,76 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% block links %}
+{% endblock links %}
+{% block content %}
+    <!-- Title Header Start -->
+    <section class="inner-header-title" style="background-image:url({% static 'assets/img/banner-10.jpg' %});">
+        <div class="container">
+            <h1>Frequently Asked Questions</h1>
+        </div>
+    </section>
+    <div class="clearfix"></div>
+    <!-- Title Header End -->
+
+    <!-- Accordion Design Start -->
+    <section class="accordion">
+        <div class="container">
+            <div class="col-md-12 col-sm-12">
+                <div class="simple-tab">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                       FAQ
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <div> <h3>Welcome to Labour Market Link</h3>
+                                    1. why do I have to pay for the registration?
+                                        <div> For us to serve you we have to pay our staff for maintenance,
+                                             we also have to do advertisements in order to get employers and employees</div>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+{#                        <div class="panel panel-default">#}
+{#                            <div class="panel-heading" role="tab" id="headingTwo">#}
+{#                                <h4 class="panel-title">#}
+{#                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">#}
+{#                                        What We Do?#}
+{#                                    </a>#}
+{#                                </h4>#}
+{#                            </div>#}
+{#                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">#}
+{#                                <div class="panel-body">#}
+{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam congue leo in congue mattis. Phasellus leo augue, consequat vitae cursus ut, efficitur a elit.</p>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="panel panel-default">#}
+{#                            <div class="panel-heading" role="tab" id="headingThree">#}
+{#                                <h4 class="panel-title">#}
+{#                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">#}
+{#                                        How We Do?#}
+{#                                    </a>#}
+{#                                </h4>#}
+{#                            </div>#}
+{#                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">#}
+{#                                <div class="panel-body">#}
+{#                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam congue leo in congue mattis. Phasellus leo augue, consequat vitae cursus ut, efficitur a elit.</p>#}
+{#                                </div>#}
+{#                            </div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Accordion Design End -->
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

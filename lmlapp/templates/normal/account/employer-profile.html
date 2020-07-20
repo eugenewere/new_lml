@@ -1,0 +1,406 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% block links %}
+
+{% endblock links %}
+{% block content %}
+
+     <!-- Title Header Start -->
+        <section class="inner-header-title img-responsive" style="background-image:url({% static 'assets/img/blog/banner-24.jpg' %});">
+            <div class="container">
+                <h1>YOUR PROFILE</h1>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <!-- Title Header End -->
+
+        <!-- Candidate Profile Start -->
+        <section class="detail-desc advance-detail-pr gray-bg">
+            <div class="container">
+                <div class="ur-detail-wrap create-kit padd-bot-0">
+
+                    <div class="row">
+                        <div class="detail-pic">
+                            {% if request.user.is_authenticated %}
+                                <img src="{{company.logo.url}}" class="img" alt="" />
+                                <a style="left: 35%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                            {% else %}
+                                <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
+                                <a style="left: 35%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                            {% endif %}
+                        </div>
+{#                        <div class="detail-status"><span>Active Now</span></div>#}
+                    </div>
+
+                    <div class="row bottom-mrg">
+                        <div class="col-md-12 col-sm-12">
+                            <div class="advance-detail detail-desc-caption">
+                                <h4 class="text-capitalize">{{company.company_name }} </h4>
+                                <span class="designation">CEO:</span>
+                                <span class="designation text-capitalize">{{request.user.first_name}} {{request.user.last_name}}</span>
+{#                                <ul>#}
+{#                                    <li><strong class="j-view">742</strong>Job Post</li>#}
+{#                                    <li><strong class="j-applied">570</strong>Job Like</li>#}
+{#                                    <li><strong class="j-shared">210</strong>Job Shared</li>#}
+{#                                </ul>#}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padd">
+                        <div class="detail pannel-footer">
+                            <div class="col-md-5 col-sm-5">
+                                <ul class="detail-footer-social">
+                                    {% if social.facebook %}
+                                       <li> <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a></li>
+                                    {% endif %}
+                                    {% if social.facebook %}
+                                       <li><a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a></li>
+                                    {% endif %}
+                                    {% if social.instagram %}
+                                       <li><a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a></li>
+                                    {% endif %}
+                                    {% if social.twitter %}
+                                       <li><a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a></li>
+                                    {% endif %}
+                                    {% if social.googlr_plus %}
+                                       <li><a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a></li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="col-md-7 col-sm-7">
+                                <div class="detail-pannel-footer-btn pull-right">
+                                    <a href="{% url 'LML:employerdetails' %}" data-toggle="tooltip"  class="footer-btn grn-btn custom-button" style=border-radius:140px;" title="">View Details</a>
+{#                                    <a href="#" class="footer-btn blu-btn" title="">Save Draft</a>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="full-detail-description full-detail gray-bg">
+            <div class="container">
+                <div class="col-md-12 col-sm-12">
+                    <div class="full-card">
+                      <div class="deatil-tab-employ tool-tab">
+							<ul class="nav simple nav-tabs" id="simple-design-tab">
+								<li class="active"><a href="#about">About</a></li>
+								<li><a href="#address">Company Info</a></li>
+								<li><a href="#settings">Settings</a></li>
+								<li><a href="#password">Password</a></li>
+							</ul>
+							<!-- Start All Sec -->
+							<div class="tab-content">
+								<!-- Start About Sec -->
+								<div id="about" class="tab-pane fade in active">
+									<h3>About {{company.comany_name}} Company</h3>
+									{{ company.brief_details|safe|escape }}
+								</div>
+								<!-- End About Sec -->
+
+								<!-- Start Address Sec -->
+								<div id="address" class="tab-pane fade">
+									<h3>Company Info</h3>
+									<ul class="job-detail-des">
+										<li><span>County:</span> {{company.county|title}}</li>
+										<li><span>Sub county:</span> {{company.region|title}}</li>
+										<li><span>Landmark:</span> {{company.landmark }}</li>
+										<li><span>Email:</span> {{company.company_email}}</li>
+                                        {% if company.website %}
+										    <li><span>Website:</span> {{company.website}}</li>
+                                        {% endif %}
+									</ul>
+								</div>
+								<!-- End Address Sec -->
+
+								<!-- Start Friend List -->
+								<div id="friends" class="tab-pane fade">
+									<div class="row">
+                                        {% for companya in scompany %}
+										    <div class="col-md-4 col-sm-4">
+                                            <div class="grid-view brows-job-list">
+                                                <div class="brows-job-company-img">
+                                                    <img src="{{ companya.logo.url }}" class="img-responsive" alt="" />
+                                                </div>
+                                                <div class="brows-job-position">
+                                                    <h3><a href="job-detail.html">{{companya.category}}</a></h3>
+                                                    <p><span>{{companya.company_name}}</span></p>
+                                                </div>
+{#                                                <div class="job-position">#}
+{#                                                    <span class="job-num">5 Position</span>#}
+{#                                                </div>#}
+                                                <div class="brows-job-type">
+                                                    <span class="part-time">{{ companya.status }}</span>
+                                                </div>
+                                                <ul class="grid-view-caption">
+                                                    <li>
+                                                        <div class="brows-job-location">
+                                                            <p><i class="fa fa-map-marker"></i>{{companya.county|title }}</p>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <p><i class="fa fa-map-marker"></i> {{ companya.region|title }}</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+
+                                    {% if scompany.count > 10 %}
+                                    <div class="row">
+                                        <ul class="pagination">
+                                            <li><a href="#">«</a></li>
+                                            <li class="active"><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#"><i class="fa fa-ellipsis-h"></i></a></li>
+                                            <li><a href="#">»</a></li>
+                                        </ul>
+                                    </div>
+                                    {% endif %}
+
+                                </div>
+                                <!-- End Friend List -->
+
+								<!-- Start Settings -->
+								<div id="settings" class="tab-pane fade">
+									<div class="row no-mrg">
+										<h3 class="">Edit Profile</h3>
+                                        <form action="{% url 'LML:update_employers_profile' %}" method="post" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="edit-pro">
+                                                <div class="row">
+                                                    <div class="detail-pic">
+                                                        {% if request.user.is_authenticated %}
+                                                            <img class="blah img" id="blah" style="max-width: 100%; position: absolute; top: -7px;" src="{{company.logo.url}}"  alt="" />
+                                                            <a style="bottom: -22px;" href="#"  class="detail-edit" title="edit">
+                                                                <label class="detail-edit" for="upload-pic"><i class="fa fa-upload fa-spin"></i></label>
+                                                            </a>
+                                                            <input value="{{ company.logo }}" style="position: relative; visibility: hidden" onchange="readURL(this)" type="file" name="logo" id="upload-pic" class="inputfile" />
+
+                                                        {% else %}
+                                                            <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
+                                                            <a  style="max-width: 100%; position: absolute; top: -7px; bottom: -22px;" href="#" class="detail-edit" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Representative  First Name</label>
+                                                    <input value="{{ company.first_name }}" name="first_name" type="text" class="form-control" placeholder="Representative First name">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Representative  Last Name</label>
+                                                    <input value="{{ company.last_name }}" name="last_name" type="text" class="form-control" placeholder="Representative Last Name">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Company Name</label>
+                                                    <input value="{{ company.company_name }}" name="company_name" type="text" class="form-control" placeholder="Comapany name">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Company Email</label>
+                                                    <input value="{{ company.company_email }}" name="company_email" type="email" class="form-control" placeholder="Company Email">
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Company Description</label>
+                                                    <input value="{{ company.description }}" name="description" type="text" class="form-control" placeholder="Company Description">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Company Category</label>
+                                                    <select name="category" id="choose-category" class="form-control input-lg">
+                                                        <option>Company Categories</option>
+                                                        {% for category in categories %}
+                                                            <option {% if category.id == company.category.id %} selected {% endif %} value="{{ category.id }}">{{ category.category }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <label>Company Username</label>
+                                                    <input value="{{ company.username }}" name="username" type="text" class="form-control" placeholder="Representative Usernanme">
+                                                </div>
+                                                 <div class="col-md-6 col-sm-6">
+                                                    <label>Company Phone Number</label>
+                                                    <input value="{{ company.phone_number }}" name="phone_number" type="text" class="form-control" placeholder="Comapany Phone Number">
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12">
+                                                    <label>Company Email</label>
+                                                    <input value="{{ company.email }}" name="email" type="text" class="form-control" placeholder="Ceo Email">
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <label>Company Motto</label>
+                                                    <input value="{{ company.company_motto }}" name="company_motto" type="text" class="form-control" placeholder="Company Motto">
+                                                </div>
+
+                                                <div class="col-md-12 col-sm-12">
+                                                    <label>Business Entity</label>
+                                                   <select  name="bizness_entity_type" id="choose-entity" class="form-control input-lg ">
+                                                        <option disabled>Type of Business Entity</option>
+                                                        <option {% if company.bizness_entity_type == 'Limited Liability Company' %} selected {% endif %} >Limited Liability Company</option>
+                                                        <option {% if company.bizness_entity_type == 'Partnership' %} selected {% endif %}>Partnership</option>
+                                                        <option {% if company.bizness_entity_type == 'Corporation' %} selected {% endif %}>Corporation</option>
+                                                        <option {% if company.bizness_entity_type == 'Proprietorship' %} selected {% endif %}>Proprietorship</option>
+                                                        <option {% if company.bizness_entity_type == 'Trust' %} selected {% endif %}>Trust</option>
+                                                        <option {% if company.bizness_entity_type == 'other' %} selected {% endif %}>other</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Date Created</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon orangebg font-12"> Date Created</span>
+                                                       <input name="date_created" value="{{ company.date_created|date:'Y-m-d' }}" style="margin-bottom:0" data-dd-theme="vanilla" placeholder="Company Start Date" type="text" id="dob" data-lang="en" data-large-mode="true" data-min-year="1900" data-max-year="<script>var date = new Date; var year = date.getFullYear();document.write(year);</script>" data-disabled-days="08/17/2017,08/18/2017" data-id="datedropper-0"  class="form-control" readonly="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Website</label>
+                                                    <input value="{{ company.website }}" name="website" type="text" class="form-control" placeholder="Website">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>KRA number</label>
+                                                    <input value="{{ company.kra_number }}" name="kra_number" type="text" class="form-control" placeholder="KRA Number">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Business No</label>
+                                                    <input value="{{ company.bussiness_reg_no }}" name="bussiness_reg_no" type="text" class="form-control" placeholder="Business Registration Number">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>County</label>
+                                                     <select name="county" required id="choose-city" class="form-control input-lg">
+                                                        {% for county in counties %}
+                                                            <option {% if county.id == company.county.id %} selected {% endif %} value="{{ county.id }}">{{ county.county }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Region</label>
+                                                    <select name="region" required id="choose-region" class="form-control input-lg">
+                                                        {% for region in regions %}
+                                                            <option {% if region.id == company.region.id %} selected {% endif %}  value="{{ region.id }}">{{ region.region }} -> ({{ region.ward }})</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <label>Landmark</label>
+                                                    <input value="{{ company.landmark }}" name="landmark" type="text" class="form-control" placeholder="Landmark">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Facebook</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fab fa-facebook-f"></i></span>
+                                                        <input name="facebook" value="{{ social.facebook }}" type="text" class="form-control" placeholder="Facebook Link">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Google+</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fab fa-google-plus"></i></span>
+                                                        <input name="googlr_plus" value="{{ social.googlr_plus }}" type="text" class="form-control" placeholder="Google+ Link">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Twitter</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fab fa-twitter"></i></span>
+                                                        <input name="twitter" value="{{ social.twitter }}" type="text" class="form-control" placeholder="Twitter Link">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Instagram</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fab fa-instagram"></i></span>
+                                                        <input name="instagram" value="{{ social.instagram }}" type="text" class="form-control" placeholder="Instagram Link">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Linkedin</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                                                        <input name="linkedin" value="{{ social.linkedin }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <label>Brief Description</label>
+                                                    <textarea required  name="brief_details" class="form-control" placeholder="Write Something">{{ company.brief_details }}</textarea>
+                                                </div>
+
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="update-btn custom-button" style="border-radius:140px;">Save</button>
+                                                </div>
+
+                                        </form>
+                                    </div>
+									</div>
+
+
+                                <div id="password" class="tab-pane fade">
+                                    <h2 class=" page-header py-4">Password Reset</h2>
+                                    <form  action="{% url 'LML:employer_change_password' %}" method="POST">
+                                        {% csrf_token %}
+                                        <div class="col-sm-12 py-5 d-flex flex-column">
+                                            <div class="col-md-12 mb-3">
+                                              <label for="validationCustom04"> Current Password</label>
+                                              <input type="password" name="old_password" class="form-control" id="validationCustom04" placeholder=" Current Password" required>
+                                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                                  Your password must be 8-20 characters long, contain letters and numbers.
+                                                    <br>
+                                                    {{ form.old_password.errors }}
+                                                </small>
+
+                                            </div>
+
+                                            <div class="col-md-12 mb-3">
+                                              <label for="validationCustom05">New Password</label>
+                                              <input name="new_password1" type="password" class="form-control" id="validationCustom05" placeholder="New Password" required>
+                                                <small id="passwordHelpBlock" class="form-text text-muted">
+                                                  Your password must be 8-20 characters long, contain letters and numbers.
+                                                     <br>
+                                                    {{ form.new_password1.errors }}
+                                                </small>
+
+                                            </div>
+
+                                            <div class="col-md-12 mb-3">
+                                              <label for="validationCustom05">Retype Password</label>
+                                              <input name="new_password2" type="password" class="form-control" id="validationCustom09" placeholder="Retype Your Password" required>
+                                                <small id="passwordHelpBlocks" class="form-text text-muted">
+                                                  Your password must be 8-20 characters long, contain letters and numbers.
+                                                     <br>
+                                                    {{ form.new_password2.errors }}
+                                                </small>
+
+                                            </div>
+                                        </div>
+                                       <div class="col-sm-12">
+                                            <button type="submit" class="update-btn custom-button" style="border-radius:140px;">Save</button>
+                                       </div>
+                                    </form>
+                                </div>
+                            </div>
+								<!-- End Settings -->
+							</div>
+							<!-- Start All Sec -->
+						</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock content %}
+{% block script %}
+    <script>
+         CKEDITOR.replace( 'brief_details',{
+              removePlugins: [  'Image', ],
+         } );
+    </script>
+{% endblock script %}

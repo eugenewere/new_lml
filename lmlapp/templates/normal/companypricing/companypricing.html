@@ -1,0 +1,50 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% block links %}
+{% endblock links %}
+{% block content %}
+            <!-- Title Header Start -->
+			<section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %}); color: white;">
+				<div class="container">
+
+					<h2 style="color: white;">SUBSCRIPTION PLANS</h2>
+
+				</div>
+			</section>
+			<div class="clearfix"></div>
+			<!-- Title Header End -->
+            <!-- pricing Section Start -->
+			<section class="pricing">
+				<div class="container">
+
+
+                    {% for price in pricing %}
+                    <div class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
+						<div class="pr-table">
+							<div class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+								<div class="pr-plan">
+									<h4>{{ price.title }}</h4>
+								</div>
+								<div class="pr-price">
+									<h3><sup>Ksh.</sup>{{price.price}}</h3>
+								</div>
+							</div>
+							<div class="pr-features">
+								<ul>
+									<li>{{price.description|safe|escape}}</li>
+								</ul>
+							</div>
+							<div class="pr-buy-button">
+								<a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %}active{% endif %}" title="Price Button">select</a>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+
+				</div>
+			</section>
+			<!-- End Pricing Section -->
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

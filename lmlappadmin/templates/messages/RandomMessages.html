@@ -1,0 +1,189 @@
+{% extends 'admin/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+     <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+{% endblock links %}
+{% block content %}
+        <div class="dashboard-wrapper">
+            <div class="container-fluid">
+                <aside class="page-aside">
+                    <div class="aside-content">
+                        <div class="aside-header">
+                            <button class="navbar-toggle" data-target=".aside-nav" data-toggle="collapse" type="button">
+                                <span class="icon"><i class="fas fa-caret-down"></i></span>
+                            </button>
+                            <span class="title">Other Messages</span>
+                            <p class="description">Undefined People</p>
+                        </div>
+                        <div class="aside-compose"><a class="btn btn-lg btn-secondary btn-block" href="#">Compose Email</a></div>
+                        <div class="aside-nav collapse">
+                            <ul class="nav">
+                                <li class="active">
+                                    <a id="in1"  data-toggle="collapse" href="#inbox1" role="button" aria-expanded="false" aria-controls="inbox1">
+                                        <span class="icon">
+                                            <i class="fas fa-fw fa-inbox"></i>
+                                        </span>Inbox
+                                        <span class="badge badge-primary float-right">{{messagecount}}</span>
+                                    </a>
+                                </li>
+                                <li class="active">
+                                    <a id="in2" data-toggle="collapse" href="#inbox2" role="button" aria-expanded="false" aria-controls="inbox2">
+                                        <span class="icon">
+                                            <i class="fas fa-fw  fa-envelope"></i>
+                                        </span>Sent Mail
+                                        <span class="badge badge-danger float-right">0</span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </aside>
+                <div class="main-content container-fluid p-0 m-0" id="kk12">
+
+                    <div class="email-list collapse show" id="inbox1" aria-labelledby="in1" data-parent="#kk12">
+                        <div class="email-inbox-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="email-title"><span class="icon"><i class="fas fa-inbox"></i></span> Inbox <span class="new-messages">({{inboxcount}} new messages)</span> </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="email-search">
+                                    <div class="input-group input-search">
+                                        <input class="form-control" type="text" placeholder="Search mail..."><span class="input-group-btn">
+                                        <button class="btn btn-secondary" type="button"><i class="fas fa-search"></i></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="email-filters">
+                            <div class="email-filters-right">
+                                <span class="email-pagination-indicator">1-50 of 253</span>
+                                <div class="btn-group email-pagination-nav">
+                                    <button class="btn btn-light" type="button"><i class="fas fa-angle-left"></i></button>
+                                    <button class="btn btn-light" type="button"><i class="fas fa-angle-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        {% for msg in messages %}
+                           <div class="email-list-item ">
+                            <div class="email-list-actions">
+                                <label class="custom-control custom-checkbox">
+                                    <input class="custom-control-input checkboxes" type="checkbox" value="{{msg.id}}" id="one"><span class="custom-control-label"></span>
+                                </label><a class="favorite active" href="#"></a>
+                            </div>
+                            <div class="email-list-detail">
+                                <span class="date float-right">
+                                    <span class="icon"><a href="#" data-toggle="modal" data-target="#exampleModal{{ msg.id }}"><i class="fas fa-paper-plane"></i></a></span>{{ msg.created_at|date:'d M' }}
+                                </span>
+                                <span class="from text-capitalize {% if msg.status == 'UNREAD' %} text-dark {% endif %} ">{{msg.name}}</span>
+                                <p class="msg {% if msg.status == 'UNREAD' %} text-dark {% endif %}">{{ msg.message }}</p>
+                            </div>
+                        </div>
+        {#                        replymodal#}
+                        <div  class="modal fade" id="exampleModal{{ msg.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <form method="post" action="{% url 'LMLAdmin:carouselImages' %}" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                  <div class="modal-body">
+                                      <div class="col-sm-12 col-md-12 col-lg-12">
+                                          <div class="row">
+                                              <div class="media">
+                                                  <img src="{% static 'assets/img/avatar/avatar1.png' %}" style="width: 80px; height: 80px; overflow: hidden;" class="mr-3" alt="...">
+                                                  <div class="media-body">
+                                                    <h5 class="mt-0">{{msg.name}}</h5>
+                                                        {{msg.message}}
+                                                  </div>
+                                              </div>
+                                              <div class="dropdown-divider"></div>
+                                              <div class="col-sm-12 col-md-12">
+                                                  <div class="form-group">
+                                                    <label for="exampleInputEmail12"></label>
+                                                    <input placeholder="Recepient" readonly value="{{ msg.email }}" type="email" class="form-control" id="exampleInputEmail12" aria-describedby="emailHelp">
+                                                  </div>
+                                                  <div class="form-group">
+                                                    <label for="exampleInputEmail1"></label>
+                                                    <input placeholder="Subject" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                  </div>
+                                                  <div class="form-group">
+                                                     <label for="exampleFormControlTextarea1"></label>
+                                                     <textarea name="messageemail" placeholder="Message" class="form-control" id="exampleFormControlTextarea{{ msg.id }}" rows="3"></textarea>
+                                                  </div>
+                                                    <script>
+                                                            CKEDITOR.replace( 'exampleFormControlTextarea{{ msg.id }}' );
+                                                    </script>
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="submit" class="btn btn-sm btn-success rounded">Send Mail</button>
+                                  </div>
+                             </form>
+                            </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <div class="email-list collapse  " id="inbox2" aria-labelledby="in2" data-parent="#kk12">
+                        <div class="email-inbox-header">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="email-title"><span class="icon"><i class="fas fa-inbox"></i></span> Sent Mail <span class="new-messages">({{inboxcount}} new messages)</span> </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="email-search">
+                                    <div class="input-group input-search">
+                                        <input class="form-control" type="text" placeholder="Search mail..."><span class="input-group-btn">
+                                        <button class="btn btn-secondary" type="button"><i class="fas fa-search"></i></button></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="email-filters">
+                            <div class="email-filters-right">
+                                <span class="email-pagination-indicator">1-50 of 253</span>
+                                <div class="btn-group email-pagination-nav">
+                                    <button class="btn btn-light" type="button"><i class="fas fa-angle-left"></i></button>
+                                    <button class="btn btn-light" type="button"><i class="fas fa-angle-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        {% for msg in messages %}
+                           <div class="email-list-item ">
+                            <div class="email-list-actions">
+                                <label class="custom-control custom-checkbox">
+                                    <input class="custom-control-input checkboxes" type="checkbox" value="{{msg.id}}" id="one"><span class="custom-control-label"></span>
+                                </label><a class="favorite active" href="#"></a>
+                            </div>
+                            <div class="email-list-detail">
+                                <span class="date float-right">
+                                    <span class="icon"><a href=""><i class="fas fa-paper-plane"></i></a></span>{{ msg.created_at|date:'d M' }}
+                                </span>
+                                <span class="from text-capitalize {% if msg.status == 'UNREAD' %} text-dark {% endif %} ">{{msg.name}}</span>
+                                <p class="msg {% if msg.status == 'UNREAD' %} text-dark {% endif %}">{{ msg.message }}</p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

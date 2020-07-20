@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Gappa is a bootstrap minimal & clean admin template">
+    <meta name="keywords" content="chat, chat platform, discussion, video call, voice call, communication, conversation, messange, messanger, talk">
+    <meta name="author" content="Themesbox">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <title>{{ title|title }}</title>
+    <!-- Fevicon -->
+{#    <link rel="shortcut icon" href="assets/images/favicon.ico">#}
+    <!-- Start css -->
+    <!-- Slick css -->
+    <script src="{% static 'assets/js/reconnecting-websockets.js' %}"></script>
+    <link href="{% static 'assets/chat/js/slick/slick.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/chat/js/slick/slick-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/chat/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/chat/css/icons.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/chat/css/flag-icon.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/chat/css/style.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'assets/chat/js/js/jquery.min.js' %}"></script>
+
+    <!-- End css -->
+</head>
+<body class="dark-layout">
+
+    <!-- Start Chat Layout -->
+    <div class="chat-layout">
+        <!-- Start Chat Leftbar -->
+        <div class="chat-leftbar">
+            <div class="tab-content" id="pills-tab-justifiedContent">
+                <!-- Start Chat Listbar -->
+                <div class="tab-pane fade show active" id="pills-chat-justified" role="tabpanel" aria-labelledby="pills-chat-tab-justified">
+                    <div class="chat-listbar">
+                        <div class="chat-left-headbar">
+                            <div class="row align-items-center">
+                                <div class="col-9">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <img style="width: 60px; height: 60px; border-radius: 50%;" class="align-self-center mr-2" src="{{customer.profile_image.url}}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="mb-0 mt-2">Chat</h5>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-3">
+                                    <a href="{% url 'LML:employer_dash' %}" data-toggle="tooltip" data-placement="right" title="Back"><i style="color: white;" class="feather icon-log-out"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-left-search">
+                            <form>
+                                <div class="input-group">
+                                  <input type="search" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="chat-left-search-btn">
+                                  <div class="input-group-append">
+                                    <button class="btn" type="submit" id="chat-left-search-btn"><i class="feather icon-search"></i></button>
+                                  </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="chat-left-body">
+                            <div class="nav flex-column nav-pills chat-userlist" id="chat-list-tab" role="tablist" aria-orientation="vertical">
+                                {% for company in msg_comapanies %}
+                                    <a class="nav-link
+                                        {% if forloop.first %} active {% endif %}"
+                                       id="chat-tab-{{ company.logo.url }}"
+                                       data-toggle="pill"
+                                       href="#chat-user-{{company.id}}"
+                                       role="tab"
+                                       aria-controls="chat-user-{{company.id}}"
+                                            {% if forloop.first %}
+                                                aria-selected="true"
+                                            {% else %}
+                                                aria-selected="false"
+                                            {% endif %}
+                                    >
+                                        <div class="media active">
+                                            <div class="user-status"></div>
+                                            <img style="height: 40px;" class="align-self-center rounded-circle" src="{{company.logo.url}}" alt="User Image">
+                                            <div class="media-body">
+                                                <h5>{{company.company_name|title}}<span class="chat-timing">02:30 pm</span></h5>
+                                                <p>Waiting for module 1 to finish...</p>
+                                            </div>
+                                        </div>
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Chat Listbar -->
+                <!-- Start Chat Profilebar -->
+                <div class="tab-pane fade" id="pills-profile-justified" role="tabpanel" aria-labelledby="pills-profile-tab-justified">
+                    <div class="chat-profilebar">
+                        <div class="chat-left-headbar">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="media">
+                                            <img style="width: 60px; height: 60px; border-radius: 50%;" class="align-self-center mr-2" src="{{customer.profile_image.url}}" alt="Generic placeholder image">
+                                            <div class="media-body">
+                                                <h5 class="mb-0 mt-2">My Profile</h5>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-left-body">
+                            <div class="profilebar">
+                                <img style="width: 60px; height: 60px; border-radius: 50%;" class="profile-pic img-fluid" src="{{customer.profile_image.url}}" alt="profile-pic">
+                                <h5>{{customer.first_name|title}} {{ customer.last_name|title }}</h5>
+                                <p class="mb-0">{{customer.country}}</p>
+                            </div>
+                            <div class="profile-detail">
+                                <ul class="list-unstyled mb-0">
+                                    <li class="media">
+                                        <i class="feather icon-user align-self-center"></i>
+                                        <div class="media-body">
+                                            <p>Username</p>
+                                            <div class="input-group">
+                                                <input readonly type="text" class="form-control" value="{{customer.username}}" aria-label="Will Patinson" aria-describedby="button-addon-group-username">
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <i class="feather icon-map align-self-center"></i>
+                                        <div class="media-body">
+                                            <p>County</p>
+                                            <div class="input-group">
+                                                <input readonly type="text" class="form-control" value="{{customer.county.county}}" aria-label="Florida, USA" aria-describedby="button-addon-group-location">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <i class="feather icon-message-square align-self-center"></i>
+                                        <div class="media-body">
+                                            <p>Region</p>
+                                            <div class="input-group">
+                                                <input readonly type="text" class="form-control" value="{{customer.region.region}}->({{customer.region.ward}})" aria-label="I am on Gappa" aria-describedby="button-addon-group-status">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="media">
+                                        <i class="feather icon-mail align-self-center"></i>
+                                        <div class="media-body">
+                                            <p>Email ID</p>
+                                            <div class="input-group">
+                                                <input readonly type="email" class="form-control" value="{{customer.email}}" aria-label="demo@example.com" aria-describedby="button-addon-group-emailid">
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Chat Profilebar -->
+
+            </div>
+            <div class="chat-menu">
+                <ul class="nav nav-pills nav-justified mb-0" id="pills-tab-justified" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="pills-chat-tab-justified" data-toggle="pill" href="#pills-chat-justified" role="tab" aria-controls="pills-chat-justified" aria-selected="true"><i class="feather icon-message-circle"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab-justified" data-toggle="pill" href="#pills-profile-justified" role="tab" aria-controls="pills-profile-justified" aria-selected="false"><i class="feather icon-user"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- End Chat Leftbar -->
+        <!-- Start Chat Rightbar -->
+        <div class="chat-rightbar">
+            <!-- Start Chat Detail -->
+            <div class="tab-content w-100" id="chat-listContent">
+                 {% for company in msg_comapanies %}
+                    <div class="tab-pane fade {% if forloop.first %} show active {% endif %}" id="chat-user-{{company.id}}" role="tabpanel" aria-labelledby="chat-tab-{{ company.id }}">
+                        <div class="chat-detail">
+                            <div class="chat-head">
+                                <div class="row align-items-center">
+                                    <div class="col-6">
+                                        <ul class="list-unstyled mb-0">
+                                            <li class="media">
+                                                <div class="user-status"></div>
+                                                <img class="align-self-center rounded-circle" src="{{company.logo.url}}" alt="Generic placeholder image">
+                                                <div class="media-body">
+                                                    <h5>{{company.company_name|title}}</h5>
+                                                    <p class="mb-0">Online</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-6">
+                                        <ul class="list-inline float-right mb-0" id="chat-log{{ company.id }}">
+                                            <li class="list-inline-item">
+                                                <div class="dropdown">
+                                                    <a href="#" class="" id="chatDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="feather icon-more-vertical-"></i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="chatDropdown">
+                                                        <a class="dropdown-item font-14" href="#" id="view-user-info-{{ company.id }}">View User Info</a>
+                                                        <script>
+                                                            $("#view-user-info-{{ company.id }}").on("click", function(e) {
+                                                                e.preventDefault();
+                                                                $("#chat-user-info-{{ company.id }}").addClass("show");
+                                                                $(".chat-bottom").addClass("small");
+                                                            });
+                                                        </script>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <a href="#" class="back-arrow"><i class="feather icon-x"></i></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-body chat-log-class" data-room="{{ company.id }}{{ request.user.id }}" id="chat-log-{{ company.id }}" data-user="{{ company.id }}" data-sender="{{ request.user.id }}">
+
+                            </div>
+                            <div class="chat-bottom">
+                                <div class="chat-messagebar">
+                                    <form class="chat-form" id="chatformee{{ company.id }}"  method="POST">
+                                        {% csrf_token %}
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <a href="#" id="button-addonmic"><i class="feather icon-mic"></i></a>
+                                            </div>
+                                            <input aria-label="sender" name="sender" id="sender{{ customer.customer.id }}" type="text" hidden  value="{{ request.user.username }}">
+                                            <input aria-label="reciever" name="reciever" id="receiver{{ company.id }}" type="text" hidden value="{{ company.username }}">
+                                            <input name="message"  autocomplete="off" id="chat-message-input" type="text" class="form-control chat-message-input" placeholder="Type a message..." aria-label="Text">
+                                            <input name="room" id="room{{ customer.customer.id }}" type="text" hidden value="{{ company.id }}{{ request.user.id }}">
+                                            <div class="input-group-append">
+                                                <a href="#" class="mr-3" id="button-addonlink"><i class="feather icon-paperclip"></i></a>
+                                                <button class="button-addonsend" type="submit" style="background-color: transparent; border: none; color: white;" id="button-addonsend"><i class="feather icon-send"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- End Chat Detail -->
+            <!-- Start Chat User Info -->
+             {% for company in msg_comapanies %}
+                <div class="chat-user-info" id="chat-user-info-{{ company.id }}">
+                    <div class="chat-user-head">
+                        <div class="row align-items-center">
+                            <div class="col-9">
+                                <h5>User Info</h5>
+                            </div>
+                            <div class="col-3">
+                                <ul class="list-inline float-right mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#" id="close-user-info-{{ company.id }}"><i class="feather icon-x"></i></a>
+                                    </li>
+                                </ul>
+                                <script>
+                                    $("#close-user-info-{{ company.id }}").on("click", function(e) {
+                                        e.preventDefault();
+                                        $("#chat-user-info-{{ company.id }}").removeClass("show");
+                                        $(".chat-bottom").removeClass("small");
+                                    });
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-user-body">
+                        <div class="userbar">
+                            <img class="user-pic img-fluid" src="{{company.logo.url}}" alt="user-pic">
+                            <h5>{{company.company_name|title}}</h5>
+                            <p class="mb-0">{{company.county.county|title}}</p>
+                        </div>
+                        <div class="user-detail">
+                            <p class="user-detail-header">About</p>
+                            <div class="user-about">
+                                <h6><i class="feather icon-heart mr-2"></i>{{company.category.category}}.</h6>
+                                <h6 class="my-3"><i class="feather icon-mail mr-2"></i>{{company.email}}</h6>
+                                <h6 class="mb-0"><i class="feather icon-phone-call mr-2"></i>{{ company.phone_number }}</h6>
+                            </div>
+                            {% if customer.customer_linkedin_social %}
+                                <p class="user-detail-header">Social Profile</p>
+                                <div class="user-social">
+                                    <ul class="list-inline mb-0">
+                                        <li class="list-inline-item">
+                                            <a target="_blank" href="{{customer.customer_linkedin_social}}" class="facebook"><i class="feather icon-linkedin"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <!-- End Chat User Info -->
+        </div>
+        <!-- End Chat Rightbar -->
+    </div>
+    <!-- End Chat Layout -->
+    <!-- Start js -->
+    <script src="{% static 'assets/chat/js/js/popper.min.js' %}"></script>
+    <script src="{% static 'assets/chat/js/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'assets/chat/js/js/modernizr.min.js' %}"></script>
+    <script src="{% static 'assets/chat/js/js/detect.js' %}"></script>
+    <script src="{% static 'assets/chat/js/js/jquery.slimscroll.js' %}"></script>
+    <script src="{% static 'assets/chat/js/js/vertical-menu.js' %}"></script>
+    <!-- Slick js -->
+    <script src="{% static 'assets/chat/js/slick/slick.min.js' %}"></script>
+    <!-- Core js -->
+    <script src="{% static 'assets/chat/js/js/core.js' %}"></script>
+    <script src="{% static 'assets/js/reconnecting-websockets.js' %}"></script>
+
+    <script>
+        var roomName = {{ room_name_json }};
+        var username = "{{ request.user.username }}";
+        var username_id = "{{ request.user.id }}";
+        var endpoint, wsStart, loc;
+        var chat_logs = $('.chat-log-class');
+
+        $(".chat-log-class").each(function () {
+           this.scrollTop = this.scrollHeight;
+        });
+
+        loc = window.location;
+        wsStart ='ws://';
+        if(loc.protocol === 'https:'){
+            wsStart = 'wss://';
+        }
+        else{
+            wsStart = 'ws://';
+        }
+
+        endpoint = wsStart + loc.host + "/ws/chat/" + username + '/' ;
+        var chatSocket = new ReconnectingWebSocket(endpoint);
+        chatSocket.debug = true;
+        chatSocket.timeoutInterval = 3000;
+        chatSocket.reconnectInterval = 1000;
+
+        {#setInterval(function () {#}
+        {#    chatSocket.refresh();#}
+        {#    chat_logs.html("");#}
+        //}, 5000);
+
+
+        document.querySelector('.chat-message-input').focus();
+        $('.chat-form').each(function (element, index) {
+            $(this).on('submit', function (e) {
+                e.preventDefault();
+                chatSocket.send(JSON.stringify({
+                    'command': 'new_messages',
+                    'message':this.children[1].children[3].value,
+                    'receiver': this.children[1].children[2].value,
+                    'sender': this.children[1].children[1].value,
+                    'room': this.children[1].children[4].value,
+                }));
+                this.reset();
+                $(".chat-log-class").each(function (index, element) {
+                    this.scrollTop = this.scrollHeight;
+                })
+            })
+        });
+        chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+
+            if (data['command'] === 'messages') {
+                for (let i = 0; i < data['messages'].length; i++) {
+                    createMessage(data['messages'][i]);
+                }
+            } else if (data['command'] === 'new_messages') {
+                createMessage(data['message']);
+            }
+        };
+
+
+
+        function createMessage(data) {
+
+                var message = data['message'];
+                var author = data['sender'];
+                var receiver = data['receiver'];
+                var room = data['room'];
+                var dayofchat = data['created_at'];
+
+                for(let x = 0; x<chat_logs.length; x++) {
+                    var ch_log_id = chat_logs[x].id;
+                    var data_user = chat_logs[x].dataset.user;
+                    var data_room = chat_logs[x].dataset.room;
+
+                    if (Number(room) === Number(data_room)) {
+                        var div1 = document.createElement('div');
+                        var div1_1 = document.createElement('div');
+                        var div1_1_span = document.createElement('span');
+                        var div2_1 = document.createElement('div');
+                        var div2_1_span = document.createElement('span');
+                        var icon = document.createElement('i');
+                        icon.classList.add('feather');
+                        icon.classList.add('icon-check');
+                        icon.classList.add('ml-2');
+                        var small = document.createElement("small");
+                        small.textContent = dayofchat;
+
+                        {#var icon = '<i class="feather icon-check ml-2"></i>';#}
+
+                        div1_1_span.textContent = message;
+                        div1.appendChild(div1_1);
+                        div1.appendChild(div2_1);
+                        div1_1.appendChild(div1_1_span);
+
+                        div1_1.classList.add('chat-message-text');
+                        div2_1.appendChild(div2_1_span);
+                        div2_1.classList.add('chat-message-meta');
+
+
+
+                        if (author === Number(username_id)) {
+                            div1.classList.add("chat-message");
+                            div1.classList.add("chat-message-right");
+                            div1.appendChild(small);
+                            div1.appendChild(icon);
+                        } else {
+                            div1.classList.add("chat-message");
+                            div1.classList.add("chat-message-left");
+                            div1.appendChild(icon);
+                            div1.appendChild(small);
+                        }
+
+                        document.getElementById(ch_log_id).appendChild(div1);
+                        document.getElementById(ch_log_id).scrollTop = document.getElementById(ch_log_id).scrollHeight;
+
+
+                    }
+
+                }
+        }
+
+
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+            {#chatSocket.onopen();#}
+        };
+
+
+        chatSocket.onopen = function (e) {
+            for(let x =0; x<chat_logs.length; x++){
+                var data_senderr = chat_logs[x].dataset.sender;
+                var data_userr = chat_logs[x].dataset.user;
+                var data_room = chat_logs[x].dataset.room;
+
+                fetchMessages(data_senderr, data_userr, data_room);
+            }
+        };
+        function fetchMessages(sd, rs, rm) {
+            chatSocket.send(JSON.stringify(({
+                'command': 'fetch_messages',
+                "sender" : sd,
+                "receiver" : rs,
+                "room": rm,
+            })));
+        }
+    </script>    <!-- End js -->
+</body>
+
+</html>

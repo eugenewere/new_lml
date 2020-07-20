@@ -1,0 +1,601 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% block links %}
+    <script type = "text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+{% endblock links %}
+{% block content %}
+    <!-- Title Header Start -->
+			<section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-22.jpg' %});">
+				<div class="container">
+					<h1>Your Profile</h1>
+				</div>
+			</section>
+			<div class="clearfix"></div>
+			<!-- Title Header End -->
+
+            <!-- Candidate Profile Start -->
+            <section class="detail-desc advance-detail-pr gray-bg">
+                <div class="container">
+                    <div class="ur-detail-wrap create-kit padd-bot-0">
+
+                        <div class="row">
+                            <div class="detail-pic">
+                                <img src="{{customer.profile_image.url}}" class="img" alt="" />
+                                <a href="#" class="detail-edit" >
+                                    <i class="fa fa-user fa-spin"></i>
+                                </a>
+                            </div>
+{#                            <div class="detail-status"><span>Active Now</span></div>#}
+                        </div>
+
+                        <div class="row bottom-mrg">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="advance-detail detail-desc-caption">
+                                    <h4 class="text-capitalize">{{request.user.first_name}} {{request.user.last_name}}</h4>
+                                    <span class="designation text-capitalize">{% for skill in skills %}{{ skill }},{% endfor %}</span>
+                                    <ul class="text-center">
+                                        <li><strong class="j-view">{{ shortlist_count }}</strong>Shortlisted Times</li>
+                                        <li><strong class="j-applied"></strong></li>
+                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row no-padd">
+                            <div class="detail pannel-footer">
+                                <div class="col-md-5 col-sm-5">
+                                    <ul class="detail-footer-social">
+{#                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>#}
+{#                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>#}
+{#                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>#}
+                                        {% if social %}
+                                        <li><a href="{{ social }}"><i class="fab fa-linkedin"></i></a></li>
+                                        {% endif %}
+{#                                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>#}
+                                    </ul>
+                                </div>
+                                <div class="col-md-7 col-sm-7">
+                                    <div class="detail-pannel-footer-btn pull-right">
+                                        <a href="{% url 'LML:employeedetails' %}" class="footer-btn grn-btn" title="View Details" style="border-radius: 140px;">View Details</a>
+{#                                        <a href="#" class="footer-btn blu-btn" title="">Save Draft</a>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="full-detail-description full-detail gray-bg">
+                <div class="container">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="full-card">
+                          <div class="deatil-tab-employ tool-tab">
+                                <ul class="nav simple nav-tabs" id="simple-design-tab">
+                                    <li class="active"><a href="#about">About</a></li>
+                                    <li><a href="#address">Address</a></li>
+                                    <li><a href="#settings">Personal Details</a></li>
+                                    <li><a href="#education">Educations</a></li>
+                                    <li><a href="#experience">Experiences</a></li>
+                                    <li><a href="#skills">Skills</a></li>
+{#                                    <li><a href="#messages">Messages <span class="info-bar">6</span></a></li>#}
+
+                                </ul>
+
+                                <!-- Start All Sec -->
+                                <div class="tab-content">
+                                    <div id="about" class="tab-pane fade in active">
+                                        <h3 class="text-capitalize">About {{request.user.first_name}} {{request.user.last_name}}</h3>
+                                        <p>{{ customer.biography }}</p>
+                                    </div>
+                                    <!-- End About Sec -->
+
+                                    <!-- Start Address Sec -->
+                                    <div id="address" class="tab-pane fade">
+                                        <h3>Address Info</h3>
+                                        <ul class="job-detail-des">
+                                            <li><span>Country:</span>{{customer.country}}</li>
+                                            <li><span>County:</span>{{customer.county.county}}</li>
+                                            <li><span>Region:</span>{{ customer.region.region }}->{{ customer.region.ward }}</li>
+{#                                            <li><span>Zip:</span>520 548</li>#}
+                                            <li><span>Telephone:</span>{{customer.phone_number}}</li>
+{#                                            <li><span>Fax:</span>(622) 123 456</li>#}
+                                            <li><span>Email:</span>{{request.user.email}}</li>
+                                        </ul>
+                                    </div>
+                                    <!-- End Address Sec -->
+
+                                    <!-- Start Friend List -->
+                                    <div id="education" class="tab-pane fade">
+                                        <div class="row">
+                                            <form action="{% url 'LML:employee_education_detail_update' %}" method="POST">
+                                            {% csrf_token %}
+                                                {% for education in educations %}
+                                                    <div class="col-md-12">
+                                                    <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Education {{ education.qualifications }}
+                                                        <span  onclick="deleteEducation(this)" id="eeducation{{ education.id }}" data-education="{{ education.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" href="">Delete</span></h2>
+
+                                                        <script type = "text/javascript">
+                                                         function deleteEducation(e) {
+                                                            var confm  =  confirm('Are you sure you want to delete.');
+                                                             var k = e.id;
+                                                             var education_id = e.dataset.education;
+                                                             if(confm === true){
+                                                                $.ajax({
+                                                                method : 'POST',
+                                                                url :  "{% url 'LML:employee_education_detail_delete' %}",
+                                                                data : {
+                                                                    'education_id': education_id,
+                                                                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                },
+                                                                success : function(response){
+                                                                    console.log(response);
+                                                                    if (response.results ==='success'){
+                                                                        var $id =  document.getElementById(k).parentElement.parentElement;
+                                                                        $($id).toggle( "explode" );
+                                                                    }else {
+                                                                        console.log('error');
+                                                                    }
+                                                                },
+                                                                error : function(response){
+                                                                    console.log(response);
+
+                                                                }
+                                                             });
+                                                             }
+                                                         }
+                                                    </script>
+                                                    <div class="extra-field-box">
+                                                        <div class="multi-box">
+                                                            <div class="dublicat-box">
+                        {#                                        university ,course,regno#}
+                                                                <input type="text" hidden value="{{ education.id }}" name="education_id">
+                                                                <div  class="col-md-4 col-sm-12 row">
+                                                                    <label for="ksww{{ education.id }}">University</label>
+                                                                    <select id="ksww{{ education.id }}" name="school" class="choose-university form-control input-lg">
+                                                                        <option disabled="disabled">School</option>
+                                                                        {% for university in unis %}
+                                                                            <option {% if education.school == university %} selected {% endif %} value="{{ university }}">{{ university }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                    <div class="employer col-md-6 col-sm-12" style="width: 100%;">
+                                                                        <label for="mfe{{ education.id }}">Registration Number</label>
+                                                                        <input required name="reg_number" value="{{education.reg_number}}" id="mfe{{ education.id }}" type="text" class="form-control w-100" placeholder="Registration Number">
+                                                                    </div>
+                                                                    </div>
+                                                                     {% if education.qualifications == 'Phd' %}
+                                                                        <div  id=""  class=" col-md-4 col-sm-12">
+                                                                            <label for="kswe{{ education.id }}">Phd</label>
+                                                                             <select id="kswe{{ education.id }}" name="course" class="choose-phd form-control input-lg">
+                                                                                <option  disabled="disabled">Qualification, e.g. Phd in Arts</option>
+                                                                                {% for phd in phds %}
+                                                                                    <option {% if education.course == phd %} selected {% endif %} value="{{ phd }}">{{ phd }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                     {% endif %}
+                                                                     {% if education.qualifications == 'Masters' %}
+                                                                        <div   class=" col-md-4 col-sm-12">
+                                                                            <label for="ksw{{ education.id }}">Masters</label>
+                                                                            <select id="ksw{{ education.id }}" name="course" class="choose-masters form-control input-lg">
+                                                                                <option selected disabled="disabled">Qualification, e.g. Masters in
+                                                                                    Arts
+                                                                                </option>
+                                                                                {% for master in masters %}
+                                                                                    <option {% if education.course == masters %} selected {% endif %} value="{{ master }}">{{ master }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                     {% endif %}
+                                                                     {% if education.qualifications == 'Bachelor' %}
+                                                                        <div  id="ksw3{{ education.id }}"  class=" col-md-4 col-sm-12">
+                                                                            <label for="ksw3{{ education.id }}">Bachelors</label>
+                                                                            <select id="ksw3{{ education.id }}" name="course" class="choose-bachelor form-control input-lg">
+                                                                                <option selected disabled="disabled">Qualification, e.g. Bachelor in
+                                                                                    Arts
+                                                                                </option>
+                                                                                {% for bachelor in bachelors %}
+                                                                                    <option {% if education.course == bachelor %} selected {% endif %} value="{{ bachelor }}">{{ bachelor }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                     {% endif %}
+                                                                     {% if education.qualifications == 'Diploma' %}
+                                                                        <div  id="ksw9"  class=" col-md-4 col-sm-12">
+                                                                            <label for="ksw9{{ education.id }}">Diploma</label>
+                                                                            <select id="ksw9{{ education.id }}" name="course" class="choose-diploma form-control input-lg">
+                                                                                <option selected disabled="disabled">Qualification, e.g. Diploma in
+                                                                                    Arts
+                                                                                </option>
+                                                                                {% for diploma in diplomas %}
+                                                                                    <option {% if education.course == diploma %} selected {% endif %} value="{{ diploma }}">{{ diploma }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                     {% endif %}
+                                                                     {% if education.qualifications == 'Certificate' %}
+                                                                        <div  id=""  class=" col-md-4 col-sm-12">
+                                                                            <label for="ksw5{{ education.id }}">Certificate</label>
+                                                                            <select id="ksw5{{ education.id }}" name="course" class="choose-certificate form-control input-lg">
+                                                                                <option selected disabled="disabled">Qualification, e.g. Certificate in Arts </option>
+                                                                                {% for cert in certificates %}
+                                                                                    <option {% if education.course == cert %} selected {% endif %} value="{{ cert }}">{{ cert }}</option>
+                                                                                {% endfor %}
+                                                                            </select>
+                                                                        </div>
+                                                                     {% endif %}
+
+
+                                                                    <div id="" class="graduation col-md-12 col-sm-12">
+                                                                        <label for="edu-start{{ education.id }}">Year of graduation</label>
+{#                                                                            <span class="input-group-addon"></span>#}
+                                                                        <input name="graduation_date" value="{{ education.graduation_date|date:'Y-m-d' }}" type="date" id="edu-start{{ education.id }}" class="form-control">
+                                                                    </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- End Friend List -->
+
+                                    <!-- Start Friend List -->
+                                    <div id="experience" class="tab-pane fade">
+                                        <div class="row">
+                                            <form action="{% url 'LML:employee_experience_detail_update'  %}" method="POST">
+                                                {% csrf_token %}
+                                                {% for experience in experiences %}
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Experience {{ forloop.counter }}
+                                                            <span onclick="deleteExperience(this)" id="eexperience{{ experience.id }}" data-experience="{{ experience.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
+                                                        </h2>
+                                                        <div class="extra-field-box">
+                                                            <div class="multi-box">
+                                                                <div class="dublicat-box">
+                                                                    <div class="col-md-12 col-sm-12">
+                                                                        <input type="text" name="experience_id" value="{{ experience.id }}" hidden >
+                                                                        <div id="employer" class="employer col-md-4 col-sm-12" >
+                                                                            <label for="emplo{{ experience.id }}">Company Employer Name</label>
+                                                                            <input required name="employer_name" id="emplo{{ experience.id }}" value="{{experience.employer_name}}" type="text" class="form-control" placeholder="Employer's Name">
+                                                                        </div>
+                                                                        <div  id="employercompany" class=" employer col-md-4 col-sm-12" >
+                                                                            <label for="emplocomp{{ experience.id }}">Company Name</label>
+                                                                            <input required name="company_name" value="{{experience.company_name}}" id="emplocomp{{ experience.id }}" type="text" class="form-control" placeholder="Employer's Company">
+                                                                        </div>
+                                                                        <div  class=" employer col-md-4 col-sm-12" >
+                                                                            <label for="emplocompemail{{ experience.id }}">Company email</label>
+                                                                            <input required name="comapny_email" value="{{experience.comapny_email}}" id="emplocompemail{{ experience.id }}" type="email" class="form-control" placeholder="Employer's email">
+                                                                        </div>
+
+                                                                        <div class="col-md-6 col-sm-12" id="employercompany"  >
+                                                                            <label for="emplocomp4n{{ experience.id }}">Company Phone</label>
+                                                                            <input required name="company_phone" value="{{experience.company_phone}}" id="emplocomp4n{{ experience.id }}" type="tel" class="form-control" placeholder="Employer's Phonenumber">
+                                                                        </div>
+
+                                                                        <div class="employer col-md-6 col-sm-12" >
+                                                                            <label for="kke{{ experience.id }}">Position Held</label>
+                                                                            <input required name="position_held" value="{{experience.position_held}}" id="kke{{ experience.id }}" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
+                                                                        </div>
+
+                                                                        <div class="employer col-md-12 col-sm-12 row">
+
+                                                                            <div class="col-md-6 col-sm-12" >
+                                                                                <label for="exp-start{{ experience.id }}" class="">Date From</label>
+                                                                                <input required name="date_from" value="{{experience.date_from|date:'Y-m-d'}}" type="date" id="exp-start{{ experience.id }}" class="form-control">
+
+                                                                            </div>
+
+                                                                            <div class="employer col-md-6 col-sm-12">
+                                                                                <label for="exp-end{{ experience.id }}" class="">Date To</label>
+                                                                                <input required name="date_to" value="{{experience.date_to|date:'Y-m-d'}}" type="date" id="exp-end{{ experience.id }}" class="form-control">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="employer col-md-12 col-sm-12" >
+                                                                            <label for="emplomsg{{ experience.id }}">Notes on the Experience</label>
+                                                                            <textarea required name="experience" id="emplomsg{{ experience.id }}" class="form-control textarea" placeholder="Optional notes on the experience">{{experience.experience}}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <script type = "text/javascript">
+                                                             function deleteExperience(e) {
+                                                                 console.log(e.dataset.experience);
+                                                                 var k = e.id;
+                                                                 var experience_id = e.dataset.experience;
+                                                                 var confm  =  confirm('Are you sure you want to delete.');
+                                                                 if(confm === true){
+
+
+                                                                 $.ajax({
+                                                                    method : 'POST',
+                                                                    url :  "{% url 'LML:employee_experience_detail_delete' %}",
+                                                                    data : {
+                                                                        'experience_id': experience_id,
+                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                    },
+                                                                    success : function(response){
+
+
+                                                                        if (response.results ==='success'){
+                                                                            var $id =  document.getElementById(k).parentElement.parentElement;
+                                                                            $( $id ).toggle( "explode" );
+                                                                        }else {
+                                                                            console.log('error');
+                                                                        }
+                                                                    },
+                                                                    error : function(response){
+                                                                        console.log(response);
+
+                                                                    }
+                                                                 });
+                                                                 }
+                                                             }
+                                                        </script>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- End Friend List -->
+
+                                    <!-- Start Friend List -->
+                                    <div id="skills" class="tab-pane fade">
+                                        <div class="row">
+                                            <form action="{% url 'LML:employee_skills_detail_update' %}" method="POST">
+                                                {% csrf_token %}
+                                                {% for skill in skills %}
+                                                 <div class="col-sm-12" id="skillparent{{ skill.id }}">
+                                                   <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Skill {{ skill.skill }}
+                                                       <span onclick="deleteSkill(this)" id="{{ skill.id }}"   class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
+                                                   </h2>
+                                                   <div class="extra-field-box">
+                                                        <div class="multi-box">
+                                                            <div class="dublicat-box">
+
+                                                                <input name="skill_id" type="text" hidden value="{{ skill.id }}">
+                                                                <div class="col-md-4 col-sm-12 ">
+                                                                    <label for="skillf{{ skill.id }}">Skill</label>
+                                                                    <input required name="skill" id="skillf{{ skill.id }}" value="{{skill.skill}}" type="text" class="form-control" placeholder="Skills, e.g. Css, Html...">
+                                                                </div>
+                                                                <div class="col-md-4 col-sm-12 ">
+                                                                    <label for="reff{{ skill.id }}">Referee Name</label>
+                                                                    <input required name="referee" id="reff{{ skill.id }}" value="{{skill.referee}}" type="text" class="form-control" placeholder="Referee Name">
+                                                                </div>
+                                                                <div class="col-md-4 col-sm-12 ">
+                                                                    <label for="ref{{ skill.id }}">Referee Phone Number</label>
+                                                                    <input required name="referee_phonenumber" id="ref{{ skill.id }}" value="{{skill.referee_phonenumber}}" type="text" class="form-control" placeholder="Referee Phone Number">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                   </div>
+                                                </div>
+                                                 <script type = "text/javascript">
+                                                     function deleteSkill(e) {
+                                                         var k = e.parent;
+                                                         var skill_id = e.id;
+                                                         var confm  =  confirm('Are you sure you want to delete.');
+                                                         if(confm === true){
+                                                            $.ajax({
+                                                            method : 'POST',
+                                                            url :  "{% url 'LML:employee_skills_update' %}",
+                                                            data : {
+                                                                'skill_id': skill_id,
+                                                                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                            },
+                                                            success : function(response){
+                                                                console.log(response);
+                                                                if (response.results ==='success'){
+                                                                    var $id =  document.getElementById(skill_id).parentElement.parentElement;
+                                                                    $( $id ).toggle( "explode" );
+                                                                }else {
+                                                                    console.log('error');
+                                                                }
+                                                            },
+                                                            error : function(response){
+                                                                console.log(response);
+
+                                                            }
+                                                         });
+                                                         }
+                                                     }
+                                                </script>
+                                                {% endfor %}
+{#                                                extra#}
+
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- End Friend List -->
+
+
+
+                                    <!-- Start Settings -->
+                                    <div id="settings" class="tab-pane fade">
+                                    <form action="{% url 'LML:employee_personal_details_update' %}" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <div class="row no-mrg">
+                                            <h3>Edit Profile</h3>
+                                            <h2 class="detail-title mrg-top-20">Personal Information</h2>
+                                            <div class="edit-pro padd-top-25">
+
+                                                <div class="row">
+                                                    <div class="detail-pic">
+                                                        {% if request.user.is_authenticated %}
+                                                            <img class="blah img" id="blah" style="max-width: 100%; position: absolute; top: -7px;" src="{{customer.profile_image.url}}"  alt="" />
+                                                            <a style="bottom: -22px;" href="#"  class="detail-edit" title="edit">
+                                                                <label class="detail-edit" for="upload-pic"><i class="fa fa-upload fa-spin"></i></label>
+                                                            </a>
+                                                            <input value="{{customer.profile_image}}" style="position: relative; visibility: hidden" onchange="readURL(this)" type="file" name="profile_image" id="upload-pic" class="inputfile" />
+                                                            <script>
+                                                            function readURL(input) {
+
+                                                                if (input.files && input.files[0]) {
+                                                                    var reader = new FileReader();
+                                                                     var disclaimer= document.getElementById("disclaimer");
+                                                                        reader.onload = function (element) {
+                                                                            $('.blah').attr('src', element.target.result).css('visibility', 'visible');
+                                                                            disclaimer.style.visibility = "hidden";
+                                                                        };
+                                                                        reader.readAsDataURL(input.files[0]);
+                                                                        }
+                                                                    }
+                                                            </script>
+                                                        {% else %}
+                                                            <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
+                                                            <a  style="max-width: 100%; position: absolute; top: -7px; bottom: -22px;" href="#" class="detail-edit" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>First Name</label>
+
+                                                    <input name="first_name" type="text" class="form-control" placeholder="First Name" value="{{ customer.first_name|title }}">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Last Name</label>
+                                                    <input name="last_name" type="text" class="form-control" placeholder="Last Name" value="{{ customer.last_name|title }}">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Gender</label>
+                                                    <input name="gender" type="text" class="form-control" placeholder="Gender" value="{{ customer.gender|title }}">
+                                                </div>
+                                                 <div class="col-md-12 col-sm-12" style="margin-top: 10px;">
+                                                    <div style=" display: block !important;" class="input-group">
+                                                        <label>Category</label>
+                                                        <select required name="category" id="category"  class="choose-category form-control input-lg">
+                                                            {% for category in categories %}
+                                                                <option  {% if category.id == customer.category.id %} selected {% endif %} value="{{ category.id }}"><span class="text-capitalize">{{ category.category }}</span></option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Username</label>
+                                                    <input name="username" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
+                                                </div>
+                                                 <div class="col-md-4 col-sm-6" hidden>
+                                                    <label>Username</label>
+                                                    <input name="usernme" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Email</label>
+                                                    <input name="email" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6" hidden>
+                                                    <label>Email</label>
+                                                    <input name="emailix" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
+                                                </div>
+
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Birth Day</label>
+                                                    <input value="{{ customer.date_of_birth|date:'Y-m-d' }}" placeholder="Date Of birth" type="date" class="form-control" name="date_of_birth">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Phone</label>
+                                                    <input name="phone_number" type="text" class="form-control" placeholder="Phone No" value="{{ customer.phone_number }}" >
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Marital Status</label>
+                                                    <select name="marital_status" id="marital" class="form-control input-lg" >
+                                                        <option {% if customer.marital_status == "Single" %} selected {% endif %} value="Single">Single</option>
+                                                        <option {% if customer.marital_status == "Married" %} selected {% endif %} value="Married">Married</option>
+                                                        <option {% if customer.marital_status == "Devorced" %} selected {% endif %} value="Devorced">Devorced </option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Country</label>
+                                                    <input name="country" type="text" class="form-control"  value="{{customer.country}}" readonly placeholder="Country">
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>County</label>
+                                                    <select name="county" class="form-control input-lg choose-city">
+                                                        {% for county in counties %}
+                                                            <option {% if county.id == customer.county.id %} selected {% endif %} value="{{ county.id }}">{{ county.county }}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>Region</label>
+                                                   <select name="region" class="form-control input-lg choose-city">
+                                                        {% for region in regions %}
+                                                            <option {% if region.id == customer.region.id %} selected {% endif %} value="{{ region.id }}">{{ region.region }} -> ({{ region.ward }})</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4 col-sm-6">
+                                                    <label>LandMark</label>
+                                                    <input type="text" class="form-control" placeholder="LandMark" name="landmark" value="{{ customer.landmark }}">
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="input-group" style="margin-bottom: 8px">
+                                                        <label>Job Type</label>
+                                                        <select id="job_type" required name="job_type"  class="marital2 form-control input-lg" style="margin-bottom: 0">
+                                                            <option selected>Choose Job Type</option>
+                                                            <option {% if customer.job_type == "Full Time" %} selected {% endif %} value="Full Time">Full Time</option>
+                                                            <option {% if customer.job_type == "Part Time" %} selected {% endif %} value="Part Time">Part Time</option>
+                                                            <option {% if customer.job_type == "Internship" %} selected {% endif %} value="Internship">Internship</option>
+                                                            <option {% if customer.job_type == "Freelancer" %} selected {% endif %} value="Freelancer">Freelancer</option>
+                                                        </select>
+                                                        <small id="marital" class="form-text text-muted">
+                                                            Job Type.
+                                                        </small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <label>About you</label>
+                                                    <textarea name="biography" rows="10" class="form-control" placeholder="Write Something">{{customer.biography}}</textarea>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <h2 class="detail-title mrg-top-20">Social Profile</h2>
+                                                <div class="col-md-12 col-sm-12">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                                                        <input name="account_url" value="{{ social.account_url }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-12">
+                                                <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                    <!-- End Settings -->
+                                </div>
+                                <!-- Start All Sec -->
+                            </div>
+                        </div>
+                    </div>
+
+            </section>
+            <!-- Candidate Profile End -->
+{% endblock content %}
+{% block script %}
+
+
+
+{% endblock script %}

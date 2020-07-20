@@ -1,0 +1,83 @@
+{% extends 'admin/layout.html' %}
+{% load static %}
+{% block content %}
+       <div class="dashboard-wrapper ml-0">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">Undefined Company</h2>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Undefined Company</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- basic table  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Undefined Company</h5>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Email</th>
+                                                <th scope="col">Category</th>
+                                                <th scope="col">Business No</th>
+                                                <th scope="col">KRA</th>
+                                                <th scope="col">Type</th>
+                                                <th scope="col">county</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for company in companies %}
+                                            <tr>
+                                                <th scope="row">{{ forloop.counter }}</th>
+                                                <td>
+                                                    <div style="width: 80px; height: 80px; overflow: hidden;">
+                                                        <img class="w-100 h-100" src="{{ company.logo.url }}" alt="">
+                                                    </div>
+                                                </td>
+                                                <td>{{company.company_name}}</td>
+                                                <td>
+                                                    <a href="mailto:{{company.email}}">{{company.email}}</a>
+                                                </td>
+                                                <td>{{company.category}}</td>
+                                                <td>{{ company.bussiness_reg_no }}</td>
+                                                <td>{{ company.kra_number }}</td>
+                                                <td>{{ company.bizness_entity_type }}</td>
+                                                <td>{{ company.county }}</td>
+                                            </tr>
+                                             {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- ============================================================== -->
+                    <!-- end basic table  -->
+                    <!-- ============================================================== -->
+                </div>
+
+            </div>
+
+        </div>
+{% endblock content %}

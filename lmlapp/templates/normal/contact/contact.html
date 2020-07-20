@@ -1,0 +1,75 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+{% endblock links %}
+{% block content %}
+
+            <!-- Title Header Start -->
+			<section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-18.jpg.' %});">
+				<div class="container">
+					<h1>Contact Page</h1>
+				</div>
+			</section>
+			<div class="clearfix"></div>
+			<!-- Title Header End -->
+
+			<!-- Contact Page Section Start -->
+			<section class="contact-page">
+				<div class="container">
+				<h2>Drop A Mail</h2>
+
+					<div class="col-md-4 col-sm-4">
+						<div class="contact-box">
+							<i class="fa fa-map-marker"></i>
+							<p>#Street 2122, Near Times Towers<br>Kenya Nairobi (200100)</p>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-sm-4">
+						<div class="contact-box">
+							<i class="fa fa-envelope"></i>
+							<p>lmlcareerdesk@gmail.com<br>lmlsupport@gmail.com</p>
+						</div>
+					</div>
+
+					<div class="col-md-4 col-sm-4">
+						<div class="contact-box">
+							<i class="fa fa-phone"></i>
+							<p>Nairobi: 070200200<br>Mombasa: +254 70200200</p>
+						</div>
+					</div>
+
+				</div>
+			</section>
+			<!-- contact section End -->
+
+			<!-- contact form -->
+			<section class="contact-form">
+				<div class="container">
+					<h2>Drop A Query</h2>
+                    <form action="{% url 'LML:home_contact_us' request.path|make_safe %}" method="post">
+                        {% csrf_token %}
+                        <div class="col-md-6 col-sm-6">
+                            <input required type="text" name="name" class="form-control" placeholder="Your Name">
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <input required type="email" name="email" class="form-control" placeholder="Your Email">
+                        </div>
+
+                        <div class="col-md-12 col-sm-12">
+                            <textarea required name="message" class="form-control" placeholder="Message"></textarea>
+                        </div>
+
+                        <div class="col-md-12 col-sm-12">
+                            <button type="submit" class="btn btn-primary custom-button">Submit</button>
+                        </div>
+                    </form>
+				</div>
+			</section>
+			<!-- Contact form End -->
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

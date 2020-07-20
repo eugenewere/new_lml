@@ -1,0 +1,307 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+    <style>
+        .customer{
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'assets/css/messagelayoutcss.css' %}">
+    <script src="{% static 'assets/js/reconnecting-websockets.js' %}"></script>
+
+
+    <link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+
+    <script src="https://use.typekit.net/hoy3lrg.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+{% endblock links %}
+{% block search %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|logged_in_company %}
+                <li class="active" style="margin-right: 21px;" >
+                    <input style="background-color: white; padding: 15px; border-radius: 20px;" type="text" class="form-control custom-button whitee" placeholder="Search">
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+{% block content %}
+    <!-- Title Header Start -->
+    <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: White; ">
+        <div class="container">
+
+            <div class="col-md-8">
+                <div class="left-side-container">
+                    <div class="freelance-image">
+                        <a href="company-detail.html">
+                            <img src="{{customer.profile_image.url}}" class="img-responsive " style="margin: 18px 0;" alt="">
+                        </a>
+                    </div>
+                    <div class="header-details">
+                        <h4 style="color: white;">{{company.company_name|title}}</h4>
+                        <p>{{ company.company_motto }}</p>
+                        <ul>
+                            {% if company.rank_status == "BASIC" %}
+                                <li><div class="verified-action-success">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+                            {% if company.rank_status == "PREMIUM" %}
+                                <li><div class="verified-action-info">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+                            {% if company.rank_status == "UNDEFINED" %}
+                                <li><div class="verified-action-error">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 bl-1 br-gary">
+                <div class="right-side-detail">
+                    <ul>
+                        <li><span class="detail-info">Experience</span> </li>
+                    </ul>
+                    <ul class="social-info">
+                        {% if social.facebook %}
+                           <li> <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a></li>
+                        {% endif %}
+                        {% if social.facebook %}
+                           <li><a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a></li>
+                        {% endif %}
+                        {% if social.instagram %}
+                           <li><a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a></li>
+                        {% endif %}
+                        {% if social.twitter %}
+                           <li><a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a></li>
+                        {% endif %}
+                        {% if social.googlr_plus %}
+                           <li><a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <div class="clearfix"></div>
+			<!-- Title Header End -->
+
+
+
+    <!-- ========== Begin: Brows job Category ===============  -->
+    <section class="brows-job-category gray-bg">
+        <div class="" style="padding: 60px 20px;">
+             <!-- Sidebar Start -->
+            <div class="col-md-3 col-sm-12">
+                <div class="sidebar right-sidebar">
+
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Messages <span style="margin-left: auto;" class="badge badge-danger badge-pill">0</span></h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="">
+                                    Messages
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Messages <span style="margin-left: auto;" class="badge badge-danger badge-pill">0</span></h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employee_dash_message' request.user.username %}">
+                                    Messages
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+
+                    <div class="side-widget">
+                        <h2 class="side-widget-title">Documents </h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:customer_resume_pdf' request.user.id %}">
+                                    {{ customer.first_name|title }} CV
+                                    <span class="pull-right"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Payment</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="">
+
+                                    Payment History
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+
+                </div>
+            </div>
+            <!-- Sidebar End -->
+            <div class="col-md-9 col-sm-12 " style="margin-bottom: 30px;">
+                <div class="full-card">
+
+                    <div class="card-header">
+                        <div class="row mrg-0">
+
+                            <div class="col-md-4 col-sm-4">
+                                <ol class="breadcrumb pull-left">
+                                    <li><a href="{% url 'LML:home' %}"><i class="fa fa-home"></i></a></li>
+                                    <li>Shortlist</li>
+                                    <li>All Candidates</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body" style="padding: 0;">
+                        <article class="advance-search-job" style="padding: 0;">
+                            <div class="row no-mrg">
+                                <div id="frame">
+                                    <div id="sidepanel">
+                                        <div id="profile">
+                                            <div class="wrap">
+                                                <img id="profile-img" src="{{customer.profile_image.url}}" class="online" alt="" />
+                                                <p>{{customer.first_name|title}} {{customer.last_name|title}}</p>
+                                                <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                                                <div id="status-options">
+                                                    <ul>
+                                                        <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+                                                    </ul>
+                                                </div>
+                                                <div id="expanded">
+                                                    <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                                                    <input name="twitter" type="text" value="mikeross" />
+                                                    <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                                                    <input name="twitter" type="text" value="ross81" />
+                                                    <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+                                                    <input name="twitter" type="text" value="mike.ross" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="search">
+                                            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+                                            <input type="text" placeholder="Search contacts..." />
+                                        </div>
+                                        <div id="contacts">
+                                            <ul>
+                                                {% for company in msg_comapanies %}
+                                                    <li class="contact">
+                                                        <div class="wrap">
+                                                            <span class="contact-status online"></span>
+                                                            <img src="{{company.logo.url}}" alt="" />
+                                                            <div class="meta">
+                                                                <p class="name">{{company.company_name}}</p>
+                                                                <p class="preview">You just got LITT up, Mike.</p>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                {% endfor %}
+
+
+                                            </ul>
+                                        </div>
+                                        <div id="bottom-bar">
+                                            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+                                            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
+                                        </div>
+                                    </div>
+                                    {% for company in msg_comapanies %}
+                                        <div class="content">
+                                            <div class="contact-profile">
+                                                <img src="{{company.logo.url}}" alt="" />
+                                                <p>{{company.company_name}}</p>
+                                                <div class="social-media">
+                                                    <i class="fa fa-facebook" aria-hidden="true"></i>
+                                                    <i class="fa fa-twitter" aria-hidden="true"></i>
+                                                    <i class="fa fa-instagram" aria-hidden="true"></i>
+                                                </div>
+                                            </div>
+                                            <div class="messages">
+                                                <ul id="chat-log{{ company.id }}">
+
+
+                                                </ul>
+                                            </div>
+                                            <div class="message-input">
+                                                <div class="wrap">
+                                                    <form  id="chatformee{{ company.id }}" method="POST">
+                                                        {% csrf_token %}
+                                                        <input name="sender" id="sender{{ company.id }}" type="text" hidden value="{{ request.user.username }}">
+                                                        <input name="reciever" id="receiver{{ company.id }}" type="text" hidden value="{{ company.username }}">
+                                                        <input name="message" type="text" id="chat-message-input{{ company.id }}" placeholder="Write your message..." />
+                                                        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                                                        <button type="submit"  id="chat-message-submit{{ company.id }}"><i class="fa fa-paper-plane" ></i></button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                        </article>
+                    </div>
+                </div>
+                <!-- Ad banner -->
+                <div class="row">
+                    <div class="ad-banner">
+                        <img src="http://via.placeholder.com/728x90" class="img-responsive" alt="">
+                    </div>
+                </div>
+            </div>
+{#        </div>#}
+
+
+
+        </div>
+    </section>
+    <!-- ========== Begin: Brows job Category End ===============  -->
+{% endblock content %}
+{% block script %}
+     <script>
+        $(function(){
+            $(".customer").slice(0, 6).show(); // select the first ten
+            $("#load").click(function(e){ // click event for load more
+                e.preventDefault();
+                $(".customer:hidden").slice(0, 6).show(); // select next 10 hidden divs and show them
+                if($(".customer:hidden").length == 0){ // check if any hidden divs still exist
+                    spinner.hide();
+                    swal.fire({
+                        title: "Error!",
+                        text: "No more categories to load",
+                        type: "error",
+                        confirmButtonText: "Retry"
+                    });
+                }
+            });
+            $('a[href=#top]').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('.totop a').fadeIn();
+                } else {
+                    $('.totop a').fadeOut();
+                }
+            });
+        });
+    </script>
+{% endblock script %}

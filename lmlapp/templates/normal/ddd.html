@@ -1,0 +1,143 @@
+    <script>
+        var endpoint, socket, wsStart, loc,  msgInput;
+
+        var charform1 = document.getElementById('chatformee{{ customer.customer.id }}');
+        var chat_message_input = $('#chat-message-input');
+        var customer_id = $('#customer_id');
+        var chat_log = $('#chat-log');
+        loc = window.location;
+        wsStart ='ws://';
+        if(loc.protocol === 'https:'){
+            wsStart = 'wss://'
+        }
+        endpoint = wsStart + loc.host + loc.pathname;
+        socket = new WebSocket(endpoint);
+
+        socket.onmessage = function (e) {
+            console.log('message', e);
+            var  chat_Data = JSON.parse(e.data);
+
+            var image_url = chat_Data.image;
+            var image_url = '{{ company.logo.url }}';
+            console.log(chat_Data);
+
+            chat_log.append("<li class='sent'><img src='"+ image_url +"' alt='' /><p>"+ chat_Data.message +"</p><li>");
+
+        };
+        socket.onopen = function (e) {
+            console.log('open', e);
+            charform1.addEventListener('submit', function(event) {
+                event.preventDefault();
+                var finalData = {
+                    'message': chat_message_input.val(),
+                    'customer':customer_id.val(),
+                };
+                socket.send(JSON.stringify(finalData));
+                charform1.reset();
+
+            })
+
+        };
+        socket.onerror = function (e) {
+            console.log('error', e);
+        };
+        socket.onclose = function (e) {
+            console.log('close', e);
+            alert('closed', e)
+        };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function createMessage(data) {
+                                                            for (x in data) {
+                                                                for (y in data[x]) {
+                                                                    for (z in data[x][y]) {
+                                                                        var message = data[x][y]['message'];
+                                                                        var sender = data[x][y]['sender'];
+                                                                        var msgList = document.createElement('li');
+                                                                        var imgTag = document.createElement('img');
+                                                                        var pTag = document.createElement('p');
+
+                                                                        pTag.textContent = message;
+
+
+                                                                        if (sender === roomName) {
+                                                                            msgList.className === 'sent';
+                                                                            imgTag.src = data[x][y]['sImage'];
+                                                                        } else {
+                                                                            msgList.className === 'replies';
+                                                                            imgTag.src = data[x][y]['rImage'];
+                                                                        }
+
+
+                                                                    }
+
+                                                                }
+                                                            }
+                                                            msgList.appendChild(imgTag);
+                                                            msgList.appendChild(pTag);
+                                                            document.querySelector('#chat-log').appendChild(msgList);
+                                                        }
+
+
+
+
+
+                                                        var data = JSON.parse(e.data);
+                                                        if (data['command'] === 'messages') {
+                                                            for (let i = 0; i < data['message'].length; i++) {
+                                                                createMessage(data['messages'][i]);
+                                                            }
+                                                        } else if (data['command'] === 'new_messages') {
+                                                            createMessage(data['message']);
+                                                        }
+
+
+
+
+                                                        var message = data['message']['message'];
+                                                        var author = data['message']['author'];
+                                                        var msgList = document.createElement('li');
+                                                        var imgTag = document.createElement('img');
+                                                        var pTag = document.createElement('p');
+
+                                                        pTag.textContent = message;
+                                                        imgTag.src = data['message']['aImage'];
+
+
+                                                        if (author === username) {
+                                                            msgList.classList.add("sent");
+                                                        } else {
+                                                            msgList.classList.add("replies");
+                                                        }
+
+                                                        msgList.appendChild(imgTag);
+                                                        msgList.appendChild(pTag);
+                                                        document.querySelector('#chat-log').appendChild(msgList);
+                                                        console.log(msgList);
+
+
+
+ </script>

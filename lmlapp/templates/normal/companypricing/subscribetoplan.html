@@ -1,0 +1,115 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% block links %}
+
+{% endblock links %}
+{% block content %}
+			
+        <!-- Title Header Start -->
+        <section  class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %});">
+            <div class="container">
+                <h3 class="text-capitalize" style="color: white;">The {{pricing.title}} Package</h3>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <!-- Title Header End -->
+
+        <!-- Accordion Design Start -->
+        <section class="accordion">
+            <div class="container">
+                <div class="row">
+
+                    <!-- Payment Detail -->
+                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 ">
+                        <div class="sidebar-wrapper">
+
+                        <div class="sidebar-box-header bb-1">
+                            <h4>Account Number</h4>
+                        </div>
+
+                        <form class="billing-form">
+                            <div class="row">
+                                <div class="pr-header active" style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
+                                    <div class="pr-plan">
+                                        <h4>Use This As Paybill Number:</h4>
+                                    </div>
+                                    <div class="pr-price">
+                                        <h3 style="font-size: 3.4em;"><sup>Paybill Number.</sup>443323</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="pr-header " style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
+                                    <div class="pr-plan">
+                                        <h4>Package Plan Amount</h4>
+                                    </div>
+                                    <div class="pr-price">
+                                        <h3><sup>ksh.</sup>{{pricing.price}}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    <!-- Billing Address -->
+                    <div class="col-md-12  col-sm-12 col-lg-6 col-xl-6 ">
+                        <div class="sidebar-wrapper">
+
+                        <div class="sidebar-box-header bb-1">
+                            <h4>Payment Information</h4>
+                        </div>
+
+                        <form class="billing-form">
+                            <div style="width: 100%; height: 205px;">
+                                <img style="width: 100%; height: 100%" src="{% static 'assets/img/MPESA-Logo.png' %}" alt="">
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Mpese Reciept No</label>
+                                    <input id="reciept" type="text" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <label>Amount</label>
+                                    <input id="amount" type="text" class="form-control" />
+                                </div>
+                            </div>
+                        </form>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <a href="#"  id="proceed" class="btn btn-primary custom-button ">Proceed...</a>
+                        <a href="{% url 'LML:companypricing' %}" class="btn btn-default custom-button">Cancel...</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Accordion Design End -->
+{% endblock content %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
+    <script>
+
+            {#setInterval(function () {#}
+            {#  var reciept = $('#reciept');#}
+            {#  var ammount = $('#amount');#}
+            {#    if(reciept.value === '' && ammount.value === ''){#}
+            {#         $('#proceed').addClass('disabled');#}
+            {#    }#}
+            {#    else {#}
+            {#        $('#proceed').removeClass('disabled');#}
+            {#    }#}
+           // },2000)}
+
+
+    </script>
+{% endblock script %}
+			
+

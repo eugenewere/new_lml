@@ -1,0 +1,407 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+    <script type = "text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
+    <style>
+        .customer{
+            display: none;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/chatpannel.css' %}">
+{% endblock links %}
+{% block search %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|logged_in_company %}
+                <li class="active" style="margin-right: 21px;" >
+                    <input style="background-color: white; padding: 15px; border-radius: 20px;" type="text" class="form-control custom-button whitee" placeholder="Search">
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+{% block content %}
+    <!-- Title Header Start -->
+    <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: White; ">
+        <div class="container">
+
+            <div class="col-md-8">
+                <div class="left-side-container">
+                    <div class="freelance-image"><a href="company-detail.html"><img src="{{company.logo.url}}" class="img-responsive " style="margin: 18px 0;" alt=""></a></div>
+                    <div class="header-details">
+                        <h4 style="color: white;">{{company.company_name|title}}</h4>
+                        <p>{{ company.company_motto }}</p>
+                        <ul>
+                            {% if company.rank_status == "BASIC" %}
+                                <li><div class="verified-action-success">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+                            {% if company.rank_status == "PREMIUM" %}
+                                <li><div class="verified-action-info">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+                            {% if company.rank_status == "UNDEFINED" %}
+                                <li><div class="verified-action-error">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 bl-1 br-gary">
+                <div class="right-side-detail">
+                    <ul>
+                        <li><span class="detail-info">Experience</span>{{ company.id|company_experience_years }} </li>
+                    </ul>
+                    <ul class="social-info">
+                        {% if social.facebook %}
+                           <li> <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a></li>
+                        {% endif %}
+                        {% if social.facebook %}
+                           <li><a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a></li>
+                        {% endif %}
+                        {% if social.instagram %}
+                           <li><a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a></li>
+                        {% endif %}
+                        {% if social.twitter %}
+                           <li><a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a></li>
+                        {% endif %}
+                        {% if social.googlr_plus %}
+                           <li><a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <div class="clearfix"></div>
+			<!-- Title Header End -->
+
+
+
+    <!-- ========== Begin: Brows job Category ===============  -->
+    <section class="brows-job-category gray-bg">
+        <div class="" style="padding: 0 20px;">
+             <!-- Sidebar Start -->
+            <div class="col-md-3 col-sm-12">
+                <div class="sidebar right-sidebar">
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">ShortList</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employer_dash' %}">
+
+                                    All Candidate
+                                    <span class="pull-right">{{customers.count}}</span></a>
+                                </li>
+                                <li><a href="">
+
+                                    Ultimate Candidate
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                                <li><a href="">
+
+                                    Premium Candidate
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                                <li><a href="">
+
+                                    Basic Candidate
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Graph</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employee_shortlist_graph_template' %}">
+                                    Shortlist Graph
+                                    <span class="pull-right"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Messages <span class="badge badge-danger badge-pill">0</span></h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employer_dash_message' request.user.username %}">
+                                    All Messages
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Subscription</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="">
+
+                                    Premium
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Payment</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="">
+
+                                    Payment History
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+
+                </div>
+            </div>
+            <!-- Sidebar End -->
+            <div class="col-md-9 col-sm-12 " style="margin-bottom: 30px;">
+                <div class="full-card">
+
+                    <div class="card-header">
+                        <div class="row mrg-0">
+
+                            <div class="col-md-4 col-sm-4">
+                                <ol class="breadcrumb pull-left">
+                                    <li><a href="{% url 'LML:home' %}"><i class="fa fa-home"></i></a></li>
+                                    <li>Shortlist</li>
+                                    <li>All Candidates</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <article class="advance-search-job">
+                            <div class="row no-mrg">
+                                 {% for customer in customers %}
+                                    <div class="col-md-4 col-sm-6 customer">
+                                        <div class="paid-candidate-container">
+                                            <div class="paid-candidate-box">
+                                                <div class="dropdown">
+                                                    <div class="btn-group fl-right">
+                                                        {% if request.user|logged_in_company %}
+                                                            <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                            <div class="dropdown-menu pull-right animated flipInX">
+                                                                {% csrf_token %}
+
+                                                                <a id="custm{{ customer.customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
+                                                                <a  data-customer="{{ customer.customer.username }}" id="kk{{ customer.customer.id }}" href="#">Chat</a>
+                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#exampleModalCenter{{ customer.customer.id }}">Review</a>
+                                                                <script>
+
+                                                                    document.querySelector('#kk{{ customer.customer.id }}').onclick = function(e) {
+                                                                        var roomName = document.getElementById('kk{{ customer.customer.id }}').getAttribute('data-customer');
+                                                                        window.location.pathname = 'employerdash_message/' + roomName + '/';
+                                                                    };
+                                                                    function unshortlist(me) {
+                                                                        var cust_id= me.id;
+                                                                        var company = me.dataset.company;
+                                                                        var customer = me.dataset.customer;
+                                                                        console.log(company, customer);
+                                                                        $.ajax({
+                                                                            type: "POST",
+                                                                            url : "{% url 'LML:unshortlistemployees' %}",
+                                                                            data:{
+                                                                                'customer_id' : customer,
+                                                                                'company_id' : company,
+                                                                                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                            },
+                                                                            dataType:'json',
+                                                                            success : function searchSuccess(data){
+                                                                                console.log(data);
+                                                                                if(data.is_shortlisted){
+                                                                                    errorshortlisting(data);
+
+                                                                                }
+                                                                                else if(data.shortlisted){
+                                                                                    var $id =  document.getElementById(cust_id).parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
+                                                                                    $( $id ).toggle( "explode" );
+
+                                                                                   setTimeout(function () {
+                                                                                       shortlisted(data);
+                                                                                   }, 1200);
+                                                                                }
+                                                                            },
+
+                                                                        });
+                                                                        function shortlisted(k){
+
+                                                                            swal.fire({
+                                                                            title: "Success!",
+                                                                            text: k.success_message,
+                                                                            type: "success",
+                                                                            confirmButtonText: "Continue"
+                                                                           });
+                                                                        }
+                                                                         function errorshortlisting(k){
+                                                                            swal.fire({
+                                                                            title: "Error!",
+                                                                            text: k.error_message,
+                                                                            type: "error",
+                                                                            confirmButtonText: "Continue"
+                                                                           });
+                                                                        }
+
+
+                                                                    }
+                                                                </script>
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="paid-candidate-inner--box">
+                                                    <div class="paid-candidate-box-thumb"><img src="{{customer.customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                    <div class="paid-candidate-box-detail">
+                                                        <h4 class="text-capitalize">{{customer.customer.first_name}} {{customer.customer.last_name}}</h4>
+                                                        <span class="desination text-capitalize">{{customer.customer.category.category}}</span></div>
+                                                </div>
+                                                <div class="paid-candidate-box-extra">
+                                                    <ul>
+                                                        {% for skill in customer.customer.skillset %}
+                                                        <li>{{skill.skill}}</li>
+                                                        {% endfor %}
+                                                        {% if customer.skillcount %}
+                                                            <li class="more-skill bg-primary">+{{customer.customer.skillcount}}</li>
+                                                        {% endif %}
+                                                    </ul>
+                                                    <p>{{customer.customer.biography|truncatechars:67}}.</p>
+                                                </div>
+                                            </div>
+                                            {% if request.user|logged_in_company %}
+                                                <a href="{% url 'LML:premium_employee_detail' customer.customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                 {% endfor %}
+                            </div>
+                        </article>
+                        {% if customers >= 6 %}
+                            <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <a id="load" href="#" class="btn btn-primary">Load More</a>
+                                    <a href="#top" class="btn btn-primary">Back to top</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+
+                {% for customer in customers  %}
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModalCenter{{ customer.customer.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                        <div class="modal-content" style="padding-bottom: 0;">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalCenterTitle">Review {{ customer.customer.first_name|title }} {{ customer.customer.last_name|title }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body " style="padding: 15px">
+                              <form action="{% url 'LML:review_shortlisted_customer' %}" method="post" enctype="multipart/form-data">
+                                  {% csrf_token %}
+                                  <input name="customer" type="text" hidden value="{{ customer.customer.id }}">
+                                  <input name="company" type="text" hidden value="{{ request.user.id }}">
+                                  <div class="card-ratings-wrapper" style="display: flex; flex-direction: column; margin-bottom: 20px;">
+                                    <label for="exampleInputsd">Ratings</label>
+                                    <div class="rate" style="margin-right: auto;">
+                                        <input type="radio" id="star5{{ customer.customer.id }}" name="ratings" value="5" />
+                                            <label for="star5{{ customer.customer.id }}" title="5 Stars">5 stars</label>
+                                        <input type="radio" id="star4{{ customer.customer.id }}" name="ratings" value="4" />
+                                            <label for="star4{{ customer.customer.id }}" title="4 Stars">4 stars</label>
+                                        <input type="radio" id="star3{{ customer.customer.id }}" name="ratings" value="3" />
+                                            <label for="star3{{ customer.customer.id }}" title="3 Stars">3 stars</label>
+                                        <input type="radio" id="star2{{ customer.customer.id }}" name="ratings" value="2" />
+                                            <label for="star2{{ customer.customer.id }}" title="2 Stars">2 stars</label>
+                                        <input type="radio" id="star1{{ customer.customer.id }}" name="ratings" value="1" />
+                                            <label for="star1{{ customer.customer.id }}" title="1 Stars">1 star</label>
+                                    </div>
+
+                                    <small id="emailHelp" class="form-text text-muted">Rate Out of 5</small>
+                                  </div>
+                                  <div class="form-group" >
+                                    <label for="exampleInput">Review Message</label>
+                                    <textarea class="form-control" name="message" id="exampleInput{{ customer.customer.id }}" ></textarea>
+                                    <small id="emailHelp" class="form-text text-muted">Thought about this customer</small>
+                                  </div>
+                                  <div class="col-sm-12 row">
+                                      <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
+                                  </div>
+                                   <script>
+                                       CKEDITOR.replace( 'exampleInput{{ customer.customer.id }}' );
+                                   </script>
+                              </form>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
+                <!-- Ad banner -->
+                <div class="row">
+                    <div class="ad-banner">
+                        <img src="http://via.placeholder.com/728x90" class="img-responsive" alt="">
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+    <!-- ========== Begin: Brows job Category End ===============  -->
+{% endblock content %}
+{% block script %}
+
+
+     <script>
+        $(function(){
+            $(".customer").slice(0, 6).show(); // select the first ten
+            $("#load").click(function(e){ // click event for load more
+                e.preventDefault();
+                $(".customer:hidden").slice(0, 6).show(); // select next 10 hidden divs and show them
+                if($(".customer:hidden").length == 0){ // check if any hidden divs still exist
+                    spinner.hide();
+                    swal.fire({
+                        title: "Error!",
+                        text: "No more categories to load",
+                        type: "error",
+                        confirmButtonText: "Retry"
+                    });
+                }
+            });
+            $('a[href=#top]').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('.totop a').fadeIn();
+                } else {
+                    $('.totop a').fadeOut();
+                }
+            });
+        });
+    </script>
+
+
+{% endblock script %}

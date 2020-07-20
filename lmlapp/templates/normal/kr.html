@@ -1,0 +1,195 @@
+<div class="panel panel-primary" style="margin-bottom: 0;  border-color: #06d15b;">
+                                        <div class="panel-heading "  style="background: #06d15b;">
+                                            <span class="fa fa-comment"></span> {{customer.customer.first_name|title }} {{customer.customer.last_name|title }}
+                                            <div class="btn-group pull-right" style="transform: translate(10px, -15px); color: white;">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+                                        </div>
+                                        <div class="panel-body" style="height: 400px;">
+                                            <script>
+                                                function getdata(){
+                                                    $.ajax({
+                                                        type:'GET',
+                                                        url:'{% url 'LML:fetch_data_messages' customer.customer.id %}',
+                                                        dataType: 'html',
+                                                        success: searchSuccess,
+
+                                                    });
+                                                    function searchSuccess(data, textStatus, jqXHR){
+                                                        $('#messagebox').html(data);
+                                                    }
+                                                }
+
+                                            </script>
+                                            <ul class="chat" id="messagebox">
+
+                                            </ul>
+                                        </div>
+                                        <div class="panel-footer" style="padding: 0px 35px;">
+                                            <form id="chatform2{{ customer.id }}" action="{% url 'LML:messages' %}" method="post">
+                                                <div class="row" style="display: flex;">
+                                                    {% csrf_token %}
+                                                    <input name="sender" value="{{ request.user.id }}" hidden>
+                                                    <input name="reciever" value="{{ customer.customer.id }}" hidden>
+                                                    <input required name="message" id="btn-input{{ customer.id }}" type="text" class="form-control input-sm col-sm-8 col-md-8col-lg-8" placeholder="Type your message here..." />
+
+                                                    <div class=" col-sm-12 col-md-2 col-lg-2" style="padding: 0;">
+                                                        <button  style="width: 100%;" type="submit" class="btn orangebg " id="btn-chat{{ customer.id }}"><i class="fas fa-paper-plane"></i></button>
+                                                    </div>
+                                                    <div class=" col-sm-12 col-md-2 col-lg-2" style="padding: 0;">
+                                                        <button  style="width: 100%; background-color: #282C32; color: white;" type="button" class="btn" data-dismiss="modal">Close</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <script>
+                                                $(document).ready(function(){
+                                                   $("#chatform2{{ customer.id }}").submit(function(e){
+                                                        e.preventDefault();
+                                                        var new_id = e.id;
+                                                        var new_form_data = new FormData(this);
+                                                        var new_form_datae = $(this).serialize();
+                                                        var jform = this;
+
+                                                        var url =$(this).attr('action');
+                                                        $.ajax({
+                                                            method : 'POST',
+                                                            data : new_form_datae,
+                                                            url : url ,
+                                                            dataType:'json',
+                                                            success : function(response){
+                                                                jform.reset();
+
+                                                                if (response.results === 'success') {
+                                                                     $('#messagebox').append(
+                                                                       '<li class="right  clearfix">'+
+                                                                            '<span class="chat-img pull-right">'+
+                                                                                   ' <img src="'+response.cmpny.logo+'"alt="User Avatar" class="img-circle" />'+
+                                                                            '</span>'+
+                                                                            '<div class="chat-body clearfix">'+
+                                                                                '<div class="header">'+
+                                                                                    '<strong class="primary-font">'+
+                                                                                        response.cmpny.company_name +
+                                                                                    '</strong> <small class="pull-right text-muted">'+
+                                                                                        '<span class="glyphicon glyphicon-time"></span>12 mins ago</small>'+
+                                                                               ' </div>'+
+                                                                                '<p>'+
+                                                                                    response.msg+
+                                                                                '</p>'+
+                                                                            '</div>'+
+                                                                        '</li>'
+                                                                     );
+
+                                                                    swal.fire({
+                                                                        title: "Success!",
+                                                                        text: response.success,
+                                                                        type: "success",
+                                                                        confirmButtonText: "Continue",
+                                                                    });
+
+                                                                }
+                                                                if(response.results === 'error') {
+                                                                    swal.fire({
+                                                                        title: "Error!",
+                                                                        text: "Form Is Invalid",
+                                                                        type: "error",
+                                                                        confirmButtonText: "Retry"
+                                                                    });
+                                                                }
+
+                                                            },
+                                                            error : function(response){
+                                                                console.log(response);
+
+                                                            }
+                                                        });
+                                                   });
+                                                });
+                                        </script>
+                                        </div>
+                                    </div>
+
+
+ <script>
+    if(!scroll){}
+    function getdata(){
+        $.ajax({
+            type:'GET',
+            url:'{% url 'LML:fetch_data_messages' customer.customer.id %}',
+            dataType: 'html',
+            success: searchSuccess,
+
+        });
+        function searchSuccess(data, textStatus, jqXHR){
+            $('#messagebox').html(data);
+        }
+    }
+
+</script>
+
+
+<script>
+                                                $(document).ready(function(){
+                                                   $("#chatform2{{ customer.id }}").submit(function(e){
+                                                        e.preventDefault();
+                                                        var new_id = e.id;
+                                                        var new_form_data = new FormData(this);
+                                                        var new_form_datae = $(this).serialize();
+                                                        var jform = this;
+
+                                                        var url =$(this).attr('action');
+                                                        $.ajax({
+                                                            method : 'POST',
+                                                            data : new_form_datae,
+                                                            url : url ,
+                                                            dataType:'json',
+                                                            success : function(response){
+                                                                jform.reset();
+                                                                var chatlist = document.getElementById('messagebox');
+                                                                chatlist.scrollTop = chatlist.scrollHeight;
+
+                                                                if (response.results === 'success') {
+                                                                     $('#messagebox').append(
+                                                                       '<li class="right  clearfix">'+
+                                                                            '<span class="chat-img pull-right">'+
+                                                                                   ' <img src="'+response.cmpny.logo+'"alt="User Avatar" class="img-circle" />'+
+                                                                            '</span>'+
+                                                                            '<div class="chat-body clearfix">'+
+                                                                                '<div class="header">'+
+                                                                                    '<strong class="primary-font">'+
+                                                                                        response.cmpny.company_name +
+                                                                                    '</strong> <small class="pull-right text-muted">'+
+                                                                                        '<span class="glyphicon glyphicon-time"></span>12 mins ago</small>'+
+                                                                               ' </div>'+
+                                                                                '<p>'+
+                                                                                    response.msg+
+                                                                                '</p>'+
+                                                                            '</div>'+
+                                                                        '</li>'
+                                                                     );
+
+                                                                    swal.fire({
+                                                                        title: "Success!",
+                                                                        text: response.success,
+                                                                        type: "success",
+                                                                        confirmButtonText: "Continue",
+                                                                    });
+
+                                                                }
+                                                                if(response.results === 'error') {
+                                                                    swal.fire({
+                                                                        title: "Error!",
+                                                                        text: "Form Is Invalid",
+                                                                        type: "error",
+                                                                        confirmButtonText: "Retry"
+                                                                    });
+                                                                }
+
+                                                            },
+                                                            error : function(response){
+                                                                console.log(response);
+
+                                                            }
+                                                        });
+                                                   });
+                                                });
+                                        </script>

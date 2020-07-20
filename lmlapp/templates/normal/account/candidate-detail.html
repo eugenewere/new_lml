@@ -1,0 +1,236 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+
+
+{% endblock links %}
+{% block content %}
+            <!-- Title Header Start -->
+			<section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-22.jpg' %});">
+				<div class="container">
+					<h1>Details</h1>
+				</div>
+			</section>
+			<div class="clearfix"></div>
+			<!-- Title Header End -->
+
+			<!-- Candidate Detail Start -->
+			<section class="detail-desc">
+				<div class="container">
+
+					<div class="ur-detail-wrap top-lay">
+
+						<div class="ur-detail-box">
+
+							<div class="ur-thumb">
+								<img src="{{customer.profile_image.url}}" class="img-responsive" alt="" />
+							</div>
+							<div class="ur-caption">
+								<h4 class="ur-title text-capitalize">{{request.user.first_name}} {{request.user.last_name}} </h4>
+                                <p class="ur-location"><i class="ti-location-pin mrg-r-5"></i>{{customer.county.county}}</p>
+								<p class="ur-location"><i class="ti-location-pin mrg-r-5"></i>{{ customer.region.region }}->{{ customer.region.ward }} </p>
+								<span class="ur-designation " style=" text-transform: capitalize;">{% for skill in skills %}{{ skill }},{% endfor %}</span>
+								<div class="rateing" style="margin-top: 12px;">
+                                    {% if social %}
+									    <a href="{{social}}"><i style="font-size: 20px;" class="fab fa-linkedin"></i></a>
+                                    {% endif %}
+								</div>
+							</div>
+
+						</div>
+
+						<div class="ur-detail-btn">
+							<a  href="{% url 'LML:employeeprofile' %}#settings" class="custom-button btn btn-warning mrg-bot-10 full-width"><i class="ti-thumb-up mrg-r-5"></i>Edit Account</a><br>
+							<a href="{% url 'LML:employee_dash' %}" class="custom-button btn btn-info full-width"><i class="ti-dashboard mrg-r-5"></i>Dashboard</a>
+						</div>
+
+					</div>
+
+				</div>
+			</section>
+			<!-- Candidate Detail End -->
+
+			<!-- Candidate full detail Start -->
+			<section class="full-detail-description full-detail">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-lg-8 col-md-8">
+
+							<div class="row-bottom">
+								<h2 class="detail-title">About Candidate</h2>
+                                <p>{{ customer.biography }}</p>
+							</div>
+
+							<div class="row-bottom">
+								<h2 class="detail-title">Education</h2>
+                                <p>This is your levels of education</p>
+								<ul class="trim-edu-list">
+                                    {% for education in educations %}
+                                        <li>
+                                            <div class="trim-edu">
+                                                <h4 class="trim-edu-title" style="text-transform: capitalize;">{{education.school}}</h4><br>
+                                                <span class="title-est">Graduation Date {{education.graduation_date|date:'Y / m /d'}}</span><br>
+                                                <div style="display: flex; align-items: center;"> <strong>{{education.qualifications}}: </strong> <p> {{education.course}}.</p></div>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+
+								</ul>
+							</div>
+
+							<div class="row-bottom">
+								<h2 class="detail-title">Work & Experience</h2>
+								<ul class="trim-edu-list">
+                                    {% for experience in experiences %}
+                                        <li>
+                                            <div class="trim-edu">
+                                                <h4 class="trim-edu-title text-capitalize">{{ experience.company_name }}<span class="title-est">Worked for {{ experience.id|experience_years|safe|escape }}</span></h4>
+                                                <strong class="text-capitalize">{{experience.position_held}}</strong>
+                                                <p>{{experience.experience}}.</p>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+
+								</ul>
+							</div>
+
+							<div class="row-bottom">
+								<h2 class="detail-title">Skills</h2>
+								<p>Diverse of skills .</p>
+								<div class="ext-mrg row third-progress">
+                                    <ul class="trim-edu-list">
+                                        {% for skill in skills %}
+                                            <li>
+                                                <div class="trim-edu">
+                                                    <h4 class="trim-edu-title text-capitalize">{{ skill.skill}}</h4>
+                                                    <div class="d-flex align-items-center"><strong>Referee</strong> <p>{{ skill.referee }}</p></div>
+                                                    <div class="d-flex align-items-center"><strong>Referee PhoneNumber</strong> <p>{{ skill.referee_phonenumber }}</p></div>
+
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-lg-4 col-md-4">
+							<div class="full-sidebar-wrap">
+
+								<!-- Candidate overview -->
+								<div class="sidebar-widgets">
+
+									<div class="ur-detail-wrap">
+										<div class="ur-detail-wrap-header">
+											<h4>Candidate Overview</h4>
+										</div>
+										<div class="ur-detail-wrap-body">
+											<ul class="ove-detail-list">
+
+												<li>
+													<i class="ti-email"></i>
+													<h5>Email</h5>
+													<span>{{request.user.email}}</span>
+												</li>
+
+                                                <li>
+													<i class="ti-location-pin"></i>
+													<h5>County</h5>
+													<span>{{customer.county.county}}</span>
+												</li>
+
+                                                <li>
+													<i class="ti-location-arrow"></i>
+													<h5>Region</h5>
+													<span>{{customer.region.region}}->{{customer.region.ward}}</span>
+												</li>
+
+												<li>
+													<i class="ti-user"></i>
+													<h5>Gender</h5>
+													<span>{{customer.gender}}</span>
+												</li>
+
+                                                <li>
+													<i class="ti-view-grid"></i>
+													<h5>Marital Status</h5>
+													<span>{{customer.marital_status}}</span>
+												</li>
+
+
+
+												<li>
+													<i class="ti-mobile"></i>
+													<h5>Phone Number</h5>
+													<span>{{customer.phone_number}}</span>
+												</li>
+
+												<li>
+													<i class="ti-book"></i>
+													<h5>Job type</h5>
+													<span>{{customer.job_type}}</span>
+												</li>
+
+{#												<li>#}
+{#													<i class="ti-shield"></i>#}
+{#													<h5>Experience</h5>#}
+{#													<span>5 Years</span>#}
+{#												</li>#}
+
+{#												<li>#}
+{#													<i class="ti-book"></i>#}
+{#													<h5>Qualification</h5>#}
+{#													<span>Master Degree</span>#}
+{#												</li>#}
+
+											</ul>
+										</div>
+									</div>
+
+								</div>
+								<!-- /Candidate overview -->
+
+								<!-- Say Hello -->
+								<div class="sidebar-widgets">
+
+									<div class="ur-detail-wrap">
+										<div class="ur-detail-wrap-header">
+											<h4>Get In Touch</h4>
+										</div>
+										<div class="ur-detail-wrap-body">
+											<form action="{% url 'LML:customer_contact_us' %}" method="post">
+                                                 {% csrf_token %}
+												<div class="form-group">
+													<label>Name</label>
+													<input name="name" type="text" value="{{ request.user.first_name }} {{ request.user.last_name }}" class="form-control">
+												</div>
+												<div class="form-group">
+													<label>Email</label>
+													<input name="email" type="email" value="{{ request.user.email }}" class="form-control">
+												</div>
+												<div class="form-group">
+													<label>Message</label>
+													<textarea name="message" class="form-control"></textarea>
+												</div>
+												<button type="submit" class="btn btn-primary" style="border-radius: 140px;">Submit</button>
+											</form>
+										</div>
+									</div>
+
+								</div>
+								<!-- /Say Hello -->
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+			<!-- company full detail End -->
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}

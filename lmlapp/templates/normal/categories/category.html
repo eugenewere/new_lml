@@ -1,0 +1,118 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+    <style>
+        article{
+            display: none;
+        }
+    </style>
+{% endblock links %}
+{% block content %}
+            <!-- Title Header Start -->
+                <section class="inner-header-page" style="background-image: url({% static 'assets/img/blog/banner-20.jpg' %})">
+                    <div class="container">
+                        <h2>All Categories</h2>
+                        <p>Main Categories We Deal With.</p>
+                    </div>
+                </section>
+                <div class="clearfix"></div>
+                <!-- Title Header End -->
+
+                <!-- Accordion Design Start -->
+			    <section class="accordion">
+				<div class="container">
+
+					<!-- search filter -->
+					<div class="row extra-mrg">
+						<div class="wrap-search-filter">
+							<form action="" method="POST">
+                            {% csrf_token %}
+                                <div class="col-md-9 col-sm-12 col-lg-9">
+									<select name="category" class="form-control choose-city" required >
+                                        <option  selected disabled class="text-muted"> Filter By Category</option>
+										{% for category in categories %}
+                                            <option value="{{ category.id }}">{{ category.category }}</option>
+                                        {% endfor %}
+									</select>
+								</div>
+								<div class="col-md-3 col-sm-12 col-lg-3">
+									<button type="submit" class="btn btn-primary full-width">Filter</button>
+								</div>
+							</form>
+                            <p class="text-muted" style="padding: 20px;">({{ categories.count }}) Categories</p>
+						</div>
+					</div>
+					<!-- search filter End -->
+
+					<!-- Paid Candidate Start -->
+
+					<div class="row">
+                        {% for category in categories %}
+                            <article>
+                                <a href="" class="category">
+                                    <div class="col-md-3 col-sm-6 small-padding ">
+                                        <div class="job-feature" style="text-align: center;">
+                                            <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+                                            <div class="feature-caption">
+                                                <h5>{{category.category|truncatechars:20}}</h5>
+                                                <p>Are you looking for {{category.category|truncatechars:10}}?.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </article>
+                        {% endfor %}
+
+
+						<!-- Single Freelancer -->
+						<div class="col-md-12 col-sm-12 " style="margin-top: 20px; ">
+							<div class="text-center">
+								<a id="load" href="#" class="btn btn-primary">Load More</a>
+                                <a href="#top" class="btn btn-primary">Back to top</a>
+							</div>
+						</div>
+
+					</div>
+                </div>
+
+
+			</section>
+			<!-- Accordion Design End -->
+{% endblock content %}
+{% block script %}
+    <script>
+        $(function(){
+            $("article").slice(0, 12).show(); // select the first ten
+            $("#load").click(function(e){ // click event for load more
+                e.preventDefault();
+                $("article:hidden").slice(0, 12).fadeIn(); // select next 10 hidden divs and show them
+                if($("article:hidden").length == 0){ // check if any hidden divs still exist
+                    spinner.hide();
+                    swal.fire({
+                        title: "Error!",
+                        text: "No more categories to load",
+                        type: "error",
+                        confirmButtonText: "Retry"
+                    });
+                }
+            });
+            $('a[href=#top]').click(function () {
+                $('body,html').animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 50) {
+                    $('.totop a').fadeIn();
+                } else {
+                    $('.totop a').fadeOut();
+                }
+            });
+        });
+    </script>
+{% endblock script %}
+
+

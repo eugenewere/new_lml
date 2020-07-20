@@ -1,0 +1,122 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+
+{% endblock links %}
+{% block content %}
+            <!-- Title Header Start -->
+                <section class="inner-header-page" style="background-image: url({% static 'assets/img/blog/banner-20.jpg' %})">
+                    <div class="container">
+
+                        <h2>All Candidates</h2>
+                        <p>Work with the countries’s best talent on Upwork.</p>
+
+                    </div>
+                </section>
+                <div class="clearfix"></div>
+			<!-- Title Header End -->
+
+			<!-- Accordion Design Start -->
+			    <section class="accordion">
+				<div class="container">
+
+					<!-- search filter -->
+					<div class="row extra-mrg">
+						<div class="wrap-search-filter">
+							<form action="{% url 'LML:all_employees' %}" method="POST">
+                            {% csrf_token %}
+								<div class="col-md-3 col-sm-3">
+									<select required name="county" class="form-control" id="j-category">
+                                        <option selected disabled class="text-muted"> Choose County</option>
+										{% for county in counties %}
+                                            <option value="{{ county.id }}">{{ county.county }}</option>
+                                        {% endfor %}
+									</select>
+								</div>
+								<div class="col-md-3 col-sm-3">
+									<select required name="region" class="form-control choose-region" >
+                                        <option selected disabled class="text-muted"> Choose Region</option>
+										{% for region in regions %}
+                                            <option value="{{ region.id }}">{{ region.region }}</option>
+                                        {% endfor %}
+									</select>
+								</div>
+								<div class="col-md-3 col-sm-3">
+									<select required name="category" class="form-control choose-city" >
+                                        <option selected disabled class="text-muted"> Choose Category</option>
+										{% for category in categories %}
+                                            <option value="{{ category.id }}">{{ category.category }}</option>
+                                        {% endfor %}
+									</select>
+								</div>
+								<div class="col-md-3 col-sm-3">
+									<button type="submit" class="btn btn-primary full-width">Filter</button>
+								</div>
+							</form>
+                            <p class="text-muted" style="padding: 20px;">({{ customers.count }}) Employee</p>
+						</div>
+					</div>
+					<!-- search filter End -->
+
+					<!-- Paid Candidate Start -->
+					<div class="row">
+                        {% for customer in customers %}
+                            <div class="col-md-4 col-sm-6">
+                                <div class="paid-candidate-container">
+                                    <div class="paid-candidate-box">
+                                        <div class="dropdown">
+                                            <div class="btn-group fl-right">
+                                                {% if request.user|logged_in_company %}
+                                                <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                <div class="dropdown-menu pull-right animated flipInX">
+                                                    {% csrf_token %}
+                                                    {% if request|shortlisted:customer.id %}
+                                                         <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                    {% else %}
+                                                        <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                    {% endif %}
+    {#                                                <a href="#">Send Message</a>#}
+    {#                                                <a href="#">Dislike</a>#}
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="paid-candidate-inner--box">
+                                            <div class="paid-candidate-box-thumb"><img src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                            <div class="paid-candidate-box-detail">
+                                                <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                        </div>
+                                        <div class="paid-candidate-box-extra">
+                                            <ul>
+                                                {% for skill in customer.skillset %}
+                                                <li>{{skill.skill|truncatechars:10}}</li>
+                                                {% endfor %}
+                                                {% if customer.skillcount %}
+                                                    <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                                {% endif %}
+                                            </ul>
+                                            <p>{{customer.biography|truncatechars:67}}.</p>
+                                        </div>
+                                    </div><a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a></div>
+                            </div>
+                        {% endfor %}
+
+{#						<!-- Single Freelancer -->#}
+{#						<div class="col-md-12 col-sm-12">#}
+{#							<div class="text-center">#}
+{#								<a href="#" class="btn btn-primary">Load More</a>#}
+{#							</div>#}
+{#						</div>#}
+
+					</div>
+
+				</div>
+			</section>
+			<!-- Accordion Design End -->
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}
+
+

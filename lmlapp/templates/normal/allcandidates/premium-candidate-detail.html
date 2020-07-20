@@ -1,0 +1,444 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+{% endblock links %}
+{% block content %}
+    <!-- Title Header Start -->
+        <section class="inner-header-page" style="background-image: url({% static 'assets/img/blog/banner-20.jpg' %}); color: black;">
+            <div class="container">
+
+                <div class="col-md-8">
+                    <div class="left-side-container">
+                        <div class="freelance-image"><a href="company-detail.html"><img src="{{ customer.profile_image.url }}" class="img-responsive img-circle" alt=""></a></div>
+                        <div class="header-details">
+                            <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}{% comment %}<span class="pull-right">$44/hr</span>{% endcomment %}</h4>
+                            <div style="display: flex;">Category: <p style="margin-right: 5px;" class="text-capitalize">{{customer.category.category}}</p></div>
+                            <ul>{#                                <li>#}
+{#                                    <div class="star-rating" data-rating="4.2">#}
+{#                                        <span class="fa fa-star fill"></span>#}
+{#                                        <span class="fa fa-star fill"></span>#}
+{#                                        <span class="fa fa-star fill"></span>#}
+{#                                        <span class="fa fa-star fill"></span>#}
+{#                                        <span class="fa fa-star-half fill"></span>#}
+{#                                    </div>#}
+{#                                </li>#}
+                                <li style="display: flex;" class="text-capitalize"><span>Country: </span> {{customer.country}}</li>
+                                <li style="display: flex;"><span>Rank: </span><div class="verified-action">{{customer.rank_status}}</div></li><br>
+                                {%  if customer.disability_status == 'DISABLED' %}
+                                    <li style="display: flex;"><span>Disability: </span><div class="verified-action">{{customer.disability_status}}</div></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 bl-1 br-gary">
+                    <div class="right-side-detail">
+                        <ul>
+                            <li><span class="detail-info text-capitalize">Availability</span>{{ customer.job_type }}</li>
+                            <li><span class="detail-info text-capitalize">Location</span>{{customer.county}}</li>
+{#                            <li><span class="detail-info">Experience</span>{{ customer. }} Year</li>#}
+                            <li><span class="detail-info">Age</span>{{customer.customer_age}} Years</li>
+                        </ul>
+                        {% if social %}
+                        <ul class="social-info">
+                            <li><a href="{{social}}"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="clearfix"></div>
+    <!-- Title Header End -->
+    <!-- Freelancer Detail Start -->
+        <section>
+        <div class="container">
+
+            <div class="col-md-8 col-sm-8">
+                <div class="container-detail-box">
+
+                    <div class="apply-job-header">
+                        <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}</h4>
+                        <a href="company-detail.html" class="cl-success text-capitalize"><span><i class="fa fa-building"></i>{{customer.category.category}}</span></a>
+                        <span><i class="fa fa-map-marker"></i>{{customer.country}}</span>
+                    </div>
+
+                    <div class="apply-job-detail">
+                        <p>{{ customer.biography }}</p>
+                    </div>
+
+                    <div class="apply-job-detail">
+                        <h5>Skills</h5>
+                        {% if skills %}
+                            <ul class="skills">
+                                {% for skill in skills %}
+                                    <li class="text-capitalize">{{ skill.skill }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                    {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
+                        <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0);" class="btn btn-success">Shortlist</a>
+                    {% endif %}
+                    <a target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn btn-success">View Cv</a>
+
+                </div>
+
+                <!-- Similar Jobs -->
+                <div class="container-detail-box">
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Review</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                    </div>
+
+                    <div class="row" id="paginate">
+                        {% if reviews %}
+                            {% for review in reviews %}
+                                <!-- Single Review -->
+                                <div class="review-list" style=" margin-bottom:0; display: table;">
+                                    <div class="review-thumb col-sm-2">
+                                        <img src="{{review.company.logo.url}}" class="img-responsive img-circle" alt="" />
+                                    </div>
+                                    <div class="review-detail col-sm-10 p-0" >
+                                         <h4>
+                                            {{review.company.company_name|title}}
+                                            <span style="margin-left: auto;">{{ review.created_at|naturaltime }}</span>
+                                         </h4>
+
+                                         <div class="col-sm-12 card-ratings-wrapper">
+
+                                           <div class=" ml-auto">
+                                               {% if review.ratings == 5 %}
+                                                    <div class="rate">
+                                                        <input readonly disabled checked type="radio"  value="5" />
+                                                            <label for="star5" title="text">5 stars</label>
+                                                        <input readonly disabled  type="radio"  value="4" />
+                                                            <label for="star4" title="text">4 stars</label>
+                                                        <input readonly disabled  type="radio"  value="3" />
+                                                            <label for="star3" title="text">3 stars</label>
+                                                        <input readonly disabled  type="radio"  value="2" />
+                                                            <label for="star2" title="text">2 stars</label>
+                                                        <input readonly disabled  type="radio"  value="1" />
+                                                            <label for="star1" title="text">1 star</label>
+                                                    </div>
+
+                                                   {% elif review.ratings == 4 %}
+                                                       <div class="rate">
+                                                        <input readonly disabled  type="radio" value="5" />
+                                                            <label for="star5" title="text">5 stars</label>
+                                                        <input readonly disabled checked type="radio" value="4" />
+                                                            <label for="star4" title="text">4 stars</label>
+                                                        <input readonly disabled  type="radio" value="3" />
+                                                            <label for="star3" title="text">3 stars</label>
+                                                        <input readonly disabled  type="radio" value="2" />
+                                                            <label for="star2" title="text">2 stars</label>
+                                                        <input readonly disabled  type="radio" value="1" />
+                                                            <label for="star1" title="text">1 star</label>
+                                                    </div>
+
+                                                   {% elif review.ratings == 3 %}
+                                                       <div class="rate">
+                                                        <input readonly disabled  type="radio" value="5" />
+                                                            <label for="star5" title="text">5 stars</label>
+                                                        <input readonly disabled  type="radio" value="4" />
+                                                            <label for="star4" title="text">4 stars</label>
+                                                        <input readonly disabled checked type="radio" value="3" />
+                                                            <label for="star3" title="text">3 stars</label>
+                                                        <input readonly disabled  type="radio" value="2" />
+                                                            <label for="star2" title="text">2 stars</label>
+                                                        <input readonly disabled  type="radio" value="1" />
+                                                            <label for="star1" title="text">1 star</label>
+                                                    </div>
+
+                                                   {% elif review.ratings == 2 %}
+                                                       <div class="rate">
+                                                        <input readonly disabled  type="radio" value="5" />
+                                                            <label disabled for="star5" title="text">5 stars</label>
+                                                        <input readonly disabled  type="radio" value="4" />
+                                                            <label disabled for="star4" title="text">4 stars</label>
+                                                        <input readonly disabled  type="radio" value="3" />
+                                                            <label disabled for="star3" title="text">3 stars</label>
+                                                        <input readonly disabled checked type="radio" value="2" />
+                                                            <label disabled for="star2" title="text">2 stars</label>
+                                                        <input readonly disabled  type="radio" value="1" />
+                                                            <label disabled for="star1" title="text">1 star</label>
+                                                    </div>
+
+                                                   {% elif review.ratings == 1 %}
+                                                       <div class="rate">
+                                                        <input readonly  type="radio" disabled value="5" />
+                                                            <label for="star5" title="text">5 stars</label>
+                                                        <input readonly  type="radio" disabled value="4" />
+                                                            <label for="star4" title="text">4 stars</label>
+                                                        <input readonly  type="radio" disabled value="3" />
+                                                            <label for="star3" title="text">3 stars</label>
+                                                        <input readonly  type="radio" disabled value="2" />
+                                                            <label for="star2" title="text">2 stars</label>
+                                                        <input readonly checked type="radio" disabled value="1" />
+                                                            <label for="star1" title="text">1 star</label>
+                                                    </div>
+                                                   {% else %}
+                                                       <div class="rate">
+                                                        <input readonly  type="radio" disabled value="5" />
+                                                            <label for="star5" title="text">5 stars</label>
+                                                        <input readonly  type="radio" disabled value="4" />
+                                                            <label for="star4" title="text">4 stars</label>
+                                                        <input readonly  type="radio" disabled value="3" />
+                                                            <label for="star3" title="text">3 stars</label>
+                                                        <input readonly  type="radio" disabled value="2" />
+                                                            <label for="star2" title="text">2 stars</label>
+                                                        <input readonly  type="radio" disabled value="1" />
+                                                            <label for="star1" title="text">1 star</label>
+                                                       </div>
+                                                   {% endif %}
+                                           </div>
+                                         </div>
+                                        <span class="re-designation">{{review.company.category.category|title}}</span>
+                                        <p>{{ review.message|safe|escape }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <nav aria-label="Page navigation example" id="paginator">
+                              <ul class="pagination">
+                                <li class="page-item">
+                                  <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                  </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item">
+                                  <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </nav>
+
+                            <script type="text/javascript" src="{% static 'assets/js/pagination.js' %}"></script>
+
+                            <script>
+                                    var result = [];
+                                    var reviews = "{{ reviews.count }}";
+                                    for (var i = 1; i < Number(reviews); i++) {
+                                        result.push(i);
+                                    }
+                                  $('#paginate').pagination({
+                                        dataSource: result,
+                                        pageSize: 2,
+                                        autoHidePrevious: true,
+                                        autoHideNext: true,
+                                        callback: function(data, pagination) {
+                                            console.log(data);
+                                            console.log(pagination);
+                                            // template method of yourself
+
+                                            var html = template(data);
+                                            dataContainer.html(html);
+                                        }
+                                    })
+
+
+                            </script>
+                        {% else %}
+                            <div class="col-sm-12 w-100" style="display: flex; justify-content: center; align-items: center;">
+                                <h2>No Reviews Yet</h2>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Sidebar Start-->
+            <div class="col-md-4 col-sm-4">
+
+                <!-- Make An Offer -->
+                <div class="sidebar-container">
+                    <div class="sidebar-box">
+                        <span class="sidebar-status">{{customer.rank_status}}</span>
+{#                        <h4 class="flc-rate">$17/hr</h4>#}
+                        <div class="sidebar-inner-box">
+                            <div class="sidebar-box-thumb">
+                                <img src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                            </div>
+                            <div class="sidebar-box-detail">
+                                <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}</h4>
+                                <span class="desination">{{customer.category.category}}</span>
+                            </div>
+                        </div>
+                        <div class="sidebar-box-extra">
+                            <ul>
+                                {% for skill in customer.skillset %}
+                                    <li>{{skill.skill}}</li>
+                                {% endfor %}
+                                {% if customer.skillcount %}
+                                    <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                {% endif %}
+                            </ul>
+
+                        </div>
+                    </div>
+                    {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
+                    <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0);" class="btn btn-sidebar bt-1 bg-success">Shortlist</a>
+                    {% endif %}
+                </div>
+
+{#                <!-- Website & Portfolio -->#}
+{#                <div class="sidebar-wrapper">#}
+{#                    <div class="sidebar-box-header bb-1">#}
+{#                        <h4>Website & Portfolio</h4>#}
+{#                    </div>#}
+{##}
+{#                    <ul class="block-list">#}
+{#                        <li><i class="fa fa-globe cl-success"></i>www.mysite.com</li>#}
+{#                        <li><i class="fa fa-briefcase cl-success"></i>Portfolio</li>#}
+{#                        <li><i class="fa fa-pencil cl-success"></i>My Blog</li>#}
+{#                    </ul>#}
+{#                </div>#}
+{#                <!-- Website & Portfolio -->#}
+{##}
+{#                <!-- Similar Profile -->#}
+{#                <div class="sidebar-wrapper">#}
+{##}
+{#                    <div class="sidebar-box-header bb-1">#}
+{#                        <h4>Similar Candidate</h4>#}
+{#                    </div>#}
+{##}
+{#                    <div class="member-profile-list">#}
+{#                        <div class="member-profile-thumb">#}
+{#                            <a href="candidate-detail.html"><img src="../../static/assets/img/can-2.png" class="img-responsive img-circle" alt="" /></a>#}
+{#                        </div>#}
+{#                        <div class="member-profile-detail">#}
+{#                            <h4><a href="candidate-detail.html">Adam Crivatinly</a></h4>#}
+{#                            <span>Web Developer</span>#}
+{#                            <span class="cl-success">Freelancer</span>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="member-profile-list">#}
+{#                        <div class="member-profile-thumb">#}
+{#                            <a href="candidate-detail.html"><img src="../../static/assets/img/can-3.png" class="img-responsive img-circle" alt="" /></a>#}
+{#                        </div>#}
+{#                        <div class="member-profile-detail">#}
+{#                            <h4><a href="candidate-detail.html">Adam Crivatinly</a></h4>#}
+{#                            <span>Web Developer</span>#}
+{#                            <a href="candidate-detail.html"><span class="cl-success">Freelancer</span></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                    <div class="member-profile-list">#}
+{#                        <div class="member-profile-thumb">#}
+{#                            <a href="candidate-detail.html"><img src="../../static/assets/img/can-1.png" class="img-responsive img-circle" alt="" /></a>#}
+{#                        </div>#}
+{#                        <div class="member-profile-detail">#}
+{#                            <h4><a href="candidate-detail.html">Adam Crivatinly</a></h4>#}
+{#                            <span>Web Developer</span>#}
+{#                            <a href="candidate-detail.html"><span class="cl-success">Freelancer</span></a>#}
+{#                        </div>#}
+{#                    </div>#}
+{##}
+{#                </div>#}
+
+                <!-- Share This Job -->
+                <div class="sidebar-wrapper">
+                    <div class="sidebar-box-header bb-1">
+                        <h4>Share This Personnel</h4>
+                    </div>
+
+                    <ul class="social-share">
+                        {% if skills %}
+                        <li><a href="{{skills}}" class="fb-share"><i class="fab fa-linkedin"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+            <!-- End Sidebar -->
+
+            <div class="clearfix"></div>
+            <section class="white">
+            <div class="container">
+                <div class="row" data-aos="fade-up">
+                    <div class="col-md-12">
+                        <div class="main-heading">
+                            <h2>Similar Potential <span>Employees</span></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="grid-slide">
+                        {% for customer in all_customers %}
+                            <!-- Single Freelancer -->
+                            <div class="grid-slide-box">
+                                <div class="top-candidate-wrap style-2">
+                                    <div style="margin: 0;" class="paid-candidate-container">
+                                    <div class="paid-candidate-box">
+                                        <div class="dropdown">
+                                            <div class="btn-group fl-right">
+                                                {% if request.user|logged_in_company %}
+                                                    <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                    <div class="dropdown-menu pull-right animated flipInX">
+                                                        {% csrf_token %}
+                                                        {% if request|shortlisted:customer.id %}
+                                                            <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                        {% else %}
+                                                            <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="paid-candidate-inner--box">
+                                            <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                            <div class="paid-candidate-box-detail">
+                                                <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                        </div>
+                                        <div class="paid-candidate-box-extra">
+                                            <ul>
+                                                {% for skill in customer.skillset %}
+                                                <li>{{skill.skill|truncatechars:7}}</li>
+                                                {% endfor %}
+                                                {% if customer.skillcount %}
+                                                    <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                                {% endif %}
+                                            </ul>
+                                            <p>{{customer.biography|truncatechars:67}}.</p>
+                                        </div>
+                                    </div>
+                                    {% if request.user|logged_in_company %}
+                                    <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                                    {% endif %}
+                                </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        </div>
+    </section>
+    <!-- Freelancer Detail End -->
+{% endblock content %}
+{% block script %}
+
+{% endblock script %}
+
+
+

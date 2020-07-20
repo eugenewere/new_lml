@@ -1,0 +1,354 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+    <style>
+        .customer{
+            display: none;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/chatpannel.css' %}">
+{% endblock links %}
+{% block search %}
+        {% if request.user.is_authenticated %}
+            {% if request.user|logged_in_company %}
+                <li class="active" style="margin-right: 21px;" >
+                    <input style="background-color: white; padding: 15px; border-radius: 20px;" type="text" class="form-control custom-button whitee" placeholder="Search">
+                </li>
+            {% endif %}
+        {% endif %}
+    {% endblock %}
+{% block content %}
+    <!-- Title Header Start -->
+    <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: White; ">
+        <div class="container">
+
+            <div class="col-md-8">
+                <div class="left-side-container">
+                    <div class="freelance-image"><a href="company-detail.html"><img src="{{company.logo.url}}" class="img-responsive " style="margin: 18px 0;" alt=""></a></div>
+                    <div class="header-details">
+                        <h4 style="color: white;">{{company.company_name|title}}</h4>
+                        <p>{{ company.company_motto }}</p>
+                        <ul>
+                            {% if company.rank_status == "BASIC" %}
+                                <li><div class="verified-action-success">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+                            {% if company.rank_status == "PREMIUM" %}
+                                <li><div class="verified-action-info">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+                            {% if company.rank_status == "UNDEFINED" %}
+                                <li><div class="verified-action-error">{{company.rank_status|title}}</div></li>
+                            {% endif %}
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 bl-1 br-gary">
+                <div class="right-side-detail">
+                    <ul>
+                        <li><span class="detail-info">Experience</span>{{ company.id|company_experience_years }} </li>
+                    </ul>
+                    <ul class="social-info">
+                        {% if social.facebook %}
+                           <li> <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a></li>
+                        {% endif %}
+                        {% if social.facebook %}
+                           <li><a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a></li>
+                        {% endif %}
+                        {% if social.instagram %}
+                           <li><a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a></li>
+                        {% endif %}
+                        {% if social.twitter %}
+                           <li><a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a></li>
+                        {% endif %}
+                        {% if social.googlr_plus %}
+                           <li><a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <div class="clearfix"></div>
+			<!-- Title Header End -->
+
+
+
+    <!-- ========== Begin: Brows job Category ===============  -->
+    <section class="brows-job-category gray-bg">
+        <div class="" style="padding: 0 20px;">
+             <!-- Sidebar Start -->
+            <div class="col-md-3 col-sm-12">
+                <div class="sidebar right-sidebar">
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">ShortList</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employer_dash' %}">
+
+                                    All Candidate
+                                    <span class="pull-right">{{customers.count}}</span></a>
+                                </li>
+                                <li><a href="">
+
+                                    Ultimate Candidate
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                                <li><a href="">
+
+                                    Premium Candidate
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                                <li><a href="">
+
+                                    Basic Candidate
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                    <div class="side-widget">
+                        <h2 class="side-widget-title">Graph</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employee_shortlist_graph_template' %}">
+                                    Shortlist Graph
+                                    <span class="pull-right"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Messages <span class="badge badge-danger badge-pill">0</span></h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="{% url 'LML:employer_dash_message' request.user.username %}">
+                                    All Messages
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Subscription</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="">
+
+                                    Premium
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+                   <div class="side-widget">
+                        <h2 class="side-widget-title">Payment</h2>
+                        <div class="widget-text padd-0">
+                            <ul>
+                                <li><a href="">
+
+                                    Payment History
+                                    <span class="pull-right">0</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                   </div>
+
+                </div>
+            </div>
+            <!-- Sidebar End -->
+            <div class="col-md-9 col-sm-12 " style="margin-bottom: 30px;">
+                <div class="full-card">
+
+                    <div class="card-header">
+                        <div class="row mrg-0">
+
+                            <div class="col-md-4 col-sm-4">
+                                <ol class="breadcrumb pull-left">
+                                    <li><a href="{% url 'LML:home' %}"><i class="fa fa-home"></i></a></li>
+                                    <li>Shortlist</li>
+                                    <li>All Candidates</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+                        <article class="advance-search-job">
+                            <div class="row no-mrg">
+                                <canvas class="col-12" id="customers" style="width: 100%; height: 400px;">
+
+                                </canvas>
+                            </div>
+                        </article>
+                        <article class="advance-search-job">
+                            <div class="row no-mrg">
+                                <canvas class="col-12" id="customers2" style="width: 100%; height: 400px;">
+
+                                </canvas>
+                            </div>
+                        </article>
+
+
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="ad-banner">
+                        <img src="http://via.placeholder.com/728x90" class="img-responsive" alt="">
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </section>
+    <!-- ========== Begin: Brows job Category End ===============  -->
+{% endblock content %}
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        var endpoint = '{% url 'LML:employee_shortlist_graph' %}';
+        var defaultData =  [];
+        var labels = [];
+        $.ajax({
+            method: "GET",
+            url : endpoint,
+            success : function (data) {
+                labels = data.labels2;
+                defaultData= data.defaultData2;
+                setCustomerLine();
+                setCustomerBar();
+                // console.log(data);
+            },
+            error : function (error_data) {
+                console.log(error);
+                console.log(error_data);
+            },
+        });
+        function setCustomerLine(){
+            var ctx = document.getElementById('customers').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Customers Shortlist Line',
+                    data: defaultData,
+                    backgroundColor: [
+                         'rgb(7, 177, 7, 50)',
+                        'rgba(255, 159, 64, 1)',
+
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgb(129,255,46)',
+                        'rgb(255,217,66)',
+                        'rgb(255,131,255)',
+                        'rgb(1,53,255)',
+                        'rgb(7, 177, 7)',
+                        'rgb(36,255,221)',
+                        'rgb(145,255,39)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(7, 177, 7, 50)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgb(129,255,46)',
+                        'rgb(255,217,66)',
+                        'rgb(255,131,255)',
+                        'rgb(1,53,255)',
+                        'rgb(7, 177, 7)',
+                        'rgb(36,255,221)',
+                        'rgb(145,255,39)',
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        }
+        function  setCustomerBar(){
+             var ctx = document.getElementById('customers2').getContext('2d');
+            var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Customers Shortlist Bar',
+                    data: defaultData,
+                    backgroundColor: [
+                         'rgb(7, 177, 7, 50)',
+                        'rgba(255, 159, 64, 1)',
+
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgb(129,255,46)',
+                        'rgb(255,217,66)',
+                        'rgb(255,131,255)',
+                        'rgb(1,53,255)',
+                        'rgb(7, 177, 7)',
+                        'rgb(36,255,221)',
+                        'rgb(145,255,39)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 159, 64, 1)',
+                        'rgb(7, 177, 7, 50)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgb(129,255,46)',
+                        'rgb(255,217,66)',
+                        'rgb(255,131,255)',
+                        'rgb(1,53,255)',
+                        'rgb(7, 177, 7)',
+                        'rgb(36,255,221)',
+                        'rgb(145,255,39)',
+
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        }
+
+    </script>
+
+
+{% endblock script %}

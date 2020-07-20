@@ -1,0 +1,565 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load call_methods %}
+{% block links %}
+{% endblock links %}
+{% block content %}
+            <!-- Title Header Start -->
+			<section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-24.jpg' %});">
+				<div class="container">
+					<h1>Search</h1>
+				</div>
+			</section>
+			<div class="clearfix"></div>
+			<!-- Title Header End -->
+
+			<section class="advance-search">
+				<div class="container-fluid " style="padding: 0 50px">
+					<div class="row">
+
+                            <div class="col-md-3 col-sm-12">
+                                <form action="{% url 'LML:advancesearch' %}" method="post">
+                                {% csrf_token %}
+                                    <div class="full-sidebar-wrap">
+                                        <a href="javascript:void(0)" onclick="openNav()" class="btn btn-dark full-width mrg-bot-20 hidden-lg hidden-md hidden-xl"><i class="ti-filter mrg-r-5"></i>Filter Search</a>
+                                        <!-- Job Alert -->
+        {#								<a href="javascript:void(0)" class="btn btn-info full-width mrg-bot-20" data-toggle="modal" data-target="#job-alert">Get Job Alert!</a>#}
+                                        <!-- /Job Alert -->
+                                        <div class="show-hide-sidebar hidden-xs hidden-sm">
+                                            <!-- Search Job -->
+                                            <div class="sidebar-widgets">
+                                                <div class="ur-detail-wrap">
+                                                    <div class="ur-detail-wrap-header">
+                                                        <h4>Search Personnel Here</h4>
+                                                    </div>
+                                                    <div class="ur-detail-wrap-body">
+                                                        <div class="form-group">
+                                                            <label>Category</label>
+                                                            <select name="category" id="" class="choose-city form-control choose-city">
+                                                                <option selected disabled class="text-muted"> Choose Category</option>
+                                                                {% for category in categories %}
+                                                                    <option value="{{ category.id }}">{{ category.category }}</option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <!-- /Search Job -->
+                                            <!-- Compensation -->
+                                            <div class="sidebar-widgets">
+                                                <div class="ur-detail-wrap">
+
+                                                    <div class="ur-detail-wrap-header">
+                                                        <h4>Qualifications</h4>
+                                                    </div>
+                                                    <div class="ur-detail-wrap-body">
+                                                        <ul class="advance-list">
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="qualification" value="Phd" type="radio" id="1">
+                                                                    <label for="1"></label>
+                                                                </span>
+                                                                PHD
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="qualification" value="Bachelor" type="radio" id="2">
+                                                                    <label for="2"></label>
+                                                                </span>
+                                                                Bachelor's
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="qualification" value="Masters" type="radio" id="3">
+                                                                    <label for="3"></label>
+                                                                </span>
+                                                                Masters
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="qualification" value="Diploma" type="radio" id="4">
+                                                                    <label for="4"></label>
+                                                                </span>
+                                                                Diploma
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="qualification" value="Certificate" type="radio" id="4">
+                                                                    <label for="4"></label>
+                                                                </span>
+                                                                Certificate
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- /Compensation -->
+
+                                            <!-- Experince -->
+                                            <div class="sidebar-widgets">
+                                                <div class="ur-detail-wrap">
+
+                                                    <div class="ur-detail-wrap-header">
+                                                        <h4>Experince</h4>
+                                                    </div>
+                                                    <div class="ur-detail-wrap-body">
+                                                        <ul class="advance-list">
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="experience"  value="1" type="radio" id="uy">
+                                                                    <label for="uy"></label>
+                                                                </span>
+                                                               1 Year
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="experience"  value="2" type="radio" id="io">
+                                                                    <label for="io"></label>
+                                                                </span>
+                                                                2 Year
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="experience"  value="3" type="radio" id="lo">
+                                                                    <label for="lo"></label>
+                                                                </span>
+                                                                 3 Year
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="experience"  value="4" type="radio" id="kj">
+                                                                    <label for="kj"></label>
+                                                                </span>
+                                                                4 Year
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="experience"  value="5" type="radio" id="kj">
+                                                                    <label for="kj"></label>
+                                                                </span>
+                                                                Over 5 Year
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- /Experince -->
+
+                                            <!-- Job Type -->
+                                            <div class="sidebar-widgets">
+                                                <div class="ur-detail-wrap">
+
+                                                    <div class="ur-detail-wrap-header">
+                                                        <h4>Job Type</h4>
+                                                    </div>
+                                                    <div class="ur-detail-wrap-body">
+                                                        <ul class="advance-list">
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="job_type" value="Full Time" type="radio" id="1">
+                                                                    <label for="1"></label>
+                                                                </span>
+                                                                Full Time
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="job_type" value="Part Time" type="radio" id="2">
+                                                                    <label for="2"></label>
+                                                                </span>
+                                                                Part Time
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="job_type" value="Internship" type="radio" id="3">
+                                                                    <label for="3"></label>
+                                                                </span>
+                                                                Internship
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="custom-checkbox">
+                                                                    <input name="job_type" value="Freelancer" type="radio" id="4">
+                                                                    <label for="4"></label>
+                                                                </span>
+                                                                Freelancer
+                                                                <span class="pull-right">0</span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- /Job Type -->
+
+                                            <!-- Location -->
+                                            <div class="sidebar-widgets">
+                                                <div class="ur-detail-wrap">
+
+                                                    <div class="ur-detail-wrap-header">
+                                                        <h4>County</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Choose County</label>
+                                                        <select name="county" id="" class="choose-city form-control choose-city">
+                                                            <option selected disabled class="text-muted"> Choose County</option>
+                                                            {% for county  in counties %}
+                                                                <option value="{{ county.id }}">{{ county.county }}</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- /Popular Locations -->
+
+                                            <!-- Location -->
+                                            <div class="sidebar-widgets">
+                                                <div class="ur-detail-wrap">
+
+                                                    <div class="ur-detail-wrap-header">
+                                                        <h4>Region</h4>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Choose Region</label>
+                                                        <select name="region" id="" class="choose-city form-control choose-city">
+                                                            <option selected disabled class="text-muted"> Choose Region (Ward)</option>
+                                                            {% for region  in regions %}
+                                                                <option value="{{ region.id }}">{{ region.region }}->({{ region.ward }})</option>
+                                                            {% endfor %}
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <!-- /Popular Locations -->
+                                         <button type="submit" class="position-sticky btn btn-primary full-width">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+						<div class="col-md-9 col-sm-12">
+							<!--Browse Job In Grid-->
+							<div class="row mrg-0">
+                                {% for customer in customers %}
+                                    <div class="col-md-4 col-sm-6">
+                                        <div class="paid-candidate-container">
+                                        <div class="paid-candidate-box">
+                                            <div class="dropdown">
+                                                <div class="btn-group fl-right">
+                                                    {% if request.user|logged_in_company %}
+                                                        <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                        <div class="dropdown-menu pull-right animated flipInX">
+                                                            {% csrf_token %}
+                                                            {% if request|shortlisted:customer.id %}
+                                                                <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                            {% else %}
+                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="paid-candidate-inner--box">
+                                                <div class="paid-candidate-box-thumb"><img src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                <div class="paid-candidate-box-detail">
+                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                            </div>
+                                            <div class="paid-candidate-box-extra">
+                                                <ul>
+                                                    {% for skill in customer.skillset %}
+                                                    <li>{{skill.skill|truncatechars:6}}</li>
+                                                    {% endfor %}
+                                                    {% if customer.skillcount %}
+                                                        <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                                    {% endif %}
+                                                </ul>
+                                                <p>{{customer.biography|truncatechars:67}}.</p>
+                                            </div>
+                                        </div>
+                                        {% if request.user|logged_in_company %}
+                                        <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                                        {% endif %}
+                                    </div>
+                                    </div>
+                                {% endfor %}
+							</div>
+							<!--/.Browse Job In Grid-->
+
+							<div class="row mrg-0">
+								<ul class="pagination">
+									<li><a href="#"><i class="ti-arrow-left"></i></a></li>
+									<li class="active"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#"><i class="fa fa-ellipsis-h"></i></a></li>
+									<li><a href="#"><i class="ti-arrow-right"></i></a></li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</section>
+
+            <div id="filter-sidebar" class="filter-sidebar">
+				<a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="ti-close"></i></a>
+				<div class="show-hide-sidebar">
+                    <form action="" method="post">
+                         <!-- Search Job -->
+                        <div class="sidebar-widgets">
+                            <div class="ur-detail-wrap">
+                                <div class="ur-detail-wrap-header">
+                                    <h4>Search Personnel Here</h4>
+                                </div>
+                                <div class="ur-detail-wrap-body">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select name="category" id="choose-city" class="form-control choose-city">
+                                            <option selected disabled class="text-muted"> Choose Category</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.id }}">{{ category.category }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /Search Job -->
+                        <!-- Compensation -->
+                        <div class="sidebar-widgets">
+                            <div class="ur-detail-wrap">
+
+                                <div class="ur-detail-wrap-header">
+                                    <h4>Qualifications</h4>
+                                </div>
+                                <div class="ur-detail-wrap-body">
+                                    <ul class="advance-list">
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="qualification" value="PHD" type="radio" id="1">
+                                                <label for="1"></label>
+                                            </span>
+                                            PHD
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="qualification" value="Bachelor" type="radio" id="2">
+                                                <label for="2"></label>
+                                            </span>
+                                            Bachelor's
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="qualification" value="Masters" type="radio" id="3">
+                                                <label for="3"></label>
+                                            </span>
+                                            Masters
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="qualification" value="Diploma" type="radio" id="4">
+                                                <label for="4"></label>
+                                            </span>
+                                            Diploma
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="qualification" value="Certificate" type="radio" id="4">
+                                                <label for="4"></label>
+                                            </span>
+                                            Certificate
+                                            <span class="pull-right">0</span>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /Compensation -->
+
+                        <!-- Experince -->
+                        <div class="sidebar-widgets">
+                            <div class="ur-detail-wrap">
+
+                                <div class="ur-detail-wrap-header">
+                                    <h4>Experince</h4>
+                                </div>
+                                <div class="ur-detail-wrap-body">
+                                    <ul class="advance-list">
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="experience"  value="1" type="radio" id="uy">
+                                                <label for="uy"></label>
+                                            </span>
+                                            0 - 1 Year
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="experience"  value="2" type="radio" id="io">
+                                                <label for="io"></label>
+                                            </span>
+                                            1 - 2 Year
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="experience"  value="4" type="radio" id="lo">
+                                                <label for="lo"></label>
+                                            </span>
+                                            2 - 4 Year
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="experience"  value="6" type="radio" id="kj">
+                                                <label for="kj"></label>
+                                            </span>
+                                            4 - 6 Year
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="experience"  value="6" type="radio" id="kj">
+                                                <label for="kj"></label>
+                                            </span>
+                                            Over 6 Year
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /Experince -->
+
+                        <!-- Job Type -->
+                        <div class="sidebar-widgets">
+                            <div class="ur-detail-wrap">
+
+                                <div class="ur-detail-wrap-header">
+                                    <h4>Job Type</h4>
+                                </div>
+                                <div class="ur-detail-wrap-body">
+                                    <ul class="advance-list">
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="job_type" value="Full Time" type="radio" id="1">
+                                                <label for="1"></label>
+                                            </span>
+                                            Full Time
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="job_type" value="Part Time" type="radio" id="2">
+                                                <label for="2"></label>
+                                            </span>
+                                            Part Time
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="job_type" value="Internship" type="radio" id="3">
+                                                <label for="3"></label>
+                                            </span>
+                                            Internship
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                        <li>
+                                            <span class="custom-checkbox">
+                                                <input name="job_type" value="Freelancer" type="radio" id="4">
+                                                <label for="4"></label>
+                                            </span>
+                                            Freelancer
+                                            <span class="pull-right">0</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /Job Type -->
+
+                        <!-- Location -->
+                        <div class="sidebar-widgets">
+                            <div class="ur-detail-wrap">
+
+                                <div class="ur-detail-wrap-header">
+                                    <h4>County</h4>
+                                </div>
+                                <div class="form-group">
+                                    <label>Choose County</label>
+                                    <select name="county" id="" class="choose-city form-control choose-city">
+                                        <option selected disabled class="text-muted"> Choose County</option>
+                                        {% for county  in counties %}
+                                            <option value="{{ county.id }}">{{ county.county }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /Popular Locations -->
+
+                        <!-- Location -->
+                        <div class="sidebar-widgets">
+                            <div class="ur-detail-wrap">
+
+                                <div class="ur-detail-wrap-header">
+                                    <h4>Region</h4>
+                                </div>
+                                <div class="form-group">
+                                    <label>Choose Region</label>
+                                    <select name="region" id="" class="choose-city form-control choose-city">
+                                        <option selected disabled class="text-muted"> Choose Region (Ward)</option>
+                                        {% for region  in regions %}
+                                            <option value="{{ region.id }}">{{ region.region }}->({{ region.ward }})</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- /Popular Locations -->
+                        <button type="submit" class="btn btn-primary full-width">Search</button>
+                    </form>
+				</div>
+			</div>
+{% endblock content %}
+{% block script %}
+            <script>
+				function openNav() {
+				  document.getElementById("filter-sidebar").style.width = 420+"px";
+				}
+
+				function closeNav() {
+				  document.getElementById("filter-sidebar").style.width = 0+"px";
+				}
+			</script>
+{% endblock script %}
