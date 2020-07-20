@@ -17,7 +17,7 @@ cryptography==2.9.2
 daphne==2.3.0
 decorator==4.4.2
 defusedxml==0.6.0
-Django==2.1.15
+Django==2.2.13
 django-allauth==0.39.1
 django-crispy-forms==1.7.2
 django-humanize==0.1.2
