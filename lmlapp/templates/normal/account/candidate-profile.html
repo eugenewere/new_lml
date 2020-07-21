@@ -128,6 +128,129 @@
                                     <!-- Start Friend List -->
                                     <div id="education" class="tab-pane fade">
                                         <div class="row">
+                                            <div class="modal fade" id="addneweducation" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+{#                                                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>#}
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <div class="row" style=" padding: 5px 15px">
+                                                          <form action="{% url 'LML:update_add_education' %}" method="post" enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                               <input style="display: none;" name="customer" type="text" class="form-control" value="{{ request.user.id }}">
+                                                              <label for="0" style="padding-left: 4px;">Choose Qualification</label>
+                                                              <div class=" me" style="padding:6px;" >
+                                                                  <select id="0" required name="qualifications" onchange="showEducation(this);" class=" qualifications form-control input-lg">
+                                                                    <option selected disabled="disabled">Qualifications</option>
+                                                                    <option value="Phd">Phd</option>
+                                                                    <option value="Masters">Masters</option>
+                                                                    <option value="Bachelor">Bachelor</option>
+                                                                    <option value="Diploma">Diploma</option>
+                                                                    <option value="Certificate">Certificate</option>
+                                                                 </select>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="uni col-md-12 col-sm-12">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon"><i class="fa fa-university"></i></span>
+                                                                        <select name="school" class="school choose-university form-control input-lg">
+                                                                            <option selected disabled="disabled">School</option>
+                                                                            {% for university in unis %}
+                                                                                <option value="{{ university }}">{{ university }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="phd col-md-12 col-sm-12">
+                                                                    <div class="input-group col-md-4 col-sm-12">
+                                                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                                        <select name="course" class="course choose-phd form-control input-lg">
+                                                                            <option selected disabled="disabled">Qualification, e.g. Phd in Arts</option>
+                                                                            {% for phd in phds %}
+                                                                                <option value="{{ phd }}">{{ phd }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="masters col-md-12 col-sm-12">
+                                                                    <div class="input-group col-md-4 col-sm-12">
+                                                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                                        <select name="course" class="course masters choose-masters form-control input-lg">
+                                                                            <option selected disabled="disabled">Qualification, e.g. Masters in
+                                                                                Arts
+                                                                            </option>
+                                                                            {% for master in masters %}
+                                                                                <option value="{{ master }}">{{ master }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="bachelor col-md-12 col-sm-12">
+                                                                    <div class="input-group col-md-4 col-sm-12">
+                                                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                                        <select name="course" class="course choose-bachelor form-control input-lg">
+                                                                            <option selected disabled="disabled">Qualification, e.g. Bachelor in
+                                                                                Arts
+                                                                            </option>
+                                                                            {% for bachelor in bachelors %}
+                                                                                <option value="{{ bachelor }}">{{ bachelor }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="diploma col-md-12 col-sm-12">
+                                                                    <div class="input-group col-md-4 col-sm-12">
+                                                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                                        <select name="course" class="course choose-diploma form-control input-lg">
+                                                                            <option selected disabled="disabled">Qualification, e.g. Diploma in
+                                                                                Arts
+                                                                            </option>
+                                                                            {% for diploma in diplomas %}
+                                                                                <option value="{{ diploma }}">{{ diploma }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="certificate col-md-12 col-sm-12">
+                                                                    <div class="input-group col-md-4 col-sm-12">
+                                                                        <span class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                                        <select name="course" class="course choose-certificate form-control input-lg">
+                                                                            <option selected disabled="disabled">Qualification, e.g. Certificate in Arts </option>
+                                                                            {% for cert in certificates %}
+                                                                                <option value="{{ cert }}">{{ cert }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="date col-md-12 col-sm-12">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon">Year of graduation</span>
+                                                                        <input name="graduation_date" type="date" class="form-control edu-start">
+                                                                    </div>
+                                                                </div>
+                                                                 <div style=" display:none; padding: 0; margin-top: 10px; " class="reg_no col-md-12 col-sm-12">
+                                                                         <div class="input-group">
+                                                                            <span class="input-group-addon">Registration number</span>
+                                                                            <input name="reg_number" type="text" class="form-control regno">
+                                                                         </div>
+                                                                     </div>
+                                                               </div>
+
+                                                            <div class="col-md-12 col-sm-12 ">
+                                                                <div class="row px-2">
+                                                                    <button type="submit" style="margin: 5px 15px;" class="btn btn-primary btn-sm  mycustombutton mx-2 pull-right">Save</button>
+{#                                                                    <button type="button" class="btn btn-danger mycustombutton mx-2" data-dismiss="modal">Close</button>#}
+                                                                </div>
+                                                            </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
                                             <form action="{% url 'LML:employee_education_detail_update' %}" method="POST">
                                             {% csrf_token %}
                                                 {% for education in educations %}
@@ -194,101 +317,99 @@
                                                                  });
                                                              }
                                                         </script>
-                                                    <div class="extra-field-box">
+                                                        <div class="extra-field-box">
                                                         <div class="multi-box">
                                                             <div class="dublicat-box">
                         {#                                        university ,course,regno#}
                                                                 <input type="text" hidden value="{{ education.id }}" name="education_id">
                                                                 <div  class="col-md-4 col-sm-12 row">
-                                                                    <label for="ksww{{ education.id }}">University</label>
-                                                                    <select id="ksww{{ education.id }}" name="school" class="choose-university form-control input-lg">
-                                                                        <option disabled="disabled">School</option>
-                                                                        {% for university in unis %}
-                                                                            <option {% if education.school == university %} selected {% endif %} value="{{ university }}">{{ university }}</option>
-                                                                        {% endfor %}
-                                                                    </select>
-                                                                    <div class="employer col-md-6 col-sm-12" style="width: 100%; padding-left: 0 !important;">
-                                                                        <label for="mfe{{ education.id }}">Registration Number</label>
-                                                                        <input required name="reg_number" value="{{education.reg_number}}" id="mfe{{ education.id }}" type="text" class="form-control w-100" placeholder="Registration Number">
+                                                                <label for="kswwd{{ education.id }}">University</label>
+                                                                <select id="kswwd{{ education.id }}" name="school" class="choose-university form-control input-lg">
+                                                                    <option disabled="disabled">School</option>
+                                                                    {% for university in unis %}
+                                                                        <option {% if education.school == university %} selected {% endif %} value="{{ university }}">{{ university }}</option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                                <div class="employer col-md-6 col-sm-12" style="width: 100%; padding-left: 0 !important;">
+                                                                    <label for="mfer{{ education.id }}">Registration Number</label>
+                                                                    <input required name="reg_number" value="{{education.reg_number}}" id="mfer{{ education.id }}" type="text" class="form-control w-100" placeholder="Registration Number">
+                                                                </div>
+                                                                </div>
+                                                                 {% if education.qualifications == 'Phd' %}
+                                                                    <div class=" col-md-4 col-sm-12">
+                                                                        <label for="kswee{{ education.id }}">Phd</label>
+                                                                         <select id="kswee{{ education.id }}" name="course" class="choose-phd form-control input-lg">
+                                                                            <option  disabled="disabled">Qualification, e.g. Phd in Arts</option>
+                                                                            {% for phd in phds %}
+                                                                                <option {% if education.course == phd %} selected {% endif %} value="{{ phd }}">{{ phd }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
                                                                     </div>
+                                                                 {% endif %}
+                                                                 {% if education.qualifications == 'Masters' %}
+                                                                    <div class=" col-md-4 col-sm-12">
+                                                                        <label for="kswklml{{ education.id }}">Masters</label>
+                                                                        <select id="kswklml{{ education.id }}" name="course" class="choose-masters form-control input-lg">
+                                                                            <option disabled="disabled">Qualification, e.g. Masters in Arts </option>
+                                                                            {% for master in masters %}
+                                                                                <option {% if education.course == masters %} selected {% endif %} value="{{ master }}">{{ master }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
                                                                     </div>
-                                                                     {% if education.qualifications == 'Phd' %}
-                                                                        <div  id=""  class=" col-md-4 col-sm-12">
-                                                                            <label for="kswe{{ education.id }}">Phd</label>
-                                                                             <select id="kswe{{ education.id }}" name="course" class="choose-phd form-control input-lg">
-                                                                                <option  disabled="disabled">Qualification, e.g. Phd in Arts</option>
-                                                                                {% for phd in phds %}
-                                                                                    <option {% if education.course == phd %} selected {% endif %} value="{{ phd }}">{{ phd }}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                     {% endif %}
-                                                                     {% if education.qualifications == 'Masters' %}
-                                                                        <div   class=" col-md-4 col-sm-12">
-                                                                            <label for="ksw{{ education.id }}">Masters</label>
-                                                                            <select id="ksw{{ education.id }}" name="course" class="choose-masters form-control input-lg">
-                                                                                <option selected disabled="disabled">Qualification, e.g. Masters in
-                                                                                    Arts
-                                                                                </option>
-                                                                                {% for master in masters %}
-                                                                                    <option {% if education.course == masters %} selected {% endif %} value="{{ master }}">{{ master }}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                     {% endif %}
-                                                                     {% if education.qualifications == 'Bachelor' %}
-                                                                        <div  id="ksw3{{ education.id }}"  class=" col-md-4 col-sm-12">
-                                                                            <label for="ksw3{{ education.id }}">Bachelors</label>
-                                                                            <select id="ksw3{{ education.id }}" name="course" class="choose-bachelor form-control input-lg">
-                                                                                <option selected disabled="disabled">Qualification, e.g. Bachelor in
-                                                                                    Arts
-                                                                                </option>
-                                                                                {% for bachelor in bachelors %}
-                                                                                    <option {% if education.course == bachelor %} selected {% endif %} value="{{ bachelor }}">{{ bachelor }}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                     {% endif %}
-                                                                     {% if education.qualifications == 'Diploma' %}
-                                                                        <div  id="ksw9"  class=" col-md-4 col-sm-12">
-                                                                            <label for="ksw9{{ education.id }}">Diploma</label>
-                                                                            <select id="ksw9{{ education.id }}" name="course" class="choose-diploma form-control input-lg">
-                                                                                <option selected disabled="disabled">Qualification, e.g. Diploma in
-                                                                                    Arts
-                                                                                </option>
-                                                                                {% for diploma in diplomas %}
-                                                                                    <option {% if education.course == diploma %} selected {% endif %} value="{{ diploma }}">{{ diploma }}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                     {% endif %}
-                                                                     {% if education.qualifications == 'Certificate' %}
-                                                                        <div  id=""  class=" col-md-4 col-sm-12">
-                                                                            <label for="ksw5{{ education.id }}">Certificate</label>
-                                                                            <select id="ksw5{{ education.id }}" name="course" class="choose-certificate form-control input-lg">
-                                                                                <option selected disabled="disabled">Qualification, e.g. Certificate in Arts </option>
-                                                                                {% for cert in certificates %}
-                                                                                    <option {% if education.course == cert %} selected {% endif %} value="{{ cert }}">{{ cert }}</option>
-                                                                                {% endfor %}
-                                                                            </select>
-                                                                        </div>
-                                                                     {% endif %}
+                                                                 {% endif %}
+                                                                 {% if education.qualifications == 'Bachelor' %}
+                                                                    <div class=" col-md-4 col-sm-12">
+                                                                        <label for="ksw3ll{{ education.id }}">Bachelors</label>
+                                                                        <select id="ksw3ll{{ education.id }}" name="course" class="choose-bachelor form-control input-lg">
+                                                                            <option disabled="disabled">Qualification, e.g. Bachelor in
+                                                                                Arts
+                                                                            </option>
+                                                                            {% for bachelor in bachelors %}
+                                                                                <option {% if education.course == bachelor %} selected {% endif %} value="{{ bachelor }}">{{ bachelor }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                 {% endif %}
+                                                                 {% if education.qualifications == 'Diploma' %}
+                                                                    <div class=" col-md-4 col-sm-12">
+                                                                        <label for="ksw9op{{ education.id }}">Diploma</label>
+                                                                        <select id="ksw9op{{ education.id }}" name="course" class="choose-diploma form-control input-lg">
+                                                                            <option  disabled="disabled">Qualification, e.g. Diploma in
+                                                                                Arts
+                                                                            </option>
+                                                                            {% for diploma in diplomas %}
+                                                                                <option {% if education.course == diploma %} selected {% endif %} value="{{ diploma }}">{{ diploma }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                 {% endif %}
+                                                                 {% if education.qualifications == 'Certificate' %}
+                                                                    <div class=" col-md-4 col-sm-12">
+                                                                        <label for="ksw5jl{{ education.id }}">Certificate</label>
+                                                                        <select id="ksw5jl{{ education.id }}" name="course" class="choose-certificate form-control input-lg">
+                                                                            <option disabled="disabled">Qualification, e.g. Certificate in Arts </option>
+                                                                            {% for cert in certificates %}
+                                                                                <option {% if education.course == cert %} selected {% endif %} value="{{ cert }}">{{ cert }}</option>
+                                                                            {% endfor %}
+                                                                        </select>
+                                                                    </div>
+                                                                 {% endif %}
 
 
-                                                                    <div id="" class="graduation col-md-12 col-sm-12" style="padding-left: 0">
-                                                                        <label for="edu-start{{ education.id }}">Year of graduation</label>
-{#                                                                            <span class="input-group-addon"></span>#}
-                                                                        <input name="graduation_date" value="{{ education.graduation_date|date:'Y-m-d' }}" type="date" id="edu-start{{ education.id }}" class="form-control">
-                                                                    </div>
+                                                                <div id="" class="graduation col-md-12 col-sm-12" style="padding-left: 0">
+                                                                    <label for="edu-startk{{ education.id }}">Year of graduation</label>
+                                                                    <input name="graduation_date" value="{{ education.graduation_date|date:'Y-m-d' }}" type="date" id="edu-startk{{ education.id }}" class="form-control">
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         </div>
                                                     </div>
                                                 {% endfor %}
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" style="display: flex;">
                                                     {% if educations %}
-                                                    <button type="submit" id="educupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
+                                                        <button type="submit" id="educupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                     {% endif %}
+                                                    <button type="button" data-toggle="modal" data-target="#addneweducation" class="update-btn custom-button" style="border-radius: 140px; background:#6e8f99 !important;">Add New Education</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -298,7 +419,90 @@
                                     <!-- Start Friend List -->
                                     <div id="experiencepanel" class="tab-pane fade">
                                         <div class="row">
-                                            <form action="{% url 'LML:employee_experience_detail_update'  %}" method="POST">
+                                            <div class="modal fade" id="addnewexperience" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+{#                                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>#}
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <div class="row" style=" padding: 5px 15px">
+                                                          <form action="{% url 'LML:update_add_experience' %}" method="post" enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                            <input style="display: none;" name="customer" type="text" class="form-control" value="{{ request.user.id }}">
+                                                            <div style="margin-top:8px;" id="employer"
+                                                                 class="employerwrapper col-md-12 col-sm-12">
+                                                                <label for="emplo">Company Employer Name</label>
+                                                                <input required name="employer_name" style="margin-bottom: 0;" id="emplo" type="text" class="form-control" placeholder="Employer's Name">
+                                                                <small id="lastname" class="form-text text-muted">
+                                                                    eg John doe.
+                                                                </small>
+                                                            </div>
+                                                            <div style="margin-top: 8px;" id="employercompany"
+                                                                 class="employerwrapper col-md-12 col-sm-12">
+                                                                <label for="emplocomp">Company Name</label>
+                                                                <input required name="company_name" style="margin-bottom: 0;" id="emplocomp" type="text" class="form-control" placeholder="Employer's Company">
+                                                                <small id="lastname" class="form-text text-muted">
+                                                                    eg abc company.
+                                                                </small>
+                                                            </div>
+                                                            <div style="margin-top: 8px;" id="employercompany"
+                                                                 class="employerwrapper col-md-12 col-sm-12">
+                                                                <label for="emplocompemail">Company email</label>
+                                                                <input required name="company_email" style="margin-bottom: 0;" id="emplocompemail" type="email" class="form-control" placeholder="Employer's email">
+                                                                <small id="lastname" class="form-text text-muted">
+                                                                    eg abc.example.org abc.example.com .
+                                                                </small>
+                                                            </div>
+                                                            <div style="margin-top: 8px;" id="employercompany"
+                                                                 class="employerwrapper col-md-12 col-sm-12">
+                                                                <label for="emplocomp4n">Company Phone</label>
+                                                                <input required name="company_phone" style="margin-bottom: 0;" id="emplocomp4n" type="text" class="form-control" placeholder="Employer's Phonenumber">
+                                                                <small id="lastname" class="form-text text-muted">
+                                                                    eg 07********.
+                                                                </small>
+                                                            </div>
+                                                            <div class="employerwrapper col-md-12 col-sm-12"
+                                                                 style="margin-top:8px;">
+                                                                <label for="kke">Position Held</label>
+                                                                <input required name="position_held" id="kke" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
+                                                            </div>
+                                                            <div class="employerwrapper col-md-12 col-sm-12" style="margin-top:8px;">
+                                                                <strong>Date</strong>
+                                                                <div class="col-md-12 col-sm-12">
+                                                                    <div class="input-group"  style="margin-bottom: 2px; display: flex !important;">
+                                                                        <label for="kevr1" style="padding:0px 51px; height: 51px;display: flex; align-items: center; justify-content: center;" class="input-group-addon">Date From</label>
+                                                                        <input required name="date_from" type="date" id="kevr1" class="exp-start form-control">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="employerwrapper col-md-12 col-sm-12" >
+                                                                    <div class="input-group" style="margin-bottom: 2px; display: flex !important;">
+                                                                        <label for="kevr2" style="padding:0px 51px; height: 51px;display: flex; align-items: center; justify-content: center;" class="input-group-addon">Date To</label>
+                                                                        <input required name="date_to" type="date" id="kevr2" class="exp-end form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="employerwrapper col-md-12 col-sm-12" style="margin-top:8px;">
+                                                                <label for="emplomsg"></label>
+                                                                <textarea style="max-width: 100%;" name="experience" id="emplomsg" class="form-control textarea" placeholder="Optional notes on the experience"></textarea>
+                                                            </div>
+
+
+                                                            <div class="col-md-12 col-sm-12 ">
+                                                                <button type="submit" class="btn btn-primary btn-sm pull-right mycustombutton">Save</button>
+                                                            </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+
+                                            <form action="{% url 'LML:employee_experience_detail_update' %}" method="POST">
                                                 {% csrf_token %}
                                                 {% for experience in experiences %}
                                                     <div class="col-md-12 col-sm-12 expcount" id="expparent{{ experience.id }}">
@@ -415,10 +619,12 @@
                                                         </script>
                                                     </div>
                                                 {% endfor %}
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" style="display: flex">
                                                     {% if experiences %}
                                                         <button type="submit" id="expupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                     {% endif %}
+                                                    <button type="button" data-toggle="modal" data-target="#addnewexperience" class="update-btn custom-button" style="border-radius: 140px; background:#6e8f99 !important;">Add New Experience</button>
+
                                                 </div>
                                             </form>
                                         </div>
@@ -428,6 +634,56 @@
                                     <!-- Start Friend List -->
                                     <div id="skills" class="tab-pane fade">
                                         <div class="row">
+                                            <div class="modal fade" id="addnewskills" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                              <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+{#                                                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>#}
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <div class="row" style=" padding: 5px 15px">
+                                                          <form action="{% url 'LML:update_skill_add' %}" method="post" enctype="multipart/form-data">
+                                                            {% csrf_token %}
+                                                              <div class="col-md-12 col-sm-12 " style="margin-bottom: 2px;">
+                                                                <div class="input-group" style="margin-bottom: 2px; display: flex !important;">
+                                                                    <span style="height: 51px;display: flex; justify-content: center; align-items: center;" class="input-group-addon"><i class="fas fa-hand-paper"></i></span>
+                                                                    <input required name="skill" type="text" class="form-control" placeholder="Skills, e.g. Css, Html...">
+                                                                </div>
+                                                                <small id="lastname" class="form-text text-muted">
+                                                                    eg Art and craft.
+                                                                </small>
+                                                            </div>
+                                                            <input style="display: none;" name="customer" type="text" class="form-control" value="{{ request.user.id }}">
+                                                            <div class="col-md-12 col-sm-12 ">
+                                                                <div class="input-group" style="margin-bottom: 8px; display: flex !important;">
+                                                                    <span style=" height: 51px; align-items: center; display: flex; justify-content: center;" class="input-group-addon"><i class="fas fa-user"></i></span>
+                                                                    <input required name="referee" id="ref" type="text" class="form-control" placeholder="Referee Name">
+                                                                </div>
+                                                                <small id="lastname" class="form-text text-muted">
+                                                                    eg Referee Name.
+                                                                </small>
+                                                            </div>
+                                                            <div class="col-md-12 col-sm-12 ">
+                                                                <div class="input-group" style="margin-bottom: 8px; display: flex !important;">
+                                                                    <span style="height: 51px;display: flex; align-items: center; justify-content: center;" class="input-group-addon"><i class="fas fa-mobile-phone"></i></span>
+                                                                    <input required name="referee_phonenumber" id="refh" type="text" class="form-control" placeholder="Referee Phone Number">
+                                                                </div>
+                                                                <small id="lastnamehh" class="form-text text-muted">
+                                                                    eg Referee Phone Number.
+                                                                </small>
+                                                            </div>
+                                                            <div class="col-md-12 col-sm-12 ">
+                                                                <button type="submit" class="btn btn-primary btn-sm pull-right mycustombutton">Save</button>
+                                                            </div>
+                                                          </form>
+                                                      </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
 
                                             <form action="{% url 'LML:employee_skills_detail_update' %}" method="POST">
                                                 {% csrf_token %}
@@ -455,11 +711,10 @@
                                                         </div>
                                                       </div>
                                                     </div>
-
-                                                   <div class="extra-field-box">
+                                                    <!-- Modal -->
+                                                    <div class="extra-field-box">
                                                         <div class="multi-box">
                                                             <div class="dublicat-box">
-
                                                                 <input name="skill_id" type="text" hidden value="{{ skill.id }}">
                                                                 <div class="col-md-4 col-sm-12 ">
                                                                     <label for="skillf{{ skill.id }}">Skill</label>
@@ -475,7 +730,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                   </div>
+                                                     </div>
                                                 </div>
                                                  <script type = "text/javascript">
                                                      function deleteSkill(e) {
@@ -518,25 +773,24 @@
                                                                 }
                                                              });
                                                      }
-                                                </script>
+                                                 </script>
                                                 {% endfor %}
 {#                                                extra#}
 
-                                                <div class="col-sm-12">
+                                                <div class="col-sm-12" style="display: flex;">
                                                     {% if skills %}
                                                         <button type="submit" id="skillbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                     {% endif %}
+                                                    <button type="button" data-toggle="modal" data-target="#addnewskills" class="update-btn custom-button" style="border-radius: 140px; background:#6e8f99 !important;">Add New Skill</button>
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
                                     <!-- End Friend List -->
 
-
-
                                     <!-- Start Settings -->
                                     <div id="settings" class="tab-pane fade">
-                                    <form action="{% url 'LML:employee_personal_details_update' %}" method="post" enctype="multipart/form-data">
+                                        <form action="{% url 'LML:employee_personal_details_update' %}" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <div class="row no-mrg">
                                             <h3>Edit Profile</h3>
@@ -677,12 +931,28 @@
 
                                             <div class="col-sm-12 col-md-12">
                                                 <h2 class="detail-title mrg-top-20">Social Profile</h2>
-                                                <div class="col-md-12 col-sm-12 " style="display: flex;">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
-                                                        <input name="account_url" value="{{ social.account_url }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                <div class="col-md-12 col-sm-12 ">
+                                                    <div class="row">
+                                                        <button data-toggle="modal" data-target="#addSocial" type="button" style="padding: 12px 15px; height: 50px; border-radius: 6px; margin-bottom: 5px;" class="btn btn-sm btn-success pull-right">Add an account</button>
                                                     </div>
-                                                    <button style="padding: 12px 15px; height: 50px; border-radius: 6px;" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
+                                                    <div class="row">
+                                                        {% if socials %}
+                                                            {% for social in socials %}
+                                                                <div style="display: flex;">
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-addon" ><i class="fab fa-linkedin"></i></span>
+                                                                        <input name="account_url" value="{{ social.account_url }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                                    </div>
+                                                                    <button type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>
+                                                                </div>
+                                                            {% endfor %}
+                                                         {% else %}
+                                                            <div class="col-md-12 col-sm-12 ">
+                                                                <p class="text-center">No social account</p>
+                                                            </div>
+                                                         {% endif %}
+                                                     </div>
+
                                                 </div>
                                             </div>
 
@@ -691,9 +961,44 @@
                                             </div>
                                         </div>
                                     </form>
+                                                                            <!-- Modal -->
+                                        <div class="modal fade" id="addSocial" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+{#                                                <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>#}
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body">
+                                                  <form action="{% url 'LML:update_add_social' %}" method="post">
+                                                      {% csrf_token %}
+                                                      <input style="display: none;" name="customer" type="text" class="form-control" value="{{ request.user.id }}">
+
+                                                      <div class="col-md-12 col-sm-12">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                                                            <input name="account_url" type="text" class="form-control" placeholder="Linkedin Link">
+                                                        </div>
+                                                        <small id="lastname" class="form-text text-muted">
+                                                            Your Linkedin Handle.
+                                                        </small>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 ">
+                                                        <div class="row px-2">
+                                                            <button type="submit" style="margin: 5px 15px;" class="btn btn-primary btn-sm  mycustombutton mx-2 pull-right">Save</button>
+{#                                                                    <button type="button" class="btn btn-danger mycustombutton mx-2" data-dismiss="modal">Close</button>#}
+                                                        </div>
+                                                    </div>
+                                                  </form>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                     </div>
                                 </div>
-                                    <!-- End Settings -->
+                                <!-- End Settings -->
                                 </div>
                                 <!-- Start All Sec -->
                         </div>
@@ -706,6 +1011,8 @@
 
 {% endblock content %}
 {% block script %}
+    <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
+
     <script>
         $(document).ready(function(){
             $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {

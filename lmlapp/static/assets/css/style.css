@@ -8616,3 +8616,10 @@ a.cl-box.pink {
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     border: 1px solid #abadaf !important;
 }
+.mycustombutton{
+	    padding: 10px 25px;
+    border-radius: 9px;
+}
+.modal .form-control{
+	margin-bottom: 0;
+}

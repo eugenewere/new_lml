@@ -389,14 +389,14 @@ def employersprofile(request):
     }
     return render(request, 'normal/account/employer-profile.html',context)
 
-
+@login_required()
 def employeeprofile(request):
     user = request.user.id
     customer = Customer.objects.filter(user_ptr_id=user).first()
     educations = Education.objects.filter(customer=customer)
     experiences = Experience.objects.filter(customer=customer)
     skills = Skills.objects.filter(customer=customer)
-    social = Social_account.objects.filter(customer=customer).first()
+    socials = Social_account.objects.filter(customer=customer)
 
     emShortlist = CompanyShortlistCustomers.objects.filter(customer=customer).count()
     unreadMessages = Message.objects.filter(reciever_id=user, status='UNREAD').count()
@@ -421,7 +421,7 @@ def employeeprofile(request):
         'skills': skills,
         'educations': educations,
         'experiences': experiences,
-        'social': social,
+        'socials': socials,
         'bachelors': qbfile.readlines(),
         'certificates': qbfile2.readlines(),
         'diplomas': qbfile3.readlines(),
@@ -1203,12 +1203,12 @@ def review_shortlisted_customer(request):
             sweetify.success(request, 'Success', text='Customer Rated Successfully', persistent='Ok')
             return redirect('LML:employer_dash')
         else:
-            sweetify.success(request, 'Error', text='Customer Not Rated', persistent='Ok')
+            sweetify.error(request, 'Error', text='Customer Not Rated', persistent='Ok')
         return redirect('LML:employer_dash')
 
     return
 
-
+@login_required()
 def generate_PDF(request, customer_id):
 
    employee = Customer.objects.filter(id=int(customer_id)).first()
@@ -1231,27 +1231,126 @@ def generate_PDF(request, customer_id):
    }
    return render(request, 'normal/Pdf_resume/employee_resume.html', context)
 
-
+@login_required()
 def employee_education_detail_update(request):
     education_ids = request.POST.getlist('education_id')
-
     schools = request.POST.getlist('school')
     courses = request.POST.getlist('course')
     graduation_dates = request.POST.getlist('graduation_date')
     regnos = request.POST.getlist('reg_number')
+    print(education_ids,schools,courses,graduation_dates,regnos)
 
     if request.method == 'POST':
         customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
-        for education_id, school, course, graduation_date, regno in zip(education_ids, schools, courses, graduation_dates, regnos):
-            Education.objects.filter(id=int(education_id)).update(
-                customer=customer,
+        if customer:
+
+            for education_id, school, course, graduation_date, regno in zip(education_ids, schools, courses, graduation_dates, regnos):
+                print(education_id, school, course, graduation_date, regno)
+                edu = Education.objects.filter(id=int(education_id)).first()
+                Education.objects.filter(id=edu.id).update(
+                    school=school,
+                    course=course,
+                    graduation_date=graduation_date,
+                    reg_number=regno,
+                    customer=customer,
+                )
+            sweetify.success(request, title='Success', text='Education Updated Successfully.', persistent='Continue')
+            return redirect('LML:employeeprofile')
+        else:
+            sweetify.error(request, 'Error', text='User Does Not Exist', persistent='Retry')
+    else:
+        sweetify.error(request, 'Error', text='Education Not Updated', persistent='Retry')
+        return redirect('LML:employeeprofile')
+
+@login_required()
+def update_add_skill(request):
+    if request.method == 'POST':
+        skill = request.POST.get('skill')
+        customer = request.POST.get('customer')
+        referee = request.POST.get('referee')
+        referee_phonenumber = request.POST.get('referee_phonenumber')
+        new_user = Customer.objects.filter(user_ptr_id=customer).first()
+        if new_user:
+            if not Skills.objects.filter(customer=customer, skill__exact=skill):
+                Skills.objects.create(
+                    customer=new_user,
+                    skill=skill,
+                    referee=referee,
+                    referee_phonenumber=referee_phonenumber
+                )
+                sweetify.success(request, 'Success', text='Successfully Added New Skill', persistent='Ok')
+            else:
+                sweetify.error(request, 'Error', text=str(skill)+' Skill Exists', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Adding New Skill', persistent='Ok')
+    return redirect('LML:employeeprofile')
+
+
+def update_add_experience(request):
+    if request.method == 'POST':
+        employer_name = request.POST.get('employer_name')
+        customer = request.POST.get('customer')
+        company_namee = request.POST.get('company_name')
+        company_email = request.POST.get('company_email')
+        company_phone = request.POST.get('company_phone')
+        position_held = request.POST.get('position_held')
+        date_from = request.POST.get('date_from')
+        date_to = request.POST.get('date_to')
+        experience = request.POST.get('experience')
+        new_user = Customer.objects.filter(user_ptr_id=customer).first()
+        if new_user:
+            Experience.objects.create(
+                customer=new_user,
+                employer_name=employer_name,
+                company_name=company_namee,
+                comapny_email=company_email,
+                company_phone=company_phone,
+                position_held=position_held,
+                date_from=date_from,
+                date_to=date_to,
+                experience=experience,
+            )
+            sweetify.success(request, 'Success', text='Successfully Added New Experience', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Adding New Experience', persistent='Ok')
+    return redirect('LML:employeeprofile')
+
+
+def update_add_education(request):
+    if request.method == 'POST':
+        qualification = request.POST.get('qualifications')
+        school = request.POST.get('school')
+        course = request.POST.get('course')
+        graduation_date = request.POST.get('graduation_date')
+        regno = request.POST.get('reg_number')
+        customer = request.POST.get('customer')
+        new_user = Customer.objects.filter(user_ptr_id=customer).first()
+        if new_user:
+            Education.objects.create(
+                customer=new_user,
+                qualifications=qualification,
                 school=school,
                 course=course,
                 graduation_date=graduation_date,
                 reg_number=regno,
             )
-        sweetify.success(request, title='Success', text='Education Updated Successfully.', persistent='Continue')
-        return redirect('LML:employeeprofile')
-    else:
-        sweetify.error(request, 'Error', text='Eeducation Not Updated', persistent='Retry')
-        return redirect('LML:employeeprofile')
+            sweetify.success(request, 'Success', text='Successfully Added New Education', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Adding New Education', persistent='Ok')
+    return redirect('LML:employeeprofile')
+
+
+def update_add_social(request):
+    if request.method == 'POST':
+        account_url = request.POST['account_url']
+        customer = request.POST.get('customer')
+        new_user = Customer.objects.filter(user_ptr_id=customer).first()
+        if new_user:
+            Social_account.objects.create(
+                customer=new_user,
+                account_url=account_url
+            )
+            sweetify.success(request, 'Success', text='Successfully Added New Social', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Adding New Social', persistent='Ok')
+    return redirect('LML:employeeprofile')

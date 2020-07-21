@@ -85,7 +85,10 @@ urlpatterns = [
     # pdf
     path('customer/resume/<int:customer_id>', views.generate_PDF, name='customer_resume_pdf'),
 
-
+    path('update/add/skill/dvdsjkxzmvnesdk/', views.update_add_skill, name='update_skill_add'),
+    path('update/add/s_experience/dvdsjksakjfvsdzxk/', views.update_add_experience, name='update_add_experience'),
+    path('update/add/s_education/dvdsjksakjfvsdzxk/', views.update_add_education, name='update_add_education'),
+    path('update/add/s_social/dvdsjksakjfvsdzxk/', views.update_add_social, name='update_add_social'),
 
 
 ]

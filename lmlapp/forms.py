@@ -15,6 +15,15 @@ class SkillsForm(forms.ModelForm):
 
 
 
+class EducationForm(forms.ModelForm):
+    class Meta:
+        model = Education
+        fields = ['course','customer','school', 'graduation_date', 'reg_number', ]
+
+
+
+
+
 
 
 class CompanyUserupdateForm(forms.ModelForm):

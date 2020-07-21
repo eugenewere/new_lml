@@ -20,33 +20,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lmlproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lmlproject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.babelrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/chatpannel.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/assets/messagelayoutcss.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/containers/chat.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/consumer.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/consumer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/filter.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/filter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/routing.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/routing.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-detail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/static/assets/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/static/assets/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/asgi.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/routing.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/routing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +150,7 @@
       <workItem from="1583481218889" duration="763000" />
       <workItem from="1583824520316" duration="179000" />
       <workItem from="1595239681978" duration="1649000" />
-      <workItem from="1595241699708" duration="31300000" />
+      <workItem from="1595241699708" duration="58684000" />
     </task>
     <servers />
   </component>
@@ -200,5 +181,9 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="186" y="60" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1595249020519" />
+    <state x="416" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595359603117">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="416" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1595359603117" />
   </component>
 </project>
