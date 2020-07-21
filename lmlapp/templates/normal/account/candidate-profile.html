@@ -791,176 +791,244 @@
                                     <!-- Start Settings -->
                                     <div id="settings" class="tab-pane fade">
                                         <form action="{% url 'LML:employee_personal_details_update' %}" method="post" enctype="multipart/form-data">
-                                        {% csrf_token %}
-                                        <div class="row no-mrg">
-                                            <h3>Edit Profile</h3>
-                                            <h2 class="detail-title mrg-top-20">Personal Information</h2>
-                                            <div class="edit-pro padd-top-25">
+                                            {% csrf_token %}
+                                            <div class="row no-mrg">
+                                                <h3>Edit Profile</h3>
+                                                <h2 class="detail-title mrg-top-20">Personal Information</h2>
+                                                <div class="edit-pro padd-top-25">
 
-                                                <div class="row">
-                                                    <div class="detail-pic">
-                                                        {% if request.user.is_authenticated %}
-                                                            <img class="blah img" id="blah" style="max-width: 100%; position: absolute; top: -7px;" src="{{customer.profile_image.url}}"  alt="" />
-                                                            <a style="bottom: -22px;" href="#"  class="detail-edit" title="edit">
-                                                                <label class="detail-edit" for="upload-pic"><i class="fa fa-upload fa-spin"></i></label>
-                                                            </a>
-                                                            <input value="{{customer.profile_image}}" style="position: relative; visibility: hidden" onchange="readURL(this)" type="file" name="profile_image" id="upload-pic" class="inputfile" />
-                                                            <script>
-                                                                function readURL(input) {
+                                                    <div class="row">
+                                                        <div class="detail-pic">
+                                                            {% if request.user.is_authenticated %}
+                                                                <img class="blah img" id="blah" style="max-width: 100%; position: absolute; top: -7px;" src="{{customer.profile_image.url}}"  alt="" />
+                                                                <a style="bottom: -22px;" href="#"  class="detail-edit" title="edit">
+                                                                    <label class="detail-edit" for="upload-pic"><i class="fa fa-upload fa-spin"></i></label>
+                                                                </a>
+                                                                <input value="{{customer.profile_image}}" style="position: relative; visibility: hidden" onchange="readURL(this)" type="file" name="profile_image" id="upload-pic" class="inputfile" />
+                                                                <script>
+                                                                    function readURL(input) {
 
-                                                                if (input.files && input.files[0]) {
-                                                                    var reader = new FileReader();
-                                                                     var disclaimer= document.getElementById("disclaimer");
-                                                                        reader.onload = function (element) {
-                                                                            $('.blah').attr('src', element.target.result).css('visibility', 'visible');
-                                                                            disclaimer.style.visibility = "hidden";
-                                                                        };
-                                                                        reader.readAsDataURL(input.files[0]);
+                                                                    if (input.files && input.files[0]) {
+                                                                        var reader = new FileReader();
+                                                                         var disclaimer= document.getElementById("disclaimer");
+                                                                            reader.onload = function (element) {
+                                                                                $('.blah').attr('src', element.target.result).css('visibility', 'visible');
+                                                                                disclaimer.style.visibility = "hidden";
+                                                                            };
+                                                                            reader.readAsDataURL(input.files[0]);
+                                                                            }
                                                                         }
-                                                                    }
-                                                            </script>
-                                                        {% else %}
-                                                            <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
-                                                            <a  style="max-width: 100%; position: absolute; top: -7px; bottom: -22px;" href="#" class="detail-edit" title="edit"><i class="fa fa-user fa-spin"></i></a>
-                                                        {% endif %}
+                                                                </script>
+                                                            {% else %}
+                                                                <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
+                                                                <a  style="max-width: 100%; position: absolute; top: -7px; bottom: -22px;" href="#" class="detail-edit" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                                                            {% endif %}
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>First Name</label>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>First Name</label>
 
-                                                    <input name="first_name" type="text" class="form-control" placeholder="First Name" value="{{ customer.first_name|title }}">
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Last Name</label>
-                                                    <input name="last_name" type="text" class="form-control" placeholder="Last Name" value="{{ customer.last_name|title }}">
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Gender</label>
-                                                    <input name="gender" type="text" class="form-control" placeholder="Gender" value="{{ customer.gender|title }}">
-                                                </div>
-                                                 <div class="col-md-12 col-sm-12" style="margin-top: 10px;">
-                                                    <div style=" display: block !important;" class="input-group">
-                                                        <label>Category</label>
-                                                        <select required name="category" id="category"  class="choose-category form-control input-lg">
-                                                            {% for category in categories %}
-                                                                <option  {% if category.id == customer.category.id %} selected {% endif %} value="{{ category.id }}"><span class="text-capitalize">{{ category.category }}</span></option>
+                                                        <input name="first_name" type="text" class="form-control" placeholder="First Name" value="{{ customer.first_name|title }}">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Last Name</label>
+                                                        <input name="last_name" type="text" class="form-control" placeholder="Last Name" value="{{ customer.last_name|title }}">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Gender</label>
+                                                        <input name="gender" type="text" class="form-control" placeholder="Gender" value="{{ customer.gender|title }}">
+                                                    </div>
+                                                     <div class="col-md-12 col-sm-12" style="margin-top: 10px;">
+                                                        <div style=" display: block !important;" class="input-group">
+                                                            <label>Category</label>
+                                                            <select required name="category" id="category"  class="choose-category form-control input-lg">
+                                                                {% for category in categories %}
+                                                                    <option  {% if category.id == customer.category.id %} selected {% endif %} value="{{ category.id }}"><span class="text-capitalize">{{ category.category }}</span></option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Username</label>
+                                                        <input name="username" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
+                                                    </div>
+                                                     <div class="col-md-4 col-sm-6" hidden>
+                                                        <label>Username</label>
+                                                        <input name="usernme" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Email</label>
+                                                        <input name="email" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6" hidden>
+                                                        <label>Email</label>
+                                                        <input name="emailix" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
+                                                    </div>
+
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Birth Day</label>
+                                                        <input value="{{ customer.date_of_birth|date:'Y-m-d' }}" placeholder="Date Of birth" type="date" class="form-control" name="date_of_birth">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Phone</label>
+                                                        <input name="phone_number" type="text" class="form-control" placeholder="Phone No" value="{{ customer.phone_number }}" >
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Marital Status</label>
+                                                        <select name="marital_status" id="marital" class="form-control input-lg" >
+                                                            <option {% if customer.marital_status == "Single" %} selected {% endif %} value="Single">Single</option>
+                                                            <option {% if customer.marital_status == "Married" %} selected {% endif %} value="Married">Married</option>
+                                                            <option {% if customer.marital_status == "Devorced" %} selected {% endif %} value="Devorced">Devorced </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Country</label>
+                                                        <input name="country" type="text" class="form-control"  value="{{customer.country}}" readonly placeholder="Country">
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>County</label>
+                                                        <select name="county" class="form-control input-lg choose-city">
+                                                            {% for county in counties %}
+                                                                <option {% if county.id == customer.county.id %} selected {% endif %} value="{{ county.id }}">{{ county.county }}</option>
                                                             {% endfor %}
                                                         </select>
                                                     </div>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Username</label>
-                                                    <input name="username" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
-                                                </div>
-                                                 <div class="col-md-4 col-sm-6" hidden>
-                                                    <label>Username</label>
-                                                    <input name="usernme" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
-                                                </div>
-
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Email</label>
-                                                    <input name="email" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
-                                                </div>
-                                                <div class="col-md-4 col-sm-6" hidden>
-                                                    <label>Email</label>
-                                                    <input name="emailix" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
-                                                </div>
-
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Birth Day</label>
-                                                    <input value="{{ customer.date_of_birth|date:'Y-m-d' }}" placeholder="Date Of birth" type="date" class="form-control" name="date_of_birth">
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Phone</label>
-                                                    <input name="phone_number" type="text" class="form-control" placeholder="Phone No" value="{{ customer.phone_number }}" >
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Marital Status</label>
-                                                    <select name="marital_status" id="marital" class="form-control input-lg" >
-                                                        <option {% if customer.marital_status == "Single" %} selected {% endif %} value="Single">Single</option>
-                                                        <option {% if customer.marital_status == "Married" %} selected {% endif %} value="Married">Married</option>
-                                                        <option {% if customer.marital_status == "Devorced" %} selected {% endif %} value="Devorced">Devorced </option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Country</label>
-                                                    <input name="country" type="text" class="form-control"  value="{{customer.country}}" readonly placeholder="Country">
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>County</label>
-                                                    <select name="county" class="form-control input-lg choose-city">
-                                                        {% for county in counties %}
-                                                            <option {% if county.id == customer.county.id %} selected {% endif %} value="{{ county.id }}">{{ county.county }}</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Region</label>
-                                                   <select name="region" class="form-control input-lg choose-city">
-                                                        {% for region in regions %}
-                                                            <option {% if region.id == customer.region.id %} selected {% endif %} value="{{ region.id }}">{{ region.region }} -> ({{ region.ward }})</option>
-                                                        {% endfor %}
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>LandMark</label>
-                                                    <input type="text" class="form-control" placeholder="LandMark" name="landmark" value="{{ customer.landmark }}">
-                                                </div>
-                                                <div class="col-md-12 col-sm-12">
-                                                    <div class="input-group" style="margin-bottom: 8px">
-                                                        <label>Job Type</label>
-                                                        <select id="job_type" required name="job_type"  class="marital2 form-control input-lg" style="margin-bottom: 0">
-                                                            <option selected>Choose Job Type</option>
-                                                            <option {% if customer.job_type == "Full Time" %} selected {% endif %} value="Full Time">Full Time</option>
-                                                            <option {% if customer.job_type == "Part Time" %} selected {% endif %} value="Part Time">Part Time</option>
-                                                            <option {% if customer.job_type == "Internship" %} selected {% endif %} value="Internship">Internship</option>
-                                                            <option {% if customer.job_type == "Freelancer" %} selected {% endif %} value="Freelancer">Freelancer</option>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Region</label>
+                                                       <select name="region" class="form-control input-lg choose-city">
+                                                            {% for region in regions %}
+                                                                <option {% if region.id == customer.region.id %} selected {% endif %} value="{{ region.id }}">{{ region.region }} -> ({{ region.ward }})</option>
+                                                            {% endfor %}
                                                         </select>
-                                                        <small id="marital" class="form-text text-muted">
-                                                            Job Type.
-                                                        </small>
+                                                    </div>
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>LandMark</label>
+                                                        <input type="text" class="form-control" placeholder="LandMark" name="landmark" value="{{ customer.landmark }}">
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <div class="input-group" style="margin-bottom: 8px">
+                                                            <label>Job Type</label>
+                                                            <select id="job_type" required name="job_type"  class="marital2 form-control input-lg" style="margin-bottom: 0">
+                                                                <option selected>Choose Job Type</option>
+                                                                <option {% if customer.job_type == "Full Time" %} selected {% endif %} value="Full Time">Full Time</option>
+                                                                <option {% if customer.job_type == "Part Time" %} selected {% endif %} value="Part Time">Part Time</option>
+                                                                <option {% if customer.job_type == "Internship" %} selected {% endif %} value="Internship">Internship</option>
+                                                                <option {% if customer.job_type == "Freelancer" %} selected {% endif %} value="Freelancer">Freelancer</option>
+                                                            </select>
+                                                            <small id="marital" class="form-text text-muted">
+                                                                Job Type.
+                                                            </small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <label>About you</label>
+                                                        <textarea name="biography" rows="10" class="form-control" placeholder="Write Something">{{customer.biography}}</textarea>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 col-sm-12">
-                                                    <label>About you</label>
-                                                    <textarea name="biography" rows="10" class="form-control" placeholder="Write Something">{{customer.biography}}</textarea>
-                                                </div>
-                                            </div>
 
 
 
-                                            <div class="col-sm-12 col-md-12">
-                                                <h2 class="detail-title mrg-top-20">Social Profile</h2>
-                                                <div class="col-md-12 col-sm-12 ">
-                                                    <div class="row">
-                                                        <button data-toggle="modal" data-target="#addSocial" type="button" style="padding: 12px 15px; height: 50px; border-radius: 6px; margin-bottom: 5px;" class="btn btn-sm btn-success pull-right">Add an account</button>
-                                                    </div>
-                                                    <div class="row">
-                                                        {% if socials %}
-                                                            {% for social in socials %}
-                                                                <div style="display: flex;">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-addon" ><i class="fab fa-linkedin"></i></span>
-                                                                        <input name="account_url" value="{{ social.account_url }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                <div class="col-sm-12 col-md-12">
+                                                    <h2 class="detail-title mrg-top-20">Social Profile</h2>
+                                                    <div class="col-md-12 col-sm-12 ">
+                                                        <div class="row">
+                                                            <button data-toggle="modal" data-target="#addSocial" type="button" style="padding: 12px 15px; height: 50px; border-radius: 6px; margin-bottom: 5px;" class="btn btn-sm btn-success pull-right">Add an account</button>
+                                                        </div>
+                                                        <div class="row" id="socialcontainerr">
+                                                            {% if socials %}
+                                                                {% for social in socials %}
+                                                                    <div class="socialwrapperr" style="display: flex;" id="socia-{{ social.id }}">
+                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon" ><i class="fab fa-linkedin"></i></span>
+                                                                            <input name="account_url" value="{{ social.account_url }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                                            <input style="display: none;" name="account_id" value="{{ social.id }}" type="text" class="form-control" >
+                                                                        </div>
+                                                                        <button data-toggle="modal" data-target="#delsocial{{ social.id }}" type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>
+                                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="delsocial{{ social.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                                          <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                              <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                  <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                              </div>
+                                                                              <div class="modal-body">
+                                                                                <p> Are you sure you want to delete Social account in: <strong>{{ social.account_url }}</strong></p>
+                                                                                <div class="container-fluid ">
+                                                                                    <button  data-socialid="{{ social.id }}" data-parenttt="socia-{{ social.id }}" type="button"  class="btn btn-danger btn-sm delsocialbtn" style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                        </div>
                                                                     </div>
-                                                                    <button type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>
-                                                                </div>
-                                                            {% endfor %}
-                                                         {% else %}
-                                                            <div class="col-md-12 col-sm-12 ">
-                                                                <p class="text-center">No social account</p>
-                                                            </div>
-                                                         {% endif %}
-                                                     </div>
+                                                                    <script type = "text/javascript">
+                                                                         $('.delsocialbtn').each(function () {
+                                                                             $(this).click(function (e) {
+                                                                                 console.log(this);
+                                                                                 console.log('MEE');
+                                                                                 var k = this.id;
+                                                                                 var parentId = this.dataset.parenttt;
+                                                                                 var social_id = this.dataset.socialid;
+                                                                                 $.ajax({
+                                                                                    method : 'POST',
+                                                                                    url :  "{% url 'LML:deletesocial' %}",
+                                                                                    data : {
+                                                                                        'social_id': social_id,
+                                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                                    },
+                                                                                    success : function(response){
+                                                                                        if (response.results ==='success'){
+                                                                                            $('#delsocial'+ {{ social.id }} ).modal('hide');
+                                                                                            $('body').removeClass('modal-open');
+                                                                                            $('.modal-backdrop').remove();
+                                                                                            $('#'+parentId).fadeOut(function () {
+                                                                                                 $('#'+parentId).remove();
+                                                                                                 if($('.socialwrapperr').length === 0){
+                                                                                                    var html = '<div class="col-md-12 col-sm-12 " style="padding:50px; ">'+
+                                                                                                                    '<p class="text-center">No social account</p>'+
+                                                                                                               ' </div>';
+                                                                                                    $(html).appendTo($('#socialcontainerr'));
+                                                                                                 }
+                                                                                            })
 
+                                                                                        }else {
+                                                                                             $('.massmodal').modal('hide');
+                                                                                             $('body').removeClass('modal-open');
+                                                                                             $('.modal-backdrop').remove();
+                                                                                             setTimeout(function () {
+                                                                                                $('#errorText').text(response['errortxt']);
+                                                                                                $('#errorModal').modal('show')
+                                                                                             },900)
+                                                                                        }
+                                                                                    },
+                                                                                    error : function(response){
+                                                                                        console.log(response);
+
+                                                                                    }
+                                                                                 });
+                                                                             })
+                                                                         })
+                                                                    </script>
+                                                                {% endfor %}
+                                                             {% else %}
+                                                                <div class="col-md-12 col-sm-12 ">
+                                                                    <p class="text-center">No social account</p>
+                                                                </div>
+                                                             {% endif %}
+                                                         </div>
+
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-12">
+                                                    <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                 </div>
                                             </div>
-
-                                            <div class="col-sm-12">
-                                                <button type="submit" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                        </form>
                                                                             <!-- Modal -->
                                         <div class="modal fade" id="addSocial" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                           <div class="modal-dialog">

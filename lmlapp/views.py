@@ -439,7 +439,8 @@ def employeeprofile(request):
 def employee_personal_details_update(request):
     user = request.user.id
     customer = Customer.objects.filter(user_ptr_id=user).first()
-    account_url = request.POST['account_url']
+    account_urls = request.POST.getlist('account_url')
+    account_ids = request.POST.getlist('account_id')
     emailix = request.POST['emailix']
     usernme = request.POST['usernme']
     if request.method == 'POST':
@@ -447,9 +448,10 @@ def employee_personal_details_update(request):
         print(form.errors)
         if form.is_valid():
             form.save()
-            Social_account.objects.filter(customer=customer).update_or_create(
-                account_url=account_url,
-            )
+            for account_url, account_id in zip(account_urls, account_ids):
+                Social_account.objects.filter(customer=customer, id=int(account_id)).update(
+                    account_url=account_url,
+                )
             sweetify.success(request, title='Success', text='Personal Account Updated Successfully.', persistent='Continue')
             return redirect('LML:employeeprofile')
         else:
@@ -1354,3 +1356,27 @@ def update_add_social(request):
         else:
             sweetify.error(request, 'Error', text='Error Adding New Social', persistent='Ok')
     return redirect('LML:employeeprofile')
+
+
+def deletesocial(request):
+    if request.method == 'POST' and request.is_ajax():
+        social_id =  request.POST['social_id']
+        social = Social_account.objects.filter(id=int(social_id)).first()
+        print(social)
+        if social:
+            # social.delete()
+            data = {
+                'results': 'success',
+                'success': 'Social deleted'
+            }
+            return JsonResponse(data, safe=False)
+        else:
+            data = {
+                'results': 'error',
+                'errortxt': 'Error Deleting Your Social'
+            }
+            return JsonResponse(data, safe=False)
+    data = {
+
+    }
+    return JsonResponse(data, safe=False)
