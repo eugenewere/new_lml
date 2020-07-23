@@ -85,12 +85,12 @@
 /*button style*/
 .custom-button {
   /*background: #07b107;*/
-  border-radius: 15px;
+  border-radius: 7px;
   /*padding: 20px 60px;*/
   color: #fff;
   text-decoration: none;
   /*font-size: 1.45em;*/
-  margin: 0 15px;
+  /*margin: 0 15px;*/
 }
 .custom-button2 {
   /*background: #07b107;*/

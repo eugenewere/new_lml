@@ -22,9 +22,8 @@
 			<section class="detail-desc">
 				<div class="container">
 
-					<div class="ur-detail-wrap top-lay">
-
-						<div class="ur-detail-box">
+					<div class="ur-detail-wrap top-lay row " style="flex-wrap: wrap; margin: 0 auto;">
+						<div class="ur-detail-box col-xs-12 col-sm-12 col-md-12 col-lg-10 mb-md-3 mb-sm-3">
 
 							<div class="ur-thumb">
 								<img src="{{customer.profile_image.url}}" class="img-responsive" alt="" />
@@ -37,19 +36,21 @@
                                     <span class="ur-designation " style=" text-transform: capitalize;"> <b>Skills:</b> {% for skill in skills %}{{ skill }},{% endfor %}</span>
                                 {% endif %}
 								<div class="rateing" style="margin-top: 12px;">
-                                    {% if social %}
-									    <a href="{{social}}"><i style="font-size: 20px;" class="fab fa-linkedin"></i></a>
-                                    {% endif %}
+                                    {% for social in socials %}
+									    <a data-toggle="tooltip" data-placement="top" title="Linkedin: {{ social.account_url }}" href="{{social.account_url}}"><i style="font-size: 20px;" class="fab fa-linkedin"></i></a>
+                                    {% endfor %}
 								</div>
 							</div>
 
 						</div>
+						<div class="ur-detail-btn col-xs-12 col-sm-12 col-md-12 col-lg-2  py-4">
+                            <div class="row">
 
-						<div class="ur-detail-btn">
-							<a  href="{% url 'LML:employeeprofile' %}#settings" class="custom-button btn btn-warning mrg-bot-10 full-width"><i class="ti-thumb-up mrg-r-5"></i>Edit Account</a><br>
-							<a href="{% url 'LML:employee_dash' %}" class="custom-button btn btn-info full-width"><i class="ti-dashboard mrg-r-5"></i>Dashboard</a>
+
+							<a  href="{% url 'LML:employeeprofile' %}#settings" class="custom-button btn btn-warning mrg-bot-10 full-width" style="width: 100%;"><i class="ti-thumb-up mrg-r-5"></i>Edit Account</a><br>
+							<a href="{% url 'LML:employee_dash' %}" class="custom-button btn btn-info full-width" style="width: 100%;"><i class="ti-dashboard mrg-r-5"></i>Dashboard</a>
+                            </div>
 						</div>
-
 					</div>
 
 				</div>
@@ -212,7 +213,7 @@
 												</div>
 												<div class="form-group">
 													<label>Message</label>
-													<textarea rows="9" name="message" class="form-control"></textarea>
+													<textarea required rows="9" name="message" class="form-control"></textarea>
 												</div>
 												<button type="submit" class="btn btn-primary" style="border-radius: 140px;">Submit</button>
 											</form>

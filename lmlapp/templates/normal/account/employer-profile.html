@@ -23,10 +23,10 @@
                         <div class="detail-pic">
                             {% if request.user.is_authenticated %}
                                 <img src="{{company.logo.url}}" class="img" alt="" />
-                                <a style="left: 35%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                                <a style="left: 43%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
                             {% else %}
                                 <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
-                                <a style="left: 35%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
+                                <a style="left: 43%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
                             {% endif %}
                         </div>
 {#                        <div class="detail-status"><span>Active Now</span></div>#}
@@ -52,24 +52,24 @@
                             <div class="col-md-5 col-sm-5">
                                 <ul class="detail-footer-social">
                                     {% if social.facebook %}
-                                       <li> <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a></li>
+                                       <li> <a data-toggle="tooltip" data-placement="top" title="Link: {{social.facebook}}" href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a></li>
                                     {% endif %}
                                     {% if social.facebook %}
-                                       <li><a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a></li>
+                                       <li><a data-toggle="tooltip" data-placement="top" title="Link: {{ social.facebook }}" href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a></li>
                                     {% endif %}
                                     {% if social.instagram %}
-                                       <li><a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a></li>
+                                       <li><a data-toggle="tooltip" data-placement="top" title="Link: {{ social.instagram }}" href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a></li>
                                     {% endif %}
                                     {% if social.twitter %}
-                                       <li><a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a></li>
+                                       <li><a data-toggle="tooltip" data-placement="top" title="Link: {{ social.twitter }}" href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a></li>
                                     {% endif %}
                                     {% if social.googlr_plus %}
-                                       <li><a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a></li>
+                                       <li><a data-toggle="tooltip" data-placement="top" title="Link: {{ social.googlr_plus }}" href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a></li>
                                     {% endif %}
                                 </ul>
                             </div>
                             <div class="col-md-7 col-sm-7">
-                                <div class="detail-pannel-footer-btn pull-right">
+                                <div class="detail-pannel-footer-btn pull-right" style="display: flex; justify-content: flex-end;">
                                     <a href="{% url 'LML:employerdetails' %}" data-toggle="tooltip"  class="footer-btn grn-btn custom-button" style=border-radius:140px;" title="">View Details</a>
 {#                                    <a href="#" class="footer-btn blu-btn" title="">Save Draft</a>#}
                                 </div>
@@ -86,11 +86,11 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="full-card">
                       <div class="deatil-tab-employ tool-tab">
-							<ul class="nav simple nav-tabs" id="simple-design-tab">
-								<li class="active"><a href="#about">About</a></li>
-								<li><a href="#address">Company Info</a></li>
-								<li><a href="#settings">Settings</a></li>
-								<li><a href="#password">Password</a></li>
+							<ul class="nav simple nav-tabs " style="display: flex; justify-content: center; flex-wrap: wrap;" id="simple-design-tab">
+								<li class="active"><a data-toggle="pill" href="#about">About</a></li>
+								<li><a data-toggle="pill" href="#address">Company Info</a></li>
+								<li><a data-toggle="pill" href="#settings">Settings</a></li>
+								<li><a data-toggle="pill" href="#password">Password</a></li>
 							</ul>
 							<!-- Start All Sec -->
 							<div class="tab-content">
@@ -256,7 +256,7 @@
                                                     <label>Date Created</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon orangebg font-12"> Date Created</span>
-                                                       <input name="date_created" value="{{ company.date_created|date:'Y-m-d' }}" style="margin-bottom:0" data-dd-theme="vanilla" placeholder="Company Start Date" type="text" id="dob" data-lang="en" data-large-mode="true" data-min-year="1900" data-max-year="<script>var date = new Date; var year = date.getFullYear();document.write(year);</script>" data-disabled-days="08/17/2017,08/18/2017" data-id="datedropper-0"  class="form-control" readonly="">
+                                                       <input name="date_created" value="{{ company.date_created|date:'Y-m-d' }}" style="margin-bottom:0"  placeholder="Company Start Date" type="date" class="form-control" >
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 col-sm-6">
@@ -292,44 +292,167 @@
                                                     <label>Landmark</label>
                                                     <input value="{{ company.landmark }}" name="landmark" type="text" class="form-control" placeholder="Landmark">
                                                 </div>
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Facebook</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fab fa-facebook-f"></i></span>
-                                                        <input name="facebook" value="{{ social.facebook }}" type="text" class="form-control" placeholder="Facebook Link">
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-md-4 col-sm-6">
-                                                    <label>Google+</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fab fa-google-plus"></i></span>
-                                                        <input name="googlr_plus" value="{{ social.googlr_plus }}" type="text" class="form-control" placeholder="Google+ Link">
+{#                                                {% if social.facebook %}#}
+                                                    <div class="col-md-4 col-sm-6" >
+                                                        <label>Facebook</label>
+                                                        <div style="display: flex">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"><i class="fab fa-facebook-f"></i></span>
+                                                                <input name="facebook" value="{{ social.facebook }}" type="text" class="form-control" placeholder="Facebook Link">
+                                                            </div>
+{#                                                            <button data-toggle="modal" data-target="#delsocial{{ social.id }}" type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>#}
+                                                            <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="delsocial{{ social.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                                              <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                  <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                      <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                  </div>
+                                                                                  <div class="modal-body">
+                                                                                    <p> Are you sure you want to delete Social account in: <strong>{{ social.account_url }}</strong></p>
+                                                                                    <div class="container-fluid ">
+                                                                                        <button  data-socialid="{{ social.id }}" data-parenttt="socia-{{ social.id }}" type="button"  class="btn btn-danger btn-sm delsocialbtn" style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                         </div>
                                                     </div>
-                                                </div>
+{#                                                {% endif %}#}
 
+
+{#                                                {% if social.googlr_plus %}#}
+                                                    <div class="col-md-4 col-sm-6">
+                                                        <label>Google+</label>
+                                                        <div style="display: flex">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon"><i class="fab fa-google-plus"></i></span>
+                                                                <input name="googlr_plus" value="{{ social.googlr_plus }}" type="text" class="form-control" placeholder="Google+ Link">
+                                                            </div>
+{#                                                            <button data-toggle="modal" data-target="#delsocialgoogleplus" type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>#}
+                                                            <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="delsocialgoogleplus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                                              <div class="modal-dialog">
+                                                                                <div class="modal-content">
+                                                                                  <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                      <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                  </div>
+                                                                                  <div class="modal-body">
+                                                                                    <p> Are you sure you want to delete Social account in: <strong>{{ social.account_url }}</strong></p>
+                                                                                    <div class="container-fluid ">
+                                                                                        <button  data-socialid="{{ social.id }}" data-parenttt="socia-{{ social.id }}" type="button"  class="btn btn-danger btn-sm delsocialbtn" style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
+                                                         </div>
+                                                    </div>
+{#                                                {% endif %}#}
+
+
+{#                                                {% if social.twitter %}#}
                                                 <div class="col-md-4 col-sm-6">
                                                     <label>Twitter</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fab fa-twitter"></i></span>
-                                                        <input name="twitter" value="{{ social.twitter }}" type="text" class="form-control" placeholder="Twitter Link">
-                                                    </div>
+                                                     <div style="display: flex">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fab fa-twitter"></i></span>
+                                                            <input name="twitter" value="{{ social.twitter }}" type="text" class="form-control" placeholder="Twitter Link">
+                                                        </div>
+{#                                                        <button data-toggle="modal" data-target="#delsocialgoogleplus" type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>#}
+                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="delsocialgoogleplus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <p> Are you sure you want to delete Social account in: <strong>{{ social.account_url }}</strong></p>
+                                                                <div class="container-fluid ">
+                                                                    <button  data-socialid="{{ social.id }}" data-parenttt="socia-{{ social.id }}" type="button"  class="btn btn-danger btn-sm delsocialbtn" style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                     </div>
                                                 </div>
+{#                                                {% endif %}#}
+
+
+{#                                                {% if social.instagram %}#}
                                                 <div class="col-md-4 col-sm-6">
                                                     <label>Instagram</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fab fa-instagram"></i></span>
-                                                        <input name="instagram" value="{{ social.instagram }}" type="text" class="form-control" placeholder="Instagram Link">
-                                                    </div>
+                                                     <div style="display: flex">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fab fa-instagram"></i></span>
+                                                            <input name="instagram" value="{{ social.instagram }}" type="text" class="form-control" placeholder="Instagram Link">
+                                                        </div>
+{#                                                         <button data-toggle="modal" data-target="#delsocialgoogleplus" type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>#}
+                                                         <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="delsocialgoogleplus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <p> Are you sure you want to delete Social account in: <strong>{{ social.account_url }}</strong></p>
+                                                                <div class="container-fluid ">
+                                                                    <button  data-socialid="{{ social.id }}" data-parenttt="socia-{{ social.id }}" type="button"  class="btn btn-danger btn-sm delsocialbtn" style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                     </div>
                                                 </div>
+{#                                                {% endif %}#}
 
+
+{#                                                {% if social.linkedin %}#}
                                                 <div class="col-md-4 col-sm-6">
                                                     <label>Linkedin</label>
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
-                                                        <input name="linkedin" value="{{ social.linkedin }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                    <div style="display: flex">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                                                            <input name="linkedin" value="{{ social.linkedin }}" type="text" class="form-control" placeholder="Linkedin Link">
+                                                        </div>
+{#                                                        <button data-toggle="modal" data-target="#delsocialgoogleplus" type="button" class="btn btn-sm btn-danger m-2" style="padding: 13px; margin: 5px; height: 43px; border-radius: 7px;"><i class="fa fa-trash"></i></button>#}
+                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="delsocialgoogleplus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <p> Are you sure you want to delete Social account in: <strong>{{ social.account_url }}</strong></p>
+                                                                <div class="container-fluid ">
+                                                                    <button  data-socialid="{{ social.id }}" data-parenttt="socia-{{ social.id }}" type="button"  class="btn btn-danger btn-sm delsocialbtn" style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                </div>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+{#                                                {% endif %}#}
+
+
                                                 <div class="col-md-12 col-sm-12">
                                                     <label>Brief Description</label>
                                                     <textarea required  name="brief_details" class="form-control" placeholder="Write Something">{{ company.brief_details }}</textarea>
@@ -345,22 +468,26 @@
 
 
                                 <div id="password" class="tab-pane fade">
-                                    <h2 class=" page-header py-4">Password Reset</h2>
+                                    <h2 class=" page-header py-4">Password Change</h2>
                                     <form  action="{% url 'LML:employer_change_password' %}" method="POST">
                                         {% csrf_token %}
                                         <div class="col-sm-12 py-5 d-flex flex-column">
-                                            <div class="col-md-12 mb-3">
+                                            <div class="col-md-12 mb-3" style="position:relative;">
                                               <label for="validationCustom04"> Current Password</label>
-                                              <input type="password" name="old_password" class="form-control" id="validationCustom04" placeholder=" Current Password" required>
+                                              <input style="position: relative; width: 100%;" type="password" name="old_password" class="form-control" id="validationCustom04" placeholder=" Current Password" required>
                                                 <small id="passwordHelpBlock" class="form-text text-muted">
                                                   Your password must be 8-20 characters long, contain letters and numbers.
                                                     <br>
                                                     {{ form.old_password.errors }}
                                                 </small>
+                                                 <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                    <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                                    <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                                 </div>
 
                                             </div>
 
-                                            <div class="col-md-12 mb-3">
+                                            <div class="col-md-12 mb-3" style="position: relative; width: 100%;">
                                               <label for="validationCustom05">New Password</label>
                                               <input name="new_password1" type="password" class="form-control" id="validationCustom05" placeholder="New Password" required>
                                                 <small id="passwordHelpBlock" class="form-text text-muted">
@@ -368,10 +495,14 @@
                                                      <br>
                                                     {{ form.new_password1.errors }}
                                                 </small>
+                                                <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                    <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                                    <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                                 </div>
 
                                             </div>
 
-                                            <div class="col-md-12 mb-3">
+                                            <div class="col-md-12 mb-3" style="position: relative; width: 100%;">
                                               <label for="validationCustom05">Retype Password</label>
                                               <input name="new_password2" type="password" class="form-control" id="validationCustom09" placeholder="Retype Your Password" required>
                                                 <small id="passwordHelpBlocks" class="form-text text-muted">
@@ -379,6 +510,10 @@
                                                      <br>
                                                     {{ form.new_password2.errors }}
                                                 </small>
+                                                <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                    <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11 "></i>
+                                                    <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                                 </div>
 
                                             </div>
                                         </div>
@@ -402,5 +537,17 @@
          CKEDITOR.replace( 'brief_details',{
               removePlugins: [  'Image', ],
          } );
+          $(document).ready(function(){
+            $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
+
+                localStorage.setItem('activeTab3', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab3');
+            if(activeTab){
+                $('#simple-design-tab a[href="' + activeTab + '"]').tab('show');
+            }
+
+        });
+
     </script>
 {% endblock script %}

@@ -48,28 +48,28 @@ All custom js files contents are below
 	
 	/*------ Grid Slider ----*/
 	$('.grid-slide').slick({
-	  slidesToShow:3,
-	  arrows:false,
-	  autoplay:true,
-	  infinite: true,
-	  responsive: [
-		{
-		  breakpoint: 768,
-		  settings: {
-			arrows:false,
-			centerMode: true,
-			slidesToShow:1
-		  }
-		},
-		{
-		  breakpoint: 480,
-		  settings: {
-			arrows: false,
-			centerPadding: '0px',
-			slidesToShow: 1
-		  }
-		}
-	  ]
+		  slidesToShow:4,
+		  arrows:false,
+		  autoplay:true,
+		  infinite: true,
+		  responsive: [
+			{
+			  breakpoint: 768,
+			  settings: {
+				arrows:false,
+				centerMode: true,
+				slidesToShow:1
+			  }
+			},
+			{
+			  breakpoint: 480,
+			  settings: {
+				arrows: false,
+				centerPadding: '0px',
+				slidesToShow: 1
+			  }
+			}
+		  ]
 	});
 	
 	/*------ Grid Slider ----*/
@@ -236,3 +236,20 @@ All custom js files contents are below
 
 			
 })(jQuery);
+function changeToText(e) {
+	var input = $(e).parent().parent().find('input');
+	$(input).attr('type', 'text')
+	jQuery(e).hide('fast',function () {
+		jQuery(e).parent().find('.k12').show('fast');
+	})
+
+
+}
+function changeToPassowrd(e) {
+	var input = $(e).parent().parent().find('input');
+	$(input).attr('type', 'password')
+	jQuery(e).hide('fast',function () {
+		jQuery(e).parent().find('.k11').show('fast');
+	});
+
+}

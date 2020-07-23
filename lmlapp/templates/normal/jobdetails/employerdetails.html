@@ -16,9 +16,8 @@
 			<section class="detail-desc">
 				<div class="container">
 
-					<div class="ur-detail-wrap top-lay">
-
-						<div class="ur-detail-box">
+					<div class="ur-detail-wrap top-lay row" style="flex-wrap: wrap; margin: 0 auto;">
+						<div class="ur-detail-box col-xs-12 col-sm-12 col-md-12 col-lg-10 ">
 
 							<div class="ur-thumb">
                                 {% if request.user.is_authenticated %}
@@ -28,30 +27,30 @@
                                 {% endif %}
 							</div>
                             {% if request.user.is_authenticated %}
-							    <div class="ur-caption">
-								<h4 class="ur-title">{{company.company_name}}</h4>
-								<p class="ur-location"><i class="ti-location-pin mrg-r-5"></i>{{company.county|title }} {{ company.region|title  }}</p>
-								<span class="ur-designation mrg-top-10">Category: {{company.category}}</span><br>
-								<span class="ur-designation mrg-top-10">Entity: {{company.bizness_entity_type}}</span>
-                                <div class="rateing " style="margin-top: 12px;">
-                                    {% if social.facebook %}
-                                        <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a>
-                                    {% endif %}
-                                    {% if social.facebook %}
-                                        <a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a>
-                                    {% endif %}
-                                    {% if social.instagram %}
-                                        <a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a>
-                                    {% endif %}
-                                    {% if social.twitter %}
-                                        <a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a>
-                                    {% endif %}
-                                    {% if social.googlr_plus %}
-                                        <a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a>
-                                    {% endif %}
+							    <div class="ur-caption row">
+                                    <h4 class="ur-title">{{company.company_name}}</h4>
+                                    <p class="ur-location"><i class="ti-location-pin mrg-r-5"></i>{{company.county|title }} {{ company.region|title  }}</p>
+                                    <span class="ur-designation mrg-top-10">Category: {{company.category}}</span><br>
+                                    <span class="ur-designation mrg-top-10">Entity: {{company.bizness_entity_type}}</span>
+                                    <div class="rateing " style="margin-top: 12px;">
+                                        {% if social.facebook %}
+                                            <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a>
+                                        {% endif %}
+                                        {% if social.facebook %}
+                                            <a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a>
+                                        {% endif %}
+                                        {% if social.instagram %}
+                                            <a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a>
+                                        {% endif %}
+                                        {% if social.twitter %}
+                                            <a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a>
+                                        {% endif %}
+                                        {% if social.googlr_plus %}
+                                            <a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a>
+                                        {% endif %}
 
-								</div>
-							</div>
+                                    </div>
+                                </div>
                             {% else %}
                                 <div class="ur-caption">
 								<h4 class="ur-title">ABC Co-orporation</h4>
@@ -69,9 +68,8 @@
                             {% endif %}
 
 						</div>
-
-						<div class="ur-detail-btn">
-							<a href="{% url 'LML:employersprofile' %}" class="custom-button btn btn-warning mrg-bot-10 full-width"><i class="ti-thumb-up mrg-r-5"></i>Edit profile</a><br>
+						<div class="ur-detail-btn col-xs-12 col-sm-12 col-md-12 col-lg-2 py-4 ">
+                            <a style="margin-top: 15px;" href="{% url 'LML:employersprofile' %}" class="custom-button btn btn-warning mrg-bot-10 full-width"><i class="ti-thumb-up mrg-r-5"></i>Edit profile</a><br>
 							<a href="{% url 'LML:employer_dash' %}" class="custom-button btn btn-info full-width"><i class="ti-dashboard mrg-r-5"></i>Dashboard</a>
 						</div>
 					</div>

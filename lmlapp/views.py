@@ -283,16 +283,16 @@ def login_user(request, source):
                 if user is not None:
                     if  user.is_active and user.is_superuser:
                         login(request, user)
-                        sweetify.success(request, title='Welcome Admin', text='Welcome Back', persistent='Continue')
+                        sweetify.success(request, title='Welcome Admin', text='Welcome Back', persistent='Continue', timer=1500)
                         return redirect('LMLAdmin:home')
                     if user.is_active:
                         if Company.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
-                            sweetify.success(request, title='Welcome to Labour Market Link', text='You successfully Logged in.', persistent='Continue')
+                            sweetify.success(request, title='Welcome to Labour Market Link', text='You successfully Logged in.', persistent='Continue', timer=1500)
                             return redirect('LML:employerdetails')
                         if Customer.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
-                            sweetify.success(request, title='Welcome to Labour Market Link', text='You successfully Logged in.', persistent='Continue')
+                            sweetify.success(request, title='Welcome to Labour Market Link', text='You successfully Logged in.', persistent='Continue', timer=1500)
                             return redirect('LML:employeedetails')
                 else:
                     sweetify.error(request, 'Error', text='Invalid Username and Password', persistent='Retry')
@@ -306,18 +306,18 @@ def login_user(request, source):
                 if user is not None:
                     if  user.is_active and user.is_superuser:
                         login(request, user)
-                        sweetify.success(request, title='Welcome Admin', text='Welcome Back', persistent='Continue')
+                        sweetify.success(request, title='Welcome Admin', text='Welcome Back', persistent='Continue', timer=1500)
                         return redirect('LMLAdmin:home')
                     if user.is_active:
                         if Company.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
                             sweetify.success(request, title='Welcome to Labour Market Link',
-                                             text='You successfully Logged in.', persistent='Continue')
+                                             text='You successfully Logged in.', persistent='Continue', timer=1500)
                             return redirect('LML:employerdetails')
                         if Customer.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
                             sweetify.success(request, title='Welcome to Labour Market Link',
-                                             text='You successfully Logged in.', persistent='Continue')
+                                             text='You successfully Logged in.', persistent='Continue', timer=1500)
                             return redirect('LML:employeedetails')
                 else:
                     sweetify.error(request, 'Error', text='Invalid Email and Password', persistent='Retry')
@@ -345,12 +345,14 @@ def employer_change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
-            sweetify.success(request, title='Success', text='Password Changed.', persistent='Continue')
+            sweetify.success(request, title='Success', text='Successfully Password Changed.', persistent='Continue')
             return redirect("LML:employersprofile")
         else:
             form = PasswordChangeForm(request.user)
-            sweetify.error(request, 'Error', text='Password not Changed', persistent='Retry')
-            return render(request, 'normal/account/employer-profile.html', {'form':form})
+            sweetify.error(request, 'Error',
+                           text='Password not Changed \n 1).Password did not match \n 2) Wrong Current Password' + str(
+                               form.errors), persistent='Retry')
+            return redirect("LML:employersprofile")
     else:
         form = PasswordChangeForm(request.user)
         return redirect("LML:employersprofile")
@@ -603,13 +605,13 @@ def employeedetails(request):
     educations = Education.objects.filter(customer=customer)
     experiences = Experience.objects.filter(customer=customer)
     skills = Skills.objects.filter(customer=customer)
-    social = Social_account.objects.filter(customer=customer)
+    socials = Social_account.objects.filter(customer=customer)
     context = {
         'customer':customer,
         'skills':skills,
         'educations':educations,
         'experiences':experiences,
-        'social':social,
+        'socials':socials,
         'title':"Account Details"
     }
     return render(request, 'normal/account/candidate-detail.html', context)
@@ -863,16 +865,43 @@ def companypaymentpackage(request, pricing_id):
     }
     return render(request,'normal/companypricing/subscribetoplan.html', context)
 
-
+@login_required()
 def employer_dash(request):
     user = request.user.id
     company = Company.objects.filter(user_ptr_id=user).first()
     social = CompanySocialAccount.objects.filter(company=company).first()
     customers = CompanyShortlistCustomers.objects.filter(company=company)
+    # premium_customers = CompanyShortlistCustomers.objects.filter(company=company, customer_rank_status='PREMIUM')
+    # basic_customers = CompanyShortlistCustomers.objects.filter(company=company, customer_rank_status='BASIC')
+    # ultimate_customers = CompanyShortlistCustomers.objects.filter(company=company, customer_rank_status='ULTIMATE')
+    basic_customers=[]
+    for customer in Customer.objects.filter(rank_status ='BASIC'):
+        c_c1 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer)
+        for ccc1 in c_c1:
+            basic_customers.append(ccc1.customer)
+    premium_customers=[]
+    for customer in Customer.objects.filter(rank_status ='PREMIUM'):
+        c_c2 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer)
+        for ccc2 in c_c2:
+            premium_customers.append(ccc2.customer)
+    ultimate_customers=[]
+    for customer in Customer.objects.filter(rank_status ='ULTIMATE'):
+        c_c3 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer)
+        for ccc3 in c_c3:
+            ultimate_customers.append(ccc3.customer)
+
+
+
+    print(len(basic_customers))
+
     context={
         'company': company,
         'social': social,
-        'customers':customers,
+        'customers': customers,
+        'title': company.company_name+' Dash',
+        'premium_customers': premium_customers,
+        'basic_customers': basic_customers,
+        'ultimate_customers': ultimate_customers,
     }
     return render(request, 'normal/dashboard/employer-dash.html', context)
 
@@ -931,8 +960,7 @@ def employee_dash(request):
     context={
         'customer': customer,
         'social': social,
-        # 'customers':customers,
-        'msg_comapanies':msg_companies
+        'msg_comapanies': msg_companies
     }
     return render(request, 'normal/dashboard/employee-dash.html', context)
 
@@ -1213,7 +1241,7 @@ def review_shortlisted_customer(request):
 @login_required()
 def generate_PDF(request, customer_id):
 
-   employee = Customer.objects.filter(id=int(customer_id)).first()
+   employee = Customer.objects.filter(user_ptr_id=int(customer_id)).first()
    experiences = Experience.objects.filter(customer=employee)
    educations = Education.objects.filter(customer=employee)
    skills = Skills.objects.filter(customer=employee)
@@ -1380,3 +1408,21 @@ def deletesocial(request):
 
     }
     return JsonResponse(data, safe=False)
+
+
+def employee_change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            sweetify.success(request, title='Success', text='Successfuly Password Changed.', persistent='Continue')
+            return redirect("LML:employeeprofile")
+        else:
+            form = PasswordChangeForm(request.user)
+            print(form.error_messages)
+            sweetify.error(request, 'Error', text='Password not Changed \n 1).Password did not match \n 2) Wrong Current Password'+str(form.errors), persistent='Retry')
+            return redirect("LML:employeeprofile")
+    else:
+        form = PasswordChangeForm(request.user)
+        return redirect("LML:employeeprofile")

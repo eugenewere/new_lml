@@ -28,7 +28,7 @@ SECRET_KEY = 'q%49#i*jdc@_g!q)le4ot79b9kdpa+aclq25832vrh18pg)4#='
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+# 192.168.100.2
 
 # Application definition
 

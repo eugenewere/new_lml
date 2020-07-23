@@ -113,7 +113,7 @@ class Customer(get_user_model()):
     disability_status =models.CharField(choices=DISABILITY_STATUS, default='NOT_DISABLED', max_length=200, null=True, blank=False)
 
     def __str__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+        return '%s %s %s' % (self.first_name, self.last_name, self.rank_status)
 
     class Meta:
         verbose_name = 'Customer'
@@ -335,7 +335,8 @@ class CompanyShortlistCustomers(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s' % (self.company.company_name)
+        return '%s %s' % (self.company.company_name, self.customer.first_name)
+    # def customerShortlist(self, company, customer):
 
 
 

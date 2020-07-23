@@ -52,14 +52,16 @@
 {#                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>#}
 {#                                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>#}
 {#                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>#}
-                                        {% if social %}
-                                        <li><a href="{{ social }}"><i class="fab fa-linkedin"></i></a></li>
-                                        {% endif %}
+                                        {% for social in socials %}
+                                            <li>
+                                                <a data-toggle="tooltip" data-placement="top" title="Linkedin: {{ social.account_url }}" target="_blank" href="{{ social.account_url }}"><i class="fab fa-linkedin"></i></a>
+                                            </li>
+                                        {% endfor %}
 {#                                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>#}
                                     </ul>
                                 </div>
                                 <div class="col-md-7 col-sm-7">
-                                    <div class="detail-pannel-footer-btn pull-right">
+                                    <div class="detail-pannel-footer-btn pull-right" style="display: flex; justify-content: flex-end;">
                                         <a href="{% url 'LML:employeedetails' %}" class="footer-btn grn-btn" title="View Details" style="border-radius: 140px;">View Details</a>
 {#                                        <a href="#" class="footer-btn blu-btn" title="">Save Draft</a>#}
                                     </div>
@@ -95,13 +97,14 @@
                             </div>
 {#                                        deleteerrormodal#}
                           <div class="deatil-tab-employ tool-tab">
-                                <ul class="nav simple nav-tabs" id="simple-design-tab">
-                                    <li class="active"><a data-toggle="pill" href="#about">About</a></li>
-                                    <li><a data-toggle="pill" href="#address">Address</a></li>
-                                    <li><a data-toggle="pill" href="#settings">Personal Details</a></li>
-                                    <li><a data-toggle="pill" href="#education">Educations</a></li>
-                                    <li><a data-toggle="pill" href="#experiencepanel">Experiences</a></li>
-                                    <li><a data-toggle="pill" href="#skills">Skills</a></li>
+                                <ul style="display: flex; justify-content: center; flex-wrap: wrap;" class="nav simple nav-tabs nav-tabs-justified" id="simple-design-tab">
+                                    <li class="active "><a data-toggle="pill" href="#about">About</a></li>
+                                    <li class=""><a data-toggle="pill" href="#address">Address</a></li>
+                                    <li class=""><a data-toggle="pill" href="#settings">Personal Details</a></li>
+                                    <li class=""><a data-toggle="pill" href="#education">Educations</a></li>
+                                    <li class=""><a data-toggle="pill" href="#experiencepanel">Experiences</a></li>
+                                    <li class=""><a data-toggle="pill" href="#skills">Skills</a></li>
+                                    <li class=""><a data-toggle="pill" href="#password">Password Change</a></li>
                                 </ul>
 
                                 <!-- Start All Sec -->
@@ -111,6 +114,61 @@
                                         <p>{{ customer.biography }}</p>
                                     </div>
                                     <!-- End About Sec -->
+                                    <div id="password" class="tab-pane fade">
+                                        <h2 class=" page-header py-4">Password Change</h2>
+                                        <form  action="{% url 'LML:employee_change_password' %}" method="POST">
+                                            {% csrf_token %}
+                                            <div class="col-sm-12 py-5 d-flex flex-column">
+                                                <div class="col-md-12 mb-3" style="position:relative;">
+                                                  <label for="validationCustom04"> Current Password</label>
+                                                  <input style="position: relative; width: 100%;" type="password" name="old_password" class="form-control" id="validationCustom04" placeholder=" Current Password" required>
+                                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                                      Your password must be 8-20 characters long, contain letters and numbers.
+                                                        <br>
+                                                        {{ form.old_password.errors }}
+                                                    </small>
+                                                     <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                        <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                                        <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                                     </div>
+
+                                                </div>
+
+                                                <div class="col-md-12 mb-3" style="position: relative; width: 100%;">
+                                                  <label for="validationCustom05">New Password</label>
+                                                  <input name="new_password1" type="password" class="form-control" id="validationCustom05" placeholder="New Password" required>
+                                                    <small id="passwordHelpBlock" class="form-text text-muted">
+                                                      Your password must be 8-20 characters long, contain letters and numbers.
+                                                         <br>
+                                                        {{ form.new_password1.errors }}
+                                                    </small>
+                                                    <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                        <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                                        <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                                     </div>
+
+                                                </div>
+
+                                                <div class="col-md-12 mb-3" style="position: relative; width: 100%;">
+                                                  <label for="validationCustom05">Retype Password</label>
+                                                  <input name="new_password2" type="password" class="form-control" id="validationCustom09" placeholder="Retype Your Password" required>
+                                                    <small id="passwordHelpBlocks" class="form-text text-muted">
+                                                      Your password must be 8-20 characters long, contain letters and numbers.
+                                                         <br>
+                                                        {{ form.new_password2.errors }}
+                                                    </small>
+                                                    <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                        <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11 "></i>
+                                                        <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                                     </div>
+
+                                                </div>
+                                            </div>
+                                           <div class="col-sm-12">
+                                                <button type="submit" class="update-btn custom-button" style="border-radius:140px;">Save</button>
+                                           </div>
+                                        </form>
+                                    </div>
 
                                     <!-- Start Address Sec -->
                                     <div id="address" class="tab-pane fade">
@@ -327,7 +385,7 @@
                                                                 <select id="kswwd{{ education.id }}" name="school" class="choose-university form-control input-lg">
                                                                     <option disabled="disabled">School</option>
                                                                     {% for university in unis %}
-                                                                        <option {% if education.school == university %} selected {% endif %} value="{{ university }}">{{ university }}</option>
+                                                                        <option {% if university|safe == education.school|safe  %} selected {% endif %} value="{{ university }}">{{ university }}</option>
                                                                     {% endfor %}
                                                                 </select>
                                                                 <div class="employer col-md-6 col-sm-12" style="width: 100%; padding-left: 0 !important;">

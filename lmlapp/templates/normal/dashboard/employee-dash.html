@@ -31,7 +31,7 @@
     {% endblock %}
 {% block content %}
     <!-- Title Header Start -->
-    <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: White; ">
+    <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: white; ">
         <div class="container">
 
             <div class="col-md-8">
@@ -54,7 +54,6 @@
                             {% if company.rank_status == "UNDEFINED" %}
                                 <li><div class="verified-action-error">{{company.rank_status|title}}</div></li>
                             {% endif %}
-
                         </ul>
                     </div>
                 </div>
@@ -88,185 +87,36 @@
         </div>
     </section>
     <div class="clearfix"></div>
-			<!-- Title Header End -->
-
-
-
+    <!-- Title Header End -->
     <!-- ========== Begin: Brows job Category ===============  -->
     <section class="brows-job-category gray-bg">
-        <div class="" style="padding: 60px 20px;">
-             <!-- Sidebar Start -->
-            <div class="col-md-3 col-sm-12">
-                <div class="sidebar right-sidebar">
-
-                   <div class="side-widget">
-                        <h2 class="side-widget-title">Messages <span style="margin-left: auto;" class="badge badge-danger badge-pill">0</span></h2>
-                        <div class="widget-text padd-0">
-                            <ul>
-                                <li><a href="">
-                                    Messages
-                                    <span class="pull-right">0</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                   </div>
-                   <div class="side-widget">
-                        <h2 class="side-widget-title">Messages <span style="margin-left: auto;" class="badge badge-danger badge-pill">0</span></h2>
-                        <div class="widget-text padd-0">
-                            <ul>
-                                <li><a href="{% url 'LML:employee_dash_message' request.user.username %}">
-                                    Messages
-                                    <span class="pull-right">0</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                   </div>
-
-                    <div class="side-widget">
-                        <h2 class="side-widget-title">Documents </h2>
-                        <div class="widget-text padd-0">
-                            <ul>
-                                <li><a href="{% url 'LML:customer_resume_pdf' request.user.id %}">
-                                    {{ customer.first_name|title }} CV
-                                    <span class="pull-right"></span></a>
-                                </li>
-                            </ul>
-                        </div>
-                   </div>
-
-                   <div class="side-widget">
-                        <h2 class="side-widget-title">Payment</h2>
-                        <div class="widget-text padd-0">
-                            <ul>
-                                <li><a href="">
-
-                                    Payment History
-                                    <span class="pull-right">0</span></a>
-                                </li>
-                            </ul>
-                        </div>
-                   </div>
+        <div class="" style="padding: 60px 20px; height: 100vh;">
+            <div class="col-sm-12" >
+                <div class="row" style="padding: 10px 5px; display: flex !important; justify-content: flex-end; align-items: center; ">
+                    <a style=" margin-left: 3px; " href="{% url 'LML:employeedetails' %}" class="custom-button btn btn-success "><i class="fa fa-user mrg-r-5"></i>Details</a>
+                    <a style=" margin-left: 3px" href="{% url 'LML:employee_dash_message' request.user.username %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
+                    <a style="margin: 3px;" href="{% url 'LML:customer_resume_pdf' request.user.id %}" class="custom-button btn btn-warning "><i class="fa fa-file-pdf mrg-r-5"></i>Cv</a>
 
                 </div>
-            </div>
-            <!-- Sidebar End -->
-            <div class="col-md-9 col-sm-12 " style="margin-bottom: 30px;">
-                <div class="full-card">
+                <div class="row">
+                   <div class="deatil-tab-employ tool-tab container " style="background: white;" >
+                        <ul class="nav simple nav-tabs" id="simple-design-tab">
+                            <li class="active"><a data-toggle="pill" href="#about">Payment History</a></li>
+                        </ul>
 
-                    <div class="card-header">
-                        <div class="row mrg-0">
-
-                            <div class="col-md-4 col-sm-4">
-                                <ol class="breadcrumb pull-left">
-                                    <li><a href="{% url 'LML:home' %}"><i class="fa fa-home"></i></a></li>
-                                    <li>Shortlist</li>
-                                    <li>All Candidates</li>
-                                </ol>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card-body" style="padding: 0;">
-                        <article class="advance-search-job" style="padding: 0;">
-                            <div class="row no-mrg">
-                                <div id="frame">
-                                    <div id="sidepanel">
-                                        <div id="profile">
-                                            <div class="wrap">
-                                                <img id="profile-img" src="{{customer.profile_image.url}}" class="online" alt="" />
-                                                <p>{{customer.first_name|title}} {{customer.last_name|title}}</p>
-                                                <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
-                                                <div id="status-options">
-                                                    <ul>
-                                                        <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
-                                                    </ul>
-                                                </div>
-                                                <div id="expanded">
-                                                    <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
-                                                    <input name="twitter" type="text" value="mikeross" />
-                                                    <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
-                                                    <input name="twitter" type="text" value="ross81" />
-                                                    <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
-                                                    <input name="twitter" type="text" value="mike.ross" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div id="search">
-                                            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
-                                            <input type="text" placeholder="Search contacts..." />
-                                        </div>
-                                        <div id="contacts">
-                                            <ul>
-                                                {% for company in msg_comapanies %}
-                                                    <li class="contact">
-                                                        <div class="wrap">
-                                                            <span class="contact-status online"></span>
-                                                            <img src="{{company.logo.url}}" alt="" />
-                                                            <div class="meta">
-                                                                <p class="name">{{company.company_name}}</p>
-                                                                <p class="preview">You just got LITT up, Mike.</p>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-                                                {% endfor %}
-
-
-                                            </ul>
-                                        </div>
-                                        <div id="bottom-bar">
-                                            <button id="addcontact"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
-                                            <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button>
-                                        </div>
-                                    </div>
-                                    {% for company in msg_comapanies %}
-                                        <div class="content">
-                                            <div class="contact-profile">
-                                                <img src="{{company.logo.url}}" alt="" />
-                                                <p>{{company.company_name}}</p>
-                                                <div class="social-media">
-                                                    <i class="fa fa-facebook" aria-hidden="true"></i>
-                                                    <i class="fa fa-twitter" aria-hidden="true"></i>
-                                                    <i class="fa fa-instagram" aria-hidden="true"></i>
-                                                </div>
-                                            </div>
-                                            <div class="messages">
-                                                <ul id="chat-log{{ company.id }}">
-
-
-                                                </ul>
-                                            </div>
-                                            <div class="message-input">
-                                                <div class="wrap">
-                                                    <form  id="chatformee{{ company.id }}" method="POST">
-                                                        {% csrf_token %}
-                                                        <input name="sender" id="sender{{ company.id }}" type="text" hidden value="{{ request.user.username }}">
-                                                        <input name="reciever" id="receiver{{ company.id }}" type="text" hidden value="{{ company.username }}">
-                                                        <input name="message" type="text" id="chat-message-input{{ company.id }}" placeholder="Write your message..." />
-                                                        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
-                                                        <button type="submit"  id="chat-message-submit{{ company.id }}"><i class="fa fa-paper-plane" ></i></button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    {% endfor %}
+                          <!-- Start All Sec -->
+                        <div class="tab-content" style="height: 500px;overflow-x: hidden; overflow-y: scroll;">
+                            <div id="about" class="tab-pane fade in active" style="height: 100%;">
+                                <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">
+                                    <h3 style="text-align: center;">No Payment Made</h3>
                                 </div>
                             </div>
-
-                        </article>
-                    </div>
-                </div>
-                <!-- Ad banner -->
-                <div class="row">
-                    <div class="ad-banner">
-                        <img src="http://via.placeholder.com/728x90" class="img-responsive" alt="">
-                    </div>
+                            <!-- End About Sec -->
+                        </div>
+                          <!-- End Settings -->
+                   </div>
                 </div>
             </div>
-{#        </div>#}
-
-
-
         </div>
     </section>
     <!-- ========== Begin: Brows job Category End ===============  -->
@@ -302,6 +152,17 @@
                     $('.totop a').fadeOut();
                 }
             });
+
+        });
+        $(document).ready(function(){
+            $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
+
+                localStorage.setItem('activeTab2', $(e.target).attr('href'));
+            });
+            var activeTab = localStorage.getItem('activeTab2');
+            if(activeTab){
+                $('#simple-design-tab a[href="' + activeTab + '"]').tab('show');
+            }
         });
     </script>
 {% endblock script %}

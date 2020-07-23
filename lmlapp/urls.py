@@ -2,7 +2,12 @@ from django.conf.urls import url
 from django.urls import path, re_path
 
 from . import views
-# from .views import EmployerCustomerShortlist
+import random, string
+
+
+def id_generator(size=122, chars=string.ascii_lowercase + string.digits):
+   return ''.join(random.choice(chars) for _ in range(size))
+
 
 app_name = 'LML'
 urlpatterns = [
@@ -14,7 +19,7 @@ urlpatterns = [
     path('employeeShortlistGraph/', views.EmployerCustomerShortlist, name='employee_shortlist_graph'),
     path('employeeShortlistGraphtemplate/', views.EmployerCustomerShortlistTemplate, name='employee_shortlist_graph_template'),
 
-    path('signup/', views.signup_initial, name="signup_initial"),
+    path('signup', views.signup_initial, name="signup_initial"),
     path('signupcompany/', views.signup_company_initial, name="signup_company_initial"),
     path('signupemployee/', views.signup_employee_initial, name="signup_employee_initial"),
 
@@ -43,6 +48,7 @@ urlpatterns = [
     path('employerdetails/', views.employerdetails, name="employerdetails"),
 
     path('employer/user_account/change_password', views.employer_change_password, name='employer_change_password'),
+    path('employee/user_account/change_password', views.employee_change_password, name='employee_change_password'),
 
     path('companypricing/', views.companypricing, name="companypricing"),
     path('contactus/', views.contactus, name="contactus"),
