@@ -419,7 +419,7 @@ nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
     color: #ccc;
 }
 .rate:not(:checked) > label:before {
-    content: '★ ';
+    content: '★';
 }
 .rate > input:checked ~ label {
     color:#FFDF00;

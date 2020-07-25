@@ -900,8 +900,10 @@ def employer_dash(request):
         'customers': customers,
         'title': company.company_name+' Dash',
         'premium_customers': premium_customers,
+        # 'premium_customers': Customer.objects.all(),
         'basic_customers': basic_customers,
         'ultimate_customers': ultimate_customers,
+        # 'ultimate_customers': Customer.objects.all(),
     }
     return render(request, 'normal/dashboard/employer-dash.html', context)
 
@@ -1007,6 +1009,7 @@ def all_premium_employees(request):
         'counties': County.objects.all(),
         'regions':Region.objects.all(),
         'categories': Category.objects.all(),
+        'title': 'Premium Candidates'
 
     }
     return render(request, 'normal/allcandidates/premium-candidate.html', context)
@@ -1073,7 +1076,6 @@ def unshortlistcustomers(request):
 
 def all_employees(request):
     if request.method == 'POST':
-
         county = request.POST.get('county')
         region = request.POST.get('region')
         category = request.POST.get('category')
@@ -1095,6 +1097,8 @@ def all_employees(request):
             customers = Customer.objects.filter(Q(county_id=count.id))
         else:
             customers = Customer.objects.order_by('?')
+    else:
+        customers = Customer.objects.order_by('?')
 
 
 
@@ -1106,6 +1110,7 @@ def all_employees(request):
         'counties': County.objects.all(),
         'regions':Region.objects.all(),
         'categories': Category.objects.all(),
+        'title':'All Candidates',
 
     }
     return render(request, 'normal/allcandidates/all-candidates.html', context)
@@ -1230,10 +1235,10 @@ def review_shortlisted_customer(request):
         form = CustomerReviewsForm(request.POST)
         if form.is_valid():
             form.save()
-            sweetify.success(request, 'Success', text='Customer Rated Successfully', persistent='Ok')
+            sweetify.success(request, 'Success', text='Candidate Rated Successfully', persistent='Ok')
             return redirect('LML:employer_dash')
         else:
-            sweetify.error(request, 'Error', text='Customer Not Rated', persistent='Ok')
+            sweetify.error(request, 'Error', text='Candidate Not Rated', persistent='Ok')
         return redirect('LML:employer_dash')
 
     return

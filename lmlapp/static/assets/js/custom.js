@@ -48,13 +48,26 @@ All custom js files contents are below
 	
 	/*------ Grid Slider ----*/
 	$('.grid-slide').slick({
-		  slidesToShow:4,
+		  slidesToShow:3,
 		  arrows:false,
 		  autoplay:true,
 		  infinite: true,
 		  responsive: [
+
+			{
+			  breakpoint: 988,
+			  autoplay:true,
+		      infinite: true,
+			  settings: {
+				arrows:false,
+				centerMode: true,
+				slidesToShow:2
+			  }
+			},
 			{
 			  breakpoint: 768,
+			  autoplay:true,
+		      infinite: true,
 			  settings: {
 				arrows:false,
 				centerMode: true,
@@ -63,6 +76,8 @@ All custom js files contents are below
 			},
 			{
 			  breakpoint: 480,
+			  autoplay:true,
+			  infinite: true,
 			  settings: {
 				arrows: false,
 				centerPadding: '0px',

@@ -72,7 +72,7 @@ urlpatterns = [
 
     # employeestatus
     path('allpremiumemployees/',views.all_premium_employees, name = 'all_premium_employees'),
-    path('allemployees/',views.all_employees, name = 'all_employees'),
+    path('allcandidates/',views.all_employees, name = 'all_employees'),
     path('premiumemployeedetails/<int:customer_id>', views.premium_employee_details, name='premium_employee_detail'),
 
     path('shortlist/', views.shortlistcustomers, name='shortlistemployees'),
