@@ -138,38 +138,8 @@ def signup(request):
                     date_to=date_to,
                     experience=experience,
                 )
-            if ('Phd' in qualifications) and ('Masters' in qualifications) and ('Degree' in qualifications) and ('Certificate' in qualifications) and ('Degree' in qualifications) and ('Diploma' in qualifications):
-                status='ULTIMATE'
-                Customer.objects.filter(user_ptr_id=new_user.id).update(
-                    rank_status=status,
-                )
-            elif ('Diploma' in qualifications):
-                status = 'BASIC'
-                Customer.objects.filter(user_ptr_id=new_user.id).update(
-                    rank_status=status,
-                )
-            elif ('Degree' in qualifications) and ('Diploma' in qualifications):
-                status = 'BASIC'
-                Customer.objects.filter(user_ptr_id=new_user.id).update(
-                    rank_status=status,
-                )
 
-            elif('Masters' in qualifications) and ('Degree' in qualifications) :
-                status = 'PREMIUM'
-                Customer.objects.filter(user_ptr_id=new_user.id).update(
-                    rank_status=status,
-                )
-            elif('Certificate' in qualifications) and ('Degree' in qualifications) and ('Diploma' in qualifications):
-                status = 'BASIC'
-                Customer.objects.filter(user_ptr_id=new_user.id).update(
-                    rank_status=status,
-                )
 
-            else:
-                status = 'BASIC'
-                Customer.objects.filter(user_ptr_id=new_user.id).update(
-                    rank_status=status,
-                )
             new_userrr = authenticate(username=username, password=password1)
             print(new_user)
             login(request, new_userrr)
@@ -230,6 +200,43 @@ def signup(request):
 #
 #     return redirect('LML:companysignup' )
         # return redirect('LML:companysignup')
+    # if ('Phd' in qualifications) and ('Masters' in qualifications) and ('Degree' in qualifications) and (
+    #         'Certificate' in qualifications) and ('Degree' in qualifications) and ('Diploma' in qualifications):
+    #     status = 'ULTIMATE'
+    #     Customer.objects.filter(user_ptr_id=new_user.id).update(
+    #         rank_status=status,
+    #     )
+    # elif ('Diploma' in qualifications):
+    #     status = 'BASIC'
+    #     Customer.objects.filter(user_ptr_id=new_user.id).update(
+    #         rank_status=status,
+    #     )
+    # elif ('Degree' in qualifications) and ('Diploma' in qualifications):
+    #     status = 'BASIC'
+    #     Customer.objects.filter(user_ptr_id=new_user.id).update(
+    #         rank_status=status,
+    #     )
+    #
+    # elif ('Masters' in qualifications) and ('Degree' in qualifications):
+    #     status = 'PREMIUM'
+    #     Customer.objects.filter(user_ptr_id=new_user.id).update(
+    #         rank_status=status,
+    #     )
+    # elif ('Certificate' in qualifications) and ('Degree' in qualifications) and ('Diploma' in qualifications):
+    #     status = 'BASIC'
+    #     Customer.objects.filter(user_ptr_id=new_user.id).update(
+    #         rank_status=status,
+    #     )
+    #
+    # else:
+    #     status = 'BASIC'
+    #     Customer.objects.filter(user_ptr_id=new_user.id).update(
+    #         rank_status=status,
+    #     )
+
+
+
+
 
 def update_employers_profile(request):
     user= request.user.id
@@ -274,11 +281,6 @@ def update_employers_profile(request):
     else:
         return redirect('LML:employersprofile')
 
-
-
-
-
-
 def login_user(request, source):
     if request.method == 'POST':
         username = request.POST['username']
@@ -308,9 +310,11 @@ def login_user(request, source):
                         if Company.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
                             sweetify.success(request, title='Welcome to Labour Market Link', text='You successfully Logged in.', persistent='Continue', timer=1500)
+
                             return redirect('LML:employerdetails')
                         if Customer.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
+                            rankCandidateStatus(request)
                             sweetify.success(request, title='Welcome to Labour Market Link', text='You successfully Logged in.', persistent='Continue', timer=1500)
                             return redirect('LML:employeedetails')
                 else:
@@ -335,6 +339,7 @@ def login_user(request, source):
                             return redirect('LML:employerdetails')
                         if Customer.objects.filter(user_ptr_id=user.id).exists():
                             login(request, user)
+                            rankCandidateStatus(request)
                             sweetify.success(request, title='Welcome to Labour Market Link',
                                              text='You successfully Logged in.', persistent='Continue', timer=1500)
                             return redirect('LML:employeedetails')
@@ -1051,7 +1056,7 @@ def shortlistcustomers(request):
                 'shortlisted': 'Successfully shortlisted',
             }
             if data['shortlisted']:
-                data['success_message'] ='Successfully Shortlisted'
+                data['success_message'] ='Successfully Shortlisted ' + customer_user.first_name.upper() + ' ' + customer_user.last_name.upper() + '.'
 
         else:
             data = {
@@ -1077,7 +1082,7 @@ def unshortlistcustomers(request):
                 'shortlisted':  customer + 'Unshortlisted Successfully',
             }
             if data['shortlisted']:
-                data['success_message'] =customer + 'Unshortlisted Successfully'
+                data['success_message'] =customer.upper() + ' Unshortlisted Successfully'
 
         else:
 
@@ -1504,3 +1509,83 @@ def checkifusernameexists(request):
                 'answer': "Username Is Clean For Use!",
             }
         return JsonResponse(context, safe=True )
+
+def rankCandidateStatus(request):
+    # ('BASIC', 'Basic'),
+    # ('PREMIUM', 'Premium'),
+    # ('ULTIMATE', 'Ultimate'),
+    from datetime import datetime
+    logedinuser = request.user
+    candidate = Customer.objects.filter(user_ptr_id =logedinuser.id).first()
+    exp_dates = []
+    educations = []
+
+
+    for experience in Experience.objects.filter(customer=candidate):
+        date_format = "%Y-%m-%d"
+        a = datetime.strptime(str(experience.date_from), date_format)
+        b = datetime.strptime(str(experience.date_to), date_format)
+        delta = b - a
+        exp_dates.append(delta.days)
+
+    for education in Education.objects.filter(customer=candidate):
+        educations.append(education.qualifications)
+    print(exp_dates, educations)
+    status = " "
+    if ((('Certificate' in educations)) and ('Phd' not in educations) and ('Bachelor' not in educations) and ('Masters' not in educations) and ('Diploma' not in educations)):
+        if (max(exp_dates) > 730):
+            status = "ULTIMATE"
+        elif (max(exp_dates) > 365):
+            status = "PREMIUM"
+        elif(max(exp_dates) < 365):
+            status = "BASIC"
+        else:
+            status = "BASIC"
+
+    elif((('Certificate' in educations) or ('Diploma' in educations)) and ('Phd' not in educations) and ('Bachelor' not in educations) and ('Masters' not in educations)):
+        if (max(exp_dates) > 730):
+            status = "ULTIMATE"
+        elif (max(exp_dates) > 365):
+            status = "PREMIUM"
+        elif (max(exp_dates) < 365):
+            status = "BASIC"
+        else:
+            status = "BASIC"
+    elif( (('Certificate' in educations) or ('Diploma' in educations) or ('Bachelor' in educations) ) and ('Phd' not in educations) and ('Masters' not in educations)):
+        if (max(exp_dates) > 730):
+            status = "ULTIMATE"
+        elif (max(exp_dates) > 365):
+            status = "PREMIUM"
+        elif (max(exp_dates) < 365):
+            status = "BASIC"
+        else:
+            status = "BASIC"
+
+    elif( (('Certificate' in educations) or ('Diploma' in educations) or ('Bachelor' in educations)  or ('Masters' in educations)) and ('Phd' not in educations)):
+        if (max(exp_dates) > 730):
+            status = "ULTIMATE"
+        elif (max(exp_dates) > 365):
+            status = "PREMIUM"
+        elif (max(exp_dates) < 365):
+            status = "BASIC"
+        else:
+            status = "BASIC"
+
+    elif( (('Certificate' in educations) or ('Diploma' in educations) or ('Bachelor' in educations)  or ('Masters' in educations) or ('Phd' in educations))):
+        if (max(exp_dates) > 730):
+            status = "ULTIMATE"
+        elif (max(exp_dates) > 365):
+            status = "PREMIUM"
+        elif (max(exp_dates) < 365):
+            status = "BASIC"
+        else:
+            status = "BASIC"
+    print(status, candidate.id)
+    Customer.objects.filter(id=candidate.id).update(
+        rank_status=status.upper()
+    )
+
+
+
+
+

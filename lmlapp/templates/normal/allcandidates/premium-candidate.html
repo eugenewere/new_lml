@@ -100,6 +100,11 @@
                             {% for customer in customers %}
                                 <div data-filter-name4="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" data-filter-item4 style="display: none;" data-status="{{ customer.rank_status }}" data-order="{{ customer.first_name }} " class="sortusers paid-candidate-container card-custom-border" >
                                     <div class="paid-candidate-box">
+                                        {% if request.user.is_authenticated %}
+                                            {% if request.user|logged_in_company %}
+                                                <span class="tpc-status {% if customer.rank_status == "BASIC" %} bg-primary {% elif customer.rank_status == "PREMIUM" %} bg-success {% elif customer.rank_status == "ULTIMATE" %} bg-warning {% else %} bg-secondary {% endif %}">{{ customer.rank_status }}</span>
+                                            {% endif %}
+                                        {% endif %}
                                         <div class="dropdown">
                                             <div class="btn-group fl-right">
                                                 {% if request.user|logged_in_company %}

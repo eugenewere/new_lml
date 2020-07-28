@@ -136,9 +136,10 @@
                             <li class=""><a data-toggle="pill" href="#basic2">Basic Candidates ({{ basic_customers|length }})</a></li>
                             <li class=""><a data-toggle="pill" href="#premium">Premium Candidates ({{ premium_customers|length }})</a></li>
                             <li class=""><a data-toggle="pill" href="#ultimate">Ultimate Candidates ({{ ultimate_customers|length }})</a></li>
-                            <li class=""><a data-toggle="pill" href="#analystics">Analytics</a></li>
+                            <li  class=""><a data-toggle="pill" href="#analystics">Analytics</a></li>
                             <li class=""><a data-toggle="pill" href="#about">Payment History</a></li>
                         </ul>
+
 
                           <!-- Start All Sec -->
                         <div id="tabcont"  class="tab-content" style="height: 800px;overflow-x: hidden; overflow-y: scroll;">
@@ -158,59 +159,64 @@
 
                               {% if customers %}
                                     <article class="advance-search-job">
-                                    <div id="listall" class="row no-mrg " style="display: flex; justify-content: center; flex-wrap: wrap;">
-                                         {% for customer in customers %}
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="allcandidate{{ customer.customer.id }}" tabindex="-1" role="dialog" aria-labelledby="allcandidate{{ customer.customer.id }}" aria-hidden="true">
-                                              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                <div class="modal-content" style="padding-bottom: 0;">
-                                                  <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Review {{ customer.first_name|title }} {{ customer.last_name|title }}</h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                      <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                  </div>
-                                                  <div class="modal-body " style="padding: 15px">
-{#                                                      <div class="container-fluid">#}
-                                                          <form action="{% url 'LML:review_shortlisted_customer' %}" method="post" enctype="multipart/form-data">
-                                                          {% csrf_token %}
-                                                          <input name="customer" type="text" hidden value="{{ customer.id }}">
-                                                          <input name="company" type="text" hidden value="{{ request.user.id }}">
-                                                          <div class="card-ratings-wrapper" style="display: flex; flex-direction: column; margin-bottom: 20px;">
-                                                            <label for="exampleInputsd">Ratings</label>
-                                                            <div class="rate" style="margin-right: auto;">
-                                                                <input type="radio" id="star5{{ customer.id }}" name="ratings" value="5" />
-                                                                    <label for="star5{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="5 Stars">5 stars</label>
-                                                                <input type="radio" id="star4{{ customer.id }}" name="ratings" value="4" />
-                                                                    <label for="star4{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="4 Stars">4 stars</label>
-                                                                <input type="radio" id="star3{{ customer.id }}" name="ratings" value="3" />
-                                                                    <label for="star3{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="3 Stars">3 stars</label>
-                                                                <input type="radio" id="star2{{ customer.id }}" name="ratings" value="2" />
-                                                                    <label for="star2{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="2 Stars">2 stars</label>
-                                                                <input type="radio" id="star1{{ customer.id }}" name="ratings" value="1" />
-                                                                    <label for="star1{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="1 Stars">1 star</label>
-                                                            </div>
-                                                            <small id="emailHelp" class="form-text text-muted">Rate Out of 5</small>
-                                                          </div>
-                                                          <div class="form-group" >
-                                                            <label for="allcandidatetextarea{{ customer.id }}">Review Message</label>
-                                                            <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allcandidatetextarea{{ customer.id }}" ></textarea>
-                                                            <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
-                                                          </div>
-                                                          <div class="col-sm-12 row">
-                                                              <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
-                                                          </div>
-                                                          <script>
-                                                               CKEDITOR.replace( 'allcandidatetextarea{{ customer.id }}' );
-                                                          </script>
-                                                      </form>
-{#                                                      </div>#}
+                                        <div id="listall" class="row no-mrg " style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                             {% for customer in customers %}
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="allcandidate{{ customer.customer.id }}" tabindex="-1" role="dialog" aria-labelledby="allcandidate{{ customer.customer.id }}" aria-hidden="true">
+                                                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content" style="padding-bottom: 0;">
+                                                      <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Review {{ customer.first_name|title }} {{ customer.last_name|title }}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                                      <div class="modal-body " style="padding: 15px">
+    {#                                                      <div class="container-fluid">#}
+                                                              <form action="{% url 'LML:review_shortlisted_customer' %}" method="post" enctype="multipart/form-data">
+                                                              {% csrf_token %}
+                                                              <input name="customer" type="text" hidden value="{{ customer.id }}">
+                                                              <input name="company" type="text" hidden value="{{ request.user.id }}">
+                                                              <div class="card-ratings-wrapper" style="display: flex; flex-direction: column; margin-bottom: 20px;">
+                                                                <label for="exampleInputsd">Ratings</label>
+                                                                <div class="rate" style="margin-right: auto;">
+                                                                    <input type="radio" id="star5{{ customer.id }}" name="ratings" value="5" />
+                                                                        <label for="star5{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="5 Stars">5 stars</label>
+                                                                    <input type="radio" id="star4{{ customer.id }}" name="ratings" value="4" />
+                                                                        <label for="star4{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="4 Stars">4 stars</label>
+                                                                    <input type="radio" id="star3{{ customer.id }}" name="ratings" value="3" />
+                                                                        <label for="star3{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="3 Stars">3 stars</label>
+                                                                    <input type="radio" id="star2{{ customer.id }}" name="ratings" value="2" />
+                                                                        <label for="star2{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="2 Stars">2 stars</label>
+                                                                    <input type="radio" id="star1{{ customer.id }}" name="ratings" value="1" />
+                                                                        <label for="star1{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="1 Stars">1 star</label>
+                                                                </div>
+                                                                <small id="emailHelp" class="form-text text-muted">Rate Out of 5</small>
+                                                              </div>
+                                                              <div class="form-group" >
+                                                                <label for="allcandidatetextarea{{ customer.id }}">Review Message</label>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allcandidatetextarea{{ customer.id }}" ></textarea>
+                                                                <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
+                                                              </div>
+                                                              <div class="col-sm-12 row">
+                                                                  <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
+                                                              </div>
+                                                              <script>
+                                                                   CKEDITOR.replace( 'allcandidatetextarea{{ customer.id }}' );
+                                                              </script>
+                                                          </form>
+    {#                                                      </div>#}
+                                                      </div>
+                                                    </div>
                                                   </div>
                                                 </div>
-                                              </div>
-                                            </div>
-                                            <div data-filter-item style="display: none;" data-sort="{{ customer.customer.first_name }}" data-filter-name="{{ customer.customer.first_name|lower }} {{ customer.customer.last_name|lower }}" class="c_all  paid-candidate-container">
+                                                <div  data-parentorall="custm-{{ customer.customer.id }}" data-filter-item style="display: none;" data-sort="{{ customer.customer.first_name }}" data-filter-name="{{ customer.customer.first_name|lower }} {{ customer.customer.last_name|lower }}" class="c_all  paid-candidate-container">
                                                     <div class="paid-candidate-box card-custom-border">
+                                                        {% if request.user.is_authenticated %}
+                                                            {% if request.user|logged_in_company %}
+                                                                <span class="tpc-status {% if customer.customer.rank_status == "BASIC" %} bg-primary {% elif customer.customer.rank_status == "PREMIUM" %} bg-success {% elif customer.customer.rank_status == "ULTIMATE" %} bg-warning {% else %} bg-secondary {% endif %}">{{ customer.customer.rank_status }}</span>
+                                                            {% endif %}
+                                                        {% endif %}
                                                         <div class="dropdown">
                                                             <div class="btn-group fl-right">
                                                                 {% if request.user|logged_in_company %}
@@ -218,8 +224,8 @@
                                                                     <div class="dropdown-menu pull-right animated flipInX">
                                                                         {% csrf_token %}
 
-                                                                        <a id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-                                                                        <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
+                                                                        <a data-idparent="custm-{{ customer.customer.id }}" id="custm-{{ customer.customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
+                                                                        <a  data-customer="{{ customer.customer.username }}" id="kk{{ customer.customer.id }}" href="#">Chat</a>
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#allcandidate{{ customer.customer.id }}">Review</a>
 
 
@@ -231,6 +237,7 @@
                                                                             };
                                                                             function unshortlist(me) {
                                                                                 var cust_id= me.id;
+                                                                                var data_parent= me.dataset.idparent;
                                                                                 var company = me.dataset.company;
                                                                                 var customer = me.dataset.customer;
                                                                                 console.log(company, customer);
@@ -247,11 +254,10 @@
                                                                                         console.log(data);
                                                                                         if(data.is_shortlisted){
                                                                                             errorshortlisting(data);
-
                                                                                         }
                                                                                         else if(data.shortlisted){
-                                                                                            var $id =  document.getElementById(cust_id).parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                                                                                            $( $id ).toggle( "explode" );
+                                                                                            console.log("[data-parentorall="+cust_id +"]")
+                                                                                            $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
 
                                                                                            setTimeout(function () {
                                                                                                shortlisted(data);
@@ -269,7 +275,7 @@
                                                                                     confirmButtonText: "Continue"
                                                                                    });
                                                                                 }
-                                                                                 function errorshortlisting(k){
+                                                                                function errorshortlisting(k){
                                                                                     swal.fire({
                                                                                     title: "Error!",
                                                                                     text: k.error_message,
@@ -277,8 +283,6 @@
                                                                                     confirmButtonText: "Continue"
                                                                                    });
                                                                                 }
-
-
                                                                             }
                                                                         </script>
                                                                     </div>
@@ -309,9 +313,9 @@
                                                         <a href="{% url 'LML:premium_employee_detail' customer.customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
                                                     {% endif %}
                                                 </div>
-                                         {% endfor %}
-                                    </div>
-                                </article>
+                                             {% endfor %}
+                                        </div>
+                                    </article>
                                 <script>
 
                                     $('[data-search]').on('keyup', function() {
@@ -439,8 +443,13 @@
                                                   </div>
                                                 </div>
 
-                                                <div data-filter-item2 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name2="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_basic paid-candidate-container">
+                                                <div data-parentorall="custm-{{ customer.id }}" data-filter-item2 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name2="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_basic paid-candidate-container">
                                                         <div class="paid-candidate-box card-custom-border">
+                                                            {% if request.user.is_authenticated %}
+                                                                {% if request.user|logged_in_company %}
+                                                                    <span class="tpc-status {% if customer.rank_status == "BASIC" %} bg-primary {% elif customer.rank_status == "PREMIUM" %} bg-success {% elif customer.rank_status == "ULTIMATE" %} bg-warning {% else %} bg-secondary {% endif %}">{{ customer.rank_status }}</span>
+                                                                {% endif %}
+                                                            {% endif %}
                                                             <div class="dropdown">
                                                                 <div class="btn-group fl-right">
                                                                     {% if request.user|logged_in_company %}
@@ -448,7 +457,7 @@
                                                                         <div class="dropdown-menu pull-right animated flipInX">
                                                                             {% csrf_token %}
 
-                                                                            <a id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
+                                                                            <a data-idparent="custm-{{ customer.id }}"  id="custm-{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
                                                                             <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#basic{{ customer.id }}">Review</a>
                                                                             <script>
@@ -459,6 +468,7 @@
                                                                                 };
                                                                                 function unshortlist(me) {
                                                                                     var cust_id= me.id;
+                                                                                    var data_parent= me.dataset.idparent;
                                                                                     var company = me.dataset.company;
                                                                                     var customer = me.dataset.customer;
                                                                                     console.log(company, customer);
@@ -478,8 +488,7 @@
 
                                                                                             }
                                                                                             else if(data.shortlisted){
-                                                                                                var $id =  document.getElementById(cust_id).parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                                                                                                $( $id ).toggle( "explode" );
+                                                                                                $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
 
                                                                                                setTimeout(function () {
                                                                                                    shortlisted(data);
@@ -616,55 +625,60 @@
                                         <div id="listpremium" class="row no-mrg" style="display: flex; justify-content: center; flex-wrap: wrap;">
                                              {% for customer in premium_customers %}
                                                  <div class="modal fade" id="premium{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="premium{{ customer.id }}" aria-hidden="true">
-                                                                              <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                                                                                <div class="modal-content" style="padding-bottom: 0;">
-                                                                                  <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalCenterTitle">Review {{ customer.first_name|title }} {{ customer.last_name|title }}</h5>
-                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                      <span aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                  </div>
-                                                                                  <div class="modal-body " style="padding: 15px">
-                                {#                                                      <div class="container-fluid">#}
-                                                                                          <form action="{% url 'LML:review_shortlisted_customer' %}" method="post" enctype="multipart/form-data">
-                                                                                          {% csrf_token %}
-                                                                                          <input name="customer" type="text" hidden value="{{ customer.id }}">
-                                                                                          <input name="company" type="text" hidden value="{{ request.user.id }}">
-                                                                                          <div class="card-ratings-wrapper" style="display: flex; flex-direction: column; margin-bottom: 20px;">
-                                                                                            <label for="exampleInputsd">Ratings</label>
-                                                                                            <div class="rate" style="margin-right: auto;">
-                                                                                                <input type="radio" id="star5{{ customer.id }}" name="ratings" value="5" />
-                                                                                                    <label for="star5{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="5 Stars">5 stars</label>
-                                                                                                <input type="radio" id="star4{{ customer.id }}" name="ratings" value="4" />
-                                                                                                    <label for="star4{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="4 Stars">4 stars</label>
-                                                                                                <input type="radio" id="star3{{ customer.id }}" name="ratings" value="3" />
-                                                                                                    <label for="star3{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="3 Stars">3 stars</label>
-                                                                                                <input type="radio" id="star2{{ customer.id }}" name="ratings" value="2" />
-                                                                                                    <label for="star2{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="2 Stars">2 stars</label>
-                                                                                                <input type="radio" id="star1{{ customer.id }}" name="ratings" value="1" />
-                                                                                                    <label for="star1{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="1 Stars">1 star</label>
-                                                                                            </div>
-                                                                                            <small id="emailHelp" class="form-text text-muted">Rate Out of 5</small>
-                                                                                          </div>
-                                                                                          <div class="form-group" >
-                                                                                            <label for="allpremiumtextarea{{ customer.id }}">Review Message</label>
-                                                                                            <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allpremiumtextarea{{ customer.id }}" ></textarea>
-                                                                                            <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
-                                                                                          </div>
-                                                                                          <div class="col-sm-12 row">
-                                                                                              <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
-                                                                                          </div>
-                                                                                          <script>
-                                                                                               CKEDITOR.replace( 'allpremiumtextarea{{ customer.id }}' );
-                                                                                          </script>
-                                                                                      </form>
-                                {#                                                      </div>#}
-                                                                                  </div>
-                                                                                </div>
-                                                                              </div>
-                                                                            </div>
-                                                 <div data-filter-item3 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name3="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_premium paid-candidate-container">
+                                                   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                    <div class="modal-content" style="padding-bottom: 0;">
+                                                      <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalCenterTitle">Review {{ customer.first_name|title }} {{ customer.last_name|title }}</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                                      <div class="modal-body " style="padding: 15px">
+    {#                                                      <div class="container-fluid">#}
+                                                              <form action="{% url 'LML:review_shortlisted_customer' %}" method="post" enctype="multipart/form-data">
+                                                              {% csrf_token %}
+                                                              <input name="customer" type="text" hidden value="{{ customer.id }}">
+                                                              <input name="company" type="text" hidden value="{{ request.user.id }}">
+                                                              <div class="card-ratings-wrapper" style="display: flex; flex-direction: column; margin-bottom: 20px;">
+                                                                <label for="exampleInputsd">Ratings</label>
+                                                                <div class="rate" style="margin-right: auto;">
+                                                                    <input type="radio" id="star5{{ customer.id }}" name="ratings" value="5" />
+                                                                        <label for="star5{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="5 Stars">5 stars</label>
+                                                                    <input type="radio" id="star4{{ customer.id }}" name="ratings" value="4" />
+                                                                        <label for="star4{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="4 Stars">4 stars</label>
+                                                                    <input type="radio" id="star3{{ customer.id }}" name="ratings" value="3" />
+                                                                        <label for="star3{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="3 Stars">3 stars</label>
+                                                                    <input type="radio" id="star2{{ customer.id }}" name="ratings" value="2" />
+                                                                        <label for="star2{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="2 Stars">2 stars</label>
+                                                                    <input type="radio" id="star1{{ customer.id }}" name="ratings" value="1" />
+                                                                        <label for="star1{{ customer.id }}" data-toggle="tooltip" data-placement="top" title="1 Stars">1 star</label>
+                                                                </div>
+                                                                <small id="emailHelp" class="form-text text-muted">Rate Out of 5</small>
+                                                              </div>
+                                                              <div class="form-group" >
+                                                                <label for="allpremiumtextarea{{ customer.id }}">Review Message</label>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allpremiumtextarea{{ customer.id }}" ></textarea>
+                                                                <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
+                                                              </div>
+                                                              <div class="col-sm-12 row">
+                                                                  <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
+                                                              </div>
+                                                              <script>
+                                                                   CKEDITOR.replace( 'allpremiumtextarea{{ customer.id }}' );
+                                                              </script>
+                                                          </form>
+    {#                                                      </div>#}
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                 </div>
+                                                 <div data-parentorall="custm-{{ customer.id }}" data-filter-item3 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name3="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_premium paid-candidate-container">
                                                         <div class="paid-candidate-box card-custom-border">
+                                                            {% if request.user.is_authenticated %}
+                                                                {% if request.user|logged_in_company %}
+                                                                    <span class="tpc-status {% if customer.rank_status == "BASIC" %} bg-primary {% elif customer.rank_status == "PREMIUM" %} bg-success {% elif customer.rank_status == "ULTIMATE" %} bg-warning {% else %} bg-secondary {% endif %}">{{ customer.rank_status }}</span>
+                                                                {% endif %}
+                                                            {% endif %}
                                                             <div class="dropdown">
                                                                 <div class="btn-group fl-right">
                                                                     {% if request.user|logged_in_company %}
@@ -672,7 +686,7 @@
                                                                         <div class="dropdown-menu pull-right animated flipInX">
                                                                             {% csrf_token %}
 
-                                                                            <a id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
+                                                                            <a data-idparent="custm-{{ customer.id }}" id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
                                                                             <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#premium{{ customer.id }}">Review</a>
                                                                              <!-- Modal -->
@@ -685,6 +699,7 @@
                                                                                 };
                                                                                 function unshortlist(me) {
                                                                                     var cust_id= me.id;
+                                                                                     var data_parent= me.dataset.idparent;
                                                                                     var company = me.dataset.company;
                                                                                     var customer = me.dataset.customer;
                                                                                     console.log(company, customer);
@@ -704,8 +719,7 @@
 
                                                                                             }
                                                                                             else if(data.shortlisted){
-                                                                                                var $id =  document.getElementById(cust_id).parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                                                                                                $( $id ).toggle( "explode" );
+                                                                                                 $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
 
                                                                                                setTimeout(function () {
                                                                                                    shortlisted(data);
@@ -935,8 +949,13 @@
                                                   </div>
                                                 </div>
 
-                                                <div data-filter-item4 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name4="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_ultimate paid-candidate-container">
+                                                <div data-parentorall="custm-{{ customer.id }}" data-filter-item4 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name4="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_ultimate paid-candidate-container">
                                                     <div class="paid-candidate-box card-custom-border">
+                                                        {% if request.user.is_authenticated %}
+                                                            {% if request.user|logged_in_company %}
+                                                                <span class="tpc-status {% if customer.rank_status == "BASIC" %} bg-primary {% elif customer.rank_status == "PREMIUM" %} bg-success {% elif customer.rank_status == "ULTIMATE" %} bg-warning {% else %} bg-secondary {% endif %}">{{ customer.rank_status }}</span>
+                                                            {% endif %}
+                                                        {% endif %}
                                                         <div class="dropdown">
                                                             <div class="btn-group fl-right">
                                                                 {% if request.user|logged_in_company %}
@@ -944,7 +963,7 @@
                                                                     <div class="dropdown-menu pull-right animated flipInX">
                                                                         {% csrf_token %}
 
-                                                                        <a id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
+                                                                        <a data-idparent="custm-{{ customer.id }}" id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
                                                                         <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#ultimate{{ customer.id }}">Review</a>
                                                                          <!-- Modal -->
@@ -957,6 +976,7 @@
                                                                             };
                                                                             function unshortlist(me) {
                                                                                 var cust_id= me.id;
+                                                                                var data_parent= me.dataset.idparent;
                                                                                 var company = me.dataset.company;
                                                                                 var customer = me.dataset.customer;
                                                                                 console.log(company, customer);
@@ -976,8 +996,7 @@
 
                                                                                         }
                                                                                         else if(data.shortlisted){
-                                                                                            var $id =  document.getElementById(cust_id).parentElement.parentElement.parentElement.parentElement.parentElement.parentElement;
-                                                                                            $( $id ).toggle( "explode" );
+                                                                                            $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
 
                                                                                            setTimeout(function () {
                                                                                                shortlisted(data);
@@ -1058,11 +1077,11 @@
                                 <div class="col-sm-12" style="height: 100%; overflow:hidden; padding: 0">
                                     <div class="deatil-tab-employ tool-tab col-sm-12 col-md-12 col-lg-10 " style="background: white; width: 100%; height: 100%; overflow:hidden;" >
                                         <ul class="nav simple nav-tabs" id="simple-design2">
-                                            <li class="active"><a  data-toggle="tab" href="#bargr">Bar Stats</a></li>
-                                            <li class=""><a  data-toggle="tab" href="#linegr">Line Stats</a></li>
+                                            <li class=""><a  data-toggle="tab" href="#bargr">Bar Stats</a></li>
+                                            <li class="active"><a  data-toggle="tab" href="#linegr">Line Stats</a></li>
                                         </ul>
                                         <div class="tab-content" style="height: 100%;">
-                                            <div id="bargr"  role="tabpanel" class="tab-pane fade active" >
+                                            <div id="bargr"  role="tabpanel" class="tab-pane fade " >
                                                  <article class="advance-search-job" style="margin: 0; padding: 0;">
                                                     <div class="row no-mrg" >
                                                         <canvas class="col-sm-12" id="customers2" >
@@ -1071,7 +1090,7 @@
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div id="linegr"  role="tabpanel" class="tab-pane fade" style="" >
+                                            <div id="linegr"  role="tabpanel" class="tab-pane fade active" style="" >
                                                  <article class="advance-search-job" style=" margin: 0; padding: 0;">
                                                     <div class="row no-mrg">
                                                         <canvas class="col-sm-12" id="customers">

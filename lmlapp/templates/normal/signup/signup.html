@@ -248,7 +248,7 @@
         </div>
 
         <!-- General Detail End -->
-
+    
         <!-- full detail SetionStart-->
         <section class="full-detail">
             <div class="container">
@@ -319,7 +319,7 @@
                                     <h4 style="margin: 20px 0;" class="text-muted">Choose your qualification</h4>
                                     <label for="0">Choose Education</label>
                                     <div class=" me" style="padding: 0;" >
-                                         <select id="0" required name="qualifications" onchange="showEducation(this);" class=" qualifications form-control input-lg">
+                                         <select id="0" required name="qualifications" onchange="showEducation(this);" class=" qualifications qualistatus form-control input-lg">
                                             <option selected disabled="disabled">Qualifications</option>
                                             <option value="Phd">Phd</option>
                                             <option value="Masters">Masters</option>
@@ -375,7 +375,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="diploma col-md-12 col-sm-12">
                                             <div class="input-group col-md-4 col-sm-12">
                                                 <span class="input-group-addon"><i class="fa fa-book"></i></span>
@@ -619,6 +618,15 @@
                 </div>
                 <div class="row bottom-mrg extra-mrg">
                     <div class="col-md-12">
+                        <div class="row " style="display: flex; justify-content: center; align-items: center;">
+                            <div class="custom-control custom-radio custom-control-inline" style="margin-right: 20px;">
+                                     <label  class="custom-control-label" for="customRadio"></label>
+                                     <span>
+                                         <input  type="checkbox" class="custom-control-input customRadio" id="trmscond" name="example" value="">
+                                     By checking this box you agree to our <a href="{% url 'LML:termsandconditons' %}">Terms and conditions</a>
+                                 </span>
+                            </div>
+                        </div>
                         <div class="row text-right" style="">
                                Create an account as an employer instead <a href="{% url 'LML:signup_initial' %}"> click
                                here</a>
@@ -626,12 +634,13 @@
                     </div>
                 </div>
             </div>
+{#            <input id="user-status" type="text" name="status" style="display: none">#}
         </section>
 
     </form>
 
     <div class="col-md-12">
-        <button  form="employeeform" id="submitbutton" type="submit" class="submitbutton btn btn-success btn-primary small-btn">Submit </button>
+        <button disabled  form="employeeform" id="submitbutton" type="submit" class="submitbutton btn btn-success btn-primary small-btn">Submit </button>
     </div>
     <div class="col-md-12" >
          <div id="error_div" style="display:none;">
@@ -846,11 +855,11 @@
               return false;
         });
         $('#clonebuttonexp').click(function () {
-            var $clonedbox = $('.expduplicat:first').clone();
+            var $clonedbox = $('.expduplicat:first').clone(true);
             $($clonedbox).insertBefore($(this)).find('input').val("");
         });
         $('#cloneskill').click(function () {
-             var $clonedboxx = $('.dublicat-box2:first').clone();
+             var $clonedboxx = $('.dublicat-box2:first').clone(true);
              {#$($clonedboxx).insertAfter('.dublicat-box2:last').find('input').val("");#}
              $($clonedboxx).insertBefore($(this)).find('input').val("");
         });
@@ -864,6 +873,47 @@
                $(e).parent().remove();
             }
         }
+
+        $('#trmscond').change(function () {
+            if($(this).prop("checked", true)){
+                $('#submitbutton').removeAttr('disabled');
+            }else if($(this).prop("checked", false)){
+                $('#submitbutton').attr('disabled');
+            }
+        });
+
+
+
+
+
+    </script>
+    <script>
+        {# $(document).ready(function(){#}
+             {#('BASIC', 'Basic'),#}
+        {#('PREMIUM', 'Premium'),#}
+        {#('ULTIMATE', 'Ultimate'),#}
+        {#      var status = " ";#}
+        {#      var detaminants = [];#}
+        {#      $('#trmscond').on("change",'.qualistatus', function () {#}
+        {#            detaminants.push($(this).val());#}
+        {#            console.log(containsAll(['Phd','Masters'], detaminants));#}
+        {#            if(detaminants.includes('Certificate') || detaminants.includes('Diploma') || detaminants.includes('Bachelor')){#}
+        {#                status = 'Basic';#}
+        {#            }#}
+        {##}
+        {##}
+        {##}
+        {##}
+        {##}
+        {#      });#}
+        {#      function containsAll(needles, haystack){#}
+        {#          for(var i = 0; i < needles.length; i++){#}
+        {#             if($.inArray(needles[i], haystack) === -1) return false;#}
+        {#          }#}
+        {#          return true;#}
+        {#        }#}
+        {##}
+        {#  });#}
     </script>
 
 

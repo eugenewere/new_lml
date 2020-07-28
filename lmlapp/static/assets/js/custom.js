@@ -63,6 +63,15 @@ All custom js files contents are below
 				centerMode: true,
 				slidesToShow:2
 			  }
+			},{
+			  breakpoint: 1085,
+			  autoplay:true,
+		      infinite: true,
+			  settings: {
+				arrows:false,
+				centerMode: true,
+				slidesToShow:4
+			  }
 			},
 			{
 			  breakpoint: 768,
@@ -164,7 +173,14 @@ All custom js files contents are below
 			console.log(id);
 			var f= x[0].getElementsByTagName('select')[0].getAttribute('id');
 
-			$('.dublicat-box:last-child', $wrapp).clone(true,true).appendTo($wrapp).find('.qualifications').attr('id', id).find('input').val('').find('select').val('').focus();
+			$('.dublicat-box:last-child', $wrapp)
+				.clone(true).appendTo($wrapp)
+				.find('.qualifications')
+				.attr('id', id).find('input')
+				.val('')
+				.find('select')
+				.val('')
+				.focus();
 		});
     	$('.dublicat-box .remove-field', $wrapp).on('click', function() {
         if ($('.dublicat-box', $wrapp).length > 1)

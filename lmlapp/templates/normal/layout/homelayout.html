@@ -32,6 +32,18 @@
              width: 100%;
              object-fit: cover;
         }
+        .tpc-status {
+            position: absolute;
+            left: 11px !important;
+            top: 8px !important;
+            background: #01c73d;
+            color: #ffffff;
+            text-transform: capitalize;
+            padding: 1px 15px !important;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 14px;
+        }
     </style>
 
 
@@ -292,7 +304,7 @@
                             <div class="textwidget">
                                 <ul class="footer-navigation">
                                     {% for category in request|top_customer_categories %}
-                                        <li><a class="text-capitalize" href="#" title="">{{category.category}}</a></li>
+                                        <li><a class="text-capitalize" href="#" title="">{{category}}</a></li>
                                     {% endfor %}
                                 </ul>
                             </div>

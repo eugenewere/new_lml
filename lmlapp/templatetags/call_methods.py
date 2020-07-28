@@ -106,8 +106,13 @@ def shortlisted(request, customer_id):
 
 @register.filter(name='top_customer_categories')
 def top_customer_categories(request):
-    category = Customer.objects.annotate(itemcount=Count('id')).order_by('-itemcount')[:7]
-    return category
+    list_category =[]
+    customer = Customer.objects.annotate(itemcount=Count('id')).order_by('-itemcount')
+    for c in customer:
+        list_category.append(c.category.category)
+
+
+    return list(set(list_category))
 
 @register.filter(name='contactushome')
 def comments(request):
