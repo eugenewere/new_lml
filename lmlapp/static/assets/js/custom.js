@@ -247,7 +247,17 @@ All custom js files contents are below
         });
     }
     csselem();	
-	
+
+	// $('.expduplicat button.remove-field2').each(function(){
+	// 	console.log('this');
+	// 	$(this).click(function (e) {
+	// 		console.log($(this) , e);
+	// 		if ($('.expduplicat').length > 1){
+	// 		   $(this).parent().remove();
+	// 		}
+	// 	});
+	// });
+
 
 			
 })(jQuery);
@@ -268,3 +278,5 @@ function changeToPassowrd(e) {
 	});
 
 }
+
+

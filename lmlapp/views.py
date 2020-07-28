@@ -2,6 +2,7 @@
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse, Http404
 from django.shortcuts import render, redirect, HttpResponseRedirect
 import os
@@ -10,7 +11,7 @@ import sweetify
 
 
 # from rest_framework import status
-
+from django.views.decorators.csrf import csrf_exempt
 
 from lmlapp.forms import *
 
@@ -42,6 +43,7 @@ def home(request):
         'counties': County.objects.all(),
         'categories':Category.objects.all(),
         'regions':Region.objects.all(),
+        'bannercustomercount':Customer.objects.filter(status='REGISTERED_CONFIRMED'),
         'images': AdvertCarousel.objects.order_by('-created_at'),
     }
     return render(request, 'normal/home/index.html', context)
@@ -49,7 +51,8 @@ def home(request):
 
 def signup(request):
 
-    if request.is_ajax() and request.method=='POST' :
+    if request.is_ajax() and request.method == 'POST':
+        # print(request.POST)
         qualifications = request.POST.getlist('qualifications')
         schools = request.POST.getlist('school')
         courses = request.POST.getlist('course')
@@ -69,20 +72,35 @@ def signup(request):
         referees = request.POST.getlist('referee')
         referee_phonenumbers= request.POST.getlist('referee_phonenumber')
 
-        account_url= request.POST['account_url']
+        account_url= request.POST.get('account_url')
 
-        password1= request.POST['password1']
-        username= request.POST['username']
+        password1= request.POST.get('password1')
+        username= request.POST.get('username')
 
+
+        county= request.POST.get('county')
+        country= request.POST.get('country')
+        biography= request.POST.get('biography')
+        password2 = request.POST.get('password2')
+        print(county, country, password2,biography)
 
 
         form = PersonelRegisterForm(request.POST, request.FILES)
 
+        def genRegNo(regnopers):
+            if CustomerRegNo.objects.filter(personel_reg_no__exact=regnopers):
+                regnoperss = ('PERS' + get_random_string(length=5, allowed_chars='ABCDFGHIJKLMNPQRSTUVWXYZ123456789'))
+                genRegNo(regnoperss)
+            else:
+                return regnopers
+
+
         if form.is_valid():
             new_user= form.save()
+
             CustomerRegNo.objects.create(
                 customer=new_user,
-                personel_reg_no=('PERS' + get_random_string(length=5, allowed_chars='ABCDFGHIJKLMNPQRSTUVWXYZ123456789')),
+                personel_reg_no=genRegNo(('PERS' + get_random_string(length=5, allowed_chars='ABCDFGHIJKLMNPQRSTUVWXYZ123456789'))),
             )
             Social_account.objects.create(
                 customer=new_user,
@@ -163,11 +181,12 @@ def signup(request):
             return JsonResponse(data, safe=False)
 
         else:
-            form1 = PersonelRegisterForm(request.POST,request.FILES)
+            print(form.errors)
+
             #
             data = {
-                'results':'error',
-                'form':form1,
+                'results':  'error',
+                'form': form.errors.as_json(),
             }
             return JsonResponse(data)
 
@@ -1431,3 +1450,57 @@ def employee_change_password(request):
     else:
         form = PasswordChangeForm(request.user)
         return redirect("LML:employeeprofile")
+def validateEmail( email ):
+    from django.core.validators import validate_email
+    from django.core.exceptions import ValidationError
+    try:
+        validate_email( email )
+        return True
+    except ValidationError:
+        return False
+
+
+@csrf_exempt
+def checkifemailexists(request):
+    if request.method == 'POST' and request.is_ajax():
+        test = request.POST.get('testvalue')
+
+        if User.objects.filter(email__iexact=test):
+            if validateEmail(test):
+                context = {
+                    'results': 'error',
+                    'answer': "Email Already Exists !!!",
+                }
+            else:
+                context = {
+                    'results': 'error',
+                    'answer': "Wrong email syntax",
+                }
+        else:
+            if validateEmail(test):
+                context = {
+                    'results': 'success',
+                    'answer': "Email Is Clean For Use!",
+                }
+            else:
+                context = {
+                    'results': 'error',
+                    'answer':  "Wrong email syntax",
+                }
+        return JsonResponse(context, safe=True )
+
+@csrf_exempt
+def checkifusernameexists(request):
+    if request.method == 'POST' and request.is_ajax():
+        test = request.POST.get('testvalue2')
+        if User.objects.filter(username__exact=test):
+            context = {
+                'results': 'error',
+                'answer': "Username Already Exists !!!",
+            }
+        else:
+            context = {
+                'results': 'success',
+                'answer': "Username Is Clean For Use!",
+            }
+        return JsonResponse(context, safe=True )

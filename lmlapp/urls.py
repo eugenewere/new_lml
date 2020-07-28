@@ -96,6 +96,8 @@ urlpatterns = [
     path('update/add/s_education/dvdsjksakjfvsdzxk/', views.update_add_education, name='update_add_education'),
     path('update/add/s_social/dvdsjksakjfvsdzxk/', views.update_add_social, name='update_add_social'),
     path('deletesocial/', views.deletesocial, name='deletesocial'),
+    path('checkifemailexists/', views.checkifemailexists, name='checkifemailexists'),
+    path('checkifusernameexists/', views.checkifusernameexists, name='checkifusernameexists'),
 
 
 ]

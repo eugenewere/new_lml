@@ -25,8 +25,8 @@
 					<div class="ur-detail-wrap top-lay row " style="flex-wrap: wrap; margin: 0 auto;">
 						<div class="ur-detail-box col-xs-12 col-sm-12 col-md-12 col-lg-10 mb-md-3 mb-sm-3">
 
-							<div class="ur-thumb">
-								<img src="{{customer.profile_image.url}}" class="img-responsive" alt="" />
+							<div class="ur-thumb" style="overflow: hidden;">
+								<img src="{{customer.profile_image.url}}" class="img-responsive" style="height: 100%; width: 100%; object-fit: cover;" alt="" />
 							</div>
 							<div class="ur-caption">
 								<h3 class="ur-title text-capitalize mb-4">{{request.user.first_name}} {{request.user.last_name}} </h3>

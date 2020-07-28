@@ -20,15 +20,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 {% endblock links %}
-{% block search %}
-        {% if request.user.is_authenticated %}
-            {% if request.user|logged_in_company %}
-                <li class="active" style="margin-right: 21px;" >
-                    <input style="background-color: white; padding: 15px; border-radius: 20px;" type="text" class="form-control custom-button whitee" placeholder="Search">
-                </li>
-            {% endif %}
-        {% endif %}
-    {% endblock %}
+{#{% block search %}#}
+{#        {% if request.user.is_authenticated %}#}
+{#            {% if request.user|logged_in_company %}#}
+{#                <li class="active" style="margin-right: 21px;" >#}
+{#                    <input style="background-color: white; padding: 15px; border-radius: 20px;" type="text" class="form-control custom-button whitee" placeholder="Search">#}
+{#                </li>#}
+{#            {% endif %}#}
+{#        {% endif %}#}
+{#    {% endblock %}#}
 {% block content %}
     <!-- Title Header Start -->
     <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: white; ">
@@ -38,7 +38,7 @@
                 <div class="left-side-container">
                     <div class="freelance-image">
                         <a href="company-detail.html">
-                            <img src="{{customer.profile_image.url}}" class="img-responsive " style="margin: 18px 0;" alt="">
+                            <img src="{{customer.profile_image.url}}" class="img-responsive " style="margin: 18px 0;width: 100%; object-fit: contain;" alt="">
                         </a>
                     </div>
                     <div class="header-details">

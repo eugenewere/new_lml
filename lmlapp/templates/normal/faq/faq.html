@@ -1,6 +1,18 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
 {% block links %}
+
+     <script src="https://kit.fontawesome.com/16d33ecbbb.js" ></script>
+    <style>
+        #accordion .panel-title > a:after, #accordion .panel-title > a.collapsed:after {
+            content: " " !important;
+
+
+        }
+        #accordion .panel-title > a.collapsed:after {
+            content: " " !important;
+        }
+    </style>
 {% endblock links %}
 {% block content %}
     <!-- Title Header Start -->
@@ -21,15 +33,15 @@
                         <div class="panel panel-default">
                             <div class="panel-heading" role="tab" id="headingOne">
                                 <h4 class="panel-title">
-                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                       FAQ
+                                    <a  style="display: flex; justify-content: space-between;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                       <span>FAQ</span>  <i class="fas fa-caret-down"></i>
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                 <div class="panel-body">
                                     <div> <h3>Welcome to Labour Market Link</h3>
-                                    1. why do I have to pay for the registration?
+                                    1. Why do I have to pay for the registration?
                                         <div> For us to serve you we have to pay our staff for maintenance,
                                              we also have to do advertisements in order to get employers and employees</div>
                                    </div>

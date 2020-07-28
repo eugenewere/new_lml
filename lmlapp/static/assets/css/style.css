@@ -4122,9 +4122,34 @@ button.btn.remove-field {
 	border:none;
 	float:right;
 	margin-right:15px;
+}button.btn.remove-field2 {
+    background:#03a9f4;
+    margin: 2em auto;
+    display:inline-block;
+    color: #ffffff;
+    border-radius: 4px;
+    text-transform: capitalize;
+    font-size: 16px;
+    padding: 15px 40px;
+    min-width: 180px;
+	border:none;
+	float:right;
+	margin-right:15px;
 }
 
 button.add-field {
+    background: #1DBF73;
+    margin: 2em auto;
+	border:none;
+	margin-left:15px;
+    display: inline-block;
+    color: #ffffff;
+    border-radius: 4px;
+    text-transform: capitalize;
+    font-size: 16px;
+    padding: 15px 40px;
+    min-width: 180px;
+}button.add-field2 {
     background: #1DBF73;
     margin: 2em auto;
 	border:none;

@@ -1,18 +1,19 @@
 
-    function openDisability() {
-    var disability = document.getElementsByClassName('des')[0];
+   $('.disability_choice').click(function () {
+        var html ='<div id="disbledtxtarea" class="col-md-12 col-sm-12" style="padding: 0;">' +
+                        '<label for="disability"></label>' +
+                        '<textarea required name="disability" id="disability" class="des form-control" placeholder="What type of disability"></textarea>' +
+                 '</div>'
 
-        disability.style.display="block";
-        disability.setAttribute('required','required');
-    }
-    function closeDisability() {
-     var disability = document.getElementsByClassName('des')[0];
-        disability.style.display="none";
-        if (disability.hasAttribute('required')){
-            disability.removeAttribute('required');
+        if($(this).val().toLowerCase()==='disabled'){
+            $('#disabilityparent').append(html);
+        }else if($(this).val().toLowerCase()==='not_disabled'){
+            if($('#disbledtxtarea:visible')){
+                $('#disbledtxtarea').remove();
+            }
         }
 
-    }
+   });
 
 
 
@@ -86,47 +87,25 @@ function showEducation(data) {
 
 
 
-
-    function showEmployment() {
-        var clonebutton1 = document.getElementById('clonebutton1');
-        var clonebutton2 = document.getElementById('clonebutton2');
-        var employer = document.getElementsByClassName('employerwrapper');
-
-         for(i=0; i<employer.length; i++){
-            employer[i].style.display="block";
-            // employer[i].setAttributeNode('required')[i]
-            // employer[i].getElementsByTagName('textarea')[i].setAttribute('required','required');
-
-         }
-
-         // for(x=0; x<employer.length; x++){
-         //    employer[x].getElementsByTagName('input')[x].setAttribute('required','required');
-         // }
-        clonebutton1.style.display = "block";
-        clonebutton2.style.display = "block";
+$('.experinput').click(function () {
+    console.log($(this).val());
+    if($(this).val().toLowerCase() === 'one'){
+        $('.multi-boxmine').show()
     }
-    function hideEmployment() {
-        var clonebutton1 = document.getElementById('clonebutton1');
-        var clonebutton2 = document.getElementById('clonebutton2');
-        var employer = document.getElementsByClassName('employerwrapper');
-
-        for(i=0; i<employer.length; i++){
-            employer[i].style.display="none";
-
-        }
-         clonebutton1.style.display = "none";
-         clonebutton2.style.display = "none";
+    else if($(this).val().toLowerCase() === 'two'){
+        $('.multi-boxmine').hide()
     }
+});
 
 
 function readURL(input) {
 
 if (input.files && input.files[0]) {
-    var reader = new FileReader();
-     var disclaimer= document.getElementById("disclaimer");
+     var reader = new FileReader();
+     // var disclaimer= document.getElementById("");
         reader.onload = function (element) {
             $('.blah').attr('src', element.target.result).css('visibility', 'visible');
-            disclaimer.style.visibility = "hidden";
+            $('#disclaimer').text('Change Profile')
         };
         reader.readAsDataURL(input.files[0]);
         }
@@ -134,154 +113,199 @@ if (input.files && input.files[0]) {
 
 
 
-
-// (function ($) {
-//     // USE STRICT
-//     "use strict";
-//     $(".animsition").animsition({
-//       inClass: 'fade-in-left',
-//       outClass: 'fade-out-right',
-//       inDuration: 900,
-//       outDuration: 900,
-//       linkElement: 'a:not([target="_blank"]):not([href^="#"]):not([class^="chosen-single"]):not([class^="not_a_link"]) textarea:not([class^="form-control"])',
-//       loading: true,
-//       loadingParentElement: 'html',
-//       loadingClass: 'Loader-bg',
-//       loadingInner: '<div class="loader">' +
-//                           '<span></span>' +
-//                           '<span></span>' +
-//                           '<span></span>' +
-//                           '<span></span>' +
-//                       '</div>',
-//       timeout: false,
-//       touchSupport  :   true,
-//       timeoutCountdown: 5000,
-//       onLoadEvent: true,
-//       browser: ['animation-duration', '-webkit-animation-duration'],
-//       overlay: false,
-//       overlayClass: 'animsition-overlay-slide',
-//       overlayParentElement: 'body',
-//       transition: function (url) {
-//         window.location.href = url;
-//       }
-//     });
 //
+// $('#element').donetyping(callback[, timeout=1000])
+// Fires callback when a user has finished typing. This is determined by the time elapsed
+// since the last keystroke and timeout parameter or the blur event--whichever comes first.
+//   @callback: function to be called when even triggers
+//   @timeout:  (default=1000) timeout, in ms, to to wait before triggering event if not
+//              caused by blur.
+// Requires jQuery 1.7+
 //
-//   })(jQuery);
+;(function($){
+    $.fn.extend({
+        donetyping: function(callback,timeout){
+            timeout = timeout || 2000; // 1 second default timeout
+            var timeoutReference,
+                doneTyping = function(el){
+                    if (!timeoutReference) return;
+                    timeoutReference = null;
+                    callback.call(el);
+                };
+            return this.each(function(i,el){
+                var $el = $(el);
+                // Chrome Fix (Use keyup over keypress to detect backspace)
+                // thank you @palerdot
+                $el.is(':input') && $el.on('keyup keypress paste',function(e){
+                    // This catches the backspace button in chrome, but also prevents
+                    // the event from triggering too preemptively. Without this line,
+                    // using tab/shift+tab will make the focused element fire the callback.
+                    if (e.type=='keyup' && e.keyCode!=8) return;
 
-
-//  $(function () {
-//    $('#search').onclick(function shortlist(data) {
-//        $(".search-results-wrapper").removeClass("search-results-wrapper").addClass("search-results-wrapper-active");
-//        $.ajax({
-//            type: "POST",
-//            url : "{% url 'Shoppy:searchbar' %}",
-//            data:{
-//                'search_text' : $('#search').val(),
-//                'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-//            },
-//            success : searchSuccess,
-//            dataType:'html',
-//        });
-//        var search = document.getElementById('search').value;
-//        var search_result= document.getElementById('searchwrapper');
-//        if(search.length === 0){
-//            search_result.classList.remove('search-results-wrapper-active');
-//            search_result.classList.add('search-results-wrapper');
-//        }
-//    });
-// });
-// function searchSuccess(data, textStatus, jqXHR){
-//    $('#search_results').html(data);
-// }
+                    // Check if timeout has been set. If it has, "reset" the clock and
+                    // start over again.
+                    if (timeoutReference) clearTimeout(timeoutReference);
+                    timeoutReference = setTimeout(function(){
+                        // if we made it here, our timeout has elapsed. Fire the
+                        // callback
+                        doneTyping(el);
+                    }, timeout);
+                }).on('blur',function(){
+                    // If we can, fire the event since we're leaving the field
+                    doneTyping(el);
+                });
+            });
+        }
+    });
+})(jQuery);
 
 
+$(document).ready(function() {
+        $('#email').blur(function() {
+            var email = $('#email').val();
+            if (IsEmail(email) == false) {
+                $('#sign-up').attr('disabled', true);
+                $('#popover-email').removeClass('hide');
+            } else {
+                $('#popover-email').addClass('hide');
+            }
+        });
+        $('#password').keyup(function() {
+            var password = $('#password').val();
+            if (checkStrength(password) == false) {
+                $('#sign-up').attr('disabled', true);
+            }
+        });
+        $('#confirm-password').blur(function() {
+            if ($('#password').val() !== $('#confirm-password').val()) {
+                $('#popover-cpassword').removeClass('hide');
+                $('#sign-up').attr('disabled', true);
+            } else {
+                $('#popover-cpassword').addClass('hide');
+            }
+        });
+        $('#contact-number').blur(function() {
+            if ($('#contact-number').val().length != 10) {
+                $('#popover-cnumber').removeClass('hide');
+                $('#sign-up').attr('disabled', true);
+            } else {
+                $('#popover-cnumber').addClass('hide');
+                $('#sign-up').attr('disabled', false);
+            }
+        });
+        $('#sign-up').hover(function() {
+            if ($('#sign-up').prop('disabled')) {
+                $('#sign-up').popover({
+                    html: true,
+                    trigger: 'hover',
+                    placement: 'below',
+                    offset: 20,
+                    content: function() {
+                        return $('#sign-up-popover').html();
+                    }
+                });
+            }
+        });
+
+        function IsEmail(email) {
+            var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            if (!regex.test(email)) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function checkStrength(password) {
+            var strength = 0;
 
 
-// var logo = document.getElementById("upload-pic");
-//         var first_name = document.getElementById('firstname');
-//         var last_name = document.getElementById('lastname');
-//         var gender = document.getElementById('gender');
-//         var email = document.getElementById('email');
-//         var username = document.getElementById('username');
-//         var phonnumber = document.getElementById('phonnumber');
-//         var dateofbirth = document.getElementById('dateofbirth');
-//         var maritalstatus = document.getElementById('maritalstatus');
-//         var job_type = document.getElementById('job_type');
-//         var category = document.getElementById('category');
-//
-//         var disability_choice = document.getElementsByClassName('disability_choice');
-//
-//         var disability = document.getElementById('disability');
-//         var country = document.getElementById('country');
-//         var county = document.getElementById('county');
-//         var region = document.getElementById('region');
-//         var landmark = document.getElementById('landmark');
-//
-//         var qualifications = document.querySelectorAll('[name=qualifications]');
-//         var course = document.querySelectorAll('[name=course]');
-//         var graduation_date = document.querySelectorAll('[name=graduation_date]');
-//         var school = document.querySelectorAll('[name=school]');
-//         var reg_number = document.querySelectorAll('[name=reg_number]');
-//
-//         var biography = document.querySelectorAll('[name=biography]');
-//
-//         var employer_name = document.querySelectorAll('[name=employer_name]');
-//         var company_name = document.querySelectorAll('[name=company_name]');
-//         var company_email = document.querySelectorAll('[name=company_email]');
-//         var company_phone = document.querySelectorAll('[name=company_phone]');
-//         var position_held = document.querySelectorAll('[name=position_held]');
-//         var date_from = document.querySelectorAll('[name=date_from]');
-//         var date_to = document.querySelectorAll('[name=date_to]');
-//         var experience = document.querySelectorAll('[name=experience]');
-//
-//         var skill = document.querySelectorAll('[name=skill]');
-//         var referee = document.querySelectorAll('[name=referee]');
-//         var referee_phonenumber = document.querySelectorAll('[name=referee_phonenumber]');
-//
-//         var account_url = document.querySelectorAll('[name=account_url]');
-//         var password1 = document.querySelectorAll('[name=password1]');
-//         var password2 = document.querySelectorAll('[name=password2]');
+            //If password contains both lower and uppercase characters, increase strength value.
+            if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)) {
+                strength += 1;
+                $('.low-upper-case').addClass('text-success');
+                $('.low-upper-case i').removeClass('fa-file-text').addClass('fa-check');
+                $('#popover-password-top').addClass('hide');
 
-// 'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-//                 "profile_image":logo.val(),
-//                 "first_name":first_name.val(),
-//                 "last_name":last_name.val(),
-//                 "gender":gender.val(),
-//                 "email":email.val(),
-//                 "username":username.val(),
-//                 "phone_number":phonnumber.val(),
-//                 "date_of_birth":dateofbirth.val(),
-//                 "marital_status":maritalstatus.val(),
-//                 "job_type":job_type.val(),
-//                 "category":category.val(),
-//
-//                 "disability_choice":disability_choice.val(),
-//                 "disability":disability.val(),
-//                 "country":country.val(),
-//                 "county":county.val(),
-//                 "region":region.val(),
-//                 "landmark":landmark.val(),
-//
-//                 "qualifications":qualifications.val(),
-//                 "school":school.val(),
-//                 "course":course.val(),
-//                 "graduation_date":graduation_date.val(),
-//                 "reg_number":reg_number.val(),
-//                 "biography":biography.val(),
-//                 "employer_name":employer_name.val(),
-//                 "company_name":company_name.val(),
-//                 "company_email":company_email.val(),
-//                 "company_phone":company_phone.val(),
-//                 "position_held":position_held.val(),
-//                 "date_from":date_from.val(),
-//                 "date_to":date_to.val(),
-//                 "experience":experience.val(),
-//
-//                 "skill":skill.val(),
-//                 "referee":referee.val(),
-//                 "referee_phonenumber":referee_phonenumber.val(),
-//
-//                 "account_url":account_url.val(),
-//                 "password1":password1.val(),
-//                 "password2":password2.val(),
+
+            } else {
+                $('.low-upper-case').removeClass('text-success');
+                $('.low-upper-case i').addClass('fa-file-text').removeClass('fa-check');
+                $('#popover-password-top').removeClass('hide');
+            }
+
+            //If it has numbers and characters, increase strength value.
+            if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)) {
+                strength += 1;
+                $('.one-number').addClass('text-success');
+                $('.one-number i').removeClass('fa-file-text').addClass('fa-check');
+                $('#popover-password-top').addClass('hide');
+
+            } else {
+                $('.one-number').removeClass('text-success');
+                $('.one-number i').addClass('fa-file-text').removeClass('fa-check');
+                $('#popover-password-top').removeClass('hide');
+            }
+
+            //If it has one special character, increase strength value.
+            if (password.match(/([!,%,&,@,#,$,^,*,?,_,~])/)) {
+                strength += 1;
+                $('.one-special-char').addClass('text-success');
+                $('.one-special-char i').removeClass('fa-file-text').addClass('fa-check');
+                $('#popover-password-top').addClass('hide');
+
+            } else {
+                $('.one-special-char').removeClass('text-success');
+                $('.one-special-char i').addClass('fa-file-text').removeClass('fa-check');
+                $('#popover-password-top').removeClass('hide');
+            }
+
+            if (password.length > 7) {
+                strength += 1;
+                $('.eight-character').addClass('text-success');
+                $('.eight-character i').removeClass('fa-file-text').addClass('fa-check');
+                $('#popover-password-top').addClass('hide');
+
+            } else {
+                $('.eight-character').removeClass('text-success');
+                $('.eight-character i').addClass('fa-file-text').removeClass('fa-check');
+                $('#popover-password-top').removeClass('hide');
+            }
+
+
+
+
+            // If value is less than 2
+
+            if (strength < 2) {
+                $('#result').removeClass()
+                $('#password-strength').addClass('progress-bar-danger');
+
+                $('#result').addClass('text-danger').text('Very Week');
+                $('#password-strength').css('width', '10%');
+            } else if (strength == 2) {
+                $('#result').addClass('good');
+                $('#password-strength').removeClass('progress-bar-danger');
+                $('#password-strength').addClass('progress-bar-warning');
+                $('#result').addClass('text-warning').text('Week')
+                $('#password-strength').css('width', '60%');
+                return 'Week'
+            } else if (strength == 4) {
+                $('#result').removeClass()
+                $('#result').addClass('strong');
+                $('#password-strength').removeClass('progress-bar-warning');
+                $('#password-strength').addClass('progress-bar-success');
+                $('#result').addClass('text-success').text('Strength');
+                $('#password-strength').css('width', '100%');
+
+                return 'Strong'
+            }
+
+        }
+
+    });
+
+
+
+
+

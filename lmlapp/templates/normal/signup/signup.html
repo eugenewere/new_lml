@@ -3,24 +3,67 @@
 {% block links %}
     <style type="text/css">
         #signuploader {
+          position: fixed;
             display: none;
-            position: fixed;
           top: 0;
           left: 0;
           right: 0;
           bottom: 0;
           width: 100%;
-          background: rgba(0,0,0,0.75) ;
+          background: #ffffff;
           z-index: 10000;
 
 
           
         }
+        #signuploader img{
+            top: 50%; left: 50%; position: absolute;transform: translate(-50%, -50%);filter: hue-rotate(277deg);
+        }
+    .is-valid-custom{
+        border-color: #28a745 !important;
+    }
+    .is-invalid-custom{
+        border-color:red !important;
+    }
+
+
+    .progresspsd {
+        height: 5px;
+    }
+
+    .control-label {
+        text-align: left !important;
+        padding-bottom: 7px;
+    }
+
+
+
+
+
+
+    .ex-account p {
+        background-color: rgba(255, 255, 255, 0.41);
+    }
+
+    select:hover {
+        color: #444645;
+        background: #ddd;
+    }
+
+    .fa-file-text {
+        color: #edda39;
+    }
+
+    .mar-top-bot-50 {
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
     </style>
 {% endblock links %}
 {% block content %}
     <div id="signuploader">
-        <img style="height: 152px; top: 50%; left: 50%; position: absolute;transform: translate(-50%, -50%);" src="{% static 'assets/img/avatar/CorruptOldfashionedGuineapig-small.gif' %}" alt="">
+        <img  src="{% static 'assets/img/avatar/PowerlessWetCentipede-small.gif' %}" alt="">
     </div>
            <section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %});">
 				<div class="container">
@@ -31,191 +74,179 @@
 
     <div class="clearfix"></div>
     <!-- Header Title End -->
-    <form id="employeeform" action="{% url 'LML:signup' %}"  method="POST" enctype="multipart/form-data" >
+    <form  id="employeeform" action="{% url 'LML:signup' %}"  method="POST" enctype="multipart/form-data" >
 
         {% csrf_token %}
 {#        <! -- General Detail Start -->#}
         <div class="section detail-desc">
-            <div class="container">
+           <div class="container">
                 <div class="ur-detail-wrap create-kit padd-bot-0">
 
                     <div class="row">
-                        <div class="detail-pic js">
+                        <label class="detail-pic js">
                             <div class="box companybox">
                                 <input required style="position: relative;" onchange="readURL(this)" type="file"
                                        name="profile_image" id="upload-pic" class="inputfile"/>
-                                <label for="upload-pic"><i class="fa fa-picture-o" aria-hidden="true"></i><span
-                                        style="margin-left:11px; color: white; text-align: center;">Upload Your Picture</span></label>
+                                <label for="upload-pic" style="display: flex; flex-direction: column;align-items: center;">
+                                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                                    <span style=" color: white; text-align: center;">Upload Your Picture</span>
+                                </label>
                                 <img class="blah" id="blah"
                                      style="position: absolute;top: 0; left: 0; bottom: 0; right: 0; visibility:hidden;width: 167px; height: 174px"
                                      src="{% static 'assets/img/client-1.jpg' %}" alt="">
                             </div>
-                            <div id="disclaimer" class="disclaimer disclaimer-animated " >
+                            <label for="upload-pic" id="disclaimer" class="disclaimer disclaimer-animated " >
                                 Upload Profile
-                            </div>
-                        </div>
+                            </label>
+                        </label>
                     </div>
-                <div id="error_div">
-                        {% include 'normal/signup/errors.html' %}
                 </div>
-
-                    <div class="row bottom-mrg">
-                        <div class="add-feild">
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group " style="margin-bottom: 8px">
-                                    <label for="firstname"></label>
-                                    <input required name="first_name" id="firstname" type="text" class="form-control"
-                                           placeholder="First Name" style="margin-bottom:0;">
-                                    <small id="passwordHelpBlock" class="form-text text-muted">
-                                        First name as it appears in id.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <label for="lastname"></label>
-                                    <input required name="last_name" id="lastname" type="text" class="form-control"
-                                           placeholder="Last Name" style="margin-bottom:0;">
-                                    <small id="lastname" class="form-text text-muted">
-                                        Last name as it appears in id.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <label for="gender"></label>
-                                    <select required name="gender" id="gender" class="form-control input-lg" style="margin-bottom:0">
-                                        <option selected disabled>Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                    <small id="gender" class="form-text text-muted">
-                                        Gender.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <label for="email"></label>
-                                    <input required name="email" id="email" type="email" class="form-control"
-                                           placeholder="Your Email" style="margin-bottom:0">
-                                    <small id="email" class="form-text text-muted">
-                                        johndoe@example.com .
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <label for="usename"></label>
-                                    <input required name="username" id="username" type="text" class="form-control"
-                                           placeholder="Your Username" style="margin-bottom:0">
-                                    <small id="usename" class="form-text text-muted">
-                                        Username.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <label for="phonnumber"></label>
-                                    <input required name="phone_number" id="phonnumber" type="tel" class="form-control"
-                                           placeholder="Phone Number" style="margin-bottom:0">
-                                    <small id="phonnumber" class="form-text text-muted">
-                                        07xxxxxxxxx.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 0">
-                                    {#                                            <span class="input-group-addon">Date From</span>#}
-                                    <span class="input-group-addon orangebg"><i class="fa fa-calendar"></i> Date Of Birth</span>
-                                    <input id="dateofbirth" required name="date_of_birth" style="margin-bottom:0" type="date"
-                                           class="form-control">
-                                </div>
-                                <small id="dob" class="dob form-text text-muted" style="margin-bottom: 8px">
-                                    Date Of Birth
-                                </small>
-                            </div>
-                            <div class="col-md-6 col-sm-6">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <select required name="marital_status" id="maritalstatus"  class="marital form-control input-lg"
-                                            style="margin-bottom: 0">
-                                        <option selected>Marital status</option>
-                                        <option value="Single">Single</option>
-                                        <option value="Married">Married</option>
-                                        <option value="Devorced">Devorced</option>
-                                    </select>
-                                    <small id="marital" class="form-text text-muted">
-                                        Marital status.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12">
-                                <div class="input-group" style="margin-bottom: 8px">
-                                    <select id="job_type" required name="job_type"  class="marital2 form-control input-lg"
-                                            style="margin-bottom: 0">
-                                        <option selected>Choose Job Type</option>
-                                        <option value="Full Time">Full Time</option>
-                                        <option value="Part Time">Part Time</option>
-                                        <option value="Internship">Internship</option>
-                                        <option value="Freelancer">Freelancer</option>
-                                    </select>
-                                    <small id="marital" class="form-text text-muted">
-                                        Job Type.
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-sm-12" style="margin-top: 10px;">
-                                <div style=" display: block !important;" class="input-group">
-                                    <select required name="category" id="category"  class="choose-category form-control input-lg">
-                                        <option {% if not form.category.value %} selected{% else %}disabled{% endif %} >
-                                            Work Categories
-                                        </option>
-                                        {% for category in categories %}
-                                            <option  {% if form.category.value == category.id %} selected {% endif %} value="{{ category.id }}"><span class="text-capitalize">{{ category.category }}</span></option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
+                <div class="row bottom-mrg">
+                    <div class="add-feild">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group " style="margin-bottom: 8px">
+                                <label for="firstname"></label>
+                                <input required name="first_name" id="firstname" type="text" class="form-control"
+                                       placeholder="First Name" style="margin-bottom:0; text-transform: capitalize;">
                                 <small id="passwordHelpBlock" class="form-text text-muted">
-                                    Work Category.
+                                    First name as it appears in id.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <label for="lastname"></label>
+                                <input required name="last_name" id="lastname" type="text" class="form-control"
+                                       placeholder="Last Name" style="margin-bottom:0;  text-transform: capitalize;">
+                                <small id="lastname" class="form-text text-muted">
+                                    Last name as it appears in id.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <label for="gender"></label>
+                                <select required name="gender" id="gender" class="form-control input-lg" style="margin-bottom:0">
+                                    <option selected disabled>Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                                <small id="gender" class="form-text text-muted">
+                                    Gender.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <label for="email"></label>
+                                <input autocomplete="off" data-email1 required name="email" id="email" type="email" class="is-valid form-control"
+                                       placeholder="Your Email" style="margin-bottom:0">
+                                <small data-answer-email1 id="email" class="form-text text-muted">
+                                    johndoe@example.com .
                                 </small>
                             </div>
 
-                            <div class="col-md-12 col-sm-12" style="margin-top: 20px;">
-                                <h4 class="text-muted">Do you have any disablity</h4>
-                                <div style="display: flex;">
-                                    <div class="custom-control custom-radio custom-control-inline"
-                                         style="margin-right: 20px;">
-                                        <input onclick="openDisability()" type="radio" class="disability_choice custom-control-input"
-                                               id="customRadio" name="disability_status" value="DISABLED">
-                                        <label class="custom-control-label" for="customRadio">Yes</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input onclick="closeDisability()" type="radio" class="disability_choice custom-control-input"
-                                               id="customRadio2" name="disability_status" value="NOT_DISABLED">
-                                        <label class="custom-control-label" for="customRadio2">No</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-sm-12" style="padding: 0;">
-                                    <label for="disability"></label>
-                                    <textarea name="disability" style="display:none;" id="disability" class="des form-control" placeholder="What type of disability"></textarea>
-                                </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <label for="usename"></label>
+                                <input autocomplete="off" data-username1 required name="username" id="username" type="text" class="form-control"
+                                       placeholder="Your Username" style="margin-bottom:0">
+                                <small data-answer-username1 id="usename" class="form-text text-muted">
+                                    Username.
+                                </small>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row no-padd">
-                        <div class="detail pannel-footer">
-                            <div class="col-md-12 col-sm-12">
-                                <div class="detail-pannel-footer-btn pull-right">
-                                    {#										<a href="#" class="footer-btn choose-cover">Choose Cover Image</a>#}
-                                </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <label for="phonnumber"></label>
+                                <input autocomplete="off" data-phoneno required name="phone_number" id="phonnumber" type="tel" class="form-control"
+                                       placeholder="Phone Number" style="margin-bottom:0">
+                                <small data-answer-phoneno id="phonnumber" class="form-text text-muted">
+                                    07xxxxxxxxx.
+                                </small>
                             </div>
                         </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 0">
+                                {#                                            <span class="input-group-addon">Date From</span>#}
+                                <span class="input-group-addon orangebg"><i class="fa fa-calendar"></i> Date Of Birth</span>
+                                <input id="dateofbirth" required name="date_of_birth" style="margin-bottom:0" type="date"
+                                       class="form-control">
+                            </div>
+                            <small id="dob" class="dob form-text text-muted" style="margin-bottom: 8px">
+                                Date Of Birth
+                            </small>
+                        </div>
+                        <div class="col-md-6 col-sm-6">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <select  required name="marital_status" id="maritalstatus"  class="marital form-control input-lg"
+                                        style="margin-bottom: 0; text-transform: capitalize;">
+                                    <option selected>Marital status</option>
+                                    <option value="Single">Single</option>
+                                    <option value="Married">Married</option>
+                                    <option value="Devorced">Devorced</option>
+                                </select>
+                                <small id="marital" class="form-text text-muted">
+                                    Marital status.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12">
+                            <div class="input-group" style="margin-bottom: 8px">
+                                <select id="job_type" required name="job_type"  class="marital2 form-control input-lg"
+                                        style="margin-bottom: 0">
+                                    <option selected>Choose Job Type</option>
+                                    <option value="Full Time">Full Time</option>
+                                    <option value="Part Time">Part Time</option>
+                                    <option value="Internship">Internship</option>
+                                    <option value="Freelancer">Freelancer</option>
+                                </select>
+                                <small id="marital" class="form-text text-muted">
+                                    Job Type.
+                                </small>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-sm-12" style="margin-top: 10px;">
+                            <div style=" display: block !important;" class="input-group">
+                                <select style="text-transform: capitalize;" required name="category" id="category"  class="choose-category form-control input-lg">
+                                    <option {% if not form.category.value %} selected{% else %}disabled{% endif %} >
+                                        Work Categories
+                                    </option>
+                                    {% for category in categories %}
+                                        <option  {% if form.category.value == category.id %} selected {% endif %} value="{{ category.id }}"><span class="text-capitalize">{{ category.category|title }}</span></option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                Work Category.
+                            </small>
+                        </div>
+                        <div id="disabilityparent" class="col-md-12 col-sm-12" style="margin-top: 20px;">
+                            <h4 class="text-muted">Do you have any disablity</h4>
+                            <div style="display: flex;">
+                                <div class="custom-control custom-radio custom-control-inline"
+                                     style="margin-right: 20px;">
+                                    <input  type="radio" class="disability_choice custom-control-input"
+                                           id="customRadio" name="disability_status" value="DISABLED">
+                                    <label class="custom-control-label" for="customRadio">Yes</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input  type="radio" class="disability_choice custom-control-input"
+                                           id="customRadio2" name="disability_status" value="NOT_DISABLED">
+                                    <label class="custom-control-label" for="customRadio2">No</label>
+                                </div>
+                            </div>
+{#                                <div class="col-md-12 col-sm-12" style="padding: 0;">#}
+{#                                    <label for="disability"></label>#}
+{#                                    <textarea name="disability" id="disability" class="des form-control" placeholder="What type of disability"></textarea>#}
+{#                                </div>#}
+                        </div>
                     </div>
-
                 </div>
             </div>
         </div>
+
         <!-- General Detail End -->
 
         <!-- full detail SetionStart-->
@@ -228,7 +259,7 @@
                             <div class="input-group" style="margin-bottom: 0;">
                                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
                                 <select id="country" required name="country" class="choose-city form-control input-lg">
-                                    <option  disabled>Country</option>
+                                    <option >Choose Country</option>
                                     <option selected value="Kenya">Kenya</option>
                                 </select>
                             </div>
@@ -240,7 +271,7 @@
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
                                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                <select required name="county"  class="choose-city form-control input-lg">
+                                <select name="county" required   class="choose-city form-control input-lg">
                                     <option selected>County</option>
                                     {% for county in counties %}
                                         <option value="{{ county.id}}">{{ county.county }}</option>
@@ -251,9 +282,6 @@
                                 eg: Nairobi, Kisumu.
                             </small>
                         </div>
-                    </div>
-
-                    <div class="row col-sm-12 col-md-12">
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
                                 <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
@@ -391,110 +419,106 @@
                         </div>
                     <button type="button" class="add-field">Add field</button>
                     </div>
-
                 </div>
 
-                    <div class="row bottom-mrg extra-mrg">
-                        <h2 class="detail-title">Brief description about yourself</h2>
-                        <div class="col-md-12 col-sm-12">
-                            <label style="width: 100%;">
-                                <textarea required name="biography" class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
-                            </label>
-                        </div>
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Brief description about yourself</h2>
+                    <div class="col-md-12 col-sm-12">
+                        <label style="width: 100%;">
+                            <textarea name="biography" style="max-width: 100%; width: 100%;" required  class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
+                        </label>
                     </div>
+                </div>
 
-                    <div class="row bottom-mrg extra-mrg">
-                        <h2 class="detail-title">Add Experience</h2>
-                        <div class="extra-field-box">
-                            <div class="multi-box">
-                                <div class="dublicat-box">
-                                    <div class="col-md-12 col-sm-12">
-                                        <label>Have you ever been employed</label>
-                                        <div style="display: flex;">
-                                            <div class="custom-control custom-radio custom-control-inline"
-                                                 style="margin-right: 20px;">
-                                                <input onclick="showEmployment()" type="radio" class="custom-control-input" id="customRadioz" name="example" value="customEx">
-                                                <label class="custom-control-label" for="customRadioz">Yes</label>
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Add Experience</h2>
+                    <div class="extra-field-boxmine">
+                        <label>Have you ever been employed</label>
+                        <div style="display: flex;">
+                            <div class="custom-control custom-radio custom-control-inline"
+                                 style="margin-right: 20px;">
+                                <input  type="radio" class="custom-control-input experinput" id="customRadiozz" name="example" value="one">
+                                <label class="custom-control-label" for="customRadiozz">Yes</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input  type="radio" class="custom-control-input experinput" id="customRadioxx" name="example" value="two">
+                                <label class="custom-control-label" for="customRadio2xx">No</label>
+                            </div>
+                        </div>
+                        <div class="multi-boxmine" style="display: none;">
+                            <div class="dublicat-boxmine expduplicat" >
+                                <div class="col-md-12 col-sm-12 in1" style="margin-top: 51px;">
+                                    <div style="margin-top:8px;" id="employer"
+                                         class="employerwrapper col-md-12 col-sm-12">
+                                        <label for="emplo">Company Employer Name</label>
+                                        <input name="employer_name" style="margin-bottom: 0;" id="emplo" type="text" class="form-control" placeholder="Employer's Name">
+                                        <small id="lastname" class="form-text text-muted">
+                                            eg John doe.
+                                        </small>
+                                    </div>
+                                    <div style="margin-top: 8px;"
+                                         class="employerwrapper col-md-12 col-sm-12">
+                                        <label for="emplocomp">Company Name</label>
+                                        <input name="company_name" style="margin-bottom: 0;" id="emplocomp" type="text" class="form-control" placeholder="Employer's Company">
+                                        <small id="lastname" class="form-text text-muted">
+                                            eg abc company.
+                                        </small>
+                                    </div>
+                                    <div style="margin-top: 8px;"
+                                         class="employerwrapper col-md-12 col-sm-12">
+                                        <label for="emplocompemail">Company email</label>
+                                        <input name="company_email" style="margin-bottom: 0;" id="emplocompemail" type="email" class="form-control" placeholder="Employer's email">
+                                        <small id="lastname" class="form-text text-muted">
+                                            eg abc.example.org abc.example.com .
+                                        </small>
+                                    </div>
+                                    <div style="margin-top: 8px;"
+                                         class="employerwrapper col-md-12 col-sm-12">
+                                        <label for="emplocomp4n">Company Phone</label>
+                                        <input name="company_phone" style="margin-bottom: 0;" id="emplocomp4n" type="text" class="form-control" placeholder="Employer's Phonenumber">
+                                        <small id="lastname" class="form-text text-muted">
+                                            eg 07********.
+                                        </small>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12" style="margin-top:8px; ">
+                                        <label for="kke">Position Held</label>
+                                        <input name="position_held" id="kke" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
+                                    </div>
+                                    <div class="col-md-12 col-sm-12" style="margin-top:8px;">
+                                        <h4>Date</h4>
+                                        <div class="col-md-6 col-sm-6"  style="margin-top:8px;">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Date From</span>
+                                                <input name="date_from" type="date" id="exp-start" class="exp-start form-control">
                                             </div>
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input onclick="hideEmployment()" type="radio" class="custom-control-input" id="customRadiox" name="example" value="customEx">
-                                                <label class="custom-control-label" for="customRadio2x">No</label>
-                                            </div>
                                         </div>
-                                        <div style="margin-top:8px; display: none;" id="employer"
-                                             class="employerwrapper col-md-12 col-sm-12">
-                                            <label for="emplo">Company Employer Name</label>
-                                            <input name="employer_name" style="margin-bottom: 0;" id="emplo" type="text" class="form-control" placeholder="Employer's Name">
-                                            <small id="lastname" class="form-text text-muted">
-                                                eg John doe.
-                                            </small>
-                                        </div>
-                                        <div style="margin-top: 8px; display: none;" id="employercompany"
-                                             class="employerwrapper col-md-12 col-sm-12">
-                                            <label for="emplocomp">Company Name</label>
-                                            <input name="company_name" style="margin-bottom: 0;" id="emplocomp" type="text" class="form-control" placeholder="Employer's Company">
-                                            <small id="lastname" class="form-text text-muted">
-                                                eg abc company.
-                                            </small>
-                                        </div>
-                                        <div style="margin-top: 8px; display: none;" id="employercompany"
-                                             class="employerwrapper col-md-12 col-sm-12">
-                                            <label for="emplocompemail">Company email</label>
-                                            <input name="company_email" style="margin-bottom: 0;" id="emplocompemail" type="email" class="form-control" placeholder="Employer's email">
-                                            <small id="lastname" class="form-text text-muted">
-                                                eg abc.example.org abc.example.com .
-                                            </small>
-                                        </div>
-                                        <div style="margin-top: 8px; display: none;" id="employercompany"
-                                             class="employerwrapper col-md-12 col-sm-12">
-                                            <label for="emplocomp4n">Company Phone</label>
-                                            <input name="company_phone" style="margin-bottom: 0;" id="emplocomp4n" type="text" class="form-control" placeholder="Employer's Phonenumber">
-                                            <small id="lastname" class="form-text text-muted">
-                                                eg 07********.
-                                            </small>
-                                        </div>
-                                        <div class="employerwrapper col-md-12 col-sm-12"
-                                             style="margin-top:8px; display: none;">
-                                            <label for="kke">Position Held</label>
-                                            <input name="position_held" id="kke" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
-                                        </div>
-                                        <div class="employerwrapper col-md-12 col-sm-12"
-                                             style="margin-top:8px; display: none;">
-                                            <h4>Date</h4>
-                                            <div class="col-md-6 col-sm-6">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Date From</span>
-                                                    <input name="date_from" type="date" id="exp-start" class="exp-start form-control">
-                                                </div>
-                                            </div>
 
-                                            <div class="employerwrapper col-md-6 col-sm-6"
-                                                 style="margin-top:8px; display: none;">
-                                                <div class="input-group">
-                                                    <span class="input-group-addon">Date To</span>
-                                                    <input name="date_to" type="date" id="exp-end" class="exp-end form-control">
-                                                </div>
+                                        <div class="employerwrapper col-md-6 col-sm-6"
+                                             style="margin-top:8px; ">
+                                            <div class="input-group">
+                                                <span class="input-group-addon">Date To</span>
+                                                <input name="date_to" type="date" id="exp-end" class="exp-end form-control">
                                             </div>
-                                        </div>
-                                        <div class="employerwrapper col-md-12 col-sm-12"
-                                             style="margin-top:8px; display: none;">
-                                            <label for="emplomsg"></label>
-                                            <textarea name="experience" id="emplomsg" class="form-control textarea" placeholder="Optional notes on the experience"></textarea>
                                         </div>
                                     </div>
-                                    <button style="display: none;" id="clonebutton1" type="button" class="employer btn remove-field">Remove</button>
+                                    <div class="col-md-12 col-sm-12" style="margin-top:8px;">
+                                        <label for="emplomsg"></label>
+                                        <textarea name="experience" id="emplomsg" class="form-control textarea" placeholder="Optional notes on the experience"></textarea>
+                                    </div>
                                 </div>
+                                <button onclick="removeParent(this)" type="button" class="employer btn btn-rmv remove-field2">Remove</button>
                             </div>
-                            <button style="display: none;" id="clonebutton2" type="button" class="employer add-field">Add</button>
+                            <button id="clonebuttonexp" type="button" class="employer add-field2">Add</button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row bottom-mrg extra-mrg">
-                        <h2 class="detail-title">Add Skills</h2>
-                        <div class="extra-field-box">
-                            <div class="multi-box">
-                                <div class="dublicat-box">
-
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Add Skills</h2>
+                    <div class="extra-field-box3 ">
+                        <div class="multi-box2 " style="position:relative;">
+                            <div class="dublicat-box2 co" style="height:100%; ">
+                                <div class="col-sm-12">
                                     <div class="col-md-12 col-sm-12 " style="margin-bottom: 2px;">
                                         <div class="input-group" style="margin-bottom: 2px;">
                                             <span class="input-group-addon"><i class="fas fa-hand-paper"></i></span>
@@ -505,7 +529,6 @@
                                             eg Art and craft.
                                         </small>
                                     </div>
-
                                     <div class="col-md-12 col-sm-12 ">
                                         <div class="input-group" style="margin-bottom: 8px;">
                                             <span class="input-group-addon"><i class="fas fa-user"></i></span>
@@ -517,136 +540,128 @@
                                         </small>
                                     </div>
                                     <div class="col-md-12 col-sm-12 ">
-                                        <div class="input-group" style="margin-bottom: 8px;">
-                                            <span class="input-group-addon"><i class="fas fa-mobile-phone"></i></span>
-                                            <input required name="referee_phonenumber" id="refh" type="text"
-                                                   class="form-control" placeholder="Referee Phone Number">
-                                        </div>
-                                        <small id="lastnamehh" class="form-text text-muted">
-                                            eg Referee Phone Number.
-                                        </small>
+                                    <div class="input-group" style="margin-bottom: 8px;">
+                                        <span class="input-group-addon"><i class="fas fa-mobile-phone"></i></span>
+                                        <input required name="referee_phonenumber" id="refh" type="text"
+                                               class="form-control" placeholder="Referee Phone Number">
                                     </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                        <button type="button" class="btn remove-field">Remove</button>
-                                    </div>
-
+                                    <small id="lastnamehh" class="form-text text-muted">
+                                        eg Referee Phone Number.
+                                    </small>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-                                <button type="button" class=" btn add-field">Add</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row bottom-mrg extra-mrg">
-                        <h2 class="detail-title">Social Profile</h2>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
-                                <input name="account_url" type="text" class="form-control" placeholder="Linkedin Link">
-                            </div>
-                            <small id="lastname" class="form-text text-muted">
-                                Your Linkedin Handle.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="row bottom-mrg extra-mrg">
-                        <h2 class="detail-title">Password</h2>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input required name="password1" type="password" class="form-control" autocomplete="off"
-                                       placeholder="Password">
-                            </div>
-                            <div class="help-block list-unstyled text-muted">
-                                {{ form.password1.help_text }}
-                            </div>
-                            {% if form.password1.errors %}
-                                <div class="alert alert-danger errorlist text-danger">
-                                    {{ form.password1.errors }}
                                 </div>
-                            {% endif %}
-                        </div>
-                        <div class="col-md-12 col-sm-12">
-                            <div class="input-group">
-                                <span class="input-group-addon"><i class="fas fa-key"></i></span>
-                                <input required name="password2" type="password" class="form-control"
-                                       placeholder="Confirm Password">
+                                <button onclick="removeParent2(this)" type="button" class="btn remove-field2">Remove</button>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="help-block list-unstyled text-muted">
-                                {{ form.password2.help_text }}
-                            </div>
-                            {% if form.password2.errors %}
-                                <div class="alert alert-danger errorlist">{{ form.password2.errors }}</div>
-                            {% endif %}
-                        </div>
-
-                        <div class="row bottom-mrg extra-mrg text-center">
-                            <div class="col-md-12 col-sm-12 mrg-top-25">
-                                <div class="custom-control custom-radio custom-control-inline"
-                                     style="margin-right: 20px;">
-                                    <label class="custom-control-label" for="customRadio"></label>
-                                    <span>
-                                         <input type="checkbox" class="custom-control-input customRadio"
-                                                id="termschecks" name="example" value="">
-                                         Agree to terms and conditions <a href="{% url 'LML:termsandconditons' %}">Terms</a>
-                                     </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row bottom-mrg extra-mrg">
-                            <div class="col-md-12">
-                                <button  id="submitbutton" type="submit" class="submitbutton btn btn-success btn-primary small-btn">Submit
-                                </button>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="row text-right" style="">
-                                       Create as an Employer instead<a href="{% url 'LML:signup_initial' %}">click
-                                       here</a>
-                                </div>
-                            </div>
+                            <button style="position: absolute; bottom: 0;" id="cloneskill" type="button" class="employer btn add-field2">Add</button>
                         </div>
                     </div>
                 </div>
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Social Profile</h2>
+                    <div class="col-md-12 col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                            <input aria-label="social" autocomplete="off" name="account_url" type="url" class="form-control" placeholder="Linkedin Link">
+                        </div>
+                        <small id="lastname" class="form-text text-muted">
+                            Your Linkedin link to the account.
+                        </small>
+                    </div>
+                </div>
+                <div class="row bottom-mrg extra-mrg">
+                    <h2 class="detail-title">Password</h2>
+                <!-- Password input-->
+                    <div class="form-group">
+                        <label class="col-md-12 control-labelpsd" for="passwordinput">Password <span id="popover-password-top" class="hide pull-right block-help"><i class="fa fa-info-circle text-danger" aria-hidden="true"></i> Enter a strong password</span></label>
+                        <div class="col-md-12" style="position: relative">
+                            <input name="password1"  autocomplete="off" required  id="password"  type="password" placeholder="" class="form-control input-md" data-placement="bottom" data-toggle="popover" data-container="body"  data-html="true">
+                            <div style="position: absolute;top: 15px;right: 29px; z-index: 11;" class="password_checker">
+                                <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                            </div>
+                            <div id="popover-password">
+                                <p>Password Strength: <span id="result"> </span></p>
+                                <div class="progress">
+                                    <div id="password-strength" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:0%">
+                                    </div>
+                                </div>
+                                <ul class="list-unstyled">
+                                    <li class=""><span class="low-upper-case"><i class="fa fa-file-text" aria-hidden="true"></i></span>&nbsp; 1 lowercase &amp; 1 uppercase</li>
+                                    <li class=""><span class="one-number"><i class="fa fa-file-text" aria-hidden="true"></i></span> &nbsp;1 number (0-9)</li>
+                                    <li class=""><span class="one-special-char"><i class="fa fa-file-text" aria-hidden="true"></i></span> &nbsp;1 Special Character (!@#$%^&*).</li>
+                                    <li class=""><span class="eight-character"><i class="fa fa-file-text" aria-hidden="true"></i></span>&nbsp; Atleast 8 Character</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Password input-->
+                    <div class="form-group" >
+                        <div class="input-group" style="position:relative;">
+                            <input name="password2" autocomplete="off" style="position: relative; width: 100%;" required  type="password" class="form-control"
+                                   placeholder="Confirm Password">
+                            <div style="position: absolute;top: 15px;right: 21px; z-index: 11;" class="password_checker">
+                                <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                            </div>
+                        </div>
+                        <small id="phonnumber" class="form-text text-muted">
+                            Enter the same password as before, for verification.
+                        </small>
+
+                        <div class="help-block list-unstyled text-muted">
+                            {{ form.password2.help_text }}
+                        </div>
+                        {% if form.password2.errors %}
+                            <div class="alert alert-danger errorlist">{{ form.password2.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="row bottom-mrg extra-mrg">
+                    <div class="col-md-12">
+                        <div class="row text-right" style="">
+                               Create an account as an employer instead <a href="{% url 'LML:signup_initial' %}"> click
+                               here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
+
     </form>
+
+    <div class="col-md-12">
+        <button  form="employeeform" id="submitbutton" type="submit" class="submitbutton btn btn-success btn-primary small-btn">Submit </button>
+    </div>
+    <div class="col-md-12" >
+         <div id="error_div" style="display:none;">
+                <div class="alert alert-danger alert-dismissable">
+                    <h4>Please fix the following errors</h4>
+                    <ul id="errorlist" >
+
+
+                    </ul>
+                </div>
+         </div>
+    </div>
     <!-- full detail SetionStart-->
 {% endblock content %}
 {% block script %}
     {#            <script type="text/javascript" src="{% static 'assets/js/js.js' %}"></script>#}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
-    <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
     <script>
-
-        var list = document.getElementsByClassName('list1');
-        for (i = 0; i < list.length; i++) {
-            var anchor = list[i].getElementsByClassName('anchor');
-            for (a = 0; a < anchor.length; a++) {
-                $(anchor[i]).on('click', function (e) {
-                    list[i].classList.add('visible');
-                    if (list[i].hasClass('visible')) {
-                        list[i].removeClass('visible');
-                    } else {
-                        list[i].classList.add('visible');
-                    }
-                });
-                $(anchor[i]).on('blur', function (e) {
-                    list[i].removeClass('visible');
-                });
-            }
-        }
-
-
-    </script>
-    <script>
+{#$('#employeeform').serialize();#}
 
         $(document).ready(function(){
            var spinner = $('#signuploader');
            $("#employeeform").submit(function(e){
+               console.log('thiss');
                 e.preventDefault();
                 spinner.show();
                 var new_form_data = new FormData(this);
-                $.ajax({
+
+                setTimeout(
+                    $.ajax({
                     method : 'POST',
                     processData: false,
                     contentType: false,
@@ -669,12 +684,33 @@
                             }, 5000)
                         }
                         else {
-                            $('#error_div').html(response);
-                            $('html, body').animate({ scrollTop: 0 }, 'slow');
+                            {#console.log(response['form'])#}
+                            console.log(JSON.stringify(response['form']))
+                            console.log(JSON.parse(response['form']))
+                            var resp = response['form']
+                            let k = JSON.stringify(resp)
+                            let str = JSON.parse(resp)
+                            for (var key in str) {
+                              if (str.hasOwnProperty(key)) {
+                                console.log(key);
+                                console.log(str[key][0]['message']);
+
+                                $('#errorlist').append(
+                                    '<li class="text-capitalize">'+
+                                       '<span>'+ key +'</span>'+
+                                       ' <a href="#" class="error">'+
+                                          str[key][0]['message']+
+                                       '</a>'+
+                                    '</li>'
+                                )
+                              }
+                            }
+                            $('#error_div').show();
+
                             setTimeout(function () {
                                 swal.fire({
                                     title: "Error!",
-                                    text: "Form Is Invalid. Please fix the above errors",
+                                    text: "Form Is Invalid. Please fix the below errors",
                                     type: "error",
                                     confirmButtonText: "Retry"
                                 });
@@ -689,9 +725,146 @@
                         spinner.hide();
 
                     }
-                });
+                }),3000);
            });
         });
     </script>
+    <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
+    <script>
+        var list = document.getElementsByClassName('list1');
+        for (i = 0; i < list.length; i++) {
+            var anchor = list[i].getElementsByClassName('anchor');
+            for (a = 0; a < anchor.length; a++) {
+                $(anchor[i]).on('click', function (e) {
+                    list[i].classList.add('visible');
+                    if (list[i].hasClass('visible')) {
+                        list[i].removeClass('visible');
+                    } else {
+                        list[i].classList.add('visible');
+                    }
+                });
+                $(anchor[i]).on('blur', function (e) {
+                    list[i].removeClass('visible');
+                });
+            }
+        }
+        function validateEmail(email) {
+          const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        }
+        function validatePhoneNumber(phone) {
+          const  keRegexPattern = /^(?:254|\+254|0)?(7(?:(?:[129][0-9])|(?:0[0-8])|(4[0-1]))[0-9]{6})$/;
+          return keRegexPattern.test(phone);
+        }
+        $('[data-email1]').keyup(function () {
+              const email = $(this).val();
+              const $result = $("[data-answer-email1]");
+               $('[data-email1]').removeClass('is-valid-custom is-invalid-custom')
+
+              $result.text("");
+
+              if (validateEmail(email)) {
+                $result.text(email + " is valid ");
+                $result.css("color", "green");
+              } else {
+                $result.text(email + " is not valid ");
+                $result.css("color", "red");
+              }
+              return false;
+        });
+        $('[data-email1]').donetyping(function(){
+
+          var testvalue = $(this).val()
+             $.ajax({
+                method : 'POST',
+                data : {'testvalue':testvalue},
+                url :  {% url 'LML:checkifemailexists' %},
+                success:function (data) {
+                    console.log('success '+data)
+                    if(data['results'].toLowerCase() === 'success'){
+                        $('[data-answer-email1]').text(data['answer']);
+                        $('[data-answer-email1]').css("color", "green");
+                        $('[data-email1]').removeClass('is-invalid-custom').addClass('is-valid-custom')
+
+                    }
+                    else if(data['results'].toLowerCase() === 'error'){
+                         $('[data-answer-email1]').text(data['answer']);
+                         $('[data-answer-email1]').css("color", "red");
+                          $('[data-email1]').removeClass('is-valid-custom').addClass('is-invalid-custom')
+                    }
+
+                } ,
+                error:function (data) {
+                    console.log('error '+data)
+                } ,
+
+             });
+        });
+        $('[data-username1]').donetyping(function(){
+             $('[data-username1]').removeClass('is-valid-custom is-invalid-custom')
+             var testvalue = $(this).val()
+             $.ajax({
+                method : 'POST',
+                data : {'testvalue2':testvalue},
+                url :  {% url 'LML:checkifusernameexists' %},
+                success:function (data) {
+                    {#console.log('success '+ data)#}
+                    if(data['results'].toLowerCase() === 'success'){
+                        $('[data-answer-username1]').text(data['answer']);
+                        $('[data-answer-username1]').css("color", "green");
+                        $('[data-username1]').removeClass('is-invalid-custom').addClass('is-valid-custom')
+
+                    }
+                    else if(data['results'].toLowerCase() === 'error'){
+                         $('[data-answer-username1]').text(data['answer']);
+                         $('[data-answer-username1]').css("color", "red");
+                          $('[data-username1]').removeClass('is-valid-custom').addClass('is-invalid-custom')
+                    }
+
+                } ,
+                error:function (data) {
+                    console.log('error '+data)
+                } ,
+
+             });
+        });
+        $('[data-phoneno]').donetyping(function () {
+              const email = $(this).val();
+              const $result = $("[data-answer-phoneno]");
+               $('[data-phoneno]').removeClass('is-valid-custom is-invalid-custom')
+              $result.text("");
+              if (validatePhoneNumber(email)) {
+                $result.text(email + " is valid ");
+                $result.css("color", "green");
+                $('[data-phoneno]').removeClass('is-invalid-custom').addClass('is-valid-custom')
+
+              } else {
+                $result.text(email + " is not valid ");
+                $result.css("color", "red");
+                $('[data-phoneno]').removeClass('is-valid-custom').addClass('is-invalid-custom')
+              }
+              return false;
+        });
+        $('#clonebuttonexp').click(function () {
+            var $clonedbox = $('.expduplicat:first').clone();
+            $($clonedbox).insertBefore($(this)).find('input').val("");
+        });
+        $('#cloneskill').click(function () {
+             var $clonedboxx = $('.dublicat-box2:first').clone();
+             {#$($clonedboxx).insertAfter('.dublicat-box2:last').find('input').val("");#}
+             $($clonedboxx).insertBefore($(this)).find('input').val("");
+        });
+        function removeParent(e) {
+            if ($('.expduplicat').length > 1){
+               $(e).parent().remove();
+            }
+        }
+        function removeParent2(e) {
+            if ($('.dublicat-box2').length > 1){
+               $(e).parent().remove();
+            }
+        }
+    </script>
+
 
 {% endblock script %}
