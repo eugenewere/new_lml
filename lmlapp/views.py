@@ -573,6 +573,7 @@ def employee_experience_detail_update(request):
                 )
 
         sweetify.success(request, title='Success', text='Experiences Updated Successfully.', persistent='Continue')
+        rankCandidateStatus(request)
         return redirect('LML:employeeprofile')
     else:
         sweetify.error(request, 'Error', text='Experiences Not Updated', persistent='Retry')
@@ -585,6 +586,7 @@ def employee_experience_detail_delete(request):
         print(experience)
         if experience:
             experience.delete()
+            rankCandidateStatus(request)
             data = {
                 'results': 'success',
                 'success': 'Experience deleted'
@@ -894,23 +896,23 @@ def employer_dash(request):
     user = request.user.id
     company = Company.objects.filter(user_ptr_id=user).first()
     social = CompanySocialAccount.objects.filter(company=company).first()
-    customers = CompanyShortlistCustomers.objects.filter(company=company)
+    customers = CompanyShortlistCustomers.objects.filter(company=company, payment_status ='SHORTLISTED')
     # premium_customers = CompanyShortlistCustomers.objects.filter(company=company, customer_rank_status='PREMIUM')
     # basic_customers = CompanyShortlistCustomers.objects.filter(company=company, customer_rank_status='BASIC')
     # ultimate_customers = CompanyShortlistCustomers.objects.filter(company=company, customer_rank_status='ULTIMATE')
     basic_customers=[]
     for customer in Customer.objects.filter(rank_status ='BASIC'):
-        c_c1 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer)
+        c_c1 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer, payment_status ='SHORTLISTED')
         for ccc1 in c_c1:
             basic_customers.append(ccc1.customer)
     premium_customers=[]
     for customer in Customer.objects.filter(rank_status ='PREMIUM'):
-        c_c2 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer)
+        c_c2 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer, payment_status ='SHORTLISTED')
         for ccc2 in c_c2:
             premium_customers.append(ccc2.customer)
     ultimate_customers=[]
     for customer in Customer.objects.filter(rank_status ='ULTIMATE'):
-        c_c3 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer)
+        c_c3 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer, payment_status ='SHORTLISTED')
         for ccc3 in c_c3:
             ultimate_customers.append(ccc3.customer)
 
@@ -1076,8 +1078,11 @@ def unshortlistcustomers(request):
         print(company_id, customer_id)
         if CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).exists():
             relation = CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).first()
-            customer =  relation.customer.first_name + relation.customer.last_name
-            relation.delete()
+            customer =  relation.customer.first_name + ' ' +relation.customer.last_name
+            CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).update(
+                payment_status ='UNSHORTLISTED'
+            )
+            # relation.delete()
             data = {
                 'shortlisted':  customer + 'Unshortlisted Successfully',
             }
@@ -1211,7 +1216,7 @@ def fetch_data_messages(request, customer_id):
 
 
 
-login_required()
+@login_required()
 def EmployerCustomerShortlist(request):
     user=request.user.id
     company =  Company.objects.filter(user_ptr_id=user).first()
@@ -1314,6 +1319,7 @@ def employee_education_detail_update(request):
                     customer=customer,
                 )
             sweetify.success(request, title='Success', text='Education Updated Successfully.', persistent='Continue')
+            rankCandidateStatus(request)
             return redirect('LML:employeeprofile')
         else:
             sweetify.error(request, 'Error', text='User Does Not Exist', persistent='Retry')
@@ -1370,6 +1376,7 @@ def update_add_experience(request):
                 experience=experience,
             )
             sweetify.success(request, 'Success', text='Successfully Added New Experience', persistent='Ok')
+            rankCandidateStatus(request)
         else:
             sweetify.error(request, 'Error', text='Error Adding New Experience', persistent='Ok')
     return redirect('LML:employeeprofile')
@@ -1394,6 +1401,7 @@ def update_add_education(request):
                 reg_number=regno,
             )
             sweetify.success(request, 'Success', text='Successfully Added New Education', persistent='Ok')
+            rankCandidateStatus(request)
         else:
             sweetify.error(request, 'Error', text='Error Adding New Education', persistent='Ok')
     return redirect('LML:employeeprofile')

@@ -331,6 +331,11 @@ class CompanyStatusPayment(models.Model):
 class CompanyShortlistCustomers(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    SHORTLIST_STATUS = {
+        ('SHORTLISTED', 'Shortlisted'),
+        ('UNSHORTLISTED', 'Unshortlisted'),
+    }
+    payment_status = models.CharField(max_length=200, choices=SHORTLIST_STATUS, default='SHORTLISTED', null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -338,8 +343,14 @@ class CompanyShortlistCustomers(models.Model):
         return '%s %s' % (self.company.company_name, self.customer.first_name)
     # def customerShortlist(self, company, customer):
 
-
-
+class WhatWeOffer(models.Model):
+    icon = models.CharField(max_length=200, null=True, blank=True)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    description = models.CharField(max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '%s %s' % (self.title, self.description)
 
 
 
