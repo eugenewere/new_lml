@@ -392,6 +392,7 @@ def employerdetails(request):
        'company':company,
        'social': social,
        'scompany': similar_company,
+        'title': company.company_name+' details'
     }
     return render(request ,'normal/jobdetails/employerdetails.html', context)
 
@@ -404,7 +405,7 @@ def employersprofile(request):
     categories = Category.objects.all()
 
     context = {
-        'title': 'Company profile',
+        'title': company.company_name+' profile',
         'user': request.user,
         'company':company,
         'social':social,
@@ -683,21 +684,20 @@ def companysignup(request):
             return JsonResponse(data, safe=False)
 
         else:
-            formr = CompanyRegisterForm(request.POST, request.FILES)
+
 
             # print(formr.errors)
             # sweetify.error(request, 'Error', text='Ensure you fill all fields correctly', persistent='Retry')
             context3 = {
                 'results': 'error',
-                'title': 'Create an account',
-                'form': formr
+                'form': form.errors.as_json()
 
             }
             # return JsonResponse(context3, safe=False)
             # return render_to_response('normal/signup/errors.html', context)
             return JsonResponse(context3)
 
-            # return redirect('LML:companysignup',{'form':form, 'social':form2})
+
 
     else:
 
@@ -710,9 +710,9 @@ def companysignup(request):
 
     context = {
         'title': 'Create an account',
-        'counties':County.objects.all(),
-        'regions':Region.objects.all(),
-        'categories': Category.objects.all(),
+        'counties':County.objects.all().order_by('county'),
+        'regions':Region.objects.all().order_by('county_number'),
+        'categories': Category.objects.all().order_by('category'),
         'form': form,
         'social': form2,
 
@@ -1053,6 +1053,7 @@ def shortlistcustomers(request):
             CompanyShortlistCustomers.objects.create(
                 customer=customer_user,
                 company=company_user,
+                payment_status="SHORTLISTED"
             )
             data = {
                 'shortlisted': 'Successfully shortlisted',
@@ -1080,11 +1081,11 @@ def unshortlistcustomers(request):
             relation = CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).first()
             customer =  relation.customer.first_name + ' ' +relation.customer.last_name
             CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).update(
-                payment_status ='UNSHORTLISTED'
+                payment_status='UNSHORTLISTED'
             )
             # relation.delete()
             data = {
-                'shortlisted':  customer + 'Unshortlisted Successfully',
+                'shortlisted':  customer.upper() + 'Unshortlisted Successfully',
             }
             if data['shortlisted']:
                 data['success_message'] =customer.upper() + ' Unshortlisted Successfully'
@@ -1478,7 +1479,7 @@ def checkifemailexists(request):
     if request.method == 'POST' and request.is_ajax():
         test = request.POST.get('testvalue')
 
-        if User.objects.filter(email__iexact=test):
+        if User.objects.filter(email__iexact=test) and test is not None:
             if validateEmail(test):
                 context = {
                     'results': 'error',
@@ -1506,7 +1507,7 @@ def checkifemailexists(request):
 def checkifusernameexists(request):
     if request.method == 'POST' and request.is_ajax():
         test = request.POST.get('testvalue2')
-        if User.objects.filter(username__exact=test):
+        if User.objects.filter(username__exact=test) and test is not None:
             context = {
                 'results': 'error',
                 'answer': "Username Already Exists !!!",

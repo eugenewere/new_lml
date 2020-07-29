@@ -34,19 +34,19 @@
                                     <span class="ur-designation mrg-top-10">Entity: {{company.bizness_entity_type}}</span>
                                     <div class="rateing " style="margin-top: 12px;">
                                         {% if social.facebook %}
-                                            <a href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a>
+                                            <a target="_blank" data-toggle="tooltip" data-placement="top" title="Facebook: {{ social.facebook }}" href="{{social.facebook}}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a>
                                         {% endif %}
-                                        {% if social.facebook %}
-                                            <a href="{{ social.facebook }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a>
+                                        {% if social.linkedin %}
+                                            <a target="_blank" data-toggle="tooltip" data-placement="top" title="Linkedin: {{ social.linkedin }}" href="{{ social.linkedin }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a>
                                         {% endif %}
                                         {% if social.instagram %}
-                                            <a href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a>
+                                            <a target="_blank" data-toggle="tooltip" data-placement="top" title="Instagram: {{  social.instagram }}" href="{{ social.instagram }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a>
                                         {% endif %}
                                         {% if social.twitter %}
-                                            <a href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a>
+                                            <a target="_blank" data-toggle="tooltip" data-placement="top" title="Twitter: {{ social.twitter }}" href="{{ social.twitter }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a>
                                         {% endif %}
                                         {% if social.googlr_plus %}
-                                            <a href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a>
+                                            <a target="_blank" data-toggle="tooltip" data-placement="top" title="Google+: {{ social.googlr_plus }}" href="{{ social.googlr_plus }}"><i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a>
                                         {% endif %}
 
                                     </div>

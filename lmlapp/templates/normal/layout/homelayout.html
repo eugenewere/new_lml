@@ -6,7 +6,7 @@
     <!-- Basic Page Needs==================================================-->
     <title>{{title|title}}</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" onresize="devicePixelRatio">
 {#    <meta name="viewport" content="width=device-width, initial-scale=1.0" >#}
     <!-- CSS==================================================-->
 {#    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">#}
@@ -484,7 +484,7 @@
                 }
 
             }
-
+            $('[data-toggle="tooltip"]').tooltip()
 
 
         </script>
@@ -508,9 +508,7 @@
                 txt.style.display = "block";
                 txt.style.transition = 0.4+"s";
             }
-            $(function () {
-              $('[data-toggle="tooltip"]').tooltip()
-            })
+
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>

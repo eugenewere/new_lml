@@ -65,12 +65,15 @@
     <div id="signuploader">
         <img  src="{% static 'assets/img/avatar/PowerlessWetCentipede-small.gif' %}" alt="">
     </div>
-           <section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %});">
-				<div class="container">
-					<h1>Sign up</h1>
-                   <h3 style="margin-bottom: 38px; color: white; " > Are you an employer? <a style="color: white;" href="{% url 'LML:companysignup' %}">click here </a></h3>
-				</div>
-			</section>
+    <section class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %});">
+        <div class="container">
+            <h1>Sign up</h1>
+           <h3 style="margin-bottom: 38px; color: white; " >
+               Are you an employer?
+               <a style="color: white;" href="{% url 'LML:companysignup' %}">click here </a>
+           </h3>
+        </div>
+    </section>
 
     <div class="clearfix"></div>
     <!-- Header Title End -->
@@ -169,12 +172,10 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="input-group" style="margin-bottom: 0">
-                                {#                                            <span class="input-group-addon">Date From</span>#}
                                 <span class="input-group-addon orangebg"><i class="fa fa-calendar"></i> Date Of Birth</span>
-                                <input id="dateofbirth" required name="date_of_birth" style="margin-bottom:0" type="date"
-                                       class="form-control">
+                                <input data-age id="dateofbirth" required name="date_of_birth" style="margin-bottom:0" type="date" class="form-control">
                             </div>
-                            <small id="dob" class="dob form-text text-muted" style="margin-bottom: 8px">
+                            <small data-answer-age id="dob" class="dob form-text text-muted" style="margin-bottom: 8px">
                                 Date Of Birth
                             </small>
                         </div>
@@ -254,47 +255,17 @@
             <div class="container">
                 <div class="row bottom-mrg extra-mrg">
                     <h2 class="detail-title">Location Information</h2>
-                    <div class="row col-sm-12 col-md-12">
+                    <div class="row " style="display: flex; flex-wrap: wrap;">
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
                                 <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                <select id="country" required name="country" class="choose-city form-control input-lg">
+                                <select id="country" required name="country" class="form-control input-lg">
                                     <option >Choose Country</option>
                                     <option selected value="Kenya">Kenya</option>
                                 </select>
                             </div>
                             <small id="lastname" class="form-text text-muted" style="margin-bottom: 8px;">
                                 eg: Kenya
-                            </small>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
-                            <div class="input-group" style="margin-bottom: 0;">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
-                                <select name="county" required   class="choose-city form-control input-lg">
-                                    <option selected>County</option>
-                                    {% for county in counties %}
-                                        <option value="{{ county.id}}">{{ county.county }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <small id="lastname" class="form-text text-muted" style="margin-bottom: 8px;">
-                                eg: Nairobi, Kisumu.
-                            </small>
-                        </div>
-                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
-                            <div class="input-group" style="margin-bottom: 0;">
-                                <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
-                                <select id="region" required name="region" class="choose-region form-control input-lg">
-                                    <option selected disabled>Sub-County And Respective Ward</option>
-                                    {% for region in regions %}
-                                        <option value="{{ region.id }}">{{ region.region }}->({{ region.ward }})
-                                        </option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <small id="lastname" class="form-text text-muted">
-                                eg Langata.
                             </small>
                         </div>
                         <div class="col-md-6 col-sm-6 " style="margin-bottom: 8px;">
@@ -308,6 +279,37 @@
                                 eg Nearest road/School/Market/.
                             </small>
                         </div>
+                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                                <select id="countyselectt" name="county" required   class=" form-control input-lg">
+                                    <option selected>County</option>
+                                    {% for county in counties %}
+                                        <option data-countynumber="{{ county.county_number }}" value="{{ county.id}}">{{ county.county|title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <small id="lastname" class="form-text text-muted" style="margin-bottom: 8px;">
+                                eg: Nairobi, Kisumu.
+                            </small>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
+                            <div class="input-group" style="margin-bottom: 0;">
+                                <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+                                <select data-region id="region" required name="region" class="form-control input-lg">
+                                    <option selected disabled>Sub-County And Respective Ward</option>
+                                    {% for region in regions %}
+                                        <option data-countyregion="{{ region.county_number }}" value="{{ region.id }}">{{ region.region }}->({{ region.ward }})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <small id="lastname" class="form-text text-muted">
+                                eg Langata.
+                            </small>
+                        </div>
+
                     </div>
                 </div>
                 <div class="row bottom-mrg extra-mrg">
@@ -560,10 +562,10 @@
                     <h2 class="detail-title">Social Profile</h2>
                     <div class="col-md-12 col-sm-12">
                         <div class="input-group">
-                            <span class="input-group-addon"><i class="fab fa-linkedin"></i></span>
-                            <input aria-label="social" autocomplete="off" name="account_url" type="url" class="form-control" placeholder="Linkedin Link">
+                            <span title="Example: www.abc.com"  data-toggle="tooltip" data-placement="top" class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+                            <input title="Example: www.abc.com"  data-toggle="tooltip" data-placement="top" data-url aria-label="social" autocomplete="off" name="account_url" type="text" class="form-control" placeholder="Linkedin Link">
                         </div>
-                        <small id="lastname" class="form-text text-muted">
+                        <small data-answer-url1 id="lastname" class="form-text text-muted">
                             Your Linkedin link to the account.
                         </small>
                     </div>
@@ -681,6 +683,7 @@
                     success : function(response){
                         spinner.hide();
                         if (response.results === 'success') {
+                             $('#error_div').fadeOut()
                             $("#employeeform")[0].reset();
                             swal.fire({
                                 title: "Success!",
@@ -765,6 +768,15 @@
           const  keRegexPattern = /^(?:254|\+254|0)?(7(?:(?:[129][0-9])|(?:0[0-8])|(4[0-1]))[0-9]{6})$/;
           return keRegexPattern.test(phone);
         }
+        function validURL(str) {
+          var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+            '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+          return !!pattern.test(str);
+        }
         $('[data-email1]').keyup(function () {
               const email = $(this).val();
               const $result = $("[data-answer-email1]");
@@ -778,6 +790,24 @@
               } else {
                 $result.text(email + " is not valid ");
                 $result.css("color", "red");
+              }
+              return false;
+        });
+        $('[data-url]').keyup(function () {
+              const email = $(this).val();
+              const $result = $("[data-answer-url1]");
+               $('[data-url]').removeClass('is-valid-custom is-invalid-custom')
+
+              $result.text("");
+
+              if (validURL(email)) {
+                $result.text(email + " is valid ");
+                $result.css("color", "green");
+                $('[data-url]').removeClass('is-invalid-custom').addClass('is-valid-custom');
+              } else {
+                $result.text(email + " is not valid ");
+                $result.css("color", "red");
+                $('[data-url]').removeClass('is-valid-custom').addClass('is-invalid-custom');
               }
               return false;
         });
@@ -827,7 +857,7 @@
                     else if(data['results'].toLowerCase() === 'error'){
                          $('[data-answer-username1]').text(data['answer']);
                          $('[data-answer-username1]').css("color", "red");
-                          $('[data-username1]').removeClass('is-valid-custom').addClass('is-invalid-custom')
+                         $('[data-username1]').removeClass('is-valid-custom').addClass('is-invalid-custom')
                     }
 
                 } ,
@@ -873,48 +903,79 @@
                $(e).parent().remove();
             }
         }
-
         $('#trmscond').change(function () {
             if($(this).prop("checked", true)){
-                $('#submitbutton').removeAttr('disabled');
+                if($('input').hasClass('is-valid-custom')){
+                     $('#submitbutton').removeAttr('disabled');
+                }else if ($('input').hasClass('is-invalid-custom')){
+                     $('#submitbutton').attr('disabled');
+                     $(this).prop("checked", false)
+                     swal.fire({
+                        title: "Error!",
+                        text: "Please Fix Any Form Errors To Continue.",
+                        type: "error",
+                        confirmButtonText: "Retry"
+                    });
+
+                }
+
+
             }else if($(this).prop("checked", false)){
                 $('#submitbutton').attr('disabled');
             }
         });
+        $('[data-age]').change(function () {
+              const email = $(this).val();
+              const $result = $("[data-answer-age]");
+               $('[data-age]').removeClass('is-valid-custom is-invalid-custom')
+                var day = new Date(email).getDay();
+                var month = new Date(email).getMonth();
+                var year = new Date(email).getFullYear();
+                var age = 18;
+                var setDate = new Date(year + age, month - 1, day);
+                var currdate = new Date();
+                $result.text("");
+
+                if (currdate >= setDate) {
+                    $result.text('Age is valid ');
+                    $result.css("color", "green");
+
+                    $('[data-age]').removeClass('is-invalid-custom').addClass('is-valid-custom')
+                } else {
+                    $result.text('Age is not valid ');
+                    $result.css("color", "red");
+                     $('[data-age]').removeClass('is-valid-custom').addClass('is-invalid-custom')
+                }
 
 
+
+
+
+
+              return false;
+        });
 
 
 
     </script>
     <script>
-        {# $(document).ready(function(){#}
-             {#('BASIC', 'Basic'),#}
-        {#('PREMIUM', 'Premium'),#}
-        {#('ULTIMATE', 'Ultimate'),#}
-        {#      var status = " ";#}
-        {#      var detaminants = [];#}
-        {#      $('#trmscond').on("change",'.qualistatus', function () {#}
-        {#            detaminants.push($(this).val());#}
-        {#            console.log(containsAll(['Phd','Masters'], detaminants));#}
-        {#            if(detaminants.includes('Certificate') || detaminants.includes('Diploma') || detaminants.includes('Bachelor')){#}
-        {#                status = 'Basic';#}
-        {#            }#}
-        {##}
-        {##}
-        {##}
-        {##}
-        {##}
-        {#      });#}
-        {#      function containsAll(needles, haystack){#}
-        {#          for(var i = 0; i < needles.length; i++){#}
-        {#             if($.inArray(needles[i], haystack) === -1) return false;#}
-        {#          }#}
-        {#          return true;#}
-        {#        }#}
-        {##}
-        {#  });#}
+        $('#countyselectt').change(function () {
+            let value = $(this).find('option:selected').attr('data-countynumber');
+            console.log(value, this.value);
+            if (value){
+                $('[data-region]').find('option').each(function () {
+
+                    if ($(this).attr('data-countyregion') === value){
+                        $(this).show();
+                    }else {
+                        $(this).hide()
+                    }
+                });
+            }
+
+        });
     </script>
+
 
 
 {% endblock script %}

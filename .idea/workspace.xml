@@ -20,13 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/db3.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/employerlogo/Untitled-nj.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-detail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/jobdetails/employerdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/jobdetails/employerdetails.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/companympesapayment.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/companympesapayment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +52,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
   </component>
   <component name="ProjectId" id="1S7I42zIvY2mcmd6MmdF7azhurI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -76,6 +83,7 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -150,7 +158,8 @@
       <workItem from="1583824520316" duration="179000" />
       <workItem from="1595239681978" duration="1649000" />
       <workItem from="1595241699708" duration="94394000" />
-      <workItem from="1595444310273" duration="224392000" />
+      <workItem from="1595444310273" duration="224995000" />
+      <workItem from="1596010982213" duration="24650000" />
     </task>
     <servers />
   </component>
@@ -189,10 +198,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1595975357281" />
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1595967979909">
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1596050383459">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1595967979909" />
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1596050383459" />
     <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1595974804345">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
