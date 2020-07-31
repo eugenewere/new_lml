@@ -130,7 +130,7 @@
                                     <div class="row">
 
                                         {% if request.user|logged_in_customer %}
-                                                <div class="col-menu col-md-4">
+                                                <div class="col-menu col-md-3">
                                                     <h6 class="title">Payments</h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
@@ -141,7 +141,7 @@
                                                         </ul>
                                                     </div>
                                                 </div><!-- end col-3 -->
-                                                 <div class="col-menu col-md-4">
+                                                 <div class="col-menu col-md-3">
                                                     <h6 class="title">Account</h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
@@ -152,8 +152,17 @@
                                                         </ul>
                                                     </div>
                                                 </div><!-- end col-3 -->
-                                                    <div class="col-menu col-md-4">
-                                                        <h6 class="title">Actions</h6>
+                                                 <div class="col-menu col-md-3">
+                                                    <h6 class="title"> Terms and Conditions </h6>
+                                                    <div class="content">
+                                                        <ul class="menu-col">
+                                                            <li><a href="{% url 'LML:termsandconditons' %}">Terms</a></li>
+                                                            <li><a href="{% url 'LML:frequentaskedquestions' %}">FAQ</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-menu col-md-3">
+                                                    <h6 class="title">Actions</h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
                                                             <li><a href="{% url 'LML:employeeprofile' %}">Edit Account</a></li>
@@ -191,6 +200,7 @@
                                                 <div class="content">
                                                     <ul class="menu-col">
                                                         <li><a href="{% url 'LML:termsandconditons' %}">Terms</a></li>
+                                                         <li><a href="{% url 'LML:frequentaskedquestions' %}">FAQ</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -349,7 +359,33 @@
                             <ul class="nav nav-tabs" role="tablist">
                                 <li style="width: 100%;"  role="presentation"><a href="{% url 'LML:signup_initial' %}"{% comment %} role="tab" data-toggle="tab"{% endcomment %}>Sign Up</a></li>
                             </ul>
-                            <div class="containerr">
+                            <div class="containerr" id="resetemail" style="display: none;">
+                              <div class="left-section" style="flex: 1;" >
+                                <div class="header" style="text-align: center">
+                                  <h1 class="animation a1">Lets Get You Back On Track</h1>
+                                  <h4 class="animation a2">Enter Your Email To Reset Yor Passsword</h4>
+                                </div>
+                                  <form action="" method="post">
+{#                                      {% url 'LML:login_user' request.path|make_safe %}#}
+                                      {% csrf_token %}
+                                    <div class="form" >
+                                      <label style="color: #C2C2C2; margin-top: 20px;margin-bottom: 5px" for="id_username" class="animation a3">Email</label>
+                                      <input id="id_username" name="username" type="text" class="form-field animation a3" placeholder="Email">
+                                      <p class="animation a5" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+                                          <a data-login-email href="#">Login</a>
+                                          <a href="{% url 'LML:signup_initial' %}">Do you have an account sign up here?</a>
+                                      </p>
+                                      <button type="submit" style="border-radius: 20px;" class="animation a6 ">LOGIN</button>
+                                    </div>
+                                  </form>
+
+                              </div>
+                            </div>
+
+
+
+
+                            <div class="containerr" id="logincontainer">
                               <div class="left-section" style="flex: 1;" >
                                 <div class="header" style="text-align: center">
                                   <h1 class="animation a1">Welcome Back!</h1>
@@ -359,7 +395,7 @@
                                       {% csrf_token %}
                                     <div class="form" >
                                       <label style="color: #C2C2C2; margin-top: 20px;margin-bottom: 5px" for="id_usernam" class="animation a3">Email or Username</label>
-                                      <input id="id_usernam" name="username" type="text" class="form-field animation a3" placeholder="Username">
+                                      <input id="id_usernam" name="username" type="text" class="form-field animation a3" placeholder="Email or Username">
                                        <div style="display: flex; flex-direction: column;">
                                            <label style="color: #C2C2C2; margin-top: 20px;margin-bottom: 5px" for="pswd" class="animation a4">Password</label>
                                             <div style="position: relative;">
@@ -373,8 +409,8 @@
 
 
                                       <p class="animation a5" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-                                          <a href="#">Forgot Password</a>
-                                          <a href="{% url 'LML:signup_initial' %}">Do you have an account?</a>
+                                          <a data-reset-password href="#">Forgot Password</a>
+                                          <a href="{% url 'LML:signup_initial' %}">Do you have an account sign up here?</a>
                                       </p>
 
                                       <button type="submit" style="border-radius: 20px;" class="animation a6 ">LOGIN</button>
@@ -508,6 +544,16 @@
                 txt.style.display = "block";
                 txt.style.transition = 0.4+"s";
             }
+            $('[data-reset-password]').click(function () {
+                $('#logincontainer').hide('fast', function () {
+                    $('#resetemail').show('fast');
+                });
+            });
+            $('[data-login-email]').click(function () {
+                $('#resetemail').hide('fast', function () {
+                    $('#logincontainer').show('fast');
+                });
+            });
 
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>

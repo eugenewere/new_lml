@@ -67,27 +67,22 @@ class PersonelUpdateForm(forms.ModelForm):
             'job_type',
             'marital_status',
             'biography',
+            'disability',
+            'disability_status',
+
 
         ]
-    # def clean_username(self):
+    # def clean_disability(self):
     #     super(PersonelUpdateForm, self).clean()
-    #     username = self.cleaned_data.get('username')
-    #     usernme = self.cleaned_data.get('usernme')
-    #     if username == usernme:
-    #         return username
-    #     elif User.objects.filter(username__iexact=username).exists():
-    #         raise forms.ValidationError('Username already exists')
-    #     return username
+    #     disability = self.cleaned_data.get('disability')
+    #     disability_status = self.cleaned_data.get('disability_status')
+    #     if disability_status == 'DISABLED':
+    #         return disability
+    #     elif disability_status == 'NOT_DISABLED':
+    #         disability = "NOT_DISABLED"
+    #         return disability
     #
-    # def clean_email(self):
-    #     super(PersonelUpdateForm, self).clean()
-    #     email = self.cleaned_data.get('email')
-    #     emailix = self.cleaned_data.get('emailix')
-    #     if email ==emailix:
-    #         return email
-    #     elif User.objects.filter(email__iexact=email).exists():
-    #         raise forms.ValidationError('A user has already registered using this email')
-    #     return email
+
 
 
 

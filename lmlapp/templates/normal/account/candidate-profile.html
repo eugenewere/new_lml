@@ -110,7 +110,7 @@
                                 <!-- Start All Sec -->
                                 <div class="tab-content">
                                     <div id="about" class="tab-pane fade in active">
-                                        <h3 class="text-capitalize">About {{request.user.first_name}} {{request.user.last_name}}</h3>
+                                        <h3 class="text-capitalize">About {{request.user.first_name|title}} {{request.user.last_name|title}}</h3>
                                         <p>{{ customer.biography }}</p>
                                     </div>
                                     <!-- End About Sec -->
@@ -311,6 +311,7 @@
                                             </div>
                                             <form action="{% url 'LML:employee_education_detail_update' %}" method="POST">
                                             {% csrf_token %}
+                                            {% if educations|length > 0 %}
                                                 {% for education in educations %}
                                                     <div class="col-md-12 educount" id="educparent{{ education.id }}">
                                                         <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="educationnn{{ education.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
@@ -463,8 +464,13 @@
                                                         </div>
                                                     </div>
                                                 {% endfor %}
+                                            {% else %}
+                                                <div class="row" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+                                                    <h4>No Education Details</h4>
+                                                </div>
+                                            {% endif %}
                                                 <div class="col-sm-12" style="display: flex;">
-                                                    {% if educations %}
+                                                    {% if educations|length > 0  %}
                                                         <button type="submit" id="educupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                     {% endif %}
                                                     <button type="button" data-toggle="modal" data-target="#addneweducation" class="update-btn custom-button" style="border-radius: 140px; background:#6e8f99 !important;">Add New Education</button>
@@ -562,123 +568,129 @@
 
                                             <form action="{% url 'LML:employee_experience_detail_update' %}" method="POST">
                                                 {% csrf_token %}
-                                                {% for experience in experiences %}
-                                                    <div class="col-md-12 col-sm-12 expcount" id="expparent{{ experience.id }}">
-                                                        <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Experience {{ forloop.counter }}
-                                                            <span data-toggle="modal" data-target="#experience{{ experience.id }}" id="eexperience{{ experience.id }}" data-experience="{{ experience.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
-                                                        </h2>
-                                                         <!-- Modal -->
-                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="experience{{ experience.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
-                                                          <div class="modal-dialog">
-                                                            <div class="modal-content">
-                                                              <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                  <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                              </div>
-                                                              <div class="modal-body">
-                                                                <p>Are you sure you want to delete Experience in: <strong>{{ experience.company_name|title }}</strong></p>
-                                                                <div class="container-fluid ">
-                                                                    <button onclick="deleteExp(this);" id="{{ experience.id }}" data-parentt="expparent{{ experience.id }}"  type="button"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                {% if experiences|length > 0 %}
+                                                    {% for experience in experiences %}
+                                                        <div class="col-md-12 col-sm-12 expcount" id="expparent{{ experience.id }}">
+                                                            <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">Experience {{ forloop.counter }}
+                                                                <span data-toggle="modal" data-target="#experience{{ experience.id }}" id="eexperience{{ experience.id }}" data-experience="{{ experience.id }}" class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
+                                                            </h2>
+                                                             <!-- Modal -->
+                                                            <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="experience{{ experience.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel88" aria-hidden="true">
+                                                              <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                  <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                      <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                  </div>
+                                                                  <div class="modal-body">
+                                                                    <p>Are you sure you want to delete Experience in: <strong>{{ experience.company_name|title }}</strong></p>
+                                                                    <div class="container-fluid ">
+                                                                        <button onclick="deleteExp(this);" id="{{ experience.id }}" data-parentt="expparent{{ experience.id }}"  type="button"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                    </div>
+                                                                  </div>
                                                                 </div>
                                                               </div>
                                                             </div>
-                                                          </div>
-                                                        </div>
-                                                        <div class="extra-field-box">
-                                                            <div class="multi-box">
-                                                                <div class="dublicat-box">
-                                                                    <div class="col-md-12 col-sm-12">
-                                                                        <input type="text" name="experience_id" value="{{ experience.id }}" hidden >
-                                                                        <div id="employer" class="employer col-md-4 col-sm-12" >
-                                                                            <label for="emplo{{ experience.id }}">Company Employer Name</label>
-                                                                            <input required name="employer_name" id="emplo{{ experience.id }}" value="{{experience.employer_name}}" type="text" class="form-control" placeholder="Employer's Name">
-                                                                        </div>
-                                                                        <div  id="employercompany" class=" employer col-md-4 col-sm-12" >
-                                                                            <label for="emplocomp{{ experience.id }}">Company Name</label>
-                                                                            <input required name="company_name" value="{{experience.company_name}}" id="emplocomp{{ experience.id }}" type="text" class="form-control" placeholder="Employer's Company">
-                                                                        </div>
-                                                                        <div  class=" employer col-md-4 col-sm-12" >
-                                                                            <label for="emplocompemail{{ experience.id }}">Company email</label>
-                                                                            <input required name="comapny_email" value="{{experience.comapny_email}}" id="emplocompemail{{ experience.id }}" type="email" class="form-control" placeholder="Employer's email">
-                                                                        </div>
-
-                                                                        <div class="col-md-6 col-sm-12" id="employercompany"  >
-                                                                            <label for="emplocomp4n{{ experience.id }}">Company Phone</label>
-                                                                            <input required name="company_phone" value="{{experience.company_phone}}" id="emplocomp4n{{ experience.id }}" type="tel" class="form-control" placeholder="Employer's Phonenumber">
-                                                                        </div>
-
-                                                                        <div class="employer col-md-6 col-sm-12" >
-                                                                            <label for="kke{{ experience.id }}">Position Held</label>
-                                                                            <input required name="position_held" value="{{experience.position_held}}" id="kke{{ experience.id }}" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
-                                                                        </div>
-
-                                                                        <div class="employer col-md-12 col-sm-12 row">
-                                                                            <div class="col-md-6 col-sm-12" >
-                                                                                <label for="exp-start{{ experience.id }}" class="">Date From</label>
-                                                                                <input required name="date_from" value="{{experience.date_from|date:'Y-m-d'}}" type="date" id="exp-start{{ experience.id }}" class="form-control">
+                                                            <div class="extra-field-box">
+                                                                <div class="multi-box">
+                                                                    <div class="dublicat-box">
+                                                                        <div class="col-md-12 col-sm-12">
+                                                                            <input type="text" name="experience_id" value="{{ experience.id }}" hidden >
+                                                                            <div id="employer" class="employer col-md-4 col-sm-12" >
+                                                                                <label for="emplo{{ experience.id }}">Company Employer Name</label>
+                                                                                <input required name="employer_name" id="emplo{{ experience.id }}" value="{{experience.employer_name}}" type="text" class="form-control" placeholder="Employer's Name">
                                                                             </div>
-                                                                            <div class="employer col-md-6 col-sm-12">
-                                                                                <label for="exp-end{{ experience.id }}" class="">Date To</label>
-                                                                                <input required name="date_to" value="{{experience.date_to|date:'Y-m-d'}}" type="date" id="exp-end{{ experience.id }}" class="form-control">
+                                                                            <div  id="employercompany" class=" employer col-md-4 col-sm-12" >
+                                                                                <label for="emplocomp{{ experience.id }}">Company Name</label>
+                                                                                <input required name="company_name" value="{{experience.company_name}}" id="emplocomp{{ experience.id }}" type="text" class="form-control" placeholder="Employer's Company">
                                                                             </div>
-                                                                        </div>
+                                                                            <div  class=" employer col-md-4 col-sm-12" >
+                                                                                <label for="emplocompemail{{ experience.id }}">Company email</label>
+                                                                                <input required name="comapny_email" value="{{experience.comapny_email}}" id="emplocompemail{{ experience.id }}" type="email" class="form-control" placeholder="Employer's email">
+                                                                            </div>
 
-                                                                        <div class="employer col-md-12 col-sm-12" >
-                                                                            <label for="emplomsg{{ experience.id }}">Notes on the Experience</label>
-                                                                            <textarea style="max-width: 100%;" required name="experience" id="emplomsg{{ experience.id }}" class="form-control textarea" placeholder="Optional notes on the experience">{{experience.experience}}</textarea>
+                                                                            <div class="col-md-6 col-sm-12" id="employercompany"  >
+                                                                                <label for="emplocomp4n{{ experience.id }}">Company Phone</label>
+                                                                                <input required name="company_phone" value="{{experience.company_phone}}" id="emplocomp4n{{ experience.id }}" type="tel" class="form-control" placeholder="Employer's Phonenumber">
+                                                                            </div>
+
+                                                                            <div class="employer col-md-6 col-sm-12" >
+                                                                                <label for="kke{{ experience.id }}">Position Held</label>
+                                                                                <input required name="position_held" value="{{experience.position_held}}" id="kke{{ experience.id }}" type="text" class="form-control" placeholder="Position, e.g. Web Designer">
+                                                                            </div>
+
+                                                                            <div class="employer col-md-12 col-sm-12 row">
+                                                                                <div class="col-md-6 col-sm-12" >
+                                                                                    <label for="exp-start{{ experience.id }}" class="">Date From</label>
+                                                                                    <input required name="date_from" value="{{experience.date_from|date:'Y-m-d'}}" type="date" id="exp-start{{ experience.id }}" class="form-control">
+                                                                                </div>
+                                                                                <div class="employer col-md-6 col-sm-12">
+                                                                                    <label for="exp-end{{ experience.id }}" class="">Date To</label>
+                                                                                    <input required name="date_to" value="{{experience.date_to|date:'Y-m-d'}}" type="date" id="exp-end{{ experience.id }}" class="form-control">
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="employer col-md-12 col-sm-12" >
+                                                                                <label for="emplomsg{{ experience.id }}">Notes on the Experience</label>
+                                                                                <textarea style="max-width: 100%;" required name="experience" id="emplomsg{{ experience.id }}" class="form-control textarea" placeholder="Optional notes on the experience">{{experience.experience}}</textarea>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <script type = "text/javascript">
-                                                             function deleteExp(e){
-                                                                 {#console.log(e.dataset.experience);#}
-                                                                 var k = e.id;
-                                                                 var parentId = e.dataset.parentt;
-                                                                 var experience_id = e.id;
-                                                                 $.ajax({
-                                                                    method : 'POST',
-                                                                    url :  "{% url 'LML:employee_experience_detail_delete' %}",
-                                                                    data : {
-                                                                        'experience_id': experience_id,
-                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                    },
-                                                                    success : function(response){
-                                                                        if (response.results ==='success'){
-                                                                            $('#experience'+ {{ experience.id }} ).modal('hide');
-                                                                            $('body').removeClass('modal-open');
-                                                                            $('.modal-backdrop').remove();
-                                                                            $('#'+parentId).fadeOut(function () {
-                                                                                 $('#'+parentId).remove();
-                                                                                 if($('.expcount').length === 0){
-                                                                                    $('#expupbtn').fadeOut();
-                                                                                 }
-                                                                            })
+                                                            <script type = "text/javascript">
+                                                                 function deleteExp(e){
+                                                                     {#console.log(e.dataset.experience);#}
+                                                                     var k = e.id;
+                                                                     var parentId = e.dataset.parentt;
+                                                                     var experience_id = e.id;
+                                                                     $.ajax({
+                                                                        method : 'POST',
+                                                                        url :  "{% url 'LML:employee_experience_detail_delete' %}",
+                                                                        data : {
+                                                                            'experience_id': experience_id,
+                                                                            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                        },
+                                                                        success : function(response){
+                                                                            if (response.results ==='success'){
+                                                                                $('#experience'+ {{ experience.id }} ).modal('hide');
+                                                                                $('body').removeClass('modal-open');
+                                                                                $('.modal-backdrop').remove();
+                                                                                $('#'+parentId).fadeOut(function () {
+                                                                                     $('#'+parentId).remove();
+                                                                                     if($('.expcount').length === 0){
+                                                                                        $('#expupbtn').fadeOut();
+                                                                                     }
+                                                                                })
 
-                                                                        }else {
-                                                                             $('.massmodal').modal('hide');
-                                                                             $('body').removeClass('modal-open');
-                                                                             $('.modal-backdrop').remove();
-                                                                             setTimeout(function () {
-                                                                                $('#errorText').text(response['errortxt']);
-                                                                                $('#errorModal').modal('show')
-                                                                             },900)
+                                                                            }else {
+                                                                                 $('.massmodal').modal('hide');
+                                                                                 $('body').removeClass('modal-open');
+                                                                                 $('.modal-backdrop').remove();
+                                                                                 setTimeout(function () {
+                                                                                    $('#errorText').text(response['errortxt']);
+                                                                                    $('#errorModal').modal('show')
+                                                                                 },900)
+                                                                            }
+                                                                        },
+                                                                        error : function(response){
+                                                                            console.log(response);
+
                                                                         }
-                                                                    },
-                                                                    error : function(response){
-                                                                        console.log(response);
-
-                                                                    }
-                                                                 });
-                                                             }
-                                                        </script>
+                                                                     });
+                                                                 }
+                                                            </script>
+                                                        </div>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <div class="row" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+                                                        <h4>No Experience Details</h4>
                                                     </div>
-                                                {% endfor %}
+                                                {% endif %}
                                                 <div class="col-sm-12" style="display: flex">
-                                                    {% if experiences %}
+                                                    {% if experiences|length > 0  %}
                                                         <button type="submit" id="expupbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                     {% endif %}
                                                     <button type="button" data-toggle="modal" data-target="#addnewexperience" class="update-btn custom-button" style="border-radius: 140px; background:#6e8f99 !important;">Add New Experience</button>
@@ -745,98 +757,102 @@
 
                                             <form action="{% url 'LML:employee_skills_detail_update' %}" method="POST">
                                                 {% csrf_token %}
-                                                {% for skill in skills %}
-                                                 <div class="col-sm-12 skillcount" id="skillparent{{ skill.id }}">
-                                                   <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">{{ skill.skill|title }}
-                                                       <span  data-toggle="modal" data-target="#skill{{ skill.id }}"   class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
-                                                   </h2>
-                                                     <!-- Modal -->
-                                                    <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="skill{{ skill.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                      <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                          <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                              <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                          </div>
-                                                          <div class="modal-body">
-                                                            <p>Are you sure you want to delete skill: <strong>{{ skill.skill|title }}</strong></p>
-                                                            <div class="container-fluid ">
-                                                                <button id="{{ skill.id }}" data-parentt="skillparent{{ skill.id }}"  type="button" onclick="deleteSkill(this)"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                {% if skills|length > 0 %}
+                                                    {% for skill in skills %}
+                                                     <div class="col-sm-12 skillcount" id="skillparent{{ skill.id }}">
+                                                       <h2 class="detail-title mrg-top-20" style="padding: 15px 5px;">{{ skill.skill|title }}
+                                                           <span  data-toggle="modal" data-target="#skill{{ skill.id }}"   class="btn-danger btn" style="float:right; border-radius: 12px; padding: 8px 12px;" >Delete</span>
+                                                       </h2>
+                                                         <!-- Modal -->
+                                                        <div data-backdrop="static" data-keyboard="false" class="modal fade massmodal" id="skill{{ skill.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                                <p>Are you sure you want to delete skill: <strong>{{ skill.skill|title }}</strong></p>
+                                                                <div class="container-fluid ">
+                                                                    <button id="{{ skill.id }}" data-parentt="skillparent{{ skill.id }}"  type="button" onclick="deleteSkill(this)"  class="btn btn-danger btn-sm " style="margin-right:9px; float:right; border-radius: 12px; padding: 8px 12px;">Delete</button>
+                                                                </div>
+                                                              </div>
                                                             </div>
                                                           </div>
                                                         </div>
-                                                      </div>
+                                                        <!-- Modal -->
+                                                        <div class="extra-field-box">
+                                                            <div class="multi-box">
+                                                                <div class="dublicat-box">
+                                                                    <input name="skill_id" type="text" hidden value="{{ skill.id }}">
+                                                                    <div class="col-md-4 col-sm-12 ">
+                                                                        <label for="skillf{{ skill.id }}">Skill</label>
+                                                                        <input required name="skill" id="skillf{{ skill.id }}" value="{{skill.skill}}" type="text" class="form-control" placeholder="Skills, e.g. Css, Html...">
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-12 ">
+                                                                        <label for="reff{{ skill.id }}">Referee Name</label>
+                                                                        <input required name="referee" id="reff{{ skill.id }}" value="{{skill.referee}}" type="text" class="form-control" placeholder="Referee Name">
+                                                                    </div>
+                                                                    <div class="col-md-4 col-sm-12 ">
+                                                                        <label for="ref{{ skill.id }}">Referee Phone Number</label>
+                                                                        <input required name="referee_phonenumber" id="ref{{ skill.id }}" value="{{skill.referee_phonenumber}}" type="text" class="form-control" placeholder="Referee Phone Number">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                         </div>
                                                     </div>
-                                                    <!-- Modal -->
-                                                    <div class="extra-field-box">
-                                                        <div class="multi-box">
-                                                            <div class="dublicat-box">
-                                                                <input name="skill_id" type="text" hidden value="{{ skill.id }}">
-                                                                <div class="col-md-4 col-sm-12 ">
-                                                                    <label for="skillf{{ skill.id }}">Skill</label>
-                                                                    <input required name="skill" id="skillf{{ skill.id }}" value="{{skill.skill}}" type="text" class="form-control" placeholder="Skills, e.g. Css, Html...">
-                                                                </div>
-                                                                <div class="col-md-4 col-sm-12 ">
-                                                                    <label for="reff{{ skill.id }}">Referee Name</label>
-                                                                    <input required name="referee" id="reff{{ skill.id }}" value="{{skill.referee}}" type="text" class="form-control" placeholder="Referee Name">
-                                                                </div>
-                                                                <div class="col-md-4 col-sm-12 ">
-                                                                    <label for="ref{{ skill.id }}">Referee Phone Number</label>
-                                                                    <input required name="referee_phonenumber" id="ref{{ skill.id }}" value="{{skill.referee_phonenumber}}" type="text" class="form-control" placeholder="Referee Phone Number">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                     </div>
-                                                </div>
-                                                 <script type = "text/javascript">
-                                                     function deleteSkill(e) {
-                                                         var parentId = e.dataset.parentt;
-                                                         var skill_id = e.id;
-                                                            $.ajax({
-                                                                method : 'POST',
-                                                                url :  "{% url 'LML:employee_skills_update' %}",
-                                                                data : {
-                                                                    'skill_id': skill_id,
-                                                                    'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                },
-                                                                success : function(response){
-                                                                    if (response.results ==='success'){
-                                                                        console.log(response);
-                                                                        $('#skill'+ {{ skill.id }} ).modal('hide');
-                                                                        $('body').removeClass('modal-open');
-                                                                        $('.modal-backdrop').remove();
-                                                                        $('#'+parentId).fadeOut(function () {
-                                                                             $('#'+parentId).remove();
-                                                                             if($('.skillcount').length === 0){
-                                                                                $('#skillbtn').fadeOut();
-                                                                             }
-                                                                        })
-                                                                    }else {
+                                                     <script type = "text/javascript">
+                                                         function deleteSkill(e) {
+                                                             var parentId = e.dataset.parentt;
+                                                             var skill_id = e.id;
+                                                                $.ajax({
+                                                                    method : 'POST',
+                                                                    url :  "{% url 'LML:employee_skills_update' %}",
+                                                                    data : {
+                                                                        'skill_id': skill_id,
+                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                                                                    },
+                                                                    success : function(response){
+                                                                        if (response.results ==='success'){
+                                                                            console.log(response);
+                                                                            $('#skill'+ {{ skill.id }} ).modal('hide');
+                                                                            $('body').removeClass('modal-open');
+                                                                            $('.modal-backdrop').remove();
+                                                                            $('#'+parentId).fadeOut(function () {
+                                                                                 $('#'+parentId).remove();
+                                                                                 if($('.skillcount').length === 0){
+                                                                                    $('#skillbtn').fadeOut();
+                                                                                 }
+                                                                            })
+                                                                        }else {
 
-                                                                         $('.massmodal').modal('hide');
-                                                                         $('body').removeClass('modal-open');
-                                                                         $('.modal-backdrop').remove();
-                                                                         setTimeout(function () {
-                                                                            $('#errorText').text(response['errortxt']);
-                                                                            $('#errorModal').modal('show')
-                                                                         },900)
+                                                                             $('.massmodal').modal('hide');
+                                                                             $('body').removeClass('modal-open');
+                                                                             $('.modal-backdrop').remove();
+                                                                             setTimeout(function () {
+                                                                                $('#errorText').text(response['errortxt']);
+                                                                                $('#errorModal').modal('show')
+                                                                             },900)
+                                                                            console.log(response);
+                                                                        }
+                                                                    },
+                                                                    error : function(response){
                                                                         console.log(response);
+
                                                                     }
-                                                                },
-                                                                error : function(response){
-                                                                    console.log(response);
-
-                                                                }
-                                                             });
-                                                     }
-                                                 </script>
-                                                {% endfor %}
-{#                                                extra#}
-
+                                                                 });
+                                                         }
+                                                     </script>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <div class="row" style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+                                                        <h4>No Skill Details</h4>
+                                                    </div>
+                                                {% endif %}
                                                 <div class="col-sm-12" style="display: flex;">
-                                                    {% if skills %}
+                                                    {% if skills|length > 0  %}
                                                         <button type="submit" id="skillbtn" class="update-btn custom-button" style="border-radius: 140px;">Update Now</button>
                                                     {% endif %}
                                                     <button type="button" data-toggle="modal" data-target="#addnewskills" class="update-btn custom-button" style="border-radius: 140px; background:#6e8f99 !important;">Add New Skill</button>
@@ -910,18 +926,11 @@
                                                         <label>Username</label>
                                                         <input name="username" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
                                                     </div>
-                                                     <div class="col-md-4 col-sm-6" hidden>
-                                                        <label>Username</label>
-                                                        <input name="usernme" type="text" class="form-control" placeholder="Username" value="{{ customer.username }}">
-                                                    </div>
+
 
                                                     <div class="col-md-4 col-sm-6">
                                                         <label>Email</label>
                                                         <input name="email" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-6" hidden>
-                                                        <label>Email</label>
-                                                        <input name="emailix" type="email" class="form-control" placeholder="Email" value="{{ customer.email }}">
                                                     </div>
 
                                                     <div class="col-md-4 col-sm-6">
@@ -984,6 +993,36 @@
                                                         <textarea name="biography" rows="10" class="form-control" placeholder="Write Something">{{customer.biography}}</textarea>
                                                     </div>
                                                 </div>
+
+
+                                                     <div class="col-sm-12 col-md-12">
+                                                        <h2 class="detail-title mrg-top-20">Disability <span style="font-weight: bolder;">{{ customer.disability_status|title }}</span></h2>
+                                                          <div style="display: flex;">
+                                                            <div class="custom-control custom-radio custom-control-inline" style="margin-right: 20px;">
+                                                                <input  {% if customer.disability_status == 'DISABLED' %}checked{% endif %} type="radio" class="cdab custom-control-input"
+                                                                       id="customRadio" name="disability_status" value="DISABLED">
+                                                                <label class="custom-control-label" for="customRadio">Yes</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio custom-control-inline">
+                                                                <input {% if customer.disability_status == 'NOT_DISABLED' %}checked{% endif %} type="radio" class="cdab custom-control-input"
+                                                                       id="customRadio2" name="disability_status" value="NOT_DISABLED">
+                                                                <label class="custom-control-label" for="customRadio2">No</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 col-sm-12 ">
+                                                            <div id="disbledtxtarea" class="col-md-12 col-sm-12" style="padding: 0; display: none;">
+                                                                    <label for="disability"></label>
+                                                                    <textarea rows="10" required name="disability" id="disability" class="des form-control" placeholder="What type of disability">
+                                                                        {% if customer.disability_status == 'DISABLED' %}
+                                                                            {{ customer.disability }}
+                                                                        {% else %}
+                                                                        {% endif %}
+                                                                    </textarea>
+                                                             </div>
+                                                        </div>
+                                                     </div>
+
+
 
 
 
@@ -1149,6 +1188,37 @@
             if(activeTab){
                 $('#simple-design-tab a[href="' + activeTab + '"]').tab('show');
             }
+            $('.cdab').each(function () {
+                var attr = $(this).attr('checked');
+                 if(typeof attr !== typeof undefined && attr !== false && $(this).val().toLowerCase() === 'disabled' ){
+
+                     if($('#disbledtxtarea:not(:visible)')){
+                         console.log('true')
+                        $('#disbledtxtarea').css('display', 'block');
+                          $('#disbledtxtarea').show();
+                    }
+                 }
+                 else {
+                     {#$('#disbledtxtarea').hide();#}
+                 }
+            });
         });
+
+         $('.cdab').click(function () {
+
+            if($(this).val().toLowerCase()==='disabled'){
+
+                if($('#disbledtxtarea:not(:visible)')){
+                     console.log('true')
+                    $('#disbledtxtarea').css('display', 'block');
+                     $('#disbledtxtarea').show();
+                }
+            }else if($(this).val().toLowerCase()==='not_disabled'){
+                if($('#disbledtxtarea:visible')){
+                    $('#disbledtxtarea').hide();
+                }
+            }
+
+       });
     </script>
 {% endblock script%}

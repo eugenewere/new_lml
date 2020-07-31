@@ -83,7 +83,6 @@
                                       <option value="za">Z to A</option>
                                   </select>
                               </div>
-
                               <div class="col-sm-1" style="padding-right: 0;">
                                   <select id="sortstatus" class="form-control form-control-sm" style="height: 36px;">
                                       <option value="all" selected >Status</option>
@@ -93,12 +92,21 @@
                                       <option value="ultimate">Ultimate</option>
                                   </select>
                               </div>
+                              <div class="col-sm-2" style="padding-right: 0;">
+                                  <select id="sortjobtype" class="form-control form-control-sm" style="height: 36px;">
+                                      <option value="all" selected >Work Schedule</option>
+                                      <option value="Full Time">Full Time</option>
+                                      <option value="Part Time">Part Time</option>
+                                      <option value="internship">Internship</option>
+                                      <option value="Freelancer">Freelancer</option>
+                                  </select>
+                              </div>
                         </div>
                         <div id="listtt" class="row" style="display: flex; justify-content: center; flex-wrap: wrap;">
                            {% if customers %}
 
                             {% for customer in customers %}
-                                <div data-filter-name4="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" data-filter-item4 style="display: none;" data-status="{{ customer.rank_status }}" data-order="{{ customer.first_name }} " class="sortusers paid-candidate-container card-custom-border" >
+                                <div data-jobtype="{{ customer.job_type|lower }}"  data-filter-name4="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" data-filter-item4 style="display: none;" data-status="{{ customer.rank_status }}" data-order="{{ customer.first_name }} " class="sortusers paid-candidate-container card-custom-border" >
                                     <div class="paid-candidate-box">
                                         {% if request.user.is_authenticated %}
                                             {% if request.user|logged_in_company %}
@@ -114,7 +122,7 @@
                                                         {% if request|shortlisted:customer.id %}
                                                             <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
                                                         {% else %}
-                                                            <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                            <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i></a>
                                                         {% endif %}
                                                     </div>
                                                 {% endif %}
@@ -222,7 +230,7 @@
 
             });
         });
-                $('[data-search4]').on('keyup', function() {
+        $('[data-search4]').on('keyup', function() {
             var searchVal = $(this).val();
             var filterItems = $('[data-filter-item4]');
 
@@ -232,6 +240,22 @@
             } else {
                 filterItems.removeClass('hidden');
             }
+        });
+        $('#sortjobtype').change(function (){
+            var valuee = $(this).val();
+            $('.sortusers').each(function () {
+                 if(valuee.toLowerCase() === $(this).attr('data-jobtype').toLowerCase()){
+                       $('#usernonemessage').hide();
+                       $(this).show('slow');
+                 }else {
+                     $(this).hide('slow');
+                     $('#usernonemessage').show();
+                 }
+                 if (valuee.toLowerCase() === 'all'){
+                     $('#usernonemessage').hide();
+                     $(this).fadeIn();
+                 }
+            });
         });
 
 

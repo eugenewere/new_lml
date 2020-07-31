@@ -468,8 +468,7 @@ def employee_personal_details_update(request):
     customer = Customer.objects.filter(user_ptr_id=user).first()
     account_urls = request.POST.getlist('account_url')
     account_ids = request.POST.getlist('account_id')
-    emailix = request.POST['emailix']
-    usernme = request.POST['usernme']
+
     if request.method == 'POST':
         form = PersonelUpdateForm(request.POST, request.FILES, instance=customer)
         print(form.errors)
@@ -658,7 +657,12 @@ def companysignup(request):
         form = CompanyRegisterForm(request.POST, request.FILES)
         form2 = CompanySocialsForm(request.POST)
 
-        # print(form)
+        def genCoRegNo(regnopers):
+            if CompanyRegNo.objects.filter(company_reg_no__exact=regnopers):
+                regnoperss = ('CMP'+get_random_string(length=8, allowed_chars='ABDEFGHIJKLNPQRSTUVWXYZ123456789'))
+                genCoRegNo(regnoperss)
+            else:
+                return regnopers
         if form.is_valid():
             new_user = form.save()
             CompanySocialAccount.objects.create(
@@ -671,7 +675,7 @@ def companysignup(request):
             )
             CompanyRegNo.objects.create(
                 company=new_user,
-                company_reg_no=('CMP'+get_random_string(length=8, allowed_chars='ABDEFGHIJKLNPQRSTUVWXYZ123456789')),
+                company_reg_no=genCoRegNo('CMP'+get_random_string(length=8, allowed_chars='ABDEFGHIJKLNPQRSTUVWXYZ123456789')),
             )
             # sweetify.success(request, 'You did it', text='Good job! You successfully registered', persistent='Ok')
             new_userrr = authenticate(username=username, password=password1)

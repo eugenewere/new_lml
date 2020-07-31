@@ -2,7 +2,7 @@
    $('.disability_choice').click(function () {
         var html ='<div id="disbledtxtarea" class="col-md-12 col-sm-12" style="padding: 0;">' +
                         '<label for="disability"></label>' +
-                        '<textarea required name="disability" id="disability" class="des form-control" placeholder="What type of disability"></textarea>' +
+                        '<textarea style="max-width: 100%;" required name="disability" id="disability" class="des form-control" placeholder="What type of disability"></textarea>' +
                  '</div>'
 
         if($(this).val().toLowerCase()==='disabled'){

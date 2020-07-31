@@ -5,20 +5,12 @@
     <style>
       {#.grid-slide-box.slick-slide.slick-current{#}
       {#    width: 383px !important;#}
-        @media only screen and (max-width: 768px){
-            .reversdivs{
-                display: flex;
-                {#flex-wrap: wrap-reverse;#}
-                flex-direction: column-reverse;
+        @media only screen and (max-width: 991px){
+            .gifs{
+                display: none !important;
             }
         }
-        @media only screen and (max-width: 576px){
-            .reversdivs{
-                display: flex;
-                {#flex-wrap: wrap-reverse;#}
-                flex-direction: column-reverse;
-            }
-        }
+
     </style>
 {% endblock %}
 {% block content %}
@@ -197,7 +189,7 @@
                                                     {% if request|shortlisted:customer.id %}
                                                         <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
                                                     {% else %}
-                                                        <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                        <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i></a>
                                                     {% endif %}
                                                 </div>
                                             {% endif %}
@@ -267,7 +259,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 hidden-sm"><img src="{% static 'assets/img/blog/wp-iphonem.png' %}" class="img-responsive" alt="" /></div>
+                <div class="col-md-4 hidden-sm"><img  src="{% static 'assets/img/blog/wp-iphonem.png' %}" class="img-responsive mx-auto" style="margin: 0 auto;" alt="" /></div>
                 <div class="col-md-4 col-sm-6">
                     <div class="work-process" style="text-align: right !important;">
 {#                        <i class=""></i>#}
@@ -310,9 +302,9 @@
                     </div>
                    </div>
                 </div>
-               <div class="row">
+               <div class="container-fluid" style="display: flex; flex-wrap: wrap;">
                     <div class="col-md-6 col-sm-12 no-padd bl-dark "  style="border-radius: 5px;">
-                        <div class="call-to-act-caption">
+                        <div class="call-to-act-caption" style="height: 100%; display: flex; flex-direction: column; justify-content: center;;">
                             <h2>LET EMPLOYERS VIEW YOUR PROFILE ANYWHERE ANYTIME</h2>
                             <h3>you might just find your next employer here today</h3>
                             {% if not request.user.is_authenticated %}
@@ -321,8 +313,8 @@
                         </div>
 
                     </div>
-                   <div class="col-md-6 col-sm-12 no-padd "  style="display: flex; justify-content: center; align-items: center;">
-                        <img style="object-fit: contain; filter: hue-rotate(270deg);" src="{% static 'assets/img/gif/unnamed.gif' %}" alt="">
+                   <div class="col-md-6 col-sm-12 no-padd gifs"  style="display: flex; justify-content: center; align-items: center;overflow: hidden; position:relative;">
+                        <img style="object-fit: contain; filter: hue-rotate(270deg); width: 100%;" src="{% static 'assets/img/gif/unnamed.gif' %}" alt="">
                    </div>
                </div>
            </div>
@@ -355,7 +347,7 @@
                                                             {% if request|shortlisted:customer.id %}
                                                                 <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
                                                             {% else %}
-                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i></a>
                                                             {% endif %}
                                                         </div>
                                                     {% endif %}
@@ -496,8 +488,8 @@
                     </div>
                     </div>
                 </div>
-               <div class="row reversdivs" id="">
-                    <div class="col-md-6 col-sm-12 no-padd h-100" style="display: flex; justify-content: center; align-items: center; padding: 84px;">
+               <div class="row reversdivs" id="" style="display: flex;flex-wrap: wrap;">
+                    <div class="col-md-6 col-sm-12 no-padd h-100 gifs" style="display: flex; justify-content: center; align-items: center; padding: 84px;" >
                         <img style="object-fit: contain;" src="{% static 'assets/img/gif/accepted.gif' %}" alt="">
                     </div>
                     <div class="col-md-6 col-sm-12 no-padd gr-dark" style="border-radius: 5px;" >
@@ -511,5 +503,5 @@
                 </div>
             </div>
         </section>
-    <div class="clearfix" style="height: 66px;"></div>
+    <div class="clearfix" ></div>
 {% endblock content %}

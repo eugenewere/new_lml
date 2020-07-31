@@ -13,7 +13,7 @@
 
                 <div class="col-md-8">
                     <div class="left-side-container">
-                        <div class="freelance-image"><a href="company-detail.html"><img src="{{ customer.profile_image.url }}" class="img-responsive img-circle" alt=""></a></div>
+                        <div class="freelance-image"><a href="company-detail.html"><img style="height: 120px;" src="{{ customer.profile_image.url }}" class="img-responsive  img-circle" alt=""></a></div>
                         <div class="header-details">
                             <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}{% comment %}<span class="pull-right">$44/hr</span>{% endcomment %}</h4>
                             <div style="display: flex;">Category: <p style="margin-right: 5px;" class="text-capitalize">{{customer.category.category}}</p></div>

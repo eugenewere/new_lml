@@ -15,9 +15,9 @@ All custom js files contents are below
 
 	 
 	 $(window).on('load', function () {
-	$('.Loader').delay(350).fadeOut('slow');
-	$('body').delay(350).css({ 'overflow': 'visible' });
-});
+		$('.Loader').delay(350).fadeOut('slow');
+		$('body').delay(350).css({ 'overflow': 'visible' });
+	});
 
 
 	 /*---Company Brand Carousel --*/
