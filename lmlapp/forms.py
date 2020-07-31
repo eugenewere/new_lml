@@ -45,7 +45,7 @@ class CompanySocialsForm(forms.ModelForm):
 class CustomerReviewsForm(forms.ModelForm):
     class Meta:
         model = CustomerReviews
-        fields = ['customer', 'company', 'ratings', 'message']
+        fields = ['customer', 'ratings', 'message']
 
 class PersonelUpdateForm(forms.ModelForm):
     class Meta:

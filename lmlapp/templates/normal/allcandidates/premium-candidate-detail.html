@@ -13,11 +13,17 @@
 
                 <div class="col-md-8">
                     <div class="left-side-container">
-                        <div class="freelance-image"><a href="company-detail.html"><img style="height: 120px;" src="{{ customer.profile_image.url }}" class="img-responsive  img-circle" alt=""></a></div>
+                        <div class="freelance-image">
+                            <a href="javascript:void (0)">
+                                <img style="height: 120px;" src="{{ customer.profile_image.url }}" class="img-responsive img-circle" alt="">
+                            </a>
+
+                        </div>
                         <div class="header-details">
                             <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}{% comment %}<span class="pull-right">$44/hr</span>{% endcomment %}</h4>
                             <div style="display: flex;">Category: <p style="margin-right: 5px;" class="text-capitalize">{{customer.category.category}}</p></div>
-                            <ul>{#                                <li>#}
+                            <ul>
+{#                                                                <li>#}
 {#                                    <div class="star-rating" data-rating="4.2">#}
 {#                                        <span class="fa fa-star fill"></span>#}
 {#                                        <span class="fa fa-star fill"></span>#}
@@ -29,7 +35,7 @@
                                 <li style="display: flex;" class="text-capitalize"><span>Country: </span> {{customer.country}}</li>
                                 <li style="display: flex;"><span>Rank: </span><div class="verified-action">{{customer.rank_status}}</div></li><br>
                                 {%  if customer.disability_status == 'DISABLED' %}
-                                    <li style="display: flex;"><span>Disability: </span><div class="verified-action">{{customer.disability_status}}</div></li>
+                                    <li style="display: flex;"><span>Disability: </span><div class="verified-action">{{customer.disability_status|title}}</div></li>
                                 {% endif %}
                             </ul>
                         </div>
@@ -39,15 +45,17 @@
                 <div class="col-md-4 bl-1 br-gary">
                     <div class="right-side-detail">
                         <ul>
-                            <li><span class="detail-info text-capitalize">Availability</span>{{ customer.job_type }}</li>
+                            <li><span class="detail-info text-capitalize">Work Schedule</span>{{ customer.job_type }}</li>
                             <li><span class="detail-info text-capitalize">Location</span>{{customer.county}}</li>
 {#                            <li><span class="detail-info">Experience</span>{{ customer. }} Year</li>#}
                             <li><span class="detail-info">Age</span>{{customer.customer_age}} Years</li>
                         </ul>
                         {% if social %}
-                        <ul class="social-info">
-                            <li><a href="{{social}}"><i class="fab fa-linkedin-in"></i></a></li>
-                        </ul>
+                            <ul class="social-info">
+                                {% for social in socials %}
+                                    <li><a href="{{social.account_url}}"><i class="fab fa-linkedin-in"></i></a></li>
+                                {% endfor %}
+                            </ul>
                         {% endif %}
                     </div>
                 </div>
@@ -65,28 +73,120 @@
 
                     <div class="apply-job-header">
                         <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}</h4>
-                        <a href="company-detail.html" class="cl-success text-capitalize"><span><i class="fa fa-building"></i>{{customer.category.category}}</span></a>
+                        <a href="javascript:void(0)" class="cl-success text-capitalize"><span><i class="fa fa-building"></i>{{customer.category.category}}</span></a>
                         <span><i class="fa fa-map-marker"></i>{{customer.country}}</span>
                     </div>
 
                     <div class="apply-job-detail">
+                         <h2 class="detail-title">About Candidate</h2>
                         <p>{{ customer.biography }}</p>
                     </div>
-
-                    <div class="apply-job-detail">
-                        <h5>Skills</h5>
-                        {% if skills %}
+                    {% if skills %}
+                        <div class="apply-job-detail">
+                             <h2 class="detail-title">Skills ({{ skills|length }})</h2>
                             <ul class="skills">
                                 {% for skill in skills %}
                                     <li class="text-capitalize">{{ skill.skill }}</li>
                                 {% endfor %}
+
                             </ul>
+
+                        </div>
+                        <div class="row-bottom">
+                            <div class="ext-mrg row third-progress">
+                                <ul class="trim-edu-list">
+                                    {% for skill in skills %}
+                                        <li style="display: none;" class="sortskill">
+                                            <div class="trim-edu">
+                                                <h4 class="trim-edu-title text-capitalize" style="text-decoration: underline;">{{ skill.skill}}</h4>
+                                                <div style="display: flex;">
+                                                    <strong style="margin-right: 5px !important;">Referee: </strong>
+                                                    <p style="margin-left: 4px !important;"> {{ skill.referee }}</p>
+                                                </div>
+                                                <div style="display: flex;">
+                                                    <strong style="margin-right: 5px !important;">Referee PhoneNumber: </strong>
+                                                    <p style="margin-left: 4px !important;"> {{ skill.referee_phonenumber }}</p>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                {% if skills|length > 2 %}
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="text-center">
+                                            <a id="loadMore"  href="javascript:void (0)" class="btn shake" style="color: #07c66f;">Load More</a>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                     {% endif %}
+
+                    {% if educations|length > 0 %}
+                    <div class="row-bottom">
+                        <h2 class="detail-title">Education</h2>
+                        <p>Levels of education</p>
+                        <ul class="trim-edu-list">
+                            {% for education in educations %}
+                                <li style="display: none;" class="sorteducation">
+                                    <div class="trim-edu">
+                                        <h4 class="trim-edu-title" style="text-transform: capitalize;">{{education.school}}</h4><br>
+                                        <span class="title-est">Graduation Date {{education.graduation_date|date:'Y / m /d'}}</span><br>
+                                        <div style="display: flex; align-items: center;"> <strong>{{education.qualifications}}: </strong> <p> {{education.course}}.</p></div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                         {% if educations|length > 2 %}
+                            <div class="col-md-12 col-sm-12">
+                                <div class="text-center">
+                                    <a id="loadMore3"  href="javascript:void (0)" class="btn shake" style="color: #07c66f;">Load More</a>
+                                </div>
+                            </div>
                         {% endif %}
                     </div>
-                    {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
-                        <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0);" class="btn btn-success">Shortlist</a>
                     {% endif %}
-                    <a target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn btn-success">View Cv</a>
+
+                    {% if  experiences %}
+                        <div class="row-bottom">
+                            <h2 class="detail-title">Work & Experience</h2>
+                            <p>Experiences List.</p>
+                            <ul class="trim-edu-list">
+                                {% for experience in experiences %}
+                                    <li style="display: none;" class="sortexperience">
+                                        <div class="trim-edu">
+                                            <h4 class="trim-edu-title text-capitalize">{{ experience.company_name }}<span class="title-est">Worked for {{ experience.id|experience_years|safe|escape }}</span></h4>
+                                            <strong class="text-capitalize my-4">{{experience.position_held}}</strong>
+                                            <p>{{experience.experience}}.</p>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+
+                            </ul>
+                            {% if experiences|length > 2 %}
+                                <div class="col-md-12 col-sm-12">
+                                    <div class="text-center">
+                                        <a id="loadMore2"  href="javascript:void (0)" class="btn shake" style="color: #07c66f;">Load More</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    <div class="apply-job-detail">
+                        <h2 class="detail-title">Actions</h2>
+                        <div class="row" style="display: flex; flex-wrap: wrap;">
+                            {% if request.user|logged_in_company %}
+                            <a style="width: 45%; margin: 4px;" target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn  bt-1 btn-warning">View Cv</a>
+                            {% endif %}
+
+                            {% if request.user|logged_in_company %}
+                                {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
+                                    <a style="width: 45%; margin: 4px;" data-shortlistbtn onclick="shortlist2(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0);" class="btn btn-success">Shortlist</a>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
 
                 </div>
 
@@ -107,18 +207,16 @@
                         {% if reviews %}
                             {% for review in reviews %}
                                 <!-- Single Review -->
-                                <div class="review-list" style=" margin-bottom:0; display: table;">
-                                    <div class="review-thumb col-sm-2">
+                                <div class="review-list" style=" margin-bottom:0; display: flex; flex-wrap: wrap; align-items: center">
+                                    <div style="margin: 0;" class="review-thumb col-sm-2">
                                         <img src="{{review.company.logo.url}}" class="img-responsive img-circle" alt="" />
                                     </div>
-                                    <div class="review-detail col-sm-10 p-0" >
+                                    <div style="margin: 0;" class="review-detail col-sm-10 p-0" >
                                          <h4>
                                             {{review.company.company_name|title}}
                                             <span style="margin-left: auto;">{{ review.created_at|naturaltime }}</span>
                                          </h4>
-
                                          <div class="col-sm-12 card-ratings-wrapper">
-
                                            <div class=" ml-auto">
                                                {% if review.ratings == 5 %}
                                                     <div class="rate">
@@ -278,24 +376,72 @@
                             </div>
                             <div class="sidebar-box-detail">
                                 <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}</h4>
-                                <span class="desination">{{customer.category.category}}</span>
+                                <span class="desination">{{customer.category.category|title}}</span>
                             </div>
                         </div>
-                        <div class="sidebar-box-extra">
-                            <ul>
-                                {% for skill in customer.skillset %}
-                                    <li>{{skill.skill}}</li>
-                                {% endfor %}
-                                {% if customer.skillcount %}
-                                    <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
-                                {% endif %}
-                            </ul>
 
-                        </div>
                     </div>
-                    {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
-                    <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0);" class="btn btn-sidebar bt-1 bg-success">Shortlist</a>
+                    {% if request.user|logged_in_company %}
+                        <a style="width: 100%; font-size: 16px;" target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn  bt-1 btn-warning">View Cv</a>
                     {% endif %}
+                    {% if request.user|logged_in_company %}
+                        {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
+                            <a data-shortlistbtn  onclick="shortlist2(this);"  data-employer="{{ request.user.id }}" data-customer="{{ customer.id }}"  href="javascript:void(0);" class="btn btn-sidebar bt-1 bg-success">Shortlist</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="ur-detail-wrap">
+                    <div class="ur-detail-wrap-header">
+                        <h4>Candidate Overview</h4>
+                    </div>
+                    <div class="ur-detail-wrap-body">
+                        <ul class="ove-detail-list">
+
+                            <li>
+                                <i class="ti-email"></i>
+                                <h5>Email</h5>
+                                <span>{{request.user.email}}</span>
+                            </li>
+
+                            <li>
+                                <i class="ti-location-pin"></i>
+                                <h5>County</h5>
+                                <span>{{customer.county.county}}</span>
+                            </li>
+
+                            <li>
+                                <i class="ti-location-arrow"></i>
+                                <h5>Region</h5>
+                                <span>{{customer.region.region}}->{{customer.region.ward}}</span>
+                            </li>
+
+                            <li>
+                                <i class="ti-user"></i>
+                                <h5>Gender</h5>
+                                <span>{{customer.gender}}</span>
+                            </li>
+
+                            <li>
+                                <i class="ti-view-grid"></i>
+                                <h5>Marital Status</h5>
+                                <span>{{customer.marital_status}}</span>
+                            </li>
+
+
+
+                            <li>
+                                <i class="ti-mobile"></i>
+                                <h5>Phone Number</h5>
+                                <span>{{customer.phone_number}}</span>
+                            </li>
+
+                            <li>
+                                <i class="ti-book"></i>
+                                <h5>Job type</h5>
+                                <span>{{customer.job_type}}</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
 {#                <!-- Website & Portfolio -->#}
@@ -311,61 +457,52 @@
 {#                    </ul>#}
 {#                </div>#}
 {#                <!-- Website & Portfolio -->#}
-{##}
-{#                <!-- Similar Profile -->#}
-{#                <div class="sidebar-wrapper">#}
-{##}
-{#                    <div class="sidebar-box-header bb-1">#}
-{#                        <h4>Similar Candidate</h4>#}
-{#                    </div>#}
-{##}
-{#                    <div class="member-profile-list">#}
-{#                        <div class="member-profile-thumb">#}
-{#                            <a href="candidate-detail.html"><img src="../../static/assets/img/can-2.png" class="img-responsive img-circle" alt="" /></a>#}
-{#                        </div>#}
-{#                        <div class="member-profile-detail">#}
-{#                            <h4><a href="candidate-detail.html">Adam Crivatinly</a></h4>#}
-{#                            <span>Web Developer</span>#}
-{#                            <span class="cl-success">Freelancer</span>#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                    <div class="member-profile-list">#}
-{#                        <div class="member-profile-thumb">#}
-{#                            <a href="candidate-detail.html"><img src="../../static/assets/img/can-3.png" class="img-responsive img-circle" alt="" /></a>#}
-{#                        </div>#}
-{#                        <div class="member-profile-detail">#}
-{#                            <h4><a href="candidate-detail.html">Adam Crivatinly</a></h4>#}
-{#                            <span>Web Developer</span>#}
-{#                            <a href="candidate-detail.html"><span class="cl-success">Freelancer</span></a>#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                    <div class="member-profile-list">#}
-{#                        <div class="member-profile-thumb">#}
-{#                            <a href="candidate-detail.html"><img src="../../static/assets/img/can-1.png" class="img-responsive img-circle" alt="" /></a>#}
-{#                        </div>#}
-{#                        <div class="member-profile-detail">#}
-{#                            <h4><a href="candidate-detail.html">Adam Crivatinly</a></h4>#}
-{#                            <span>Web Developer</span>#}
-{#                            <a href="candidate-detail.html"><span class="cl-success">Freelancer</span></a>#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                </div>#}
 
-                <!-- Share This Job -->
-                <div class="sidebar-wrapper">
-                    <div class="sidebar-box-header bb-1">
-                        <h4>Share This Personnel</h4>
+                <!-- Similar Profile -->
+                {% if  all_customers %}
+                    <div class="sidebar-wrapper">
+                        <div class="sidebar-box-header bb-1">
+                            <h4>Similar Candidate</h4>
+                        </div>
+                        {% for customer in all_customers %}
+                            <div class="member-profile-list">
+                                <div class="member-profile-thumb">
+                                    <a href="{% url 'LML:premium_employee_detail' customer.id %}"><img src="{{customer.profile_image.url}}" style=" height: 72px; width: 72px; object-fit: contain;" class="img-responsive img-circle" alt="" /></a>
+                                </div>
+                                <div class="member-profile-detail">
+                                    <h4><a href="{% url 'LML:premium_employee_detail' customer.id %}">{{customer.first_name|title}} {{customer.last_name|title}} </a></h4>
+                                    <span>{{ customer.category.category|title}}</span>
+                                    <span class="cl-success">{{ customer.job_type|title }}</span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <a href="{% url 'LML:all_category_employees' customer.category.id %}">View All</a>
                     </div>
+                {% else %}
+                    <div class="sidebar-wrapper " style="text-align: center;padding: 20px">
+                        <p>No Similar Candidates</p>
+                    </div>
+              {% endif %}
 
-                    <ul class="social-share">
-                        {% if skills %}
-                        <li><a href="{{skills}}" class="fb-share"><i class="fab fa-linkedin"></i></a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+{#                <!-- Share This Job -->#}
+{#                <div class="sidebar-wrapper">#}
+{#                    <div class="sidebar-box-header bb-1">#}
+{#                        <h4>Share This Personnel</h4>#}
+{#                    </div>#}
+{#                        {% if social %}#}
+{#                            <ul class="social-share">#}
+{#                                {% for social in socials %}#}
+{#                                    <li><a href="{{social.account_url}}" class="fb-share"><i class="fab fa-linkedin"></i></a></li>#}
+{#                                {% endfor %}#}
+{#                            </ul>#}
+{#                        {% endif %}#}
+{##}
+{#                    <ul class="social-share">#}
+{#                        {% if skills %}#}
+{#                          <li><a href="{{skills}}" class="fb-share"><i class="fab fa-linkedin"></i></a></li>#}
+{#                        {% endif %}#}
+{#                    </ul>#}
+{#                </div>#}
 
             </div>
             <!-- End Sidebar -->
@@ -376,13 +513,13 @@
                 <div class="row" data-aos="fade-up">
                     <div class="col-md-12">
                         <div class="main-heading">
-                            <h2>Similar Potential <span>Employees</span></h2>
+                            <h2>Other <span>Employees</span></h2>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="grid-slide">
-                        {% for customer in all_customers %}
+                        {% for customer in other_customers %}
                             <!-- Single Freelancer -->
                             <div class="grid-slide-box">
                                 <div class="top-candidate-wrap style-2">
@@ -395,7 +532,7 @@
                                                     <div class="dropdown-menu pull-right animated flipInX">
                                                         {% csrf_token %}
                                                         {% if request|shortlisted:customer.id %}
-                                                            <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                            <a onclick="shortlist(this);" data-employer="{{ request.user.id }}"  id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
                                                         {% else %}
                                                             <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
                                                         {% endif %}
@@ -437,7 +574,150 @@
     <!-- Freelancer Detail End -->
 {% endblock content %}
 {% block script %}
+    <script>
+            function shortlistmessage() {
+                swal.fire({
+                title: "Error!",
+                text: "You have already shortlisted this user",
+                type: "error",
+                confirmButtonText: "Continue"
+               });
+            }
+            function shortlist(shortlist){
 
+                var user = document.getElementById(shortlist.id);
+                var company = user.getAttribute('data-employer');
+
+                 $.ajax({
+                    type: "POST",
+                    url : "{% url 'LML:shortlistemployees' %}",
+                    data:{
+                        'customer_id' : user.id,
+                        'company_id' : company,
+                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    dataType:'json',
+                    success : function searchSuccess(data){
+                        if(data.is_shortlisted){
+                            errorshortlisting(data);
+                            console.log();
+                        }
+                        else if(data.shortlisted){
+                           shortlisted(data);
+                           var user = document.getElementById(shortlist.id);
+                           user.innerText='Shortlisted';
+                           user.style.color='green';
+                        }
+                    },
+
+                });
+                 function shortlisted(k){
+
+                    swal.fire({
+                    title: "Success!",
+                    text: k.success_message,
+                    type: "success",
+                    confirmButtonText: "Continue"
+                   });
+                }
+                 function errorshortlisting(k){
+                    swal.fire({
+                    title: "Error!",
+                    text: k.error_message,
+                    type: "error",
+                    confirmButtonText: "Continue"
+                   });
+                }
+
+            }
+            function shortlist2(shortlist){
+
+                var user = $(shortlist).attr('data-customer')
+                var company = $(shortlist).attr('data-employer')
+                console.log(user, company)
+
+                 $.ajax({
+                    type: "POST",
+                    url : "{% url 'LML:shortlistemployees' %}",
+                    data:{
+                        'customer_id' : Number(user),
+                        'company_id' : Number(company),
+                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    dataType:'json',
+                    success : function searchSuccess(data){
+                        if(data.is_shortlisted){
+                            errorshortlisting(data);
+                            console.log();
+                        }
+                        else if(data.shortlisted){
+                           shortlisted(data);
+                           $('[data-shortlistbtn ]').fadeOut();
+                        }
+                    },
+
+                });
+                 function shortlisted(k){
+
+                    swal.fire({
+                    title: "Success!",
+                    text: k.success_message,
+                    type: "success",
+                    confirmButtonText: "Continue"
+                   });
+                }
+                 function errorshortlisting(k){
+                    swal.fire({
+                    title: "Error!",
+                    text: k.error_message,
+                    type: "error",
+                    confirmButtonText: "Continue"
+                   });
+                }
+
+            }
+            $(function () {
+                $(".sortskill").slice(0, 2).show();
+                $(".sortexperience").slice(0, 2).show();
+                $(".sorteducation").slice(0, 2).show();
+                $("#loadMore").on('click', function (e) {
+                    e.preventDefault();
+                    $(".sortskill:hidden").slice(0, 2).slideDown();
+                    if ($(".sortskill:hidden").length === 0) {
+                        $("#loadMore").fadeOut('slow');
+                    }
+                    $('html,body').animate({
+                        scrollTop: $(this).offset().top
+                    }, 1500);
+
+                });
+                $("#loadMore2").on('click', function (e) {
+                    e.preventDefault();
+                    $(".sortexperience:hidden").slice(0, 2).slideDown();
+                    if ($(".sortexperience:hidden").length === 0) {
+                        $("#loadMore2").fadeOut('slow');
+                    }
+                    $('html,body').animate({
+                        scrollTop: $(this).offset().top
+                    }, 1500);
+
+                });
+                $("#loadMore3").on('click', function (e) {
+                    e.preventDefault();
+                    $(".sorteducation:hidden").slice(0, 2).slideDown();
+                    if ($(".sorteducation:hidden").length === 0) {
+                        $("#loadMore3").fadeOut('slow');
+                    }
+                    $('html,body').animate({
+                        scrollTop: $(this).offset().top
+                    }, 1500);
+
+                });
+            });
+
+
+
+    </script>
 {% endblock script %}
 
 

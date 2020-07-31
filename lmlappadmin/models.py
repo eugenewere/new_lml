@@ -518,3 +518,11 @@ class CustomerReviews(models.Model):
         return '%s' % (self.company.company_name)
     # def customer_rating_average(self):
 
+
+class ShortCode(models.Model):
+    short_code = models.CharField(max_length=10,null=False, blank=False)
+    email = models.CharField(max_length=220,null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '%s' % (self.short_code)

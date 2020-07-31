@@ -1003,18 +1003,22 @@ def premium_employee_details(request, customer_id):
     educations = Education.objects.filter(customer=customer)
     experiences = Experience.objects.filter(customer=customer)
     skills = Skills.objects.filter(customer=customer)
-    social = Social_account.objects.filter(customer=customer)
+    socials = Social_account.objects.filter(customer=customer)
     reviews = CustomerReviews.objects.filter(customer=customer).order_by('-created_at')
-    all_customers = Customer.objects.filter(category_id=customer.category.id)
-    print(reviews)
+    all_customers = Customer.objects.filter(category_id=customer.category.id).exclude(id=customer.id)[:7]
+    other_customers = Customer.objects.filter(category__category__contains=customer.category.category).exclude(id=customer.id)
+
+    print(other_customers)
     context = {
+        'title':customer.first_name.capitalize()+' '+ customer.last_name.capitalize(),
         'customer': customer,
         'skills': skills,
         'educations': educations,
         'experiences': experiences,
-        'social': social,
+        'socials': socials,
         'reviews':reviews,
         'all_customers':all_customers,
+        'other_customers':other_customers,
 
     }
 
@@ -1044,16 +1048,33 @@ def all_premium_employees(request):
     }
     return render(request, 'normal/allcandidates/premium-candidate.html', context)
 
+def all_category_employees(request, category_id):
+    category = Category.objects.filter(id = category_id).first()
+    if category is not None:
+        customers = Customer.objects.filter(category=category)
+    else:
+        customers = Customer.objects.order_by('?')
+
+    context = {
+        'customers': customers,
+        'counties': County.objects.all(),
+        'regions':Region.objects.all(),
+        'categories': Category.objects.all(),
+        'title': 'Premium Candidates'
+
+    }
+    return render(request, 'normal/allcandidates/premium-candidate.html', context)
+
 
 def shortlistcustomers(request):
 
     if request.method == 'POST':
-        customer= request.POST['customer_id']
-        company= request.POST['company_id']
-
-        customer_user = Customer.objects.filter(user_ptr_id=customer).first()
-        company_user = Company.objects.filter(user_ptr_id=company).first()
-        if not CompanyShortlistCustomers.objects.filter(customer=customer, company=company).exists():
+        customer= request.POST.get('customer_id')
+        company= request.POST.get('company_id')
+        print(customer, company)
+        customer_user = Customer.objects.filter(user_ptr_id=int(customer)).first()
+        company_user = Company.objects.filter(user_ptr_id=int(company)).first()
+        if not CompanyShortlistCustomers.objects.filter(customer=customer, company=company, payment_status='SHORTLISTED').exists():
             CompanyShortlistCustomers.objects.create(
                 customer=customer_user,
                 company=company_user,
@@ -1262,20 +1283,27 @@ def EmployerCustomerShortlistTemplate(request):
 
 def review_shortlisted_customer(request):
     if request.method == 'POST':
-        # message =  request.POST.get('message')
-        # ratings =  request.POST.get('ratings')
-        # customer =  request.POST.get('customer')
-        # company =  request.POST.get('company')
-        form = CustomerReviewsForm(request.POST)
-        if form.is_valid():
-            form.save()
+        message =  request.POST.get('message')
+        ratings =  request.POST.get('ratings')
+        customer =  request.POST.get('customer')
+        comp = Company.objects.filter(user_ptr_id=request.user.id).first()
+        cusr = Customer.objects.filter(id=customer).first()
+        # form = CustomerReviewsForm(request.POST)
+        if comp is not None:
+            CustomerReviews.objects.create(
+                message=message,
+                ratings=ratings,
+                customer=cusr,
+                company=comp,
+
+            )
             sweetify.success(request, 'Success', text='Candidate Rated Successfully', persistent='Ok')
             return redirect('LML:employer_dash')
         else:
             sweetify.error(request, 'Error', text='Candidate Not Rated', persistent='Ok')
         return redirect('LML:employer_dash')
 
-    return
+    return redirect('LML:employer_dash')
 
 @login_required()
 def generate_PDF(request, customer_id):
@@ -1597,7 +1625,6 @@ def rankCandidateStatus(request):
     Customer.objects.filter(id=candidate.id).update(
         rank_status=status.upper()
     )
-
 
 
 

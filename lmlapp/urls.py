@@ -16,12 +16,12 @@ urlpatterns = [
     # path('li/<str:room_name>/', views.room, name='room'),
     # re_path(r'^(?P<room_name>[^/]+)/$', views.room, name='room'),
     # re_path(r"^employerdash_message/(?P<username>[\w.@+-]+)/$", views.employer_dash_message),
-    path('employeeShortlistGraph/', views.EmployerCustomerShortlist, name='employee_shortlist_graph'),
-    path('employeeShortlistGraphtemplate/', views.EmployerCustomerShortlistTemplate, name='employee_shortlist_graph_template'),
+    path('candidateShortlistGraph/', views.EmployerCustomerShortlist, name='employee_shortlist_graph'),
+    path('candidateShortlistGraphtemplate/', views.EmployerCustomerShortlistTemplate, name='employee_shortlist_graph_template'),
 
     path('signup', views.signup_initial, name="signup_initial"),
     path('signupcompany/', views.signup_company_initial, name="signup_company_initial"),
-    path('signupemployee/', views.signup_employee_initial, name="signup_employee_initial"),
+    path('signupcandidate/', views.signup_employee_initial, name="signup_employee_initial"),
 
     path('loginauser/<str:source>/', views.login_user, name="login_user"),
     path('logoutuser/', views.log_out_user, name="log_out_user"),
@@ -32,23 +32,23 @@ urlpatterns = [
 
     path('signin/', views.signin, name="signin"),
 
-    path('employeeprofile/', views.employeeprofile, name="employeeprofile"),
-    path('updateemployeepersonaldetails', views.employee_personal_details_update, name='employee_personal_details_update'),
-    path('updateemployeeskills', views.employee_skills_update, name='employee_skills_update'),
-    path('updateemployeeskillsupdate', views.employee_skills_detail_update, name='employee_skills_detail_update'),
-    path('updateemployeexperiencesupdate', views.employee_experience_detail_update, name='employee_experience_detail_update'),
-    path('updateemployeeducationsupdate', views.employee_education_detail_update, name='employee_education_detail_update'),
-    path('updateemployeexperiencesdelete', views.employee_experience_detail_delete, name='employee_experience_detail_delete'),
-    path('updateemployeeducationsdelete', views.employee_education_detail_delete, name='employee_education_detail_delete'),
-    path('employeedetails/', views.employeedetails, name="employeedetails"),
+    path('candidateprofile/', views.employeeprofile, name="employeeprofile"),
+    path('updatecandidatepersonaldetails', views.employee_personal_details_update, name='employee_personal_details_update'),
+    path('updatecandidateskills', views.employee_skills_update, name='employee_skills_update'),
+    path('updatecandidateskillsupdate', views.employee_skills_detail_update, name='employee_skills_detail_update'),
+    path('updatecandidatexperiencesupdate', views.employee_experience_detail_update, name='employee_experience_detail_update'),
+    path('updatecandidateducationsupdate', views.employee_education_detail_update, name='employee_education_detail_update'),
+    path('updatcandidateexperiencesdelete', views.employee_experience_detail_delete, name='employee_experience_detail_delete'),
+    path('updatcandidateeducationsdelete', views.employee_education_detail_delete, name='employee_education_detail_delete'),
+    path('candidatedetails/', views.employeedetails, name="employeedetails"),
     path('advancesearch/', views.advancesearch, name="advancesearch"),
 
-    path('employersprofile/', views.employersprofile, name="employersprofile"),
-    path('updateemployersprofile/', views.update_employers_profile, name="update_employers_profile"),
-    path('employerdetails/', views.employerdetails, name="employerdetails"),
+    path('compantsprofile/', views.employersprofile, name="employersprofile"),
+    path('updatecompantsprofile/', views.update_employers_profile, name="update_employers_profile"),
+    path('compantdetails/', views.employerdetails, name="employerdetails"),
 
-    path('employer/user_account/change_password', views.employer_change_password, name='employer_change_password'),
-    path('employee/user_account/change_password', views.employee_change_password, name='employee_change_password'),
+    path('company/user_account/change_password', views.employer_change_password, name='employer_change_password'),
+    path('company/user_account/change_password', views.employee_change_password, name='employee_change_password'),
 
     path('companypricing/', views.companypricing, name="companypricing"),
     path('contactus/', views.contactus, name="contactus"),
@@ -64,16 +64,17 @@ urlpatterns = [
     path('companypayment/',views.companypayment, name='companypayment'),
     path('companypaymentpackage/<int:pricing_id>',views.companypaymentpackage, name='companypaymentpackage'),
 
-    path('employerdash/',views.employer_dash, name='employer_dash'),
-    path('employerdash_message/<str:room_name>/',views.employer_dash_message, name='employer_dash_message'),
+    path('companydash/',views.employer_dash, name='employer_dash'),
+    path('companydash_message/<str:room_name>/',views.employer_dash_message, name='employer_dash_message'),
 
-    path('employeedash/',views.employee_dash, name='employee_dash'),
-    path('employee_dash_message/<str:room_name>/',views.employee_dash_message, name='employee_dash_message'),
+    path('candidatedash/',views.employee_dash, name='employee_dash'),
+    path('candidate_dash_message/<str:room_name>/',views.employee_dash_message, name='employee_dash_message'),
 
     # employeestatus
-    path('allpremiumemployees/',views.all_premium_employees, name = 'all_premium_employees'),
+    path('allpremiumcandidates/',views.all_premium_employees, name = 'all_premium_employees'),
+    path('allcategorycandidates/<int:category_id>',views.all_category_employees, name = 'all_category_employees'),
     path('allcandidates/',views.all_employees, name = 'all_employees'),
-    path('premiumemployeedetails/<int:customer_id>', views.premium_employee_details, name='premium_employee_detail'),
+    path('premiumcandidatedetails/<int:customer_id>', views.premium_employee_details, name='premium_employee_detail'),
 
     path('shortlist/', views.shortlistcustomers, name='shortlistemployees'),
     path('unshortlist/', views.unshortlistcustomers, name='unshortlistemployees'),

@@ -411,7 +411,7 @@ nav.navbar.bootsnav li.dropdown ul.dropdown-menu{
 }
 .rate:not(:checked) > label {
     float: right;
-    width: 1em;
+    width: 22px;
     overflow: hidden;
     white-space: nowrap;
     cursor: pointer;

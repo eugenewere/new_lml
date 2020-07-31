@@ -131,7 +131,7 @@ def commentscount(request):
 
 @register.filter(name='if_company_has_shortlisted_the_customer')
 def if_company_has_shortlisted_the_customer(customer_id, company_id):
-     custShortlist =  CompanyShortlistCustomers.objects.filter(company_id=company_id,customer_id=customer_id).exists()
+     custShortlist =  CompanyShortlistCustomers.objects.filter(company_id=company_id,customer_id=customer_id, payment_status='SHORTLISTED').exists()
      if custShortlist:
          return False
      return True

@@ -175,7 +175,7 @@
     {#                                                      <div class="container-fluid">#}
                                                               <form action="{% url 'LML:review_shortlisted_customer' %}" method="post" enctype="multipart/form-data">
                                                               {% csrf_token %}
-                                                              <input name="customer" type="text" hidden value="{{ customer.id }}">
+                                                              <input name="customer" type="text" hidden value="{{ customer.customer.id }}">
                                                               <input name="company" type="text" hidden value="{{ request.user.id }}">
                                                               <div class="card-ratings-wrapper" style="display: flex; flex-direction: column; margin-bottom: 20px;">
                                                                 <label for="exampleInputsd">Ratings</label>
@@ -195,14 +195,14 @@
                                                               </div>
                                                               <div class="form-group" >
                                                                 <label for="allcandidatetextarea{{ customer.id }}">Review Message</label>
-                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allcandidatetextarea{{ customer.id }}" ></textarea>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allcandidatetextarea{{ customer.customer.id }}" ></textarea>
                                                                 <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
                                                               </div>
                                                               <div class="col-sm-12 row">
                                                                   <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
                                                               </div>
                                                               <script>
-                                                                   CKEDITOR.replace( 'allcandidatetextarea{{ customer.id }}' );
+                                                                   CKEDITOR.replace( 'allcandidatetextarea{{ customer.customer.id }}' );
                                                               </script>
                                                           </form>
     {#                                                      </div>#}

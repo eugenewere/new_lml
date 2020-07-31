@@ -438,14 +438,13 @@
         <script type="text/javascript" src="{% static 'assets/plugins/js/loader.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/owl.carousel.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/slick.min.js' %}"></script>
-        <script type="text/javascript" src="{% static 'assets/plugins/js/gmap3.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.easy-autocomplete.min.js' %}"></script>
 {#        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
 {#        <script type="text/javascript" src="{% static 'assets/animision/animsition.min.js' %}"></script>#}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
 
         <script src="{% static 'assets/js/custom.js' %}"></script>
-        <script src="{% static 'assets/js/jQuery.style.switcher.js' %}"></script>
+{#        <script src="{% static 'assets/js/jQuery.style.switcher.js' %}"></script>#}
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
@@ -465,61 +464,7 @@
                 }, 1000);
 
             });
-            function shortlistmessage() {
-                swal.fire({
-                title: "Error!",
-                text: "You have already shortlisted this user",
-                type: "error",
-                confirmButtonText: "Continue"
-               });
-            }
-            function shortlist(shortlist){
 
-                var user = document.getElementById(shortlist.id);
-                var company = user.getAttribute('data-employer');
-
-                 $.ajax({
-                    type: "POST",
-                    url : "{% url 'LML:shortlistemployees' %}",
-                    data:{
-                        'customer_id' : user.id,
-                        'company_id' : company,
-                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                    },
-                    dataType:'json',
-                    success : function searchSuccess(data){
-                        if(data.is_shortlisted){
-                            errorshortlisting(data);
-                            console.log();
-                        }
-                        else if(data.shortlisted){
-                           shortlisted(data);
-                           var user = document.getElementById(shortlist.id);
-                           user.innerText='Shortlisted';
-                           user.style.color='green';
-                        }
-                    },
-
-                });
-                 function shortlisted(k){
-
-                    swal.fire({
-                    title: "Success!",
-                    text: k.success_message,
-                    type: "success",
-                    confirmButtonText: "Continue"
-                   });
-                }
-                 function errorshortlisting(k){
-                    swal.fire({
-                    title: "Error!",
-                    text: k.error_message,
-                    type: "error",
-                    confirmButtonText: "Continue"
-                   });
-                }
-
-            }
             $('[data-toggle="tooltip"]').tooltip()
 
 
