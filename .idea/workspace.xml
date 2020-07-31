@@ -21,19 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db2.json" beforeDir="false" afterPath="$PROJECT_DIR$/db2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db3.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/colors/blue.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/colors/blue.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/account/employer-profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/account/employer-profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,7 +150,7 @@
       <workItem from="1595239681978" duration="1649000" />
       <workItem from="1595241699708" duration="94394000" />
       <workItem from="1595444310273" duration="224995000" />
-      <workItem from="1596010982213" duration="81845000" />
+      <workItem from="1596010982213" duration="83616000" />
     </task>
     <servers />
   </component>
