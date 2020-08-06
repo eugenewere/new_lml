@@ -32,18 +32,22 @@
                             <div class="card">
                                 <h5 class="card-header">Premium Company</h5>
                                 <div class="card-body">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" id="myDataTable">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Image</th>
                                                 <th scope="col">Name</th>
+                                                <th scope="col">Owner</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Category</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Business No</th>
-                                                <th scope="col">KRA</th>
+{#                                                <th scope="col">KRA NO</th>#}
                                                 <th scope="col">Type</th>
-                                                <th scope="col">county</th>
+                                                <th scope="col">County</th>
+                                                <th scope="col">Created At</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -52,18 +56,45 @@
                                                 <th scope="row">{{ forloop.counter }}</th>
                                                 <td>
                                                     <div style="width: 80px; height: 80px; overflow: hidden;">
-                                                        <img class="w-100 h-100" src="{{ company.logo.url }}" alt="">
+                                                        <img style="object-fit: contain" class="w-100 h-100" src="{{ company.logo.url }}" alt="">
                                                     </div>
                                                 </td>
-                                                <td>{{company.company_name}}</td>
+                                                <td>{{company.company_name|title}}</td>
+                                                <td>{{company.first_name|title}} {{company.last_name|title}}</td>
+                                                <td><a href="mailto:{{company.email}}">{{company.email}}</a></td>
+                                                <td>{{company.category|title}}</td>
                                                 <td>
-                                                    <a href="mailto:{{company.email}}">{{company.email}}</a>
+                                                    <div class="dropdown">
+                                                      <button class="btn btn-secondary
+                                                        {% if  company.status == 'NEWBIE' %}
+                                                         btn-secondary
+                                                     {% elif  company.status == 'REGISTERED_CONFIRMED' %}
+                                                        btn-success
+                                                     {% elif  company.status == 'DEACTIVATED' %}
+                                                        btn-danger
+                                                     {% endif %}
+                                                       dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                          {{ company.status|truncatechars:10 }}
+                                                      </button>
+                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                          {% if not company.status == 'NEWBIE' %}
+                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanytatustonewbee' company.id   %}">NEWBIE </a>
+                                                          {% endif %}
+                                                          {% if not company.status == 'REGISTERED_CONFIRMED' %}
+                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustoregi' company.id  %}">REGISTERED</a>
+                                                          {% endif %}
+                                                          {% if not company.status == 'DEACTIVATED' %}
+                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustodeac' company.id    %}">DEACTIVATED</a>
+                                                          {% endif %}
+                                                      </div>
+                                                    </div>
                                                 </td>
-                                                <td>{{company.category}}</td>
                                                 <td>{{ company.bussiness_reg_no }}</td>
-                                                <td>{{ company.kra_number }}</td>
-                                                <td>{{ company.bizness_entity_type }}</td>
-                                                <td>{{ company.county }}</td>
+{#                                                <td>{{ company.kra_number }}</td>#}
+                                                <td>{{ company.bizness_entity_type|title }}</td>
+                                                <td>{{ company.county|title }}</td>
+                                                <td>{{company.created_at|date:'d-M-Y'}}</td>
+                                                <td><a target="_blank" class="btn btn-success" href="{% url 'LMLAdmin:companydetails' company.id %}">View</a></td>
                                             </tr>
                                              {% endfor %}
 

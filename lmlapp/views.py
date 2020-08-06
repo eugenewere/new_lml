@@ -8,7 +8,9 @@ from django.shortcuts import render, redirect, HttpResponseRedirect
 import os
 from datetime import datetime
 import sweetify
-
+import humanize
+# from django.contrib.humanize.templatetags.humanize import naturalday
+from django.contrib.humanize.templatetags.humanize import *
 
 # from rest_framework import status
 from django.views.decorators.csrf import csrf_exempt
@@ -45,6 +47,7 @@ def home(request):
         'regions':Region.objects.all(),
         'bannercustomercount':Customer.objects.filter(status='REGISTERED_CONFIRMED'),
         'images': AdvertCarousel.objects.order_by('-created_at'),
+        'offers': WhatWeOffer.objects.all()
     }
     return render(request, 'normal/home/index.html', context)
 
@@ -762,7 +765,8 @@ def advancesearch(request):
 def companypricing(request):
     context={
         'title':'Company Pricing',
-        'pricing':CompanyPricingPlan.objects.order_by('price')
+        'monthpricing':CompanyPricingPlan.objects.filter(status='MONTHLY').order_by('price'),
+        'yearpricing':CompanyPricingPlan.objects.filter(status='YEARLY').order_by('price'),
     }
     return render(request,'normal/companypricing/companypricing.html', context)
 
@@ -937,21 +941,7 @@ def employer_dash(request):
     }
     return render(request, 'normal/dashboard/employer-dash.html', context)
 
-def employer_dash_message(request, room_name):
-    user = request.user.id
-    company = Company.objects.filter(user_ptr_id=user).first()
-    social = CompanySocialAccount.objects.filter(company=company).first()
-    customers = CompanyShortlistCustomers.objects.filter(company=company)
-    username_of_user = request.user.first_name + "" + request.user.last_name + " messsages"
-    context={
-        'title': username_of_user,
-        'company': company,
-        'social': social,
-        'customers':customers,
-        'room_name_json': mark_safe(json.dumps(room_name))
 
-    }
-    return render(request, 'normal/dashboard/employerchatpage.html', context)
 
 def employee_dash_message(request, room_name):
     user = request.user.id
@@ -1050,6 +1040,24 @@ def all_premium_employees(request):
 
 def all_category_employees(request, category_id):
     category = Category.objects.filter(id = category_id).first()
+    if category is not None:
+        customers = Customer.objects.filter(category=category)
+    else:
+        customers = Customer.objects.order_by('?')
+
+    context = {
+        'customers': customers,
+        'counties': County.objects.all(),
+        'regions':Region.objects.all(),
+        'categories': Category.objects.all(),
+        'title': 'Premium Candidates'
+
+    }
+    return render(request, 'normal/allcandidates/premium-candidate.html', context)
+
+def all_offer_employees(request, offer):
+    category = Category.objects.filter(category__contains=offer).first()
+    print(category)
     if category is not None:
         customers = Customer.objects.filter(category=category)
     else:
@@ -1197,47 +1205,9 @@ def dumb(request):
     return render(request, 'normal/signup/dumb.html', context)
 
 
-def messages(request):
-    if request.is_ajax() and request.method == 'POST':
-        message= request.POST['message']
-        sender= request.POST['sender']
-        reciever = request.POST['reciever']
-        # customer = Customer.objects.filter(user_ptr_id=reciever).first()
-        user_sender = User.objects.filter(id=int(sender)).first()
-        user_reciever = User.objects.filter(id=int(reciever)).first()
-        print(message,sender,reciever,user_reciever,user_sender)
-        Message.objects.create(
-            msg_content=message,
-            sender=user_sender,
-            reciever=user_reciever,
-        )
-        context = {
-            'results':'success',
-            'msg': message,
-            'cmpny' : Company.objects.filter(user_ptr_id = int(sender))
-        }
-        return JsonResponse(context)
-    context = {
-        'results': 'error'
-    }
-    return JsonResponse(context)
 
 
-def fetch_data_messages(request, customer_id):
-    # customer = Customer.objects.filter(id=int(customer_id)).first()
-    userr =User.objects.filter(id=customer_id).first()
-    messg = Message.objects.filter(reciever=userr, sender_id=request.user.id).order_by('created_at')
 
-    context = {
-        'messages': messg,
-        'sender': request.user.id
-    }
-    # content = loader.render_to_string('normal/dashboard/chatb.html', context )
-
-    # html_data = render_to_string('normal/dashboard/employer-dash.html',context, request=request,)
-    return JsonResponse(context)
-    # return JsonResponse(content)
-    # return render(request, 'normal/dashboard/employer-dash.html', context)
 
 
 
@@ -1625,7 +1595,5 @@ def rankCandidateStatus(request):
     Customer.objects.filter(id=candidate.id).update(
         rank_status=status.upper()
     )
-
-
 
 

@@ -14,8 +14,10 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import sweetify
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -34,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
 
+    'chat.apps.ChatConfig',
     'lmlappadmin.apps.LmlappadminConfig',
     'lmlapp.apps.LmlappConfig',
     'django.contrib.admin',
@@ -42,9 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'sweetify',
     # 'channels',
-    'django.contrib.humanize',
+
+
+
 ]
 
 MIDDLEWARE = [
@@ -77,6 +83,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'lmlproject.wsgi.application'
+
+# ASGI_APPLICATION = "lmlproject.routing.application"
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
+#         'CONFIG': {
+#             "hosts": [('127.0.0.1', 6379)],
+#         },
+#     },
+# }
 
 # ASGI_APPLICATION = 'lmlproject.routing.application'
 # CHANNEL_LAYERS = {
@@ -160,11 +176,12 @@ LOGIN_REDIRECT_URL = 'LML:home'
 
 # mysite/settings.py
 # Channels
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'Climatechangebasicske@gmail.com'
 EMAIL_HOST_PASSWORD = 'Brandoxvilla7123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL: False
+

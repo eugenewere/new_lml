@@ -73,7 +73,7 @@
 
                     <div class="apply-job-header">
                         <h4 class="text-capitalize">{{customer.first_name}} {{ customer.last_name }}</h4>
-                        <a href="javascript:void(0)" class="cl-success text-capitalize"><span><i class="fa fa-building"></i>{{customer.category.category}}</span></a>
+                        <a target="_blank" href="{% url 'LML:all_category_employees' customer.category.id %}" class="cl-success text-capitalize"><span><i class="fa fa-building"></i>{{customer.category.category}}</span></a>
                         <span><i class="fa fa-map-marker"></i>{{customer.country}}</span>
                     </div>
 
@@ -437,7 +437,7 @@
 
                             <li>
                                 <i class="ti-book"></i>
-                                <h5>Job type</h5>
+                                <h5>Work Schedule</h5>
                                 <span>{{customer.job_type}}</span>
                             </li>
                         </ul>

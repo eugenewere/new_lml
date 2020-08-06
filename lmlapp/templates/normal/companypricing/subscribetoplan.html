@@ -41,10 +41,10 @@
                             <div class="row">
                                 <div class="pr-header " style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
                                     <div class="pr-plan">
-                                        <h4>Package Plan Amount</h4>
+                                        <h4>Package Plan Amount For<strong>{{ pricing.title|title }}</strong></h4>
                                     </div>
                                     <div class="pr-price">
-                                        <h3><sup>ksh.</sup>{{pricing.price}}</h3>
+                                        <h3><sup>ksh.</sup>{{pricing.price}} <sub>/{{ pricing.status }}</sub></h3>
                                     </div>
                                 </div>
                             </div>
@@ -61,7 +61,7 @@
 
                         <form class="billing-form">
                             <div style="width: 100%; height: 205px;">
-                                <img style="width: 100%; height: 100%" src="{% static 'assets/img/MPESA-Logo.png' %}" alt="">
+                                <img style="width: 100%; height: 100%; object-fit: contain;" src="{% static 'assets/img/MPESA-Logo.png' %}" alt="">
                             </div>
                             <div class="row">
                                 <div class="col-xs-12">

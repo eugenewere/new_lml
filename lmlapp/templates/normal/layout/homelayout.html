@@ -10,6 +10,7 @@
 {#    <meta name="viewport" content="width=device-width, initial-scale=1.0" >#}
     <!-- CSS==================================================-->
 {#    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">#}
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="{% static 'assets/plugins/css/plugins.css' %}">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'assets/img/avatar/icon.jpeg' %}" style="border-radius: 50%">
@@ -24,7 +25,7 @@
 {#    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />#}
     <link href="{% static 'assets/css/select2.css' %}" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-
+ <script defer src="https://friconix.com/cdn/friconix.js"> </script>
     <script src="https://kit.fontawesome.com/16d33ecbbb.js" ></script>
     <style>
          .img-circle{
@@ -442,6 +443,7 @@
 {#        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
 {#        <script type="text/javascript" src="{% static 'assets/animision/animsition.min.js' %}"></script>#}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
         <script src="{% static 'assets/js/custom.js' %}"></script>
 {#        <script src="{% static 'assets/js/jQuery.style.switcher.js' %}"></script>#}
@@ -466,8 +468,9 @@
             });
 
             $('[data-toggle="tooltip"]').tooltip()
-
-
+            $(document).ready( function () {
+                $('#myTable').DataTable();
+            } );
         </script>
 
         {% block script %}

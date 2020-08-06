@@ -1,0 +1,154 @@
+{% load humanize %}
+
+    {% for message in messages %}
+        {% if messages %}
+            {% if  message.reciever == customer.customer.id %}
+                {% if message.sender == request.user.id %}
+                    <div class="chat-message chat-message-right">
+                        <div class="chat-message-text">
+                            <span>{{ message.msg_content }}</span>
+                        </div>
+                        <div class="chat-message-meta">
+                            <span>{{ message.created_at|naturaltime }}<i class="feather icon-check ml-2"></i></span>
+                        </div>
+                    </div>
+                {% else %}
+                    <div  class="chat-message chat-message-left">
+                        <div class="chat-message-text">
+                            <span>{{ message.msg_content }}</span>
+                        </div>
+                        <div class="chat-message-meta">
+                            <span>{{ message.created_at|naturaltime }}<i class="feather icon-check ml-2"></i></span>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        {% else %}
+            <div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+                <h4>No Messages</h4>
+            </div>
+        {% endif %}
+    {% endfor %}
+
+  <script>
+
+
+
+
+  </script>
+
+
+{#document.querySelector('#chat-message-submit').onclick = function(e) {#}
+{#            const messageInputDom = document.querySelector('#chat-message-input');#}
+{#            const message = messageInputDom.value;#}
+{#            chatSocket.send(JSON.stringify({#}
+{#                'message': message,#}
+{#                'commands': 'fetch_messages'#}
+{#            }));#}
+{#            messageInputDom.value = '';#}
+{#        };#}
+
+
+  {#document.querySelector('#chat-message-input').focus();#}
+        {#document.querySelector('#chat-message-input').onkeyup = function(e) {#}
+        {#    if (e.keyCode === 13) {  // enter, return#}
+        {#        document.querySelector('#chat-message-submit').click();#}
+        {#    }#}
+        {#    };#}
+
+<script>
+     $(document).ready(function () {
+            const roomName = '{{ request.user.username }}';
+            const userid = {{ request.user.id }}
+            var endpoint, wsStart, loc;
+
+            loc = window.location;
+            if(loc.protocol === 'https:'){
+                wsStart = 'wss://';
+            }
+            else if (loc.protocol === 'http:'){
+                wsStart = 'ws://';
+            }
+            else {
+                wsStart = 'ws://';
+            }
+            endpoint = wsStart + loc.host + '/ws/chat/' + roomName + '/';
+            console.log(endpoint)
+            var chatSocket = new ReconnectingWebSocket(endpoint);
+
+            chatSocket.onopen = function(e){
+                fetchMessagess();
+            }
+            function fetchMessagess(sd, rs, rm) {
+            chatSocket.send(JSON.stringify(({
+                'command': 'fetch_messages',
+                {#"sender" : sd,#}
+                {#"receiver" : rs,#}
+                {#"room": rm,#}
+            })));
+        }
+            chatSocket.onmessage = function (e) {
+            var data = JSON.parse(e.data);
+
+            if (data['command'] === 'messages') {
+                for (let i = 0; i < data['messages'].length; i++) {
+                    createMessagee(data['messages'][i]);
+                }
+            } else if (data['command'] === 'new_messages') {
+                createMessagee(data['message']);
+            }
+        };
+            function createMessagee(data) {
+
+            var message = data['message'];
+            var author = data['sender'];
+            var receiver = data['receiver'];
+            var room = data['room'];
+            var dayofchat = data['created_at'];
+            $('.chat-body-wrapper').each(function () {
+                var divroom = $(this).attr('data-room')
+                if(room === divroom){
+                    var chat_class = '';
+                    if(Number(author) === Number(userid)){
+                        chat_class = 'chat-message-right'
+                    }
+                    else {
+                        chat_class = 'chat-message-left'
+                    }
+                     let html = ' <div class="chat-message '+ chat_class +'">' +
+                                    '<div class="chat-message-text">' +
+                                        '<span>'+ message +'</span>' +
+                                    '</div>' +
+                                    '<div class="chat-message-meta">' +
+                                        '<span>'+ dayofchat +'<i class="feather icon-check ml-2"></i></span>' +
+                                    '</div>' +
+                                '</div>'
+                    $(this).append(html);
+                    $(this).animate({ scrollTop: $(this).prop("scrollHeight")}, 1000);
+
+                }
+            });
+
+
+
+
+        }
+            chatSocket.onclose = function(e) {
+                console.error('Chat socket closed unexpectedlyll');
+            };
+            $('.chat-form').each(function () {
+                $(this).on('submit', function(event) {
+                    event.preventDefault();
+                    let msginputform = $(this);
+                    console.log("form submitted!");
+                    let form = $(this).serialize();
+                    {#let url = $(this).attr('action')#}
+                    console.log(form);
+                    chatSocket.send(JSON.stringify({
+                        'form': 'kkkk',
+                        'commands': 'new_messages'
+                    }));
+                })
+            });
+        });
+</script>

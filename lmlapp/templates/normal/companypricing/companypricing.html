@@ -1,6 +1,12 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
 {% block links %}
+    <style>
+        *::-webkit-scrollbar {
+            width: 4px !important;
+            background-color: #F5F5F5;
+        }
+    </style>
 {% endblock links %}
 {% block content %}
             <!-- Title Header Start -->
@@ -17,29 +23,77 @@
 			<section class="pricing">
 				<div class="container">
 
+                    <div class="deatil-tab-employ tool-tab container " style="background: white;" >
+                            <h2 class="detail-title"> Choose Which Plan</h2>
+                            <ul class="nav simple nav-tabs" id="simple-design-tab" style="display: flex;justify-content: center;">
+                                <li class="active"><a data-toggle="pill" href="#about1">Monthly</a></li>
+                                <li class=""><a data-toggle="pill" href="#about2">Yearly</a></li>
+                            </ul>
 
-                    {% for price in pricing %}
-                    <div class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
-						<div class="pr-table">
-							<div class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
-								<div class="pr-plan">
-									<h4>{{ price.title }}</h4>
-								</div>
-								<div class="pr-price">
-									<h3><sup>Ksh.</sup>{{price.price}}</h3>
-								</div>
-							</div>
-							<div class="pr-features">
-								<ul>
-									<li>{{price.description|safe|escape}}</li>
-								</ul>
-							</div>
-							<div class="pr-buy-button">
-								<a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %}active{% endif %}" title="Price Button">select</a>
-							</div>
-						</div>
-					</div>
-                    {% endfor %}
+                              <!-- Start All Sec -->
+                            <div class="tab-content" style="height: 600px;overflow-x: hidden; overflow-y: scroll;">
+                                <div id="about1" class="tab-pane fade in active" style="height: 100%;">
+                                    <div class="col-sm-12" style="padding: 20px 10px;">
+                                         {% for price in monthpricing %}
+                                                <div data-status="{{ price.status }}" class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
+                                                <div class="pr-table">
+                                                    <div class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+                                                        <div class="pr-plan">
+                                                            <h4>{{ price.title }}</h4>
+                                                        </div>
+                                                        <div class="pr-price">
+                                                            <h3><sup>Ksh.</sup>{{price.price}}<sub>/ {{ price.status }}</sub></h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pr-features" style="height: 234px; overflow: auto;">
+                                                        {{price.description|safe|escape}}
+
+                                                    </div>
+                                                    <div class="pr-buy-button" style="padding: 0;">
+                                                        <a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %} active {% endif %}" title="Price Button">select</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+
+                                    </div>
+                                </div>
+                                <!-- End About Sec -->
+                                <div id="about2" class="tab-pane fade in" style="height: 100%;">
+                                    <div class="col-sm-12" style="padding: 20px 10px; ">
+                                         {% for price in yearpricing %}
+
+                                            <div data-status="{{ price.status }}" class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
+                                                <div class="pr-table">
+                                                    <div class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+                                                        <div class="pr-plan">
+                                                            <h4>{{ price.title }}</h4>
+                                                        </div>
+                                                        <div class="pr-price">
+                                                            <h3><sup>Ksh.</sup>{{price.price}}<sub>/ {{ price.status }}</sub></h3>
+                                                        </div>
+                                                    </div>
+                                                    <div class="pr-features" style="height: 234px; overflow: auto;">
+                                                        {{price.description|safe|escape}}
+
+                                                    </div>
+                                                    <div class="pr-buy-button" style="padding: 0;">
+                                                        <a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %} active {% endif %}" title="Price Button">select</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <!-- End About Sec -->
+
+                            </div>
+                              <!-- End Settings -->
+                       </div>
+
+{#<div class="row">#}
+
+{#</div>#}
 
 				</div>
 			</section>

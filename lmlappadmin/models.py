@@ -15,6 +15,8 @@ from django.db.models import Count, Q
 
 def compress(image):
     im = Image.open(image)
+    if im.mode in ("RGBA", "P"):
+        im = im.convert("RGB")
     im_io = BytesIO()
     im.save(im_io, 'JPEG', quality=60)
     new_image = File(im_io, name=image.name)
@@ -116,7 +118,6 @@ class Customer(get_user_model()):
         ('BASIC', 'Basic'),
         ('PREMIUM', 'Premium'),
         ('ULTIMATE', 'Ultimate'),
-
     }
     rank_status = models.CharField(choices=RANK_STATUS, default='BASIC', max_length=200, null=False, blank=False)
     DISABILITY_STATUS = [
@@ -207,6 +208,8 @@ class Education(models.Model):
     course = models.CharField(max_length=200, null=False, blank=False)
     graduation_date = models.DateTimeField(blank=False, null=False, default=datetime.datetime.now())
     reg_number = models.CharField(max_length=200, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return '%s %s' % (self.customer.first_name, self.qualifications)
@@ -222,6 +225,8 @@ class Experience(models.Model):
     date_from = models.DateField(default=datetime.datetime.now)
     date_to = models.DateField(default=datetime.datetime.now)
     experience = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return '%s %s' % (self.customer.first_name, self.company_name)
@@ -232,6 +237,8 @@ class Skills(models.Model):
     skill = models.CharField(max_length=100, null=False, blank=False)
     referee = models.CharField(max_length=100, null=False, blank=False)
     referee_phonenumber = models.CharField(max_length=100, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return '%s' % (self.skill)
@@ -240,6 +247,8 @@ class Skills(models.Model):
 class Social_account(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, null=False, blank=False)
     account_url = models.CharField(max_length=100, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
         return '%s %s' % (self.customer.first_name, self.account_url)
@@ -392,9 +401,11 @@ class CompanySocialAccount(models.Model):
     twitter = models.CharField(max_length=200, null=True, blank=True)
     linkedin = models.CharField(max_length=200, null=True, blank=True)
     instagram = models.CharField(max_length=200, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return '%s' % (self.company.company_name)
+        return '%s %s %s' % ( self.facebook, self.googlr_plus, self.twitter)
 
 
 class Query(models.Model):
@@ -495,6 +506,15 @@ class CompanyPricingPlan(models.Model):
     title = models.CharField(max_length=200, null=False, blank=False)
     price = models.IntegerField(null=False, blank=False)
     description = models.TextField()
+    MONTHLY = 0
+    YEARLY = 1
+    TIME = {
+        (MONTHLY, 'Monthly'),
+        (YEARLY, 'Yearly'),
+    }
+    status = models.CharField(max_length=200, null=True, blank=True, choices=TIME, default=MONTHLY)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def _str__(self):
         return '%s  ' % (self.title)
@@ -503,6 +523,9 @@ class CompanyPricingPlan(models.Model):
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE, null=False, blank=False)
     reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE, null=False, blank=False)
+    reply = models.ForeignKey('self', related_name="messagereply", on_delete=models.CASCADE, null=True, blank=True)
+    subject = models.CharField(max_length=260, null=True, blank=True, default='No Subject')
+    file = models.FileField(upload_to='documents')
     msg_content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -510,14 +533,29 @@ class Message(models.Model):
     MESSAGECHOICES = {
         ('READ', 'Read'),
         ('UNREAD', 'Unread'),
-        ('TRASH', 'Trash'),
     }
-    status = models.CharField(max_length=200, null=True, blank=True, choices=MESSAGECHOICES, default='UNREAD')
+    readstatus = models.CharField(max_length=200, null=False, blank=False, choices=MESSAGECHOICES, default='UNREAD')
+    DELETESTAR = {
+        ('DELETE', 'Delete'),
+        ('STARRED', 'Starred'),
+        ('NORMAL', 'Normal'),
+    }
+    delstar = models.CharField(max_length=200, null=False, blank=False, choices=DELETESTAR, default='NORMAL')
+    LABELS = {
+        ('PRODUCT', 'Product'),
+        ('WORK', 'Work'),
+        ('MISC', 'Misc'),
+        ('UNDEFINED', 'Undefined'),
+    }
+    labels = models.CharField(max_length=200, null=True, blank=True, choices=LABELS, default='UNDEFINED')
+
 
     def _str__(self):
         return '%s  ' % (self.sender)
 
     # def chat_room_messages(self, sender, receiver):
+    def last_15_messages(self):
+        return Message.objects.order_by('-created_at').all()[:15]
 
 
 class Newsletter(models.Model):
@@ -537,6 +575,7 @@ class AdvertCarousel(models.Model):
 
     def __str__(self):
         return '%s' % (self.carousel_image)
+
 
 
 class CustomerReviews(models.Model):

@@ -81,81 +81,21 @@
                     </div>
                 </div>
                 <div class="all-features">
-                    <a href="">
-                        <div class="col-md-3 col-sm-6 small-padding">
-                            <div class="job-feature">
-                                <div class="feature-icon"><i class="fas fa-desktop"></i></div>
-                                <div class="feature-caption">
-                                    <h5>Engineering</h5>
-                                    <p>Are you looking for engineers?.</p>
+                    {% for offer in offers %}
+{#                        <a target="_blank" href="{% url 'LML:all_offer_employees' request|replacestring:offer.title %}">#}
+                            <div class="col-md-3 col-sm-6 small-padding">
+                                <div class="job-feature">
+                                    <div class="feature-icon"><i class="{{ offer.icon }}"></i></div>
+                                    <div class="feature-caption">
+                                        <h5>{{ offer.title }}</h5>
+                                        <p>{{ offer.description }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </a>
+{#                        </a>#}
+                    {% endfor %}
 
-                    <div class="col-md-3 col-sm-6 small-padding">
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-mobile"></i></div>
-                            <div class="feature-caption">
-                                <h5>Construction</h5>
-                                <p>get construction specialists here.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 small-padding">
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-lightbulb-o"></i></div>
-                            <div class="feature-caption">
-                                <h5>Medicine</h5>
-                                <p>get certified practitioners here today.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 small-padding">
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-file-text"></i></div>
-                            <div class="feature-caption">
-                                <h5>Education</h5>
-                                <p>Hire part/full time teachers here today.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 small-padding">
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-hdd-o"></i></div>
-                            <div class="feature-caption">
-                                <h5>IT</h5>
-                                <p>are you looking for a technician?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 small-padding" >
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-bullhorn"></i></div>
-                            <div class="feature-caption">
-                                <h5>Sales & Marketing</h5>
-                                <p>Get the best sales team from here today</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 small-padding">
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-credit-card"></i></div>
-                            <div class="feature-caption">
-                                <h5>Accountant</h5>
-                                <p>over 10,000+ certified accountants.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 small-padding">
-                        <div class="job-feature">
-                            <div class="feature-icon"><i class="fa fa-user"></i></div>
-                            <div class="feature-caption">
-                                <h5>Management / HR</h5>
-                                <p>Don't be left out get the best from here</p>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </section>
@@ -505,3 +445,108 @@
         </section>
     <div class="clearfix" ></div>
 {% endblock content %}
+{% block script %}
+    <script>
+            function shortlistmessage() {
+                swal.fire({
+                title: "Error!",
+                text: "You have already shortlisted this user",
+                type: "error",
+                confirmButtonText: "Continue"
+               });
+            }
+            function shortlist(shortlist){
+
+                var user = document.getElementById(shortlist.id);
+                var company = user.getAttribute('data-employer');
+
+                 $.ajax({
+                    type: "POST",
+                    url : "{% url 'LML:shortlistemployees' %}",
+                    data:{
+                        'customer_id' : user.id,
+                        'company_id' : company,
+                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    dataType:'json',
+                    success : function searchSuccess(data){
+                        if(data.is_shortlisted){
+                            errorshortlisting(data);
+                            console.log();
+                        }
+                        else if(data.shortlisted){
+                           shortlisted(data);
+                           var user = document.getElementById(shortlist.id);
+                           user.innerText='Shortlisted';
+                           user.style.color='green';
+                        }
+                    },
+
+                });
+                 function shortlisted(k){
+
+                    swal.fire({
+                    title: "Success!",
+                    text: k.success_message,
+                    type: "success",
+                    confirmButtonText: "Continue"
+                   });
+                }
+                 function errorshortlisting(k){
+                    swal.fire({
+                    title: "Error!",
+                    text: k.error_message,
+                    type: "error",
+                    confirmButtonText: "Continue"
+                   });
+                }
+
+            }
+            function shortlist2(shortlist){
+
+                var user = $(shortlist).attr('data-customer')
+                var company = $(shortlist).attr('data-employer')
+                console.log(user, company)
+
+                 $.ajax({
+                    type: "POST",
+                    url : "{% url 'LML:shortlistemployees' %}",
+                    data:{
+                        'customer_id' : Number(user),
+                        'company_id' : Number(company),
+                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    dataType:'json',
+                    success : function searchSuccess(data){
+                        if(data.is_shortlisted){
+                            errorshortlisting(data);
+                            console.log();
+                        }
+                        else if(data.shortlisted){
+                           shortlisted(data);
+                           $('[data-shortlistbtn ]').fadeOut();
+                        }
+                    },
+
+                });
+                 function shortlisted(k){
+
+                    swal.fire({
+                    title: "Success!",
+                    text: k.success_message,
+                    type: "success",
+                    confirmButtonText: "Continue"
+                   });
+                }
+                 function errorshortlisting(k){
+                    swal.fire({
+                    title: "Error!",
+                    text: k.error_message,
+                    type: "error",
+                    confirmButtonText: "Continue"
+                   });
+                }
+
+            }
+    </script>
+{% endblock script %}

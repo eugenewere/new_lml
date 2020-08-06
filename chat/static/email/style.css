@@ -1,0 +1,138 @@
+/*================================================================================
+	Item Name: Modern Admin - Clean Bootstrap 4 Dashboard HTML Template
+	Version: 1.0
+	Author: PIXINVENT
+	Author URL: http://www.themeforest.net/user/pixinvent
+================================================================================
+
+NOTE:
+------
+PLACE HERE YOUR OWN SCSS CODES AND IF NEEDED, OVERRIDE THE STYLES FROM THE OTHER STYLESHEETS.
+WE WILL RELEASE FUTURE UPDATES SO IN ORDER TO NOT OVERWRITE YOUR STYLES IT'S BETTER LIKE THIS.  */
+:root{
+    --bg_color: #66e868;
+}
+html body .pace .pace-progress {
+    background: var(--bg_color);
+}
+.email-application .app-content .sidebar .email-app-sidebar .email-app-menu .list-group .list-group-item.active {
+    background-color:var(--bg_color) !important;
+}
+.select2-container--classic .select2-selection--multiple .select2-selection__choice, .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    padding: 1px 11px!important;
+    margin-top: 0!important;
+    background-color: var(--bg_color) !important;
+    border-color: transparent!important;
+    color: #fff;
+    margin-right: 8px!important;
+}
+.select2-container--classic .select2-results__options .select2-results__option[aria-selected=true], .select2-container--default .select2-results__options .select2-results__option[aria-selected=true] {
+    background-color: var(--bg_color) !important;
+    color: #fff!important;
+}
+*::-webkit-scrollbar-track
+{
+    border: 1px solid #ffffff;
+    background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar
+{
+    width: 6px;
+    background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb
+{
+    background-color:  var(--bg_color) !important;
+        border-radius: 7px;
+}
+.custom-file-inputt::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.custom-file-inputt::before {
+  content: 'Select some files';
+  display: inline-block;
+  background: linear-gradient(top,  var(--bg_color) #99b79b);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+    position: absolute;
+    right: 5px;
+}
+.custom-file-inputt:hover::before {
+  border-color: black;
+}
+.custom-file-inputt:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+
+
+.tabcontentt {
+  animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* Style the tab */
+/*.tab {*/
+/*  overflow: hidden;*/
+/*  border: 1px solid #ccc;*/
+/*  background-color: #f1f1f1;*/
+/*}*/
+
+/* Style the buttons that are used to open the tab content */
+.tabt a {
+  /*background-color: inherit;*/
+  /*float: left;*/
+  /*border: none;*/
+  /*outline: none;*/
+  cursor: pointer;
+  /*padding: 14px 16px;*/
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+
+
+/* Create an active/current tablink class */
+
+
+/* Style the tab content */
+.tabcontentt {
+  display: none;
+}
+.email-application.horizontal-layout.horizontal-menu-padding .app-content .content-right .email-app-details .email-scroll-area {
+     height: 100% !important;
+}
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #e4e4e4;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 7px !important;
+    padding: 0;
+}
+.ps__rail-y, .ps__rail-x{
+    display: none !important;
+}
+.no-results{
+    height: 100%;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

@@ -79,17 +79,33 @@ def employees(request):
 def premiumemployees(request):
     employees = Customer.objects.filter(rank_status='PREMIUM').order_by('-created_at')
     context = {
-        'title': 'PremiumEmployees',
+        'title': 'Premium Employees',
         'customers': employees,
     }
     return render(request,'employee/premiumemployees.html', context)
+@login_required()
+def basicemployees(request):
+    employees = Customer.objects.filter(rank_status='BASIC').order_by('-created_at')
+    context = {
+        'title': 'Basic Employees',
+        'customers': employees,
+    }
+    return render(request,'employee/basicemployees.html', context)
+@login_required()
+def ultimateemployees(request):
+    employees = Customer.objects.filter(rank_status='ULTIMATE').order_by('-created_at')
+    context = {
+        'title': 'Ultimate Employees',
+        'customers': employees,
+    }
+    return render(request,'employee/ultimateemployees.html', context)
 
 @login_required()
 def shortlistedemployees(request):
 
      # = Customer.objects.filter(rank_status='PREMIUM').order_by('-created_at')
     # customers =[]
-    employ = CompanyShortlistCustomers.objects.filter()
+    employ = CompanyShortlistCustomers.objects.filter(payment_status='SHORTLISTED').order_by('-created_at')
     context = {
         'title': 'ShortlistedEmployees',
         'customers': employ,
@@ -97,14 +113,35 @@ def shortlistedemployees(request):
     return render(request,'employee/shortlistedemployies.html', context)
 
 @login_required()
+def allshortlistedemployeeshistory(request):
+    employ = CompanyShortlistCustomers.objects.all().order_by('-created_at')
+    context = {
+        'title': 'Shortlisted History',
+        'customers': employ,
+    }
+    return render(request,'employee/allshortlistinghistory.html', context)
+
+@login_required()
 def registeredemployees(request):
 
     employ = Customer.objects.filter(regpayment_id__isnull=False)
+    # employ = Customer.objects.filter(regpayment__payment_status="PAYED")
     context = {
         'title': 'RegisteredEmployees',
         'customers': employ,
     }
     return render(request,'employee/registeredemployees.html', context)
+
+@login_required()
+def unregipayedemployees(request):
+
+    employ = Customer.objects.filter(regpayment__payment_status="UNPAYED", regpayment_id__isnull=True)
+    # employ = Customer.objects.all()
+    context = {
+        'title': 'RegisteredEmployees',
+        'customers': employ,
+    }
+    return render(request,'employee/unpaidregemployees.html', context)
 
 @login_required()
 def deactivatedemployees(request):
@@ -120,13 +157,28 @@ def deactivatedemployees(request):
 
 @login_required()
 def companies(request):
-    company = Company.objects.all()
+    company = Company.objects.order_by('-created_at')
 
     context = {
         'title': 'Companies',
         'companies': company,
     }
     return render(request, 'company/company.html', context)
+
+
+@login_required()
+def companydetails(request, company_id):
+    company = Company.objects.filter(id=company_id).first()
+    social = CompanySocialAccount.objects.filter(company=company).first()
+    print(social)
+    context = {
+        'title': 'Companies',
+        'company': company,
+        'social': social,
+    }
+    return render(request, 'company/companydetails.html', context)
+
+
 
 @login_required()
 def premiumcompanies(request):
@@ -201,13 +253,26 @@ def undefinedcompanies(request):
 
 @login_required()
 def companiesregpayment(request):
-    company = Company.objects.filter(regpayment_id__isnull=False)
+    company = Company.objects.filter(regpayment_id__isnull=False, regpayment__payment_status="PAYED", )
 
     context = {
         'title': 'Company Registration Payment',
         'companies': company,
     }
     return render(request, 'company/registrationpayment.html', context)
+
+@login_required()
+def companiesregunpayment(request):
+    company = Company.objects.filter(regpayment_id__isnull=True, regpayment__payment_status="UNPAYED", )
+
+    context = {
+        'title': 'Company Registration UnPayed',
+        'companies': company,
+    }
+    return render(request, 'company/registrationunpaidpayment.html', context)
+
+
+
 
 def deactivatedemployers(request):
     company = Company.objects.filter(status='DEACTIVATED')
@@ -224,18 +289,6 @@ def deactivatedemployers(request):
 
 def companyPricing(request):
     pricing = CompanyPricingPlan.objects.all()
-    if request.method == 'POST':
-        title = request.POST['title']
-        price = request.POST['price']
-        description = request.POST['description']
-        CompanyPricingPlan.objects.create(
-            title=title,
-            price=price,
-            description=description
-        )
-        sweetify.success(request, 'Success', text='Price Added', persistent='Ok')
-    else:
-        pricing = CompanyPricingPlan.objects.all()
 
 
     context = {
@@ -244,6 +297,57 @@ def companyPricing(request):
 
     }
     return render(request, 'company/companypricing.html', context)
+
+def addcompanyPricing(request):
+    # pricing = CompanyPricingPlan.objects.all()
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        price = request.POST.get('price')
+        status = request.POST.get('status')
+        description = request.POST.get('description')
+        CompanyPricingPlan.objects.create(
+            title=title.capitalize(),
+            price=price,
+            status=status.upper(),
+            description=description
+        )
+        sweetify.success(request, 'Success', text='Price Added', persistent='Ok')
+
+
+    return redirect(request.META['HTTP_REFERER'])
+
+def editcompanyPricing(request, price_id):
+
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        price = request.POST.get('price')
+        status = request.POST.get('status')
+        description = request.POST.get('description')
+        pricing = CompanyPricingPlan.objects.filter(id=price_id).first()
+        if pricing is not None:
+            CompanyPricingPlan.objects.filter(id=pricing.id).update(
+                title=title.capitalize(),
+                price=price,
+                status=status.upper(),
+                description=description
+            )
+            sweetify.success(request, 'Success', text='Price Updated', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Price Does Not Exist', persistent='Ok')
+
+
+    return redirect(request.META['HTTP_REFERER'])
+
+def deletecompanyPricing(request, price_id):
+    pricing = CompanyPricingPlan.objects.filter(id=price_id).first()
+    if pricing is not None:
+        pricing.delete()
+        sweetify.success(request, 'Success', text='Price Deleted', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='Price Not Deleted', persistent='Ok')
+
+    return redirect(request.META['HTTP_REFERER'])
+
 
 
 @login_required()
@@ -366,3 +470,153 @@ def reply_to_random_messages_via_email(request, source):
         # messages.success(request, 'Emails sent')
         # return redirect('CCSBADMIN:newsLetter')
     return redirect(sourcez)
+
+
+def whatweoffer(request):
+    context={
+        'whatweoffer':WhatWeOffer.objects.all()
+    }
+    return render(request, 'whatweoffer/whatweoffer.html' , context)
+
+
+def addwhatweoffer(request):
+    if request.method == "POST":
+        icon = request.POST.get('icon')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        WhatWeOffer.objects.create(
+            icon=icon,
+            title=title,
+            description=description,
+        )
+        sweetify.success(request, 'Success', text='Offer Added Successfully', persistent='Ok')
+
+    else:
+        sweetify.error(request, 'Error', text='Error adding the offer', persistent='Retry')
+
+    return redirect('LMLAdmin:whatweoffer')
+
+
+def editwhatweoffer(request, offer_id):
+    w = WhatWeOffer.objects.filter(id= offer_id).first()
+    if request.method == "POST":
+        icon = request.POST.get('icon')
+        title = request.POST.get('title')
+        description = request.POST.get('description')
+        WhatWeOffer.objects.filter(id=w.id).update(
+            icon=icon,
+            title=title,
+            description=description,
+        )
+        sweetify.success(request, 'Success', text='Offer Updated Successfully', persistent='Ok')
+
+    else:
+        sweetify.error(request, 'Error', text='Error updating the offer', persistent='Retry')
+
+    return redirect('LMLAdmin:whatweoffer')
+
+
+def deletewhatweoffer(request, offer_id):
+    w = WhatWeOffer.objects.filter(id=offer_id).first()
+    if w is not None:
+        # w.delete()
+        sweetify.success(request, 'Success', text='Offer deleted', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='Error deleting the offer', persistent='Retry')
+
+    return redirect('LMLAdmin:whatweoffer')
+
+
+def employeesdetails(request, customer_id):
+    customer = Customer.objects.filter(id=customer_id).first()
+    reg = CustomerRegNo.objects.filter(customer=customer).first()
+    educations = Education.objects.filter(customer=customer)
+    experiences = Experience.objects.filter(customer=customer)
+    skills = Skills.objects.filter(customer=customer)
+    socials = Social_account.objects.filter(customer=customer)
+    context={
+        'title':customer.first_name+' Details',
+        'employee':customer,
+        'reg':reg,
+        'skills':skills,
+        'educations':educations,
+        'experiences':experiences,
+        'socials':socials,
+    }
+    return render(request, 'employee/employeedetails.html', context)
+
+def changecandidatestatustonewbee(request, custom_id):
+    custom = Customer.objects.filter(id=custom_id).first()
+    if custom is not None:
+        Customer.objects.filter(id=custom.id).update(
+            status="NEWBIE"
+        )
+        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+    else:
+        sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def changecandidatestatustoregi(request,custom_id):
+    custom = Customer.objects.filter(id=custom_id).first()
+    if custom is not None:
+        Customer.objects.filter(id=custom.id).update(
+            status="REGISTERED_CONFIRMED"
+        )
+        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='Status not changed', persistent='Ok')
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def changecandidatestatustodeac(request,custom_id):
+    custom = Customer.objects.filter(id=custom_id).first()
+    if custom is not None:
+        Customer.objects.filter(id=custom.id).update(
+            status="DEACTIVATED"
+        )
+        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+    else:
+        sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
+    return redirect(request.META['HTTP_REFERER'])
+
+
+def changecompanystatustonewbee(request, custom_id):
+    custom = Company.objects.filter(id=custom_id).first()
+    if custom is not None:
+        Company.objects.filter(id=custom.id).update(
+            status="NEWBIE"
+        )
+        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+    else:
+        sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
+    return redirect(request.META['HTTP_REFERER'])
+    # return redirect('LMLAdmin:companies')
+
+
+def changecompanystatustoregi(request,custom_id):
+    custom = Company.objects.filter(id=custom_id).first()
+    if custom is not None:
+        Company.objects.filter(id=custom.id).update(
+            status="REGISTERED_CONFIRMED"
+        )
+        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+    else:
+        sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
+    return redirect(request.META['HTTP_REFERER'])
+    # return redirect('LMLAdmin:companies')
+
+
+def changecompanystatustodeac(request,custom_id):
+    custom = Company.objects.filter(id=custom_id).first()
+    if custom is not None:
+        Company.objects.filter(id=custom.id).update(
+            status="DEACTIVATED"
+        )
+        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+    else:
+        sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
+    return redirect(request.META['HTTP_REFERER'])
+    # return redirect('LMLAdmin:companies')
+
+

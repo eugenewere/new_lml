@@ -42,12 +42,13 @@
                                 <h5 class="card-header">Pricing</h5>
 
                                 <div class="card-body">
-                                    <table class="table table-striped">
+                                    <table class="table table-striped" id="myDataTable">
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Title</th>
                                                 <th scope="col">Pricing (Kshs)</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Description</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -58,10 +59,11 @@
                                                     <th scope="row">{{ forloop.counter }}</th>
                                                     <th  scope="row">{{ price.title|title }}</th>
                                                     <th scope="row">{{ price.price|intcomma }}</th>
+                                                    <th scope="row">{{ price.status }}</th>
                                                     <th scope="row">{{ price.description|safe|escape }}</th>
                                                     <th scope="row">
-                                                        <a href="" class="btn btn-success rounded btn-sm" >Edit</a>
-                                                        <a href="" class="btn btn-danger rounded btn-sm">Delete</a>
+                                                        <a data-toggle="modal" data-target="#editModal{{ price.id }}" href="" class="btn btn-success rounded btn-sm" >Edit</a>
+                                                        <a data-toggle="modal" data-target="#deleteModal-{{ price.id }}" href="" class="btn btn-danger rounded btn-sm">Delete</a>
                                                     </th>
 
                                                 </tr>
@@ -73,6 +75,82 @@
                         </div>
                     <!-- ============================================================== -->
                     <!-- end basic table  -->
+                    <!-- Modal -->
+                 {% for price in pricings %}
+                    <div  class="modal fade" id="editModal{{ price.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit Pricing ({{ price.title }})</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form method="post" action="{% url 'LMLAdmin:editcompanyPricing' price.id %}" >
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Select Available Packages</label>
+                                    <select required name="title" class="form-control" id="exampleFormControlSelect1">
+                                      <option disabled value="">Choose Package</option>
+                                      <option {% if price.title|upper == "BASIC" %} selected {% endif %} value="BASIC">BASIC</option>
+                                      <option {% if price.title|upper == "PRO_BASIC" %} selected {% endif %} value="PRO_BASIC">PRO_BASIC</option>
+                                      <option {% if price.title|upper == "PREMIUM" %} selected {% endif %} value="PREMIUM">PREMIUM</option>
+                                      <option {% if price.title|upper == "ULTIMATE" %} selected {% endif %} value="ULTIMATE">ULTIMATE</option>
+                                      <option {% if price.title|upper == "PRO_ULTIMATE" %} selected {% endif %} value="PRO_ULTIMATE">PRO_ULTIMATE</option>
+                                      <option {% if price.title|upper == "PLATINUM" %} selected {% endif %} value="PLATINUM">PLATINUM</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelecte1">Select Period</label>
+                                    <select required name="status" class="form-control" id="exampleFormControlSelecte1">
+                                      <option disabled value=" ">Select Period</option>
+                                      <option {% if price.status|lower == "monthly" %} selected {% endif %}  value="Monthly">Monthly</option>
+                                      <option{% if price.status|lower == "yearly" %} selected {% endif %}  value="Yearly">Yearly</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Price</label>
+                                    <input value="{{ price.price }}" required name="price" type="number" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter Price">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail3">Description</label>
+                                    <textarea required class="form-control" name="description{{ price.id }}" id="exampleInputEmail3" cols="30" rows="10">
+                                        {{ price.description }}
+                                    </textarea>
+                                    <script>
+                                        CKEDITOR.replace('description{{ price.id }}',{
+                                              removePlugins: [  'Image', ],
+                                         } );
+                                    </script>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-success rounded">Save changes</button>
+                              </div>
+                         </form>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal fade" id="deleteModal-{{ price.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete {{ price.title|title }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Are You Sure You Want To Delete
+                              <div class="row" style="padding: 15px;">
+                                  <a href="{% url 'LMLAdmin:deletecompanyPricing' price.id %}" class="btn btn-danger">Delete</a>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                {% endfor %}
                     <!-- ============================================================== -->
                     <!-- Modal -->
                     <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -84,12 +162,28 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form method="post" action="">
+                          <form method="post" action="{% url 'LMLAdmin:addcompanyPricing' %}" >
                               {% csrf_token %}
                               <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Title</label>
-                                    <input required name="title" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter title">
+                                    <label for="exampleFormControlSelect1">Select Available Packages</label>
+                                    <select required name="title" class="form-control" id="exampleFormControlSelect1">
+                                      <option selected disabled value="">Choose Package</option>
+                                      <option value="BASIC">BASIC</option>
+                                      <option value="PRO_BASIC">PRO_BASIC</option>
+                                      <option value="PREMIUM">PREMIUM</option>
+                                      <option value="ULTIMATE">ULTIMATE</option>
+                                      <option value="PRO_ULTIMATE">PRO_ULTIMATE</option>
+                                      <option value="PLATINUM">PLATINUM</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelecte1">Select Period</label>
+                                    <select required name="status" class="form-control" id="exampleFormControlSelecte1">
+                                      <option selected disabled value=" ">Select Period</option>
+                                      <option value="Monthly">Monthly</option>
+                                      <option value="Yearly">Yearly</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail2">Price</label>

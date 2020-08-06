@@ -1,0 +1,174 @@
+{% extends 'admin/layout.html' %}
+{% load static %}
+{% block links %}
+       <link rel="stylesheet" href="{% static 'assets/libs/css/userprofile.css' %}">
+
+{% endblock links %}
+{% block content %}
+       <div class="dashboard-wrapper ml-0">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">All Company</h2>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Company</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- basic table  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <h5 class="card-header">Company</h5>
+                                <div class="card-body">
+
+                                    <div class="container-fluid">
+                                        <div class="col-12">
+                                            <div class="col-sm-12">
+                                                <div class="user-detail" style="display: flex !important;">
+                                                    <div class="user-image">
+                                                        <img src="{{ company.logo.url }}">
+                                                    </div>
+                                                    <div class="user-data">
+                                                        <h2>{{ company.company_name }}</h2>
+                                                        <span class="post-label"><strong>Category:</strong> {{ company.category.category }}</span><br>
+                                                        <span class="post-label"><strong>Status:</strong> {{ company.status }}</span><br>
+                                                        <span class="post-label"><strong>Rank Status:</strong> {{ company.rank_status }}</span>
+                                                        <p> <strong>Representative </strong> {{ company.first_name|title }} {{ company.last_name|title }} <br>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i> <strong>County:</strong> {{company.county.county|title}} <br>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i> <strong>Region:</strong>  {{company.region.region|title}}
+                                                        </p>
+                                                        <p><strong>Motto: </strong> {{ company.company_motto }}</p>
+                                                    </div>
+                                                    <div class="social-icons">
+    {#                                                     <ul class="detail-footer-social">#}
+                                                            {% if social.linkedin %}
+                                                                <a data-toggle="tooltip" data-placement="top" title="Link: {{social.linkedin}}" href="{{social.linkedin}}">
+                                                                    <i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a>
+                                                            {% endif %}
+                                                            {% if social.facebook %}
+                                                                <a data-toggle="tooltip" data-placement="top" title="Link: {{social.facebook }}" href="{{ social.facebook }}">
+                                                                    <i style="margin-right: 5px; font-size: 20px;" class="fab fa-facebook"></i></a>
+                                                            {% endif %}
+                                                            {% if social.instagram %}
+                                                                <a data-toggle="tooltip" data-placement="top" title="Link: {{social.instagram }}" href="{{ social.instagram }}">
+                                                                    <i style="margin-right: 5px; font-size: 20px;" class="fab fa-instagram"></i></a>
+                                                            {% endif %}
+                                                            {% if social.twitter %}
+                                                                <a data-toggle="tooltip" data-placement="top" title="Link: {{social.twitter }}" href="{{ social.twitter }}">
+                                                                    <i style="margin-right: 5px; font-size: 20px;" class="fab fa-twitter-square"></i></a>
+                                                            {% endif %}
+                                                            {% if social.googlr_plus %}
+                                                                <a data-toggle="tooltip" data-placement="top" title="Link: {{social.googlr_plus }}" href="{{ social.googlr_plus }}">
+                                                                    <i style="margin-right: 5px; font-size: 20px;" class="fab fa-google-plus-square"></i></a>
+                                                            {% endif %}
+    {#                                                    </ul>#}
+    {#                                                    <a href="#" type="button" class="msg-btn"><i class="fa fa-envelope-o" aria-hidden="true"></i>Send Message</a>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+                                                <div class="tab-outline">
+                                                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="tab-outline-one" data-toggle="tab" href="#outline-one" role="tab" aria-controls="home" aria-selected="true">Basic Information</a>
+                                                        </li>
+
+
+                                                    </ul>
+                                                    <div class="tab-content" id="myTabContent2">
+                                                        <div class="tab-pane fade show active" id="outline-one" role="tabpanel" aria-labelledby="tab-outline-one" style="display: flex; flex-direction: column">
+                                                            <div class="bio-box">
+                                                                <div class="heading">
+                                                                    <h4 class="detail-title">Company Short Description
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="desc">
+                                                                   {{ company.description }}
+                                                                </div>
+                                                                <div class="heading">
+                                                                    <h4 class="detail-title">Brief Details
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="desc">
+                                                                   {{ company.brief_details|safe|escape }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="detail-box">
+                                                                <h4 class="detail-title">Detail</h4>
+                                                                <ul class="ul-first">
+                                                                    <li><strong>Date Company Started: </strong> {{ company.date_created|date:'d-M-Y' }}</li>
+                                                                    <li><strong>County: </strong> {{ company.county.county }}</li>
+                                                                    <li><strong>Region: </strong> {{ company.region.region }}</li>
+                                                                    <li><strong>Landmark: </strong> {{ company.landmark }}</li>
+                                                                    <li><strong>Business Reg No: </strong> {{ company.bussiness_reg_no }}</li>
+                                                                    <li><strong>KRA No: </strong> {{ company.kra_number }}</li>
+                                                                    <li><strong>Business Entity: </strong> {{ company.bizness_entity_type }}</li>
+                                                                    <li><strong>Phone_Number: </strong> {{ company.phone_number }}</li>
+                                                                    <li><strong>Website: </strong> {{ company.website }}</li>
+                                                                    <li><strong>Company Email: </strong> {{ company.company_email }}</li>
+                                                                </ul>
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+{#                                        <div style="clear: both;"></div>#}
+{#                                        <div class="footer">#}
+{#                                            <p><strong>My Badges</strong></p><br>#}
+{#                                            <div class="footer-box"><i class="fa fa-facebook"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-twitter"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-linkedin"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-google"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-instagram"></i></div>#}
+{#                                        </div>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- ============================================================== -->
+                    <!-- end basic table  -->
+                    <!-- ============================================================== -->
+                </div>
+
+            </div>
+
+        </div>
+{% endblock content %}
+{% block script %}
+    <script>
+        	$(document).ready(function(){
+                $('ul.tabs li').click(function(){
+                    var tab_id = $(this).attr('data-tab');
+
+                    $('ul.tabs li').removeClass('current');
+                    $('.tab-content').removeClass('current');
+
+                    $(this).addClass('current');
+                    $("#"+tab_id).addClass('current');
+                });
+            });
+    </script>
+{% endblock script %}

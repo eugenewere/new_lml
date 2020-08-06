@@ -10,6 +10,9 @@ def id_generator(size=122, chars=string.ascii_lowercase + string.digits):
 
 
 app_name = 'LML'
+
+
+
 urlpatterns = [
     path('', views.home, name="home"),
 
@@ -65,7 +68,7 @@ urlpatterns = [
     path('companypaymentpackage/<int:pricing_id>',views.companypaymentpackage, name='companypaymentpackage'),
 
     path('companydash/',views.employer_dash, name='employer_dash'),
-    path('companydash_message/<str:room_name>/',views.employer_dash_message, name='employer_dash_message'),
+
 
     path('candidatedash/',views.employee_dash, name='employee_dash'),
     path('candidate_dash_message/<str:room_name>/',views.employee_dash_message, name='employee_dash_message'),
@@ -73,6 +76,7 @@ urlpatterns = [
     # employeestatus
     path('allpremiumcandidates/',views.all_premium_employees, name = 'all_premium_employees'),
     path('allcategorycandidates/<int:category_id>',views.all_category_employees, name = 'all_category_employees'),
+    path('alloffercandidates/<str:offer>',views.all_offer_employees, name = 'all_offer_employees'),
     path('allcandidates/',views.all_employees, name = 'all_employees'),
     path('premiumcandidatedetails/<int:customer_id>', views.premium_employee_details, name='premium_employee_detail'),
 
@@ -82,8 +86,7 @@ urlpatterns = [
 
     path('dumb/', views.dumb, name='dumb'),
 
-    path('sendmessages/', views.messages, name='messages'),
-    path('fetchmessages/<int:customer_id>', views.fetch_data_messages, name='fetch_data_messages'),
+
 
 
     path('reviewshortlistedcustomer', views.review_shortlisted_customer, name='review_shortlisted_customer'),
@@ -99,6 +102,8 @@ urlpatterns = [
     path('deletesocial/', views.deletesocial, name='deletesocial'),
     path('checkifemailexists/', views.checkifemailexists, name='checkifemailexists'),
     path('checkifusernameexists/', views.checkifusernameexists, name='checkifusernameexists'),
+
+
 
 
 ]

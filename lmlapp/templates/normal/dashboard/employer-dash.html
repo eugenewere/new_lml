@@ -127,7 +127,7 @@
             <div class="col-sm-12" >
                 <div class="row container" style="padding: 10px 5px; margin: 0 auto; display: flex !important; justify-content: flex-end; align-items: center; ">
                     <a style=" margin-left: 3px; " href="{% url 'LML:employerdetails' %}" class="custom-button btn btn-success "><i class="fa fa-user mrg-r-5"></i>Details</a>
-                    <a style=" margin-left: 3px" href="{% url 'LML:employer_dash_message' request.user.username %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
+                    <a style=" margin-left: 3px" target="_blank" href="{% url 'Chat:employer_dash_message' %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
                 </div>
                 <div class="row" style="display: flex; justify-content: center;">
                    <div  class="deatil-tab-employ tool-tab col-sm-12 col-md-12 col-lg-10 " style="background: white;" >
@@ -1105,9 +1105,36 @@
                                 </div>
                             </div>
                             <div id="about" class="tab-pane fade-in " style="height: 100%;">
-                                <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">
-                                    <h3 style="text-align: center;">No Payment Made</h3>
+                                <div class="col-sm-12" style="margin: 0 auto;">
+                                    <table class="table table-hover" id="myTable">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">#</th>
+                                          <th scope="col">Trans_id</th>
+                                          <th scope="col">Amount</th>
+                                          <th scope="col">User</th>
+                                          <th scope="col">Status</th>
+                                          <th scope="col">Gateway</th>
+                                          <th scope="col">Date</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+{#                                        <tr>#}
+{#                                          <th scope="row">1</th>#}
+{#                                          <td>Mark</td>#}
+{#                                          <td>Otto</td>#}
+{#                                          <td>@mdo</td>#}
+{#                                          <td>@mdo</td>#}
+{#                                          <td>@mdo</td>#}
+{#                                          <td>@mdo</td>#}
+{#                                        </tr>#}
+
+                                      </tbody>
+                                    </table>
                                 </div>
+{#                                <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">#}
+{#                                    <h3 style="text-align: center;">No Payment Made</h3>#}
+{#                                </div>#}
                             </div>
                             <!-- End About Sec -->
                         </div>

@@ -1,0 +1,253 @@
+{% extends 'admin/layout.html' %}
+{% load static %}
+{% load humanize %}
+{% block links %}
+       <link rel="stylesheet" href="{% static 'assets/libs/css/userprofile.css' %}">
+
+{% endblock links %}
+{% block content %}
+       <div class="dashboard-wrapper ml-0">
+            <div class="container-fluid  dashboard-content">
+                <!-- ============================================================== -->
+                <!-- pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title"> {{ employee.first_name|title }} {{ employee.last_name|title }} </h2>
+                            <div class="page-breadcrumb">
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}" class="breadcrumb-link">Dashboard</a></li>
+                                        <li class="breadcrumb-item active" aria-current="page">Candidate</li>
+                                        <li class="breadcrumb-item active" aria-current="page">{{ employee.first_name|title }} {{ employee.last_name|title }}</li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ============================================================== -->
+                <!-- end pageheader -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- basic table  -->
+                    <!-- ============================================================== -->
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+
+                                <h5 class="detail-title">{{ employee.first_name|title }} {{ employee.last_name|title }}</h5>
+                                <div class="card-body">
+
+
+
+                                     <div class="container-fluid">
+                                        <div class="col-sm-12">
+                                            <div class="dropdown">
+                                              <button class="btn btn-secondary
+                                              {% if  employee.customer.status == 'NEWBIE' %}
+                                                 btn-secondary
+                                              {% elif  employee.customer.status == 'REGISTERED_CONFIRMED' %}
+                                                btn-success
+                                              {% elif  employee.customer.status == 'DEACTIVATED' %}
+                                                btn-danger
+                                              {% endif %}
+                                                dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                  {{ employee.customer.status }}
+                                              </button>
+                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                  {% if not employee.customer.status == 'NEWBIE' %}
+                                                    <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustonewbee' employee.customer.id   %}">NEWBIE </a>
+                                                  {% endif %}
+                                                  {% if not employee.customer.status == 'REGISTERED_CONFIRMED' %}
+                                                    <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustoregi' employee.customer.id  %}">REGISTERED</a>
+                                                  {% endif %}
+                                                  {% if not employee.customer.status == 'DEACTIVATED' %}
+                                                    <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustodeac' employee.customer.id    %}">DEACTIVATED</a>
+                                                  {% endif %}
+                                              </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="col-sm-12">
+                                                <div class="user-detail" style="display: flex !important;">
+                                                    <div class="user-image">
+                                                        <img src="{{ employee.profile_image.url }}">
+                                                    </div>
+                                                    <div class="user-data">
+                                                        <h2>{{employee.first_name|title}} {{ employee.last_name|title }}</h2>
+                                                        <span class="post-label"><strong>Category:</strong> {{ employee.category.category }}</span><br>
+                                                        <span class="post-label"><strong>Status:</strong> {{ employee.status }}</span><br>
+                                                        <span class="post-label"><strong>Rank Status:</strong> {{ employee.rank_status }}</span>
+                                                        <p>
+{#                                                            <strong>Representative </strong> {{ company.first_name|title }} {{ company.last_name|title }} <br>#}
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i> <strong>County:</strong> {{employee.county.county|title}} <br>
+                                                            <i class="fa fa-map-marker" aria-hidden="true"></i> <strong>Region:</strong>  {{employee.region.region|title}}
+                                                        </p>
+                                                        <p><strong>Phone: </strong> {{ employee.phone_number }}</p>
+                                                    </div>
+                                                    <div class="social-icons">
+    {#                                                     <ul class="detail-footer-social">#}
+                                                            {% if socials%}
+                                                                {% for social in socials %}
+                                                                <a data-toggle="tooltip" data-placement="top" title="Link: {{social.account_url}}" href="{{social.account_url}}">
+                                                                    <i style="margin-right: 5px; font-size: 20px;" class="fab fa-linkedin"></i></a>
+                                                                {% endfor %}
+                                                            {% endif %}
+
+    {#                                                    </ul>#}
+    {#                                                    <a href="#" type="button" class="msg-btn"><i class="fa fa-envelope-o" aria-hidden="true"></i>Send Message</a>#}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb-5">
+                                                <div class="tab-outline">
+                                                    <ul class="nav nav-tabs" id="myTab2" role="tablist">
+                                                        <li class="nav-item">
+                                                            <a class="nav-link active" id="tab-outline-one" data-toggle="tab" href="#outline-one" role="tab" aria-controls="home" aria-selected="true">Basic Information</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="tab-outline-two" data-toggle="tab" href="#outline-two" role="tab" aria-controls="home2" aria-selected="true">Education Information</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="tab-outline-three" data-toggle="tab" href="#outline-three" role="tab" aria-controls="home3" aria-selected="true">Experience Information</a>
+                                                        </li>
+                                                        <li class="nav-item">
+                                                            <a class="nav-link" id="tab-outline-four" data-toggle="tab" href="#outline-four" role="tab" aria-controls="home4" aria-selected="true">Skill Information</a>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="tab-content" id="myTabContent2">
+                                                        <div class="tab-pane fade show active" id="outline-one" role="tabpanel" aria-labelledby="tab-outline-one">
+                                                           <div class="col-sm-12" style="padding-top: 20px; padding-left: 0;">
+                                                            <div class="bio-box">
+
+                                                                <div class="heading">
+                                                                    <h4 class="detail-title">About
+                                                                    </h4>
+                                                                </div>
+                                                                <div class="desc">
+                                                                   {{ employee.biography }}
+                                                                </div>
+                                                                {% if employee.disability_status|lower == 'disabled' %}
+                                                                    <div class="heading">
+                                                                        <h4 class="detail-title">Disability
+                                                                        </h4>
+                                                                    </div>
+                                                                    <div class="desc">
+                                                                       {{ employee.disability}}
+                                                                    </div>
+                                                                {% endif %}
+
+
+                                                            </div>
+                                                            <div class="detail-box">
+                                                                <h4 class="detail-title">Detail</h4>
+                                                                <ul class="ul-first">
+                                                                    <li><strong>Birth Date: </strong> {{ employee.date_of_birth|date:'d-M-Y' }}</li>
+                                                                    <li><strong>Reg Payment: </strong> {{ employee.regpayment.recipt_no }}</li>
+                                                                    <li><strong>Reg Payment Cash: </strong> {{ employee.regpayment.amount }}</li>
+                                                                    <li><strong>Reg Payment status: </strong> {{ employee.regpayment.payment_status }}</li>
+                                                                    <li><strong>Disability Status: </strong> {{ employee.disability_status }}</li>
+                                                                    <li><strong>County: </strong> {{ employee.county.county|title }}</li>
+                                                                    <li><strong>Region: </strong> {{ employee.region.region|title }}</li>
+                                                                    <li><strong>Landmark: </strong> {{ employee.landmark|title }}</li>
+                                                                    <li><strong>Huduma Number: </strong> {{ employee.huduma_no }}</li>
+                                                                    <li><strong>Gender: </strong> {{ employee.gender }}</li>
+                                                                    <li><strong>Marital Status: </strong> {{ employee.marital_status }}</li>
+                                                                    <li><strong>Phone Number: </strong> {{ employee.phone_number }}</li>
+                                                                    <li><strong>Work Schedule: </strong> {{ employee.job_type }}</li>
+{#                                                                    <li><strong>Website: </strong> {{ company.website }}</li>#}
+{#                                                                    <li><strong>Company Email: </strong> {{ company.company_email }}</li>#}
+                                                                </ul>
+
+                                                            </div>
+                                                           </div>
+                                                        </div>
+                                                        <div class="tab-pane fade " id="outline-two" role="tabpanel" aria-labelledby="tab-outline-two" >
+                                                            {% if educations %}
+                                                                <div class="col-sm-12" style="padding-top: 20px; padding-left: 0;">
+                                                                    <span class="detail-title" style="font-weight: bolder; text-align: center;width: 100%;">Education: </span><br>
+                                                                    <div class="history-tl-container" style="padding: 20px;">
+                                                                      <ul class="tl">
+                                                                          {% for edu in educations %}
+                                                                            <li class="tl-item" ng-repeat="item in retailer_history">
+                                                                              <div class="timestamp">
+                                                                                {{ edu.graduation_date|date:'d/M/Y' }}<br>
+                                                                              </div>
+                                                                              <div class="item-title">{{ edu.course }}</div>
+                                                                              <div class="item-detail">{{ edu.school}}</div>
+                                                                            </li>
+                                                                          {% endfor %}
+                                                                      </ul>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="tab-pane fade " id="outline-three" role="tabpanel" aria-labelledby="tab-outline-three" >
+                                                            {% if experiences %}
+                                                                <div class="col-sm-12" style="padding-top: 20px; padding-left: 0;">
+                                                                    <span class="detail-title" style="font-weight: bolder; text-align: center;width: 100%;">Experiences: </span><br>
+                                                                    <div class="history-tl-container" style="padding: 20px;">
+                                                                      <ul class="tl">
+                                                                          {% for edu in experiences %}
+                                                                            <li class="tl-item" ng-repeat="item in retailer_history">
+                                                                              <div class="timestamp">
+                                                                                {{ edu.date_from|date:'d/M/Y' }}<br>
+                                                                              </div>
+                                                                              <div class="item-title">{{ edu.position_held|title  }}</div>
+                                                                              <div class="item-detail">{{ edu.company_name|title }}</div>
+                                                                            </li>
+                                                                          {% endfor %}
+                                                                      </ul>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="tab-pane fade " id="outline-four" role="tabpanel" aria-labelledby="tab-outline-four" >
+                                                            {% if skills %}
+                                                                <div class="col-sm-12" style="padding-top: 20px; padding-left: 0;">
+                                                                    <span class="detail-title" style="font-weight: bolder; text-align: center;width: 100%;">Skills: </span><br>
+                                                                    <div class="history-tl-container" style="padding: 20px;">
+                                                                      <ul class="tl">
+                                                                          {% for edu in skills %}
+                                                                            <li class="tl-item" ng-repeat="item in retailer_history">
+                                                                              <div class="timestamp">
+                                                                                {{ edu.date_from|date:'d/M/Y' }}<br>
+                                                                              </div>
+                                                                              <div class="item-title">{{ edu.skill|title  }}</div>
+                                                                              <div class="item-detail">{{ edu.referee_phonenumber|title }}</div>
+                                                                            </li>
+                                                                          {% endfor %}
+                                                                      </ul>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+{#                                        <div style="clear: both;"></div>#}
+{#                                        <div class="footer">#}
+{#                                            <p><strong>My Badges</strong></p><br>#}
+{#                                            <div class="footer-box"><i class="fa fa-facebook"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-twitter"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-linkedin"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-google"></i></div>#}
+{#                                            <div class="footer-box"><i class="fa fa-instagram"></i></div>#}
+{#                                        </div>#}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- ============================================================== -->
+                    <!-- end basic table  -->
+                    <!-- ============================================================== -->
+                </div>
+
+            </div>
+
+        </div>
+{% endblock content %}

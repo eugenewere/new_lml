@@ -1,8 +1,10 @@
+import os
+import re
 import statistics
 from datetime import date
 
 from django import template
-from django.shortcuts import render_to_response
+# from django.shortcuts import render_to_response
 from django.views import View
 from lmlappadmin.models import *
 
@@ -99,7 +101,7 @@ def confirm_company_reg_payment(request):
 @register.filter(name='shortlisted')
 def shortlisted(request, customer_id):
     customer = Customer.objects.filter(user_ptr_id=customer_id).first()
-    is_shortlisted = CompanyShortlistCustomers.objects.filter(customer_id=customer.id, company_id=request.user.id).exists()
+    is_shortlisted = CompanyShortlistCustomers.objects.filter(customer_id=customer.id, company_id=request.user.id, payment_status='SHORTLISTED').exists()
     if is_shortlisted:
         return False
     return True
@@ -136,6 +138,14 @@ def if_company_has_shortlisted_the_customer(customer_id, company_id):
          return False
      return True
 
+@register.filter(name='replacestring')
+def replacestring(request, s):
+    # return re.sub('[^0-9a-zA-Z]+', '_', s)
+    return re.sub('[^a-zA-Z0-9\n\.]', ' ', s)
+
+
+
+
 @register.filter(name='average_ratings')
 def average_ratings(customer_id):
     customer= Customer.objects.filter(user_ptr_id=customer_id).first()
@@ -152,5 +162,37 @@ def average_ratings(customer_id):
             return average_ratings
         else:
             return 0
+
+@register.filter(name='get_messege_reciever_image')
+def get_messege_reciever_image(request, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+    candidate = Customer.objects.filter(user_ptr_id=user.id).first()
+    if candidate:
+        return candidate.profile_image.url
+    else:
+        return 'Noimage.jpg'
+
+@register.filter(name='get_filename')
+def get_filename(name):
+    return os.path.basename(name)
+
+@register.filter(name='sizify')
+def sizify(value):
+    # value = ing(value)
+    if value < 512000:
+        value = value / 1024.0
+        ext = 'kb'
+    elif value < 4194304000:
+        value = value / 1048576.0
+        ext = 'mb'
+    else:
+        value = value / 1073741824.0
+        ext = 'gb'
+    return '%s %s' % (str(round(value, 2)), ext.capitalize())
+
+
+register.filter('sizify', sizify)
+
+
 
 
