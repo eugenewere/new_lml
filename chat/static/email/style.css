@@ -116,6 +116,7 @@ html body .pace .pace-progress {
 }
 .email-application.horizontal-layout.horizontal-menu-padding .app-content .content-right .email-app-details .email-scroll-area {
      height: 100% !important;
+    overflow-y: scroll;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
     background-color: #e4e4e4;
@@ -129,10 +130,33 @@ html body .pace .pace-progress {
 .ps__rail-y, .ps__rail-x{
     display: none !important;
 }
+.email-scroll-area{
+    overflow-y: scroll !important;
+}
+.email-scroll-area::-webkit-scrollbar {
+    display: none !important;
+}
+/* Optional: show position indicator in red */
+.email-scroll-area::-webkit-scrollbar-thumb {
+   display: none !important;
+}
 .no-results{
     height: 100%;
     display: flex !important;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+.little_content > *{
+    margin: 0 !important;
+    height: 4px !important;
+}
+/*@media screen and (min-width: 793px) {*/
+/*    .sidebar-left{*/
+/*        height: 100%;*/
+/*    }*/
+/*}*/
+.hide {display:none!important }
+.select2-container {
+    width: 100% !important;
 }

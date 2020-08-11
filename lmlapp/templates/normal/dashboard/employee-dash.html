@@ -16,7 +16,8 @@
 
     <script src="https://use.typekit.net/hoy3lrg.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'><link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
 {% endblock links %}
@@ -92,9 +93,9 @@
     <section class="brows-job-category gray-bg">
         <div class="" style="padding: 60px 20px; height: 100vh;">
             <div class="col-sm-12" >
-                <div class="row" style="padding: 10px 5px; display: flex !important; justify-content: flex-end; align-items: center; ">
+                <div class="container" style="padding: 10px 5px; display: flex !important; justify-content: flex-end; align-items: center; ">
                     <a style=" margin-left: 3px; " href="{% url 'LML:employeedetails' %}" class="custom-button btn btn-success "><i class="fa fa-user mrg-r-5"></i>Details</a>
-                    <a style=" margin-left: 3px" href="{% url 'LML:employee_dash_message' request.user.username %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
+                    <a style=" margin-left: 3px" href="{% url 'Chat:employee_dash_message'  %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
                     <a style="margin: 3px;" href="{% url 'LML:customer_resume_pdf' request.user.id %}" class="custom-button btn btn-warning "><i class="fa fa-file-pdf mrg-r-5"></i>Cv</a>
 
                 </div>

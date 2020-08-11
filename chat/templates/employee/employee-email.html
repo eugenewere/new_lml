@@ -222,10 +222,6 @@
 
 
 
-
-
-
-
         <div id="All"  style="height: 100%;" class="tabcontentt content-wrapper active show">
           <div class="content-header row"> </div>
           <div style="height: 100%;" class="content-body">
@@ -422,7 +418,8 @@
                         <div class="col-12">
                           <div class="collapsible email-detail-head">
                             <div class="card collapse-header open" role="tablist">
-                              <div id="headingCollapse7" class="card-header d-flex justify-content-between align-items-center" data-toggle="collapse" role="tab" data-target="#collapse7" aria-expanded="true" aria-controls="collapse7">
+                              <div id="headingCollapse7" class="card-header d-flex justify-content-between align-items-center"
+                                data-toggle="collapse" role="tab" data-target="#collapse7" aria-expanded="true" aria-controls="collapse7">
                                 <div class="collapse-title media">
                                   <div class="pr-1">
                                     <div class="avatar mr-75">
@@ -529,115 +526,6 @@
                                   </div>
                                 </div>
                               </div>
-
-                              <div id="headingCollapse8" class="card-header d-flex justify-content-between align-items-center flex-row-reverse" data-toggle="collapse" role="tab" data-target="#collapse8" aria-expanded="true" aria-controls="collapse8">
-                                <div class="collapse-title media" style="display:flex; flex-direction: row-reverse; align-items: center">
-                                  <div class="pr-1">
-                                    <div class="avatar mr-75">
-                                         {% if message.sender.id == request.user.id %}
-                                              {% if request.user|logged_in_customer %}
-                                                <img style="object-fit: contain; width: 38px; height: 38px;" src="{{ request|get_messege_sender_image:message.sender.id }}" alt="avtar img holder">
-                                              {% else %}
-                                                  <img style="object-fit: contain; width: 38px; height: 38px;" src="{{ request|get_messege_reciever_image:message.reciever.id }}" alt="avtar img holder">
-                                              {% endif %}
-                                          {% else %}
-                                               {% if request.user|logged_in_customer %}
-                                                   <img style="object-fit: contain; width: 38px; height: 38px;" src="{{ request|get_messege_sender_image:message.sender.id }}" alt="avtar img holder">
-                                               {% else %}
-                                                   <img style="object-fit: contain; width: 38px; height: 38px;" src="{{ request|get_messege_reciever_image:message.reciever.id }}" alt="avtar img holder">
-
-                                               {% endif %}
-                                          {% endif %}
-                                    </div>
-                                  </div>
-                                  <div class="media-body mt-25">
-                                    <span class="text-primary">
-                                         {% if message.sender.id == request.user.id %}
-                                              {% if request.user|logged_in_customer %}
-                                                 {{ message.sender.first_name|title }} {{ message.sender.last_name|title }}
-                                              {% else %}
-                                                  {{ message.reciever.first_name|title }} {{ message.reciever.last_name|title }}
-                                              {% endif %}
-                                          {% else %}
-                                              {% if request.user|logged_in_customer %}
-                                                  {{ message.sender.first_name|title }} {{ message.sender.last_name|title }}
-
-                                              {% else %}
-                                                  {{ message.reciever.first_name|title }} {{ message.reciever.last_name|title }}
-                                              {% endif %}
-                                          {% endif %}
-                                    </span>
-                                    <span class="d-sm-inline d-none">&lt;
-                                         {% if message.sender.id == request.user.id %}
-                                              {% if request.user|logged_in_customer %}
-                                                 {{ message.sender.email }}
-                                              {% else %}
-                                                  {{ message.reciever.email }}
-                                              {% endif %}
-                                          {% else %}
-                                              {% if request.user|logged_in_customer %}
-                                                  {{ message.sender.email }}
-
-                                              {% else %}
-                                                  {{ message.reciever.email }}
-                                              {% endif %}
-                                          {% endif %}
-                                        &gt;</span>
-{#                                    <small class="text-muted d-block">from {{ request.user.email }}</small>#}
-                                  </div>
-                                </div>
-                                <div class="information d-sm-flex d-none align-items-center">
-                                  <small class="text-muted mr-50">{{ message.created_at|naturaltime }}</small>
-                                  <span class="favorite  {% if request|get_user_msgstatus:message.id %}warning{% endif %}">
-                                    <i data-star data-star-message="{{ message.id }}" class="lni lni-star"></i>
-                                  </span>
-                                  <div class="dropdown">
-                                      {% if not message.sender.id == request.user.id %}
-                                        <a href="#" class="dropdown-toggle" id="third-open-menu" data-toggle="dropdown" aria-haspopup="true"
-                                          aria-expanded="false">
-                                          <i class="lni lni-menu"></i>
-                                        </a>
-                                      {% endif %}
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="second-open-submenu">
-                                      <a href="#" class="dropdown-item mail-reply">
-                                        <i class="lni lni-reply"></i>
-                                        Reply
-                                      </a>
-                                      <a href="#" class="dropdown-item">
-                                        <i class="lni lni-reply"></i>
-                                        Forward
-                                      </a>
-
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div id="collapse8" role="tabpanel" aria-labelledby="headingCollapse8" class="collapse ">
-                                <div class="card-content">
-                                  <div class="card-body py-1">
-                                    <p class="text-bold-500">{{ message.subject|upper }}</p>
-                                    <span>
-                                        {{ message.msg_content|safe|escape }}
-                                    </span>
-
-                                  </div>
-                                  <div class="card-footer pt-0 border-top">
-                                      {% if message.file %}
-                                        <label class="sidebar-label">Download Attached Files</label>
-                                        <ul class="list-unstyled mb-0">
-                                          <li class="cursor-pointer pb-25">
-                                              <a href="{{ message.file.url }}" download style="font-size: 18px;">
-                                                  <i class="lni lni-files"></i>
-                                                  <small class="text-muted ml-1 attchement-text">{{ message.file.name|get_filename }} ({{ message.file.size|sizify }})</small>
-                                              </a>
-
-                                          </li>
-                                        </ul>
-                                      {% endif %}
-                                  </div>
-                                </div>
-                              </div>
-
                             </div>
                           </div>
                         </div>

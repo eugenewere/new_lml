@@ -520,6 +520,8 @@ class CompanyPricingPlan(models.Model):
         return '%s  ' % (self.title)
 
 
+
+
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE, null=False, blank=False)
     reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE, null=False, blank=False)
@@ -530,33 +532,42 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     room = models.IntegerField(null=False, blank=False)
-    MESSAGECHOICES = {
+    MESSAGE_CHOICES = {
         ('READ', 'Read'),
         ('UNREAD', 'Unread'),
     }
-    readstatus = models.CharField(max_length=200, null=False, blank=False, choices=MESSAGECHOICES, default='UNREAD')
-    DELETESTAR = {
-        ('DELETE', 'Delete'),
-        ('STARRED', 'Starred'),
-        ('NORMAL', 'Normal'),
-    }
-    delstar = models.CharField(max_length=200, null=False, blank=False, choices=DELETESTAR, default='NORMAL')
+    readstatus = models.CharField(max_length=200, null=False, blank=False, choices=MESSAGE_CHOICES, default='UNREAD')
     LABELS = {
         ('PRODUCT', 'Product'),
         ('WORK', 'Work'),
         ('MISC', 'Misc'),
         ('UNDEFINED', 'Undefined'),
     }
-    labels = models.CharField(max_length=200, null=True, blank=True, choices=LABELS, default='UNDEFINED')
-
+    label = models.CharField(max_length=200, null=False, blank=False, choices=LABELS, default='UNDEFINED')
 
     def _str__(self):
         return '%s  ' % (self.sender)
+    def delstar_status(self):
+        d = MsgStatus.objects.filter(message=self).first()
+        if d:
+            return d.delstar
+        else:
+            return False
 
-    # def chat_room_messages(self, sender, receiver):
-    def last_15_messages(self):
-        return Message.objects.order_by('-created_at').all()[:15]
+class MsgStatus(models.Model):
+    m_user = models.ForeignKey(User, related_name="m_user", on_delete=models.CASCADE, null=False, blank=False)
+    message = models.ForeignKey(Message, on_delete=models.CASCADE, null=False, blank=False)
+    DELETE_STAR = {
+        ('DELETE', 'Delete'),
+        ('STARRED', 'Starred'),
+        ('NORMAL', 'Normal'),
+    }
+    delstar = models.CharField(max_length=200, null=False, blank=False, choices=DELETE_STAR, default='NORMAL')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def _str__(self):
+        return '%s  ' % (self.m_user)
 
 class Newsletter(models.Model):
     email = models.CharField(max_length=200, null=False, blank=False)

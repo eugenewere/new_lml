@@ -172,6 +172,16 @@ def get_messege_reciever_image(request, user_id):
     else:
         return 'Noimage.jpg'
 
+@register.filter(name='get_messege_sender_image')
+def get_messege_sender_image(request, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+    candidate = Company.objects.filter(user_ptr_id=user.id).first()
+    if candidate:
+        return candidate.logo.url
+    else:
+        return 'Noimage.jpg'
+
+
 @register.filter(name='get_filename')
 def get_filename(name):
     return os.path.basename(name)
@@ -190,9 +200,14 @@ def sizify(value):
         ext = 'gb'
     return '%s %s' % (str(round(value, 2)), ext.capitalize())
 
-
-register.filter('sizify', sizify)
-
-
+@register.filter(name='get_user_msgstatus')
+def get_user_msgstatus(request, msg_id):
+    user = User.objects.filter(id=request.user.id).first()
+    message = Message.objects.filter(id=msg_id).first()
+    d = MsgStatus.objects.filter(message=message, m_user=user, delstar='STARRED').first()
+    if d:
+        return True
+    else:
+        return False
 
 

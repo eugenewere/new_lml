@@ -147,7 +147,7 @@
                                                     <div class="content">
                                                         <ul class="menu-col">
 
-                                                            <li><a target="_blank" href="{% url 'LML:employee_dash_message' request.user.username %}">Messages (10)</a></li>
+                                                            <li><a target="_blank" href="{% url 'Chat:employee_dash_message'  %}">Messages (10)</a></li>
                                                             <li><a target="_blank" href="{% url 'LML:customer_resume_pdf' request.user.id %}">Your Resume</a></li>
                                                             <li><a href="{% url 'LML:employee_dash' %}">Dashboard</a></li>
                                                         </ul>
@@ -252,7 +252,9 @@
         <footer class="footer">
             <div class="row lg-menu">
                 <div class="container" >
-                    <div class="col-md-4 col-sm-4"><img style="width: 98px;" src="{% static 'assets/img/LML5.png' %}" class="img-responsive" alt="" /> </div>
+                    <div class="col-md-4 col-sm-4">
+                        <img style="width: 98px;" src="{% static 'assets/img/LML5.png' %}" class="img-responsive" alt="" />
+                    </div>
                     <div class="col-md-8 co-sm-8 pull-right">
                         <ul>
                             <li><a href="{% url 'LML:home' %}" title="">Home</a></li>

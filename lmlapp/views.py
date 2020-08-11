@@ -943,28 +943,7 @@ def employer_dash(request):
 
 
 
-def employee_dash_message(request, room_name):
-    user = request.user.id
-    customer = Customer.objects.filter(user_ptr_id=user).first()
-    username_of_user = request.user.first_name + "" + request.user.last_name + " messsages"
 
-    companies_list = []
-    userr = User.objects.filter(id=user).first()
-    companies = Message.objects.filter(reciever=userr)
-    for company in companies:
-        cmpn = Company.objects.filter(user_ptr_id=company.sender.id).first()
-        companies_list.append(cmpn)
-    msg_companies = list(set(companies_list))
-    context = {
-        'title': username_of_user,
-        # 'company': company,
-        # 'social': social,
-        'customer': customer,
-        'msg_comapanies': msg_companies,
-        'room_name_json': mark_safe(json.dumps(room_name))
-
-    }
-    return render(request, 'normal/dashboard/employee-message-chat.html', context)
 
 def employee_dash(request):
     user = request.user.id

@@ -20,215 +20,82 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/chat/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/consumer.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/migrations/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/routing.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/bootstrap-extended.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/colors.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/components.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/core/colors/palette-gradient.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/core/menu/menu-types/horizontal-menu.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/css/pages/app-email.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/large/avatar-l-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/medium/avatar-m-9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-11.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-13.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-14.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-15.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-16.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-17.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-18.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-19.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-20.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-21.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-22.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-23.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-24.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-25.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/images/portrait/small/avatar-s-9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/core/app-menu.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/core/app.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/core/libraries/jquery_ui/jquery-ui.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/customizer.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/footer.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/ui/jquery.sticky.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/ui/prism.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/templates/employer/app-email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/templates/employer/message.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db3.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/celery.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/static/assets/libs/css/userprofile.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/companydetails.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/registrationunpaidpayment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/allshortlistinghistory.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/basicemployees.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/employeedetails.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/ultimateemployees.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/unpaidregemployees.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/holder.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/whatweoffer/whatweoffer.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlproject/asgi.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/customerImages/Untitled-nj_w3mETrE.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-nj.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-nj_2mdRhMg.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/lmlproject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/lmlproject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/static/email/jquery-pagination-lgh.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/static-pagination.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/templates/employee/employee-email.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db4.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db5.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-2_uFQaFcx.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-nj_ldT3WKC.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-nj_nnrlmsH.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-njn.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-njn_6QO1fGv.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-njn_FOxpL5U.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/static/email/css/pages/app-email.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/css/pages/app-email.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/static/email/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/templates/employer/app-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employer/app-email.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/css/flag-icon.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/css/flag-icon.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/css/icons.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/css/icons.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Simple-Line-Iconsb26c.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Simple-Line-Iconsb26c.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Simple-Line-Iconsb26c.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Simple-Line-Iconsb26c.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Simple-Line-Iconsb26c.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Simple-Line-Iconsb26c.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Simple-Line-Iconsb26c.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Simple-Line-Iconsb26c.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Simple-Line-Iconsb26c.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Simple-Line-Iconsb26c.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Socicon397f.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Socicon397f.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Socicon397f.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Socicon397f.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Socicon397f.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Socicon397f.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Socicon397f.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Socicon397f.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/Socicon397f.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/Socicon397f.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/dripicons-v2.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/dripicons-v2.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/dripicons-v2.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/dripicons-v2.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/dripicons-v2.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/dripicons-v2.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/dripicons-v2.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/dripicons-v2.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/dripicons-v2d41d.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/dripicons-v2d41d.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/feathere8ab.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/feathere8ab.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/feathere8ab.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/feathere8ab.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/feathere8ab.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/feathere8ab.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/feathere8ab.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/feathere8ab.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/fontawesome-webfont3e6e.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/fontawesome-webfont3e6e.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/fontawesome-webfont3e6e.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/fontawesome-webfont3e6e.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/fontawesome-webfont3e6e.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/fontawesome-webfont3e6e.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/fontawesome-webfont3e6e.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/fontawesome-webfont3e6e.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/fontawesome-webfont3e6e.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/fontawesome-webfont3e6e.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/fontawesome-webfontd41d.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/fontawesome-webfontd41d.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons2117.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons2117.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons2117.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons2117.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons2117.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons2117.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons2117.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons2117.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons2117.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons2117.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons6c3c.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons6c3c.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons6c3c.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons6c3c.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons6c3c.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons6c3c.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons6c3c.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons6c3c.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/ionicons6c3c.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/ionicons6c3c.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/line-awesome0176.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/line-awesome0176.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/line-awesomeeb4f.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/line-awesomeeb4f.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/line-awesomeeb4f.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/line-awesomeeb4f.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/line-awesomeeb4f.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/line-awesomeeb4f.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/line-awesomeeb4f.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/line-awesomeeb4f.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/line-awesomeeb4f.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/line-awesomeeb4f.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/materialdesignicons-webfont5ba3.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/materialdesignicons-webfont5ba3.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/materialdesignicons-webfont5ba3.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/materialdesignicons-webfont5ba3.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/materialdesignicons-webfont5ba3.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/materialdesignicons-webfont5ba3.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/materialdesignicons-webfont5ba3.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/materialdesignicons-webfont5ba3.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/materialdesignicons-webfont5ba3.woff2" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/materialdesignicons-webfont5ba3.woff2" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/materialdesignicons-webfontd41d.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/materialdesignicons-webfontd41d.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/themify9f24.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/themify9f24.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/themify9f24.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/themify9f24.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/themify9f24.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/themify9f24.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/themify9f24.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/themify9f24.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/themifyd41d.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/themifyd41d.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/typicons.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/typicons.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/typicons.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/typicons.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/typicons.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/typicons.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/typicons.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/typicons.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/fonts/typiconsd41d.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/fonts/typiconsd41d.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/core.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/core.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/detect.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/detect.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/jquery.slimscroll.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/jquery.slimscroll.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/modernizr.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/modernizr.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/popper.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/popper.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/js/vertical-menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/vertical-menu.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/ajax-loader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/ajax-loader.gif" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/fonts/slick.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/fonts/slick.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/fonts/slick.svg" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/fonts/slick.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/fonts/slick.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/fonts/slick.ttf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/fonts/slick.woff" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/fonts/slick.woff" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/fonts/slickd41d.eot" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/fonts/slickd41d.eot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/slick-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/slick-theme.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/slick.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/slick.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/chat/js/slick/slick.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/slick/slick.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/reconnecting-websockets.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/chat/js/js/reconnecting-websockets.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/all-candidates.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/all-candidates.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/accordion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/advance-search-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/advance-search.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/blog-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/blog.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-company.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-jobs-grid.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-jobs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-resume.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/candidate-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/candidate-profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/company-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/contact.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/create-company.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/create-job.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/create-resume.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/employer-profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/faq.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/freelancing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/job-apply-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/job-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/lost-password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-candidate.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-company.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-employee.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-resume-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-resume.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/new-job-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/new-login-signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/payment-methode.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/popular-jobs.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/premium-candidate-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/premium-candidate.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/pricing.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/search-job.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/search-new.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/signin-signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/signup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/tab.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/top-candidate-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/top-candidate-detail.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/top-candidate.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-message-chat.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-message-chat.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employerchatpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employer/employerchatpage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/static/assets/libs/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/static/assets/libs/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/admin/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/admin/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/categories/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/categories/categories.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/basiccompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/basiccompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/company.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/company.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/companypricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/companypricing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/deactivatedcompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/deactivatedcompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/platinumcompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/platinumcompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/premiumcompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/premiumcompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/probasiccompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/probasiccompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/proultimatecompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/proultimatecompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/registrationpayment.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/registrationpayment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/ultimatecompany.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/ultimatecompany.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/undefinedcompanies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/undefinedcompanies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/employee/allemployees.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/allemployees.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/employee/deactivatedemployees.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/deactivatedemployees.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/employee/premiumemployees.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/premiumemployees.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/employee/registeredemployees.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/registeredemployees.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/employee/shortlistedemployies.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/employee/shortlistedemployies.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/routing.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/routing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,10 +108,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
         <option value="CSS File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -288,10 +155,10 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="J:\LMLL\lmlproject\chat\static\email" />
+      <recent name="J:\LMLL\lmlproject\chat\static\email\js\scripts\pages" />
       <recent name="J:\LMLL\lmlproject\chat\templates\employer" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\company" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\whatweoffer" />
-      <recent name="J:\LMLL\lmlproject\lmlapp\static\assets\img\gif" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="J:\LMLL\lmlproject\chat\templates\employer" />
@@ -363,7 +230,7 @@
       <workItem from="1596010982213" duration="198140000" />
       <workItem from="1596569156766" duration="39067000" />
       <workItem from="1596650445979" duration="5454000" />
-      <workItem from="1596656119590" duration="58534000" />
+      <workItem from="1596656119590" duration="214710000" />
     </task>
     <servers />
   </component>
@@ -390,6 +257,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="309" y="77" key="#Inspections/0.30.1366.738@0.30.1366.738" timestamp="1596645571943" />
+    <state x="498" y="36" key="#app-email.html" timestamp="1597012122754">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="498" y="36" key="#app-email.html/0.30.1366.738@0.30.1366.738" timestamp="1597012122754" />
     <state x="413" y="148" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595797960137">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
@@ -402,14 +273,14 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="186" y="60" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1596654416736" />
-    <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1596719845375">
+    <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1596836121770">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1596719845375" />
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1596631585571">
+    <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1596836121770" />
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1597181535258">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1596631585571" />
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1597181535258" />
     <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1595974804345">
       <screen x="0" y="30" width="1366" height="738" />
     </state>

@@ -71,7 +71,6 @@ urlpatterns = [
 
 
     path('candidatedash/',views.employee_dash, name='employee_dash'),
-    path('candidate_dash_message/<str:room_name>/',views.employee_dash_message, name='employee_dash_message'),
 
     # employeestatus
     path('allpremiumcandidates/',views.all_premium_employees, name = 'all_premium_employees'),
