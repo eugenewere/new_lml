@@ -60,11 +60,13 @@
         <nav class="navbar navbar-default navbar-fixed navbar-transparent white bootsnav" >
             <div  class="container">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i class="fa fa-bars"></i></button>
-                <div class="navbar-header">
+                <div class="navbar-header" style="position: relative;">
                     <a class="navbar-brand" href="{% url 'LML:home' %}">
                         <img style="width: 114px;height: 47px;" src="{% static 'assets/img/LML5.png' %}" class="logo logo-display" alt="">
                         <img style="width: 90px;height: 38px;" src="{% static 'assets/img/LML4.png' %}" class="logo logo-scrolled img-responsive" alt="" >
+
                     </a>
+                    <div data-toggle="tooltip" data-placement="right" title="New Message" style="right: -12px; top: 4px; display: none" class="blob"></div>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp" >
@@ -147,13 +149,16 @@
                                                     <div class="content">
                                                         <ul class="menu-col">
 
-                                                            <li><a target="_blank" href="{% url 'Chat:employee_dash_message'  %}">Messages (10)</a></li>
+                                                            <li style="position:relative;">
+                                                                <a class="message-txt" target="_blank" href="{% url 'Chat:employee_dash_message'  %}">Messages </a>
+                                                                <div data-toggle="tooltip" data-placement="bottom" title="New Message" style="left: -21px; top: -2px; display: none;" class="blob"></div>
+                                                            </li>
                                                             <li><a target="_blank" href="{% url 'LML:customer_resume_pdf' request.user.id %}">Your Resume</a></li>
                                                             <li><a href="{% url 'LML:employee_dash' %}">Dashboard</a></li>
                                                         </ul>
                                                     </div>
                                                 </div><!-- end col-3 -->
-                                                 <div class="col-menu col-md-3">
+                                                <div class="col-menu col-md-3">
                                                     <h6 class="title"> Terms and Conditions </h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
@@ -166,6 +171,7 @@
                                                     <h6 class="title">Actions</h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
+
                                                             <li><a href="{% url 'LML:employeeprofile' %}">Edit Account</a></li>
                                                             <li><a href="{% url 'LML:employeeprofile' %}">View profile</a></li>
                                                             <li><a href="{% url 'LML:log_out_user' %}">Logout</a></li>
@@ -190,6 +196,10 @@
                                                 <h6 class="title"> Account </h6>
                                                 <div class="content">
                                                     <ul class="menu-col">
+                                                        <li>
+                                                            <a target="_blank" class="message-txt" href="{% url 'Chat:employer_dash_message' %}">Message</a>
+                                                            <div data-toggle="tooltip" data-placement="bottom" title="New Message" style="left: -21px; top: -2px; display: none;" class="blob"></div>
+                                                        </li>
                                                         <li><a href="{% url 'LML:employerdetails' %}">Account</a></li>
                                                         <li><a href="{% url 'LML:employersprofile' %}">View Profile</a></li>
                                                         <li><a href="{% url 'LML:employersprofile' %}">Edit Profile</a></li>
@@ -452,60 +462,12 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-        <script>
-            function openRightMenu() {
-                document.getElementById("rightMenu").style.display = "block";
-            }
 
-            function closeRightMenu() {
-                document.getElementById("rightMenu").style.display = "none";
-            }
-
-            $(window).load(function() {
-                // Animate loader off screen
-                setTimeout(function () {
-                     $(".Loader-bg").fadeOut('slow');
-                }, 1000);
-
-            });
-
-            $('[data-toggle="tooltip"]').tooltip()
-            $(document).ready( function () {
-                $('#myTable').DataTable();
-            } );
-        </script>
 
         {% block script %}
 
         {% endblock script %}
-        <script>
-            var pswd = document.getElementsByClassName('password')[0];
-            var txt = document.getElementsByClassName('txt')[0];
-            var psd = document.getElementsByClassName('psd')[0];
-            function changeText() {
-                pswd.setAttribute('type','text');
-                psd.style.display="block";
-                txt.style.display = "none";
-                txt.style.transition = 0.4+"s";
-            }
-            function changePassword() {
-                pswd.setAttribute('type','password');
-                psd.style.display="none";
-                txt.style.display = "block";
-                txt.style.transition = 0.4+"s";
-            }
-            $('[data-reset-password]').click(function () {
-                $('#logincontainer').hide('fast', function () {
-                    $('#resetemail').show('fast');
-                });
-            });
-            $('[data-login-email]').click(function () {
-                $('#resetemail').hide('fast', function () {
-                    $('#logincontainer').show('fast');
-                });
-            });
 
-        </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
         {% load sweetify %}

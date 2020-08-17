@@ -427,9 +427,10 @@ def employeeprofile(request):
     experiences = Experience.objects.filter(customer=customer)
     skills = Skills.objects.filter(customer=customer)
     socials = Social_account.objects.filter(customer=customer)
+    userr = User.objects.filter(id=user).first()
 
     emShortlist = CompanyShortlistCustomers.objects.filter(customer=customer).count()
-    unreadMessages = Message.objects.filter(reciever_id=user, status='UNREAD').count()
+    unreadMessages = Message.objects.filter(reciever=userr, readstatus='UNREAD').count()
     module_dir = os.path.dirname(__file__)  # get current directory
     file_path1 = os.path.join(module_dir, 'Bachelorcourses')
     file_path2 = os.path.join(module_dir, 'course_certificate')

@@ -12,32 +12,32 @@
 .holder a:not(.jp-current):hover {
 	    color: #fff;
     font-weight: bold;
-    background-color: #94cb85 !important;
+    background-color: #66e868 !important;
     padding: 4px;
     border-radius: 4px;
 }
 
 .holder a:hover {
-	background-color: #94cb85;
+	background-color:#66e868;
 	color: #fff;
     padding: 4px;
     border-radius: 4px;
 }
 
-.holder a.jp-previous { margin-right: 15px;  color: #94cb85;}
-.holder a.jp-next { margin-left: 15px; color: #94cb85;}
+.holder a.jp-previous { margin-right: 15px;  color: #66e868;}
+.holder a.jp-next { margin-left: 15px; color: #66e868;}
 
 .holder a.jp-current {
 	    color: #fff;
     font-weight: bold;
-    background-color: #94cb85 !important;
+    background-color: #66e868 !important;
     padding: 4px;
     border-radius: 4px;
 }
 .holder a.jp-current:hover {
 	    color: #fff;
     font-weight: bold;
-    background-color: #94cb85 !important;
+    background-color: #66e868 !important;
     padding: 4px;
     border-radius: 4px;
 }
@@ -55,7 +55,7 @@
 .holder span { margin: 0 5px; }
 
 .legend-wrapper{
-        background: #94cb85;
+        background: #66e868;
     color: #fff;
     padding: 6px;
     border-radius: 17px;

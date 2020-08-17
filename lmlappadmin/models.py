@@ -547,6 +547,14 @@ class Message(models.Model):
 
     def _str__(self):
         return '%s  ' % (self.sender)
+    def get_replys(self):
+        mm = Message.objects.filter(id=self.id).first()
+        messages  = Message.objects.filter(reply_id=mm.id).all()
+        if messages:
+           return messages
+
+
+    @property
     def delstar_status(self):
         d = MsgStatus.objects.filter(message=self).first()
         if d:

@@ -294,5 +294,72 @@ function changeToPassowrd(e) {
 	});
 
 }
+function openRightMenu() {
+                document.getElementById("rightMenu").style.display = "block";
+            }
+function closeRightMenu() {
+	document.getElementById("rightMenu").style.display = "none";
+}
+$(window).load(function() {
+	// Animate loader off screen
+	setTimeout(function () {
+		 $(".Loader-bg").fadeOut('slow');
+	}, 1000);
 
-
+});
+$('[data-toggle="tooltip"]').tooltip()
+$(document).ready( function () {
+                $('#myTable').DataTable();
+            } );
+var pswd = document.getElementsByClassName('password')[0];
+var txt = document.getElementsByClassName('txt')[0];
+var psd = document.getElementsByClassName('psd')[0];
+function changeText() {
+	pswd.setAttribute('type','text');
+	psd.style.display="block";
+	txt.style.display = "none";
+	txt.style.transition = 0.4+"s";
+}
+function changePassword() {
+	pswd.setAttribute('type','password');
+	psd.style.display="none";
+	txt.style.display = "block";
+	txt.style.transition = 0.4+"s";
+}
+$('[data-reset-password]').click(function () {
+	$('#logincontainer').hide('fast', function () {
+		$('#resetemail').show('fast');
+	});
+});
+$('[data-login-email]').click(function () {
+	$('#resetemail').hide('fast', function () {
+		$('#logincontainer').show('fast');
+	});
+});
+var msgst = setInterval(getMessageStatus, 5000);
+function getMessageStatus() {
+	var location =  window.location.origin + "/ws/message_count/";
+	$.ajax({
+        url: location,
+        type: 'GET',
+        dataType: 'json', // added data type
+        success: function(res) {setNotification(res)}
+    });
+}
+function setNotification(data) {
+	if(data.test === 'success'){
+		if(data.msg_count === 0){
+			$('.blob').fadeOut('slow');
+			$('.message-txt').text('Message')
+		}else {
+			$('.blob').fadeIn('slow');
+			$('.message-txt').text('Message ('+data.msg_count+')')
+		}
+	}
+	else {
+		// console.log('claerd')
+		$('.blob').fadeOut('slow');
+		$('.message-txt').text('Message');
+		clearInterval(msgst);
+	}
+}

@@ -20,82 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/chat/static/email/jquery-pagination-lgh.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/static-pagination.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/templates/employee/employee-email.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db4.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db5.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-2_uFQaFcx.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-nj_ldT3WKC.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-nj_nnrlmsH.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-njn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-njn_6QO1fGv.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/Untitled-njn_FOxpL5U.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/static/email/popups.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/ajaxform.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/frmsbmt.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chat/templates/hh.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/TYPES_OF_LEARNING.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/entrepreneurs.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/documents/entrepreneurs_v3BtJdH.docx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/static/email/css/pages/app-email.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/css/pages/app-email.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/static/email/jquery-pagination-lgh.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/jquery-pagination-lgh.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/static/email/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/templates/employee/employee-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employee/employee-email.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/templates/employer/app-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employer/app-email.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/404.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/accordion.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/advance-search-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/advance-search.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/blog-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/blog.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-company.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-jobs-grid.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-jobs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/browse-resume.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/candidate-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/candidate-profile.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/company-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/create-company.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/create-job.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/create-resume.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/employer-profile.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/faq.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/freelancing.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-4.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index-5.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/job-apply-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/job-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/login.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/lost-password.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-candidate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-company.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-employee.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-resume-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/manage-resume.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/new-job-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/new-login-signup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/payment-methode.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/popular-jobs.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/premium-candidate-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/premium-candidate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/pricing.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/search-job.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/search-new.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/signin-signup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/signup.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/tab.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/top-candidate-2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/top-candidate-detail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/job-stock/top-candidate.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/concept-master/assets/libs/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/concept-master/assets/libs/css/style.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,9 +53,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
-        <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="CSS File" />
       </list>
     </option>
   </component>
@@ -139,7 +83,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/chat/static/email" />
+    <property name="last_opened_file_path" value="C:/myprojectx/douglas/visitorsrecording" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -230,7 +174,9 @@
       <workItem from="1596010982213" duration="198140000" />
       <workItem from="1596569156766" duration="39067000" />
       <workItem from="1596650445979" duration="5454000" />
-      <workItem from="1596656119590" duration="214710000" />
+      <workItem from="1596656119590" duration="261347000" />
+      <workItem from="1597411844125" duration="32956000" />
+      <workItem from="1597515465120" duration="16132000" />
     </task>
     <servers />
   </component>
@@ -265,10 +211,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="413" y="148" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.30.1366.738@0.30.1366.738" timestamp="1595797960137" />
-    <state x="462" y="154" key="FileChooserDialogImpl" timestamp="1596654373319">
+    <state x="462" y="154" key="FileChooserDialogImpl" timestamp="1597570755487">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="462" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1596654373319" />
+    <state x="462" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1597570755487" />
     <state x="186" y="60" key="SettingsEditor" timestamp="1596654416736">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
@@ -277,13 +223,13 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1596836121770" />
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1597181535258">
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1597509290245">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1597181535258" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1595974804345">
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1597509290245" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1597524450623">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.30.1366.738@0.30.1366.738" timestamp="1595974804345" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.30.1366.738@0.30.1366.738" timestamp="1597524450623" />
   </component>
 </project>

@@ -13,5 +13,8 @@ urlpatterns = [
     path('mark_as_read_or_unread/', views.mark_as_read_or_unread, name='mark_as_read_or_unread'),
 
     path('candidate_dash_message/', views.employee_dash_message, name='employee_dash_message'),
+    path('message_reply/', views.message_reply, name='message_reply'),
+    path('message_read/', views.message_read, name='message_read'),
+    path('message_count/', views.message_count, name='message_count'),
 
 ]

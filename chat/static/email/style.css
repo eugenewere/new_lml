@@ -160,3 +160,7 @@ html body .pace .pace-progress {
 .select2-container {
     width: 100% !important;
 }
+.ck.ck-editor__main>.ck-editor__editable {
+    /*border-color: var(--ck-color-base-border);*/
+     height: 200px;
+}

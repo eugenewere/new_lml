@@ -28,6 +28,23 @@ def logged_in_customer(user):
         return customer
     else:
         return False
+@register.filter(name='logged_in_company2')
+def logged_in_company2(user):
+    user_id = user.id
+    company = Company.objects.filter(user_ptr_id=user_id).first()
+    if company is not None:
+        return True
+    else:
+        return False
+
+@register.filter(name='logged_in_customer2')
+def logged_in_customer2(user):
+    user_id = user.id
+    customer = Customer.objects.filter(user_ptr_id=user_id).first()
+    if customer:
+        return True
+    else:
+        return False
 
 @register.filter(name='make_safe')
 def make_safe(source):
@@ -163,6 +180,146 @@ def average_ratings(customer_id):
         else:
             return 0
 
+
+
+
+@register.filter(name='get_reciever_image')
+def get_reciever_image(message_id, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+
+    # print(user.id)
+    if logged_in_company2(user):
+       message = Message.objects.filter(id=message_id, sender=user).first()
+       candidate = Customer.objects.filter(user_ptr_id=message.reciever.id).first()
+       # print('candidate '+ str(candidate))
+       if candidate:
+          return candidate.profile_image.url
+       else:
+           return 'Noimage.jpg'
+    elif logged_in_customer2(user):
+        message = Message.objects.filter(id=message_id, sender=user).first()
+        company = Company.objects.filter(user_ptr_id=message.reciever.id).first()
+        # print('company '+ str(company))
+        if company:
+            return company.logo.url
+        else:
+            return 'Noimage.jpg'
+
+@register.filter(name='get_sender_image')
+def get_sender_image(message_id, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+
+    # print(user.id)
+    if logged_in_company2(user):
+       message = Message.objects.filter(id=message_id, reciever=user).first()
+       candidate = Customer.objects.filter(user_ptr_id=message.sender.id).first()
+       # print('candidate '+ str(candidate))
+       if candidate:
+          return candidate.profile_image.url
+       else:
+           return 'Noimage.jpg'
+    elif logged_in_customer2(user):
+        message = Message.objects.filter(id=message_id, reciever=user).first()
+        company = Company.objects.filter(user_ptr_id=message.sender.id).first()
+        # print('company '+ str(company))
+        if company:
+            return company.logo.url
+        else:
+            return 'Noimage.jpg'
+
+@register.filter(name='get_reciever_name')
+def get_reciever_name(message_id, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+
+    # print(user.id)
+    if logged_in_company2(user):
+       message = Message.objects.filter(id=message_id, sender=user).first()
+       candidate = Customer.objects.filter(user_ptr_id=message.reciever.id).first()
+       # print('candidate '+ str(candidate))
+       if candidate:
+          return str(candidate.first_name.capitalize())+' '+str(candidate.last_name.capitalize())
+       else:
+           return 'Noimage.jpg'
+    elif logged_in_customer2(user):
+        message = Message.objects.filter(id=message_id, sender=user).first()
+        company = Company.objects.filter(user_ptr_id=message.reciever.id).first()
+        # print('company '+ str(company))
+        if company:
+            return company.company_name
+        else:
+            return 'Noimage.jpg'
+
+@register.filter(name='get_sender_name')
+def get_sender_name(message_id, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+
+    # print(user.id)
+    if logged_in_company2(user):
+       message = Message.objects.filter(id=message_id, reciever=user).first()
+       candidate = Customer.objects.filter(user_ptr_id=message.sender.id).first()
+       # print('candidate '+ str(candidate))
+       if candidate:
+           return str(candidate.first_name.capitalize()) + ' ' + str(candidate.last_name.capitalize())
+       else:
+           return 'Noimage.jpg'
+    elif logged_in_customer2(user):
+        message = Message.objects.filter(id=message_id, reciever=user).first()
+        company = Company.objects.filter(user_ptr_id=message.sender.id).first()
+        # print('company '+ str(company))
+        if company:
+            return company.company_name
+        else:
+            return 'Noimage.jpg'
+
+@register.filter(name='get_reciever_email')
+def get_reciever_email(message_id, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+
+    # print(user.id)
+    if logged_in_company2(user):
+       message = Message.objects.filter(id=message_id, sender=user).first()
+       candidate = Customer.objects.filter(user_ptr_id=message.reciever.id).first()
+       # print('candidate '+ str(candidate))
+       if candidate:
+          return candidate.email
+       else:
+           return 'Noimage.jpg'
+    elif logged_in_customer2(user):
+        message = Message.objects.filter(id=message_id, sender=user).first()
+        company = Company.objects.filter(user_ptr_id=message.reciever.id).first()
+        # print('company '+ str(company))
+        if company:
+            return company.company_email
+        else:
+            return 'Noimage.jpg'
+
+@register.filter(name='get_sender_email')
+def get_sender_email(message_id, user_id):
+    user = User.objects.filter(id=int(user_id)).first()
+
+    # print(user.id)
+    if logged_in_company2(user):
+       message = Message.objects.filter(id=message_id, reciever=user).first()
+       candidate = Customer.objects.filter(user_ptr_id=message.sender.id).first()
+       # print('candidate '+ str(candidate))
+       if candidate:
+           return candidate.email
+       else:
+           return 'Noimage.jpg'
+    elif logged_in_customer2(user):
+        message = Message.objects.filter(id=message_id, reciever=user).first()
+        company = Company.objects.filter(user_ptr_id=message.sender.id).first()
+        # print('company '+ str(company))
+        if company:
+            return company.company_email
+        else:
+            return 'Noimage.jpg'
+
+
+
+
+
+
 @register.filter(name='get_messege_reciever_image')
 def get_messege_reciever_image(request, user_id):
     user = User.objects.filter(id=int(user_id)).first()
@@ -206,6 +363,16 @@ def get_user_msgstatus(request, msg_id):
     message = Message.objects.filter(id=msg_id).first()
     d = MsgStatus.objects.filter(message=message, m_user=user, delstar='STARRED').first()
     if d:
+        return True
+    else:
+        return False
+
+@register.filter(name='get_if_its_reply')
+def get_if_its_reply(request, msg_id):
+    user = User.objects.filter(id=request.user.id).first()
+    message = Message.objects.filter(id=msg_id, reciever=user, reply_id__isnull=False).first()
+    # d = MsgStatus.objects.filter(message=message, m_user=user, delstar='STARRED').first()
+    if message:
         return True
     else:
         return False
