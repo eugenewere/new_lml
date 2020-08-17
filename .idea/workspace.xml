@@ -20,26 +20,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/chat/static/email/popups.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/ajaxform.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/frmsbmt.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/chat/templates/hh.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/TYPES_OF_LEARNING.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/entrepreneurs.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/documents/entrepreneurs_v3BtJdH.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/cmpscriptbootstrap.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/compscriptjquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/empscripjquery.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/empscriptbootstrap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/static/email/jquery-pagination-lgh.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/jquery-pagination-lgh.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/js/scripts/pages/app-email.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/static/email/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/vendors/js/vendors.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/templates/employee/employee-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employee/employee-email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/templates/employer/app-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employer/app-email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/concept-master/assets/libs/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/concept-master/assets/libs/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/dumb.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/dumb.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,9 +42,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
-        <option value="JavaScript File" />
         <option value="HTML File" />
         <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -97,19 +86,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="J:\LMLL\lmlproject\lmlapp\static\assets" />
+      <recent name="J:\LMLL\lmlproject\chat\templates\employer" />
+      <recent name="J:\LMLL\lmlproject\chat\static\chat\js\js" />
+      <recent name="J:\LMLL\lmlproject\chat\static" />
+      <recent name="C:\projects\LML\LMLprojo\lmlproject\lmlapp" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="J:\LMLL\lmlproject\chat\static\email" />
       <recent name="J:\LMLL\lmlproject\chat\static\email\js\scripts\pages" />
       <recent name="J:\LMLL\lmlproject\chat\templates\employer" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\company" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\whatweoffer" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="J:\LMLL\lmlproject\chat\templates\employer" />
-      <recent name="J:\LMLL\lmlproject\chat\static\chat\js\js" />
-      <recent name="J:\LMLL\lmlproject\chat\static" />
-      <recent name="C:\projects\LML\LMLprojo\lmlproject\lmlapp" />
-      <recent name="C:\projects\LML\LMLprojo\lmlproject\lmlapp\templates\normal\textapis" />
     </key>
   </component>
   <component name="RunManager">
@@ -177,6 +166,7 @@
       <workItem from="1596656119590" duration="261347000" />
       <workItem from="1597411844125" duration="32956000" />
       <workItem from="1597515465120" duration="16132000" />
+      <workItem from="1597683150575" duration="7180000" />
     </task>
     <servers />
   </component>
