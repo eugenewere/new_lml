@@ -48,6 +48,12 @@
         .ck-editor__editable {
             min-height: 263px !important;
         }
+
+        .grid-slide .grid-slide-box .paid-candidate-box{
+            min-height: 410px !important;
+            height: 410px !important;
+            overflow: hidden;
+        }
     </style>
 </head>
 
@@ -407,11 +413,11 @@
                                       {% csrf_token %}
                                     <div class="form" >
                                       <label style="color: #C2C2C2; margin-top: 20px;margin-bottom: 5px" for="id_usernam" class="animation a3">Email or Username</label>
-                                      <input id="id_usernam" name="username" type="text" class="form-field animation a3" placeholder="Email or Username">
+                                      <input id="id_usernam" required name="username" type="text" class="form-field animation a3" placeholder="Email or Username">
                                        <div style="display: flex; flex-direction: column;">
                                            <label style="color: #C2C2C2; margin-top: 20px;margin-bottom: 5px" for="pswd" class="animation a4">Password</label>
                                             <div style="position: relative;">
-                                                <input  style="position: relative; width: 100%;" id="pswd"  name="password" type="password" class="password form-field animation a4" placeholder="Password">
+                                                <input required  style="position: relative; width: 100%;" id="pswd"  name="password" type="password" class="password form-field animation a4" placeholder="Password">
                                                 <div style="position: absolute;top: 13px;right: 11px;" class="password_checker">
                                                     <i onclick="changeText();" class="fas fa-eye txt color animation "></i>
                                                     <i style="display:none;" onclick="changePassword();" class="fas fa-eye-slash psd color animation "></i>
@@ -455,18 +461,10 @@
 {#        <script type="text/javascript" src="{% static 'assets/animision/animsition.min.js' %}"></script>#}
         <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-
         <script src="{% static 'assets/js/custom.js' %}"></script>
-{#        <script src="{% static 'assets/js/jQuery.style.switcher.js' %}"></script>#}
-
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-
-
-        {% block script %}
-
-        {% endblock script %}
-
+        {% block script %}{% endblock script %}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
         {% load sweetify %}

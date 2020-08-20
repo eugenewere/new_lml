@@ -11,6 +11,7 @@
             }
         }
 
+
     </style>
 {% endblock %}
 {% block content %}
@@ -149,7 +150,9 @@
                                                 <li style="height: 30px;" class="more-skill bg-primary">+{{customer.skillcount}}</li>
                                             {% endif %}
                                         </ul>
-                                        <p>{{customer.biography|truncatechars:20}}.</p>
+{#                                    {% autoescape on %}#}
+                                        <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
+{#                                    {% endautoescape %}#}
                                     </div>
                                 </div>
                                 {% if request.user|logged_in_company %}
@@ -307,7 +310,7 @@
                                                         <li style="height: 30px;" class="more-skill bg-primary">+{{customer.skillcount}}</li>
                                                     {% endif %}
                                                 </ul>
-                                                <p>{{customer.biography|truncatechars:20}}.</p>
+                                                 <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
                                             </div>
                                         </div>
                                         {% if request.user|logged_in_company %}
@@ -352,7 +355,7 @@
                                                         <li style="height: 30px;" class="more-skill bg-primary">+{{customer.skillcount}}</li>
                                                     {% endif %}
                                                 </ul>
-                                                <p>{{customer.biography|truncatechars:20}}.</p>
+                                                 <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
                                             </div>
                                         </div>
                                         {% if request.user|logged_in_company %}
@@ -402,7 +405,7 @@
                                                         <li style="height: 30px;" class="more-skill bg-primary">+{{customer.skillcount}}</li>
                                                     {% endif %}
                                                 </ul>
-                                                <p>{{customer.biography|truncatechars:20}}.</p>
+                                                 <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
                                             </div>
                                         </div>
                                         {% if request.user|logged_in_company %}

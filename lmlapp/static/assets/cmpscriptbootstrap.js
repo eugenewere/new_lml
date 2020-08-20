@@ -1,4 +1,3 @@
-
 ClassicEditor
     .create( document.querySelector( '#brief_details' ), {
           removePlugins: [  'Image','Table','Media','Image' ],

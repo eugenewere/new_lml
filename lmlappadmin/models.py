@@ -1,3 +1,5 @@
+from html import escape
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -11,6 +13,7 @@ from django.core.files import File
 
 # # Create your models here.
 from django.db.models import Count, Q
+from django.utils.safestring import mark_safe
 
 
 def compress(image):
@@ -77,6 +80,7 @@ class CustomerPayments(models.Model):
     CUSTOMER_PAYMENT_STATUS = {
         ('UNPAYED', 'Unpayed'),
         ('PAYED', 'Payed'),
+        ('PARTIAL', 'Partial'),
     }
     payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=False,
                                       blank=False)
@@ -85,6 +89,31 @@ class CustomerPayments(models.Model):
 
     def __str__(self):
         return '%s' % (self.amount)
+
+class CandidateRegPrice(models.Model):
+    price = models.IntegerField( null=False, blank=False)
+    CANDREGPRICE = {
+        ('ACTIVE', 'Active'),
+        ('INACTIVE', 'InActive'),
+    }
+    status = models.CharField(choices=CANDREGPRICE, default='INACTIVE', max_length=200, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '%s' % (self.price)
+
+
+class CompanyRegPrice(models.Model):
+    price = models.IntegerField( null=False, blank=False)
+    COMPREGPRICE = {
+        ('ACTIVE', 'Active'),
+        ('INACTIVE', 'InActive'),
+    }
+    status = models.CharField(choices=COMPREGPRICE, default='INACTIVE', max_length=200, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '%s' % (self.price)
 
 
 class Customer(get_user_model()):
@@ -109,11 +138,16 @@ class Customer(get_user_model()):
     biography = models.TextField()
     PERSONNEL_STATUS = {
         ('NEWBIE', 'Newbie'),
-        ('REGISTERED_CONFIRMED', 'Registerd_confirmed'),
         ('DEACTIVATED', 'Deactivated'),
-
     }
     status = models.CharField(choices=PERSONNEL_STATUS, default='NEWBIE', max_length=200, null=False, blank=False)
+    PAYMENT_STATUS = {
+        ('PAID', 'Paid'),
+        ('UNPAID', 'UnPaid'),
+        ('PARTIAL', 'Partial'),
+    }
+    pay_status = models.CharField(choices=PAYMENT_STATUS, default='UNPAID', max_length=200, null=False, blank=False)
+
     RANK_STATUS = {
         ('BASIC', 'Basic'),
         ('PREMIUM', 'Premium'),
@@ -130,8 +164,6 @@ class Customer(get_user_model()):
     def __str__(self):
         return '%s %s %s' % (self.first_name, self.last_name, self.rank_status)
 
-
-
     class Meta:
         verbose_name = 'Customer'
         verbose_name_plural = 'Customers'
@@ -140,6 +172,13 @@ class Customer(get_user_model()):
         new_image = compress(self.profile_image)
         self.profile_image = new_image
         super().save(*args, **kwargs)
+
+    @property
+    def cus_bio(self):
+        data = mark_safe(self.biography)
+
+        # data = mark_safe(self.biography)
+        return data
 
     @property
     def customer_linkedin_social(self):
@@ -405,7 +444,7 @@ class CompanySocialAccount(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
 
     def __str__(self):
-        return '%s %s %s' % ( self.facebook, self.googlr_plus, self.twitter)
+        return '%s %s %s' % (self.facebook, self.googlr_plus, self.twitter)
 
 
 class Query(models.Model):
@@ -520,8 +559,6 @@ class CompanyPricingPlan(models.Model):
         return '%s  ' % (self.title)
 
 
-
-
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE, null=False, blank=False)
     reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE, null=False, blank=False)
@@ -547,12 +584,12 @@ class Message(models.Model):
 
     def _str__(self):
         return '%s  ' % (self.sender)
+
     def get_replys(self):
         mm = Message.objects.filter(id=self.id).first()
-        messages  = Message.objects.filter(reply_id=mm.id).all()
+        messages = Message.objects.filter(reply_id=mm.id).all()
         if messages:
-           return messages
-
+            return messages
 
     @property
     def delstar_status(self):
@@ -561,6 +598,7 @@ class Message(models.Model):
             return d.delstar
         else:
             return False
+
 
 class MsgStatus(models.Model):
     m_user = models.ForeignKey(User, related_name="m_user", on_delete=models.CASCADE, null=False, blank=False)
@@ -576,6 +614,7 @@ class MsgStatus(models.Model):
 
     def _str__(self):
         return '%s  ' % (self.m_user)
+
 
 class Newsletter(models.Model):
     email = models.CharField(max_length=200, null=False, blank=False)
@@ -594,7 +633,6 @@ class AdvertCarousel(models.Model):
 
     def __str__(self):
         return '%s' % (self.carousel_image)
-
 
 
 class CustomerReviews(models.Model):

@@ -7,6 +7,35 @@
 
         if($(this).val().toLowerCase()==='disabled'){
             $('#disabilityparent').append(html);
+            ClassicEditor
+                .create( document.querySelector( '#disability' ), {
+                      removePlugins: [  'Image','Table','Media','Image' ],
+                    toolbar: {
+                    items: [
+                      'heading',
+                      '|',
+                      'bold',
+                      'italic',
+                      '|',
+                      'bulletedList',
+                      'numberedList',
+                      '|',
+                      'undo',
+                      'redo'
+                    ]
+                  },
+                } )
+                .then( editor => {
+                        // console.log( editor );
+                    const wordCountPlugin = editor.plugins.get( 'WordCount' );
+                    const wordCountWrapper = document.getElementById( 'word-count' );
+
+                    wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
+                } )
+                .catch( error => {
+                        // console.error( error );
+                } );
+
         }else if($(this).val().toLowerCase()==='not_disabled'){
             if($('#disbledtxtarea:visible')){
                 $('#disbledtxtarea').remove();

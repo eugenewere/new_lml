@@ -20,6 +20,17 @@ class EducationForm(forms.ModelForm):
         model = Education
         fields = ['course','customer','school', 'graduation_date', 'reg_number', ]
 
+class CandRegprice(forms.ModelForm):
+    class Meta:
+        model = CandidateRegPrice
+        fields = ['price', ]
+
+
+class CompRegprice(forms.ModelForm):
+    class Meta:
+        model = CompanyRegPrice
+        fields = ['price', ]
+
 
 
 

@@ -258,14 +258,14 @@
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-10" aria-controls="submenu-10"><i class="fas fa-f fa-folder"></i>Settings</a>
                                 <div id="submenu-10" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
+{#                                        <li class="nav-item">#}
+{#                                            <a class="nav-link" href="#">Terms And Conditions</a>#}
+{#                                        </li>#}
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Terms And Conditions</a>
+                                            <a class="nav-link" href="{% url 'LMLAdmin:companyregpricing' %}">Company Reg Pricing</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="#">Company Pricing</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Employee Pricing</a>
+                                            <a class="nav-link" href="{% url 'LMLAdmin:candidateregpricing' %}">Employee Reg Pricing</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{% url 'LMLAdmin:whatweoffer' %}">What We Offer</a>

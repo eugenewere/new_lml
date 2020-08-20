@@ -66,8 +66,14 @@
 
 							<div class="row-bottom">
 								<h2 class="detail-title">About Candidate</h2>
-                                <p>{{ customer.biography }}</p>
+                                <p>{{ customer.biography|safe|escape }}</p>
 							</div>
+                            {% if customer.disability_status == 'DISABLED' %}
+                                <div class="row-bottom">
+                                    <h2 class="detail-title">Disability</h2>
+                                    <p>{{ customer.disability|safe|escape }}</p>
+                                </div>
+                            {% endif %}
 
 							<div class="row-bottom">
 								<h2 class="detail-title">Education</h2>

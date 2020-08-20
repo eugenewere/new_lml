@@ -24,11 +24,6 @@ def employee_dash_message(request):
 
     companies_list = []
     userr = User.objects.filter(id=user).first()
-    companies = Message.objects.filter(reciever=userr)
-    for company in companies:
-        cmpn = Company.objects.filter(user_ptr_id=company.sender.id).first()
-        companies_list.append(cmpn)
-    msg_companies = list(set(companies_list))
 
     blocked = MsgStatus.objects.filter(Q(m_user=u) and (Q(delstar='DELETE') | Q(delstar='NORMAL'))).values_list(
         'message_id', flat=True)
@@ -66,9 +61,6 @@ def employee_dash_message(request):
         'starredmessages': starreds,
         'trashmessages':trashes,
         'title': username_of_user,
-        'company': company,
-        # 'social': social,
-        # 'customers':customers,
         'product_label':product_label,
         'misc_label':misc_label,
         'work_label':work_label,
@@ -290,9 +282,6 @@ def mark_as_read_or_unread(request):
             'title': username_of_user,
         }
         return JsonResponse(context)
-
-
-
 
 
 def message_reply(request):

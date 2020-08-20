@@ -70,6 +70,20 @@ urlpatterns = [
     path('changecompanystatustoregi/<int:custom_id>/', views.changecompanystatustoregi, name='changecompanystatustoregi'),
     path('changecompanystatustodeac/<int:custom_id>/', views.changecompanystatustodeac, name='changecompanystatustodeac'),
 
+    # candidatepricing
+    path('allcandidateregpricing/', views.candidateregpricing, name='candidateregpricing'),
+    path('allcandidateaddregpricing/', views.candidateaddregpricing, name='candidateaddregpricing'),
+    path('allcandidateupdateregpricing/<int:price_id>/', views.candidateupdateregpricing, name='candidateupdateregpricing'),
+    path('allcandidatedeleteregpricing/<int:price_id>/', views.candidatedeleteregpricing, name='candidatedeleteregpricing'),
+    path('allcandidatestatusregpricing/<int:price_id>/', views.candidatestatusregpricing, name='candidatestatusregpricing'),
+
+    # compdidatepricing
+    path('allcompanyregpricing/', views.companyregpricing, name='companyregpricing'),
+    path('allcompanyaddregpricing/', views.companyaddregpricing, name='companyaddregpricing'),
+    path('allcompanyupdateregpricing/<int:price_id>/', views.companyupdateregpricing, name='companyupdateregpricing'),
+    path('allcompanydeleteregpricing/<int:price_id>/', views.companydeleteregpricing, name='companydeleteregpricing'),
+    path('allcompanystatusregpricing/<int:price_id>/', views.companystatusregpricing, name='companystatusregpricing'),
+
 
 
 

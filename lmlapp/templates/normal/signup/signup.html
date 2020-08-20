@@ -2,63 +2,7 @@
 {% load static %}
 {% block links %}
     <style type="text/css">
-        #signuploader {
-          position: fixed;
-            display: none;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          width: 100%;
-          background: #ffffff;
-          z-index: 10000;
-
-
-          
-        }
-        #signuploader img{
-            top: 50%; left: 50%; position: absolute;transform: translate(-50%, -50%);filter: hue-rotate(277deg);
-        }
-    .is-valid-custom{
-        border-color: #28a745 !important;
-    }
-    .is-invalid-custom{
-        border-color:red !important;
-    }
-
-
-    .progresspsd {
-        height: 5px;
-    }
-
-    .control-label {
-        text-align: left !important;
-        padding-bottom: 7px;
-    }
-
-
-
-
-
-
-    .ex-account p {
-        background-color: rgba(255, 255, 255, 0.41);
-    }
-
-    select:hover {
-        color: #444645;
-        background: #ddd;
-    }
-
-    .fa-file-text {
-        color: #edda39;
-    }
-
-    .mar-top-bot-50 {
-        margin-top: 50px;
-        margin-bottom: 50px;
-    }
-
+      #signuploader{position:fixed;display:none;top:0;left:0;right:0;bottom:0;width:100%;background:#fff;z-index:10000}#signuploader img{top:50%;left:50%;position:absolute;transform:translate(-50%,-50%);filter:hue-rotate(277deg)}.is-valid-custom{border-color:#28a745!important}.is-invalid-custom{border-color:red!important}.progresspsd{height:5px}.control-label{text-align:left!important;padding-bottom:7px}.ex-account p{background-color:rgba(255,255,255,.41)}select:hover{color:#444645;background:#ddd}.fa-file-text{color:#edda39}.mar-top-bot-50{margin-top:50px;margin-bottom:50px}
     </style>
 {% endblock links %}
 {% block content %}
@@ -426,7 +370,7 @@
                     <h2 class="detail-title">Brief description about yourself</h2>
                     <div class="col-md-12 col-sm-12">
                         <label style="width: 100%;">
-                            <textarea name="biography" style="max-width: 100%; width: 100%;" required  class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
+                            <textarea id="brief_details" name="biography" style="max-width: 100%; width: 100%;" class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
                         </label>
                     </div>
                 </div>

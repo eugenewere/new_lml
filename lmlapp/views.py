@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.serializers import serialize
 from django.http import HttpResponse, JsonResponse, Http404
-from django.shortcuts import render, redirect, HttpResponseRedirect
+from django.shortcuts import render, redirect, HttpResponseRedirect, get_object_or_404
 import os
 from datetime import datetime
 import sweetify
@@ -13,7 +13,9 @@ import humanize
 from django.contrib.humanize.templatetags.humanize import *
 
 # from rest_framework import status
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from paypal.standard.forms import PayPalPaymentsForm
 
 from lmlapp.forms import *
 
@@ -872,15 +874,72 @@ def home_contact_us(request, source):
         source = source.replace('____', '/')
     return redirect(source)
 
+@csrf_exempt
+def payment_done(request):
 
+    print(request.POST)
+    context = {
+        'post': request.POST
+    }
+    return render(request, 'normal/payment/employee/paymentdone.html', context)
+
+
+@csrf_exempt
+def payment_canceled(request):
+    print(request)
+    return render(request, 'normal/payment/employee/paymentcanceled.html')
+
+
+@login_required()
 def payment(request):
     customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
     customer_reg = CustomerRegNo.objects.filter(customer=customer).first()
+    pricing = CandidateRegPrice.objects.filter(status='ACTIVE').first()
+    crp = CandidateRegPrice.objects.filter(status='ACTIVE').first()
+    host = request.get_host()
+
+    paypal_dict = {
+        'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'amount': '%.2f' % crp.price,
+        'item_name': 'Candidate {}{}'.format(customer.first_name, customer.last_name),
+        'invoice': str(customer.customer_reg_no),
+        'currency_code': 'USD',
+        'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+        'return_url': request.build_absolute_uri(reverse('LML:payment_done')),
+        'cancel_return': request.build_absolute_uri(reverse('LML:payment_cancelled')),
+    }
+
+    # form = PayPalPaymentsForm(initial=paypal_dict)
     context = {
         'regno':customer_reg,
-        'customer':customer,
+        'customer': customer,
+        'price':pricing,
+        # 'form': form
     }
     return render(request,'normal/payment/payment-method.html', context)
+
+
+
+
+# def process_payment(request):
+#     userid = request.user.id
+#     customer = Customer.objects.filter(user_ptr_id=userid).first()
+#     crp = CandidateRegPrice.objects.filter(status='ACTIVE').first()
+#     host = request.get_host()
+#
+#     paypal_dict = {
+#         'business': settings.PAYPAL_RECEIVER_EMAIL,
+#         'amount': '%.2f' % crp.price.quantize(Decimal('.01')),
+#         'item_name': 'Order {}'.format(customer.customer_reg_no),
+#         'invoice': str(customer.id),
+#         'currency_code': 'USD',
+#         'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+#         'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+#         'cancel_return': 'http://{}{}'.format(host, reverse('payment_cancelled')),
+#     }
+#
+#     form = PayPalPaymentsForm(initial=paypal_dict)
+#     return render(request, 'normal/payment/payment-method.html', {'customer': customer, })
 
 def companypayment(request):
     company = Company.objects.filter(user_ptr_id=request.user.id).first()
@@ -945,7 +1004,7 @@ def employer_dash(request):
 
 
 
-
+@login_required()
 def employee_dash(request):
     user = request.user.id
     customer = Customer.objects.filter(user_ptr_id=user).first()
@@ -1521,7 +1580,7 @@ def rankCandidateStatus(request):
 
     for education in Education.objects.filter(customer=candidate):
         educations.append(education.qualifications)
-    print(exp_dates, educations)
+    # print(exp_dates, educations)
     status = " "
     if ((('Certificate' in educations)) and ('Phd' not in educations) and ('Bachelor' not in educations) and ('Masters' not in educations) and ('Diploma' not in educations)):
         if (max(exp_dates) > 730):
@@ -1577,3 +1636,18 @@ def rankCandidateStatus(request):
     )
 
 
+def registrationpaydetails(request):
+    customer = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    customer_reg = CustomerRegNo.objects.filter(customer=customer).first()
+    crp = CandidateRegPrice.objects.filter(status='ACTIVE').first()
+
+    paypal_dict = {
+        # 'business': settings.PAYPAL_RECEIVER_EMAIL,
+        'reg_amount':  crp.price,
+        'user_name': customer.username,
+        'user_id': customer.id,
+        # 'invoice': str(customer.customer_reg_no),
+        'reg_no':customer_reg.personel_reg_no,
+
+    }
+    return JsonResponse(paypal_dict)

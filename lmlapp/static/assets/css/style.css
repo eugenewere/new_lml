@@ -6486,6 +6486,9 @@ div.datedropper.my-style.picker-lkd .pick-submit {
 	transition: .4s;
     border:1px solid #eaeff5;
 	width: 290px;
+	display: flex !important;
+    flex-direction: column;
+    justify-content: space-between
 
 }
 .paid-candidate-container:hover, .paid-candidate-container:focus{

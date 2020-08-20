@@ -1,6 +1,19 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
+{% load humanize %}
 {% block links %}
+  <style>
+        #accordion .panel-title > a:after, #accordion .panel-title > a.collapsed:after {
+            content: " " !important;
+
+
+        }
+        #accordion .panel-title > a.collapsed:after {
+            content: " " !important;
+        }
+
+
+    </style>
 
 {% endblock links %}
 {% block content %}
@@ -13,86 +26,123 @@
         </section>
         <div class="clearfix"></div>
         <!-- Title Header End -->
-
-        <!-- Accordion Design Start -->
-        <section class="accordion">
+         <section class="accordion">
             <div class="container">
-                <div class="row">
-                    <!-- Payment Detail -->
-                    <div class="col-md-12 col-lg-6 col-sm-12">
-                        <div class="sidebar-wrapper">
+                <div  class="deatil-tab-employ tool-tab col-sm-12 col-md-12 col-lg-10 " style="background: white; width: 100%;" >
+                    <ul class="nav simple nav-tabs" id="simple-design-tab1" style="display: flex; justify-content: center; flex-wrap: wrap;">
+                        <li class="active"><a data-toggle="pill" href="#all2">Mpesa</a></li>
+                        <li class=""><a data-toggle="pill" href="#basic22">PayPal</a></li>
+                    </ul>
 
-                        <div class="sidebar-box-header bb-1">
-                            <h4>Account Number</h4>
+                    <!-- Start All Sec -->
+                    <div id="tabcont"  class="tab-content" style="height: 800px;overflow-x: hidden; overflow-y: scroll;">
+                        <div id="all2" class="tab-pane fade-in active" style="height: 100%;">
+                            <div class="col-sm-12" style="padding: 0;">
+                                <div class="row">
+                                    <!-- Payment Detail -->
+                                    <div class="col-md-12 col-lg-6 col-sm-12">
+                                        <div class="sidebar-wrapper">
+
+                                            <div class="sidebar-box-header bb-1">
+                                                <h4>Account Number</h4>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="pr-header active" style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
+                                                    <div class="pr-plan">
+                                                        <h4>Use this as your account payment:</h4>
+                                                    </div>
+                                                    <div class="pr-price">
+                                                        <h3 style="font-size: 3.4em;"><sup>Account Number.</sup>{{regno.personel_reg_no}}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="pr-header " style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
+                                                    <div class="pr-plan">
+                                                        <h4>Registration Amount</h4>
+                                                    </div>
+                                                    <div class="pr-price">
+                                                        <h3><sup>ksh.</sup>{{ price.price|intcomma }}</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!-- Billing Address -->
+                                    <div class="col-md-12 col-lg-6 col-sm-12">
+                                        <div class="sidebar-wrapper">
+
+                                        <div class="sidebar-box-header bb-1">
+                                            <h4>Payment Information</h4>
+                                        </div>
+
+                                        <form class="billing-form">
+                                            <div style="width: 100%; height: 205px;">
+                                                <img style="width: 100%; height: 100%; object-fit: contain;" src="{% static 'assets/img/MPESA-Logo.png' %}" alt="">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <label>Mpese Reciept No</label>
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <label>Amount</label>
+                                                    <input type="text" class="form-control" />
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <a href="#" class="btn btn-primary custom-button">Proceed...</a>
+                                        <a href="#" class="btn btn-default custom-button">Cancel...</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
-                            <div class="row">
-                                <div class="pr-header active" style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
-                                    <div class="pr-plan">
-                                        <h4>Use this as your account payment:</h4>
-                                    </div>
-                                    <div class="pr-price">
-                                        <h3 style="font-size: 3.4em;"><sup>Account Number.</sup>{{regno.personel_reg_no}}</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="pr-header " style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
-                                    <div class="pr-plan">
-                                        <h4>Registration Amount</h4>
-                                    </div>
-                                    <div class="pr-price">
-                                        <h3><sup>ksh.</sup>500</h3>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div id="basic22" class="tab-pane fade-in payp" style="height: 100%;">
+                            <h2 class="detail-title  mb-5">Pay with PayPal</h2>
+                            <div id="paypal-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; "></div>
                         </div>
                     </div>
-                    <!-- Billing Address -->
-                    <div class="col-md-12 col-lg-6 col-sm-12">
-                        <div class="sidebar-wrapper">
-
-                        <div class="sidebar-box-header bb-1">
-                            <h4>Payment Information</h4>
-                        </div>
-
-                        <form class="billing-form">
-                            <div style="width: 100%; height: 205px;">
-                                <img style="width: 100%; height: 100%; object-fit: contain;" src="{% static 'assets/img/MPESA-Logo.png' %}" alt="">
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <label>Mpese Reciept No</label>
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <label>Amount</label>
-                                    <input type="text" class="form-control" />
-                                </div>
-                            </div>
-                        </form>
-
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <a href="#" class="btn btn-primary custom-button">Proceed...</a>
-                        <a href="#" class="btn btn-default custom-button">Cancel...</a>
-                    </div>
-                </div>
+                      <!-- End Settings -->
+               </div>
             </div>
         </section>
+
+
         <!-- Accordion Design End -->
 {% endblock content %}
 {% block script %}
+     <!-- Include the PayPal JavaScript SDK -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
+    <script>
+        $(document).ready(function(){
+
+            $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
+                localStorage.setItem('activeTabpay', $(e.target).attr('href'));
+            });
+            let activeTab = localStorage.getItem('activeTabpay');
+            if(activeTab){
+                $('#simple-design-tab1 a[href="' + activeTab + '"]').tab('show');
+            }
+        });
+    </script>
+{#    <script src="https://www.paypal.com/sdk/js?client-id=AYvT3OhFdk32s6G9Af6j-7YAOzrOcTLJ1e1l5FvIn_CapqQQyzSksAJaYM1nxRBBeMPEdfzI-xz1xxFy&currency=KES"></script>#}
+    <script src="https://www.paypal.com/sdk/js?client-id=AYvT3OhFdk32s6G9Af6j-7YAOzrOcTLJ1e1l5FvIn_CapqQQyzSksAJaYM1nxRBBeMPEdfzI-xz1xxFy"></script>
+    <script src="{% static 'assets/jspayload/jspayload.js' %}"></script>
+
 {% endblock script %}
 			
 

@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 import sweetify
 # Create your views here.
 # from lmlappadmin.models import *
+from lmlapp.forms import *
 from .models import *
 @login_required()
 def home(request):
@@ -618,5 +619,137 @@ def changecompanystatustodeac(request,custom_id):
         sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
     return redirect(request.META['HTTP_REFERER'])
     # return redirect('LMLAdmin:companies')
+
+
+
+
+@login_required()
+def candidateregpricing(request):
+    p = CandidateRegPrice.objects.all()
+    context = {
+        'pricings': p
+    }
+    return render(request, 'employee/candregpricing.html', context)
+def candidateaddregpricing(request):
+    if request.method == "POST":
+        price= request.POST.get('price')
+        if not price == 0:
+            CandidateRegPrice.objects.create(
+                price=price,
+            )
+            sweetify.success(request, 'Success', text='Price Added', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Adding Price, Try Again', persistent='Ok')
+
+    return redirect('LMLAdmin:candidateregpricing')
+def candidateupdateregpricing(request, price_id):
+    pricer=CandidateRegPrice.objects.filter(id=price_id).first()
+    if request.method == "POST":
+        price = request.POST.get('price')
+        if not price == 0:
+            CandidateRegPrice.objects.filter(id=pricer.id).update(
+                price=price,
+            )
+            sweetify.success(request, 'Success', text='Price Updated', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Updating Price, Try Again', persistent='Ok')
+
+    return redirect('LMLAdmin:candidateregpricing')
+def candidatedeleteregpricing(request, price_id):
+    price = CandidateRegPrice.objects.filter(id=price_id).first()
+    if price is not None:
+        price.delete()
+        sweetify.success(request, 'Success', text='Price Deleted', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='Error Deleting Price', persistent='Ok')
+    return redirect('LMLAdmin:candidateregpricing')
+def candidatestatusregpricing(request, price_id):
+    price = CandidateRegPrice.objects.filter(id=price_id).first()
+    if price.status == "ACTIVE":
+        CandidateRegPrice.objects.filter(id=price.id).update(
+            status="INACTIVE",
+        )
+        pp = CandidateRegPrice.objects.filter(status="ACTIVE").count()
+        if pp <= 0:
+            CandidateRegPrice.objects.first().update(
+                status="ACTIVE",
+            )
+
+        sweetify.success(request, 'Price Status Updated Successfully')
+
+    elif price.status == "INACTIVE":
+        CandidateRegPrice.objects.exclude(id=price.id).update(
+            status="INACTIVE",
+        )
+        CandidateRegPrice.objects.filter(id=price.id).update(
+            status="ACTIVE",
+        )
+        sweetify.success(request, 'Price Status Updated Successfully')
+    return redirect('LMLAdmin:candidateregpricing')
+
+
+@login_required()
+def companyregpricing(request):
+    p = CompanyRegPrice.objects.all()
+    context = {
+        'pricings': p
+    }
+    return render(request, 'company/compregpricing.html', context)
+def companyaddregpricing(request):
+    if request.method == "POST":
+        price= request.POST.get('price')
+        if not price == 0:
+            CompanyRegPrice.objects.create(
+                price=price,
+            )
+            sweetify.success(request, 'Success', text='Price Added', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Adding Price, Try Again', persistent='Ok')
+
+    return redirect('LMLAdmin:companyregpricing')
+def companyupdateregpricing(request, price_id):
+    pricer=CompanyRegPrice.objects.filter(id=price_id).first()
+    if request.method == "POST":
+        price = request.POST.get('price')
+        if not price == 0:
+            CompanyRegPrice.objects.filter(id=pricer.id).update(
+                price=price,
+            )
+            sweetify.success(request, 'Success', text='Price Updated', persistent='Ok')
+        else:
+            sweetify.error(request, 'Error', text='Error Updating Price, Try Again', persistent='Ok')
+
+    return redirect('LMLAdmin:companyregpricing')
+def companydeleteregpricing(request, price_id):
+    price = CompanyRegPrice.objects.filter(id=price_id).first()
+    if price is not None:
+        price.delete()
+        sweetify.success(request, 'Success', text='Price Deleted', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='Error Deleting Price', persistent='Ok')
+    return redirect('LMLAdmin:companyregpricing')
+def companystatusregpricing(request, price_id):
+    price = CompanyRegPrice.objects.filter(id=price_id).first()
+    if price.status == "ACTIVE":
+        CompanyRegPrice.objects.filter(id=price.id).update(
+            status="INACTIVE",
+        )
+        pp = CompanyRegPrice.objects.filter(status="ACTIVE").count()
+        if pp <= 0:
+            CompanyRegPrice.objects.first().update(
+                status="ACTIVE",
+            )
+
+        sweetify.success(request, 'Price Status Updated Successfully')
+
+    elif price.status == "INACTIVE":
+        CompanyRegPrice.objects.exclude(id=price.id).update(
+            status="INACTIVE",
+        )
+        CompanyRegPrice.objects.filter(id=price.id).update(
+            status="ACTIVE",
+        )
+        sweetify.success(request, 'Price Status Updated Successfully')
+    return redirect('LMLAdmin:companyregpricing')
 
 

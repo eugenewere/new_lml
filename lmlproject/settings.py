@@ -47,9 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'sweetify',
-    # 'channels',
-
-
+    'paypal.standard.ipn',
 
 ]
 
@@ -173,6 +171,8 @@ sweetify.DEFAULT_OPTS = {
 }
 
 LOGIN_REDIRECT_URL = 'LML:home'
+LOGIN_URL = "LML:home"
+
 
 # mysite/settings.py
 # Channels
@@ -184,4 +184,6 @@ EMAIL_HOST_PASSWORD = 'Brandoxvilla7123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL: False
-
+# OPENEXCHANGERATES_API_KEY = '71501b20f84c42cfa79667487398fd93'
+PAYPAL_RECEIVER_EMAIL = "sb-mobfb2963036@business.example.com"
+PAYPAL_TEST = True

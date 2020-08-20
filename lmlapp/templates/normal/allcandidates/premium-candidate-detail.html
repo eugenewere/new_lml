@@ -79,11 +79,20 @@
 
                     <div class="apply-job-detail">
                          <h2 class="detail-title">About Candidate</h2>
-                        <p>{{ customer.biography }}</p>
+                        <p>{{ customer.first_name|title }} {{ customer.last_name|title }} biography</p>
+                        <p>{{ customer.biography|safe|escape }}</p>
                     </div>
+                    {% if customer.disability_status == 'DISABLED' %}
+                        <div class="row-bottom">
+                            <h2 class="detail-title">Disability</h2>
+                            <p>{{ customer.first_name|title }} {{ customer.last_name|title }} disability details</p>
+                            <p>{{ customer.disability|safe|escape }}</p>
+                        </div>
+                    {% endif %}
                     {% if skills %}
                         <div class="apply-job-detail">
-                             <h2 class="detail-title">Skills ({{ skills|length }})</h2>
+                            <h2 class="detail-title">Skills ({{ skills|length }})</h2>
+                            <p>{{ customer.first_name|title }} {{ customer.last_name|title }} skills set</p>
                             <ul class="skills">
                                 {% for skill in skills %}
                                     <li class="text-capitalize">{{ skill.skill }}</li>
@@ -126,7 +135,7 @@
                     {% if educations|length > 0 %}
                     <div class="row-bottom">
                         <h2 class="detail-title">Education</h2>
-                        <p>Levels of education</p>
+                        <p>{{ customer.first_name|title }} {{ customer.last_name|title }} Levels of education</p>
                         <ul class="trim-edu-list">
                             {% for education in educations %}
                                 <li style="display: none;" class="sorteducation">
@@ -151,7 +160,7 @@
                     {% if  experiences %}
                         <div class="row-bottom">
                             <h2 class="detail-title">Work & Experience</h2>
-                            <p>Experiences List.</p>
+                            <p>{{ customer.first_name|title }} {{ customer.last_name|title }} Experiences List.</p>
                             <ul class="trim-edu-list">
                                 {% for experience in experiences %}
                                     <li style="display: none;" class="sortexperience">
@@ -195,7 +204,8 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Review</h4>
+                            <h2 class="detail-title">Review</h2>
+                            <p>{{ customer.first_name|title }} {{ customer.last_name|title }} reviews</p>
                         </div>
                     </div>
                     <div class="row">
@@ -509,64 +519,66 @@
 
             <div class="clearfix"></div>
             <section class="white">
-            <div class="container">
-                <div class="row" data-aos="fade-up">
-                    <div class="col-md-12">
-                        <div class="main-heading">
-                            <h2>Other <span>Employees</span></h2>
+            {% if other_customers %}
+                <div class="container">
+                    <div class="row" data-aos="fade-up">
+                        <div class="col-md-12">
+                            <div class="main-heading">
+                                <h2>Other <span>Employees</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="grid-slide">
+                            {% for customer in other_customers %}
+                                <!-- Single Freelancer -->
+                                <div class="grid-slide-box">
+                                    <div class="top-candidate-wrap style-2">
+                                        <div style="margin: 0;" class="paid-candidate-container">
+                                        <div class="paid-candidate-box">
+                                            <div class="dropdown">
+                                                <div class="btn-group fl-right">
+                                                    {% if request.user|logged_in_company %}
+                                                        <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
+                                                        <div class="dropdown-menu pull-right animated flipInX">
+                                                            {% csrf_token %}
+                                                            {% if request|shortlisted:customer.id %}
+                                                                <a onclick="shortlist(this);" data-employer="{{ request.user.id }}"  id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
+                                                            {% else %}
+                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
+                                                            {% endif %}
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                            <div class="paid-candidate-inner--box">
+                                                <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                <div class="paid-candidate-box-detail">
+                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                            </div>
+                                            <div class="paid-candidate-box-extra">
+                                                <ul>
+                                                    {% for skill in customer.skillset %}
+                                                    <li>{{skill.skill|truncatechars:7}}</li>
+                                                    {% endfor %}
+                                                    {% if customer.skillcount %}
+                                                        <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
+                                                    {% endif %}
+                                                </ul>
+                                                <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
+                                            </div>
+                                        </div>
+                                        {% if request.user|logged_in_company %}
+                                        <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
+                                        {% endif %}
+                                    </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="grid-slide">
-                        {% for customer in other_customers %}
-                            <!-- Single Freelancer -->
-                            <div class="grid-slide-box">
-                                <div class="top-candidate-wrap style-2">
-                                    <div style="margin: 0;" class="paid-candidate-container">
-                                    <div class="paid-candidate-box">
-                                        <div class="dropdown">
-                                            <div class="btn-group fl-right">
-                                                {% if request.user|logged_in_company %}
-                                                    <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
-                                                    <div class="dropdown-menu pull-right animated flipInX">
-                                                        {% csrf_token %}
-                                                        {% if request|shortlisted:customer.id %}
-                                                            <a onclick="shortlist(this);" data-employer="{{ request.user.id }}"  id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                        {% else %}
-                                                            <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
-                                                        {% endif %}
-                                                    </div>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        <div class="paid-candidate-inner--box">
-                                            <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
-                                            <div class="paid-candidate-box-detail">
-                                                <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
-                                        </div>
-                                        <div class="paid-candidate-box-extra">
-                                            <ul>
-                                                {% for skill in customer.skillset %}
-                                                <li>{{skill.skill|truncatechars:7}}</li>
-                                                {% endfor %}
-                                                {% if customer.skillcount %}
-                                                    <li class="more-skill bg-primary">+{{customer.skillcount}}</li>
-                                                {% endif %}
-                                            </ul>
-                                            <p>{{customer.biography|truncatechars:67}}.</p>
-                                        </div>
-                                    </div>
-                                    {% if request.user|logged_in_company %}
-                                    <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
-                                    {% endif %}
-                                </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </section>
 
         </div>
@@ -574,150 +586,7 @@
     <!-- Freelancer Detail End -->
 {% endblock content %}
 {% block script %}
-    <script>
-            function shortlistmessage() {
-                swal.fire({
-                title: "Error!",
-                text: "You have already shortlisted this user",
-                type: "error",
-                confirmButtonText: "Continue"
-               });
-            }
-            function shortlist(shortlist){
-
-                var user = document.getElementById(shortlist.id);
-                var company = user.getAttribute('data-employer');
-
-                 $.ajax({
-                    type: "POST",
-                    url : "{% url 'LML:shortlistemployees' %}",
-                    data:{
-                        'customer_id' : user.id,
-                        'company_id' : company,
-                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                    },
-                    dataType:'json',
-                    success : function searchSuccess(data){
-                        if(data.is_shortlisted){
-                            errorshortlisting(data);
-                            console.log();
-                        }
-                        else if(data.shortlisted){
-                           shortlisted(data);
-                           var user = document.getElementById(shortlist.id);
-                           user.innerText='Shortlisted';
-                           user.style.color='green';
-                        }
-                    },
-
-                });
-                 function shortlisted(k){
-
-                    swal.fire({
-                    title: "Success!",
-                    text: k.success_message,
-                    type: "success",
-                    confirmButtonText: "Continue"
-                   });
-                }
-                 function errorshortlisting(k){
-                    swal.fire({
-                    title: "Error!",
-                    text: k.error_message,
-                    type: "error",
-                    confirmButtonText: "Continue"
-                   });
-                }
-
-            }
-            function shortlist2(shortlist){
-
-                var user = $(shortlist).attr('data-customer')
-                var company = $(shortlist).attr('data-employer')
-                console.log(user, company)
-
-                 $.ajax({
-                    type: "POST",
-                    url : "{% url 'LML:shortlistemployees' %}",
-                    data:{
-                        'customer_id' : Number(user),
-                        'company_id' : Number(company),
-                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                    },
-                    dataType:'json',
-                    success : function searchSuccess(data){
-                        if(data.is_shortlisted){
-                            errorshortlisting(data);
-                            console.log();
-                        }
-                        else if(data.shortlisted){
-                           shortlisted(data);
-                           $('[data-shortlistbtn ]').fadeOut();
-                        }
-                    },
-
-                });
-                 function shortlisted(k){
-
-                    swal.fire({
-                    title: "Success!",
-                    text: k.success_message,
-                    type: "success",
-                    confirmButtonText: "Continue"
-                   });
-                }
-                 function errorshortlisting(k){
-                    swal.fire({
-                    title: "Error!",
-                    text: k.error_message,
-                    type: "error",
-                    confirmButtonText: "Continue"
-                   });
-                }
-
-            }
-            $(function () {
-                $(".sortskill").slice(0, 2).show();
-                $(".sortexperience").slice(0, 2).show();
-                $(".sorteducation").slice(0, 2).show();
-                $("#loadMore").on('click', function (e) {
-                    e.preventDefault();
-                    $(".sortskill:hidden").slice(0, 2).slideDown();
-                    if ($(".sortskill:hidden").length === 0) {
-                        $("#loadMore").fadeOut('slow');
-                    }
-                    $('html,body').animate({
-                        scrollTop: $(this).offset().top
-                    }, 1500);
-
-                });
-                $("#loadMore2").on('click', function (e) {
-                    e.preventDefault();
-                    $(".sortexperience:hidden").slice(0, 2).slideDown();
-                    if ($(".sortexperience:hidden").length === 0) {
-                        $("#loadMore2").fadeOut('slow');
-                    }
-                    $('html,body').animate({
-                        scrollTop: $(this).offset().top
-                    }, 1500);
-
-                });
-                $("#loadMore3").on('click', function (e) {
-                    e.preventDefault();
-                    $(".sorteducation:hidden").slice(0, 2).slideDown();
-                    if ($(".sorteducation:hidden").length === 0) {
-                        $("#loadMore3").fadeOut('slow');
-                    }
-                    $('html,body').animate({
-                        scrollTop: $(this).offset().top
-                    }, 1500);
-
-                });
-            });
-
-
-
-    </script>
+    <script src="{% static 'assets/company/premiumcanddet.js' %}"></script>
 {% endblock script %}
 
 

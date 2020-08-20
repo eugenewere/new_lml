@@ -15,7 +15,7 @@
 <link href="css/ie6.css" rel="stylesheet" type="text/css" />
 <![endif]-->
 
-
+<link rel="shortcut icon" type="image/x-icon" style="object-fit: cover; border-radius: 50%;" href="{{employee.profile_image.url}}">
 <script type="text/javascript" src="{% static 'assets/employeepdf/js/jquery-1.4.2.min.js' %}"></script>
 {#<script type="text/javascript" src="{% static 'assets/employeepdf/js/jquery.tipsy.js' %}"></script>#}
 <script type="text/javascript" src="{% static 'assets/employeepdf/js/cufon.yui.js' %}"></script>
@@ -63,7 +63,8 @@
               <!-- Begin Personal Information -->
               <div class="self">
                 <h1 class="name">{{employee.first_name|title }} {{ employee.last_name|title }}<br />
-                  <span style="margin-top: 15px;">{{employee.category.category|title}}</span></h1>
+                  <span style="margin-top: 15px;">{{employee.category.category|title}}</span>
+                </h1>
                 <ul>
                   <li class="ad">{{ employee.country }}</li>
                   <li style="color:black;" class="mail"><a style="color:black;" href="mailto:{{employee.email}}">{{employee.email}}</a></li>
@@ -71,6 +72,10 @@
                   <li class="" style="padding-left: 3px;">
                       <i class="fas fa-calendar-week"> </i>
                       <span style="padding-left: 7px;">{{employee.customer_age}} Years</span>
+                  </li>
+                    <li class="" style="padding-left: 3px;">
+                        <i class="fas fa-map-marker-alt"></i>
+                      <span style="padding-left: 7px;">{{employee.county.county}}</span>
                   </li>
                 </ul>
               </div>
@@ -91,7 +96,7 @@
             <!-- Begin 1st Row -->
             <div class="entry">
               <h2>ABOUT ME</h2>
-              <p>{{ employee.biography|capfirst }}</p>
+              <p style="text-align: justify !important;">{{ employee.biography|safe }}</p>
             </div>
             <!-- End 1st Row -->
             <!-- Begin 2nd Row -->
