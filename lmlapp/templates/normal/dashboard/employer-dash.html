@@ -1,5 +1,6 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
+{% load humanize %}
 {% load call_methods %}
 {% block links %}
 {#    <script type = "text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>#}
@@ -1105,36 +1106,53 @@
                                 </div>
                             </div>
                             <div id="about" class="tab-pane fade-in " style="height: 100%;">
-                                <div class="col-sm-12" style="margin: 0 auto;">
-                                    <table class="table table-hover" id="myTable">
-                                      <thead>
-                                        <tr>
-                                          <th scope="col">#</th>
-                                          <th scope="col">Trans_id</th>
-                                          <th scope="col">Amount</th>
-                                          <th scope="col">User</th>
-                                          <th scope="col">Status</th>
-                                          <th scope="col">Gateway</th>
-                                          <th scope="col">Date</th>
-                                        </tr>
-                                      </thead>
-                                      <tbody>
-{#                                        <tr>#}
-{#                                          <th scope="row">1</th>#}
-{#                                          <td>Mark</td>#}
-{#                                          <td>Otto</td>#}
-{#                                          <td>@mdo</td>#}
-{#                                          <td>@mdo</td>#}
-{#                                          <td>@mdo</td>#}
-{#                                          <td>@mdo</td>#}
-{#                                        </tr>#}
+                                <div class="col-sm-12" style="padding: 20px 10px;">
+                                    {% if company_reg_pay %}
+                                        <div class="col-sm-12" style="margin: 0 auto;">
+                                            <table class="table table-hover" id="myTable">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">#</th>
+                                              <th scope="col">Gateway</th>
+                                              <th scope="col">Trans_id</th>
 
-                                      </tbody>
-                                    </table>
+                                              <th scope="col">Payer Email</th>
+                                              <th scope="col">User Reg No</th>
+                                              <th scope="col">Payer Name</th>
+                                              <th scope="col">Amount</th>
+                                              <th scope="col">Status</th>
+                                              <th scope="col">Date</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                          {% for k in company_reg_pay %}
+                                            <tr>
+                                              <th scope="row">{{ forloop.counter }}</th>
+                                              <td>{{ k.pay_method }}</td>
+                                              <td>{{ k.transaction_recipt_no }}</td>
+                                              <td>{{ k.payer_paying_email }}</td>
+                                              <td>{{ k.payer_reg_no }}</td>
+                                              <td>{{ k.payer_full_name }}</td>
+                                              <td>{{ k.amount }}</td>
+                                              <td>
+                                                  {{ k.payment_status }}
+                                                  {% if k.payment_status|lower == 'completed' %}
+                                                      <i style="color: limegreen;" class="fas fa-check-circle"></i>
+                                                      {% else %}
+                                                      <i style="color: red;" class="fas fa-exclamation-circle"></i>
+                                                  {% endif %}
+                                              </td>
+                                              <td>{{ k.created_at|naturaltime }}</td>
+                                            </tr>
+                                          {% endfor %}
+
+                                          </tbody>
+                                        </table>
+                                        </div>
+                                    {% else %}
+                                        <h3 style="text-align: center;">No Payment Made</h3>
+                                    {% endif %}
                                 </div>
-{#                                <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">#}
-{#                                    <h3 style="text-align: center;">No Payment Made</h3>#}
-{#                                </div>#}
                             </div>
                             <!-- End About Sec -->
                         </div>

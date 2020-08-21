@@ -1,6 +1,7 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
 {% load call_methods %}
+{% load humanize %}
 {% block links %}
     <style>
         .customer{
@@ -109,7 +110,50 @@
                         <div class="tab-content" style="height: 500px;overflow-x: hidden; overflow-y: scroll;">
                             <div id="about" class="tab-pane fade in active" style="height: 100%;">
                                 <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">
-                                    <h3 style="text-align: center;">No Payment Made</h3>
+                                    {% if cust_reg_pay %}
+                                        <div class="col-sm-12" style="margin: 0 auto;">
+                                            <table class="table table-hover" id="myTable">
+                                          <thead>
+                                            <tr>
+                                              <th scope="col">#</th>
+                                              <th scope="col">Gateway</th>
+                                              <th scope="col">Trans_id</th>
+                                              <th scope="col">Payer Email</th>
+                                              <th scope="col">User Reg No</th>
+                                              <th scope="col">Payer Name</th>
+                                              <th scope="col">Amount</th>
+                                              <th scope="col">Status</th>
+                                              <th scope="col">Date</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                          {% for k in cust_reg_pay %}
+                                            <tr>
+                                              <th scope="row">{{ forloop.counter }}</th>
+                                              <td>{{ k.pay_method }}</td>
+                                              <td>{{ k.transaction_recipt_no }}</td>
+                                              <td>{{ k.payer_paying_email }}</td>
+                                              <td>{{ k.payer_reg_no }}</td>
+                                              <td>{{ k.payer_full_name }}</td>
+                                              <td>{{ k.amount }}</td>
+                                              <td>
+                                                  {{ k.payment_status }}
+                                                  {% if k.payment_status|lower == 'completed' %}
+                                                      <i style="color: limegreen;" class="fas fa-check-circle"></i>
+                                                      {% else %}
+                                                      <i style="color: red;" class="fas fa-exclamation-circle"></i>
+                                                  {% endif %}
+                                              </td>
+                                              <td>{{ k.created_at|naturaltime }}</td>
+                                            </tr>
+                                          {% endfor %}
+
+                                          </tbody>
+                                        </table>
+                                        </div>
+                                    {% else %}
+                                        <h3 style="text-align: center;">No Payment Made</h3>
+                                    {% endif %}
                                 </div>
                             </div>
                             <!-- End About Sec -->

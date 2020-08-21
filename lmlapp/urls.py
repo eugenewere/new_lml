@@ -67,9 +67,6 @@ urlpatterns = [
     path('companypayment/',views.companypayment, name='companypayment'),
     path('companypaymentpackage/<int:pricing_id>',views.companypaymentpackage, name='companypaymentpackage'),
 
-    path('payment-done/', views.payment_done, name='payment_done'),
-    path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
-
     path('companydash/',views.employer_dash, name='employer_dash'),
 
 
@@ -105,6 +102,18 @@ urlpatterns = [
     path('checkifemailexists/', views.checkifemailexists, name='checkifemailexists'),
     path('checkifusernameexists/', views.checkifusernameexists, name='checkifusernameexists'),
 
+
+
+    path('payment-done/', views.payment_done, name='payment_done'),
+    path('payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
     path('registrationpaydetails/', views.registrationpaydetails, name='registrationpaydetails'),
+    path('payment_complete/', views.payment_complete, name='payment_complete'),
+
+
+
+    path('companyregistrationpaydetails/', views.companyregistrationpaydetails, name='companyregistrationpaydetails'),
+    path('company_payment_complete/', views.comapny_payment_complete, name='comapny_payment_complete'),
+    path('company_payment-done/', views.company_payment_done, name='company_payment_done'),
+    path('company_payment-cancelled/', views.company_payment_canceled, name='company_payment_cancelled'),
 
 ]

@@ -309,8 +309,11 @@ $(window).load(function() {
 });
 $('[data-toggle="tooltip"]').tooltip()
 $(document).ready( function () {
-                $('#myTable').DataTable();
-            } );
+	if($('#myTable').length){
+		$('#myTable').DataTable();
+	}
+
+} );
 var pswd = document.getElementsByClassName('password')[0];
 var txt = document.getElementsByClassName('txt')[0];
 var psd = document.getElementsByClassName('psd')[0];

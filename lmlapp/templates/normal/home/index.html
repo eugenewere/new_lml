@@ -163,7 +163,7 @@
                     {% endfor %}
                 </div>
                 <div class="col-md-12 col-sm-12">
-                    {% if request.user|logged_in_company %}
+                    {% if request.user|logged_in_company2 %}
                     <div class="text-center"><a href="{% url 'LML:all_premium_employees' %}" class="btn btn-primary">Load More</a></div>
                     {% endif %}
                 </div>

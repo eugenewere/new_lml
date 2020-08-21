@@ -75,20 +75,35 @@ class Category(models.Model):
 
 
 class CustomerPayments(models.Model):
-    amount = models.FloatField()
-    recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    pay_method = models.CharField(max_length=200, null=False, blank=False)
+
+    payer_reg_no = models.CharField(max_length=200, null=True, blank=True)
+    payer_full_name = models.CharField(max_length=200, null=True, blank=True)
+    payer_paying_email = models.CharField(max_length=200, null=True, blank=True)
+    business_email_paid = models.CharField(max_length=200, null=True, blank=True)
+
+    country_code = models.CharField(max_length=200, null=True, blank=True)
+    amount = models.CharField(max_length=200, null=False, blank=False)
+
+    currency_amount = models.CharField(max_length=200, null=True, blank=True)
+    currency_code = models.CharField(max_length=200, null=True, blank=True)
+    currency_value = models.CharField(max_length=200, null=True, blank=True)
+
+    pay_recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    transaction_recipt_no = models.CharField(max_length=200, null=False, blank=False)
     CUSTOMER_PAYMENT_STATUS = {
-        ('UNPAYED', 'Unpayed'),
-        ('PAYED', 'Payed'),
+        ('UNPAID', 'Unpaid'),
+        ('CANCELED', 'Canceled'),
+        ('COMPLETED', 'Completed'),
         ('PARTIAL', 'Partial'),
     }
-    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=False,
-                                      blank=False)
+    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True, blank=True)
+    transaction_status = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s' % (self.amount)
+        return '%s' % (self.payer_reg_no)
 
 class CandidateRegPrice(models.Model):
     price = models.IntegerField( null=False, blank=False)
@@ -102,7 +117,6 @@ class CandidateRegPrice(models.Model):
     def __str__(self):
         return '%s' % (self.price)
 
-
 class CompanyRegPrice(models.Model):
     price = models.IntegerField( null=False, blank=False)
     COMPREGPRICE = {
@@ -114,7 +128,6 @@ class CompanyRegPrice(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     def __str__(self):
         return '%s' % (self.price)
-
 
 class Customer(get_user_model()):
     profile_image = models.ImageField(max_length=200, upload_to='customerImages', null=True, blank=True)
@@ -294,14 +307,31 @@ class Social_account(models.Model):
 
 
 class CompanyRegistrationPayment(models.Model):
-    recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    pay_method = models.CharField(max_length=200, null=False, blank=False)
+
+    payer_reg_no = models.CharField(max_length=200, null=True, blank=True)
+    payer_full_name = models.CharField(max_length=200, null=True, blank=True)
+    payer_paying_email = models.CharField(max_length=200, null=True, blank=True)
+    business_email_paid = models.CharField(max_length=200, null=True, blank=True)
+
+    country_code = models.CharField(max_length=200, null=True, blank=True)
     amount = models.CharField(max_length=200, null=False, blank=False)
-    PAYMENT_STATUS = {
-        ('UNPAYED', 'Unpayed'),
-        ('PAYED', 'Payed'),
+
+    currency_amount = models.CharField(max_length=200, null=True, blank=True)
+    currency_code = models.CharField(max_length=200, null=True, blank=True)
+    currency_value = models.CharField(max_length=200, null=True, blank=True)
+
+    pay_recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    transaction_recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    CUSTOMER_PAYMENT_STATUS = {
+        ('UNPAID', 'Unpaid'),
+        ('CANCELED', 'Canceled'),
+        ('COMPLETED', 'Completed'),
+        ('PARTIAL', 'Partial'),
     }
-    payment_status = models.CharField(max_length=200, choices=PAYMENT_STATUS, default='UNPAYED', null=False,
-                                      blank=False)
+    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True,
+                                      blank=True)
+    transaction_status = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -372,7 +402,6 @@ class Company(get_user_model()):
     @property
     def companyregno(self):
         reg_no = CompanyRegNo.objects.filter(company=self).first()
-        print(reg_no)
         if reg_no:
             return reg_no.company_reg_no
         return 'N/A'
@@ -656,3 +685,11 @@ class ShortCode(models.Model):
 
     def __str__(self):
         return '%s' % (self.short_code)
+
+class CurrencyValue(models.Model):
+    currency =  models.CharField(max_length=100, null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % (self.currency)

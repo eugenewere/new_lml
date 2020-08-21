@@ -1,5 +1,5 @@
  $(document).ready(function () {
-    let loc = window.location.origin + "/registrationpaydetails/"
+    let loc = window.location.origin + "/companyregistrationpaydetails/"
     $.get(loc, function(data, status){
        // console.log(data, status);
        loadPayp(data);
@@ -24,11 +24,7 @@ const csrftoken = getCookie('csrftoken');
 
 function loadPayp(d) {
    var total =  d.reg_amount;
-   var user_id = d.user_id;
-   var user_name = d.user_name;
-   var reg_no = d.reg_no;
    var currency = d.currency;
-
    var ammount = total/currency;
 
    paypal.Buttons({
@@ -52,9 +48,7 @@ function loadPayp(d) {
         // Finalize the transaction
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                // Show a success message to the buyer
-                // console.log(details)
-                // console.log(JSON.stringify(details))
+
                 completePayment(details)
                 // alert('Transaction completed by ' + details.payer.name.given_name + '!');
             });
@@ -63,7 +57,7 @@ function loadPayp(d) {
  }
 
  function completePayment(data){
-    var url = window.location.origin+"/payment_complete/";
+    var url = window.location.origin+"/company_payment_complete/";
     $.ajax({
         processData: false,
         headers: {
@@ -77,10 +71,10 @@ function loadPayp(d) {
         success: function(data){
             console.log(data)
             if (data['status'] === 'success' && data['payment'] === 'done' ){
-                window.location = window.location.origin+'/payment-done/';
+                window.location = window.location.origin+'/company_payment-done/';
             }
             else if(data['status'] === 'error' && data['payment'] === 'reversed' ){
-                window.location = window.location.origin+'/payment-cancelled/';
+                window.location = window.location.origin+'/company_payment-cancelled/';
             }
         },
         error: function(){

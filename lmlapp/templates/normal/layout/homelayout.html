@@ -100,7 +100,6 @@
                                                              <li style="margin-bottom: 10px; border-bottom: 1px solid #fff;"><a href="{% url 'LML:employeedetails' %}">Account</a></li>
                                                              <li style="margin-bottom: 10px; border-bottom: 1px solid #fff;"><a href="{% url 'LML:employeeprofile' %}"> Profile</a></li>
                                                              <li style="margin-top: 10px; border-bottom: 1px solid #fff;"><a class="signin" href="{% url 'LML:log_out_user' %}">Logout</a></li>
-
                                                          {% endif %}
                                                     {% else %}
                                                         <li style="margin-bottom: 10px; border-bottom: 1px solid #fff;"><a href="javascript:void(0)" data-toggle="modal" data-target="#signup" class="signin">Sign In</a></li>
@@ -149,7 +148,7 @@
                                                         </ul>
                                                     </div>
                                                 </div><!-- end col-3 -->
-                                                 <div class="col-menu col-md-3">
+                                                <div class="col-menu col-md-3">
                                                     <h6 class="title">Account</h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
@@ -446,6 +445,8 @@
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/viewportchecker.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/bootstrap.min.js' %}"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
@@ -459,8 +460,6 @@
         <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.easy-autocomplete.min.js' %}"></script>
 {#        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
 {#        <script type="text/javascript" src="{% static 'assets/animision/animsition.min.js' %}"></script>#}
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
         <script src="{% static 'assets/js/custom.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>

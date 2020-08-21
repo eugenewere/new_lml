@@ -24,7 +24,6 @@ urlpatterns = [
     path('lmladmin/', include('lmlappadmin.urls')),
     path('ws/', include('chat.urls')),
     path('', include('lmlapp.urls')),
-    path('paypal/', include('paypal.standard.ipn.urls')),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 if settings.DEBUG:

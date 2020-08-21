@@ -6,6 +6,8 @@ from datetime import date
 from django import template
 # from django.shortcuts import render_to_response
 from django.views import View
+
+from lmlapp.decorators import has_user_paid_registration
 from lmlappadmin.models import *
 
 
@@ -16,7 +18,16 @@ def logged_in_company(user):
     user_id = user.id
     company = Company.objects.filter(user_ptr_id=user_id).first()
     if company is not None:
-        return company
+        return True
+    else:
+        return False
+
+@register.filter(name='logged_in_company2')
+def logged_in_company2(user):
+    user_id = user.id
+    company = Company.objects.filter(user_ptr_id=user_id).first()
+    if company is not None  and  Company.objects.filter(user_ptr_id=user_id, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').first():
+        return True
     else:
         return False
 
@@ -102,7 +113,7 @@ def company_experience_years(company_id):
 @register.filter(name='confirm_reg_payment')
 def confirm_reg_payment(request):
     user = request.user.id
-    customer = Customer.objects.filter(user_ptr_id=user, regpayment__isnull=False).first()
+    customer = Customer.objects.filter(user_ptr_id=user, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED' ).first()
     if customer:
         return False
     return True
@@ -110,7 +121,7 @@ def confirm_reg_payment(request):
 @register.filter(name='confirm_company_reg_payment')
 def confirm_company_reg_payment(request):
     user = request.user.id
-    company = Company.objects.filter(user_ptr_id=user, regpayment__isnull=False).first()
+    company = Company.objects.filter(user_ptr_id=user, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED',).first()
     if company:
         return False
     return True
