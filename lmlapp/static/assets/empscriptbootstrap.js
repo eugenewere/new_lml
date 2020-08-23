@@ -1,31 +1,33 @@
-ClassicEditor
-    .create( document.querySelector( '#brief_details' ), {
-          removePlugins: [  'Image','Table','Media','Image' ],
-        toolbar: {
-        items: [
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          '|',
-          'bulletedList',
-          'numberedList',
-          '|',
-          'undo',
-          'redo'
-        ]
-      },
-    } )
-    .then( editor => {
-            // console.log( editor );
-        const wordCountPlugin = editor.plugins.get( 'WordCount' );
-        const wordCountWrapper = document.getElementById( 'word-count' );
+$(document).ready(function () {
+    ClassicEditor
+        .create( document.querySelector( '#brief_details' ), {
+              removePlugins: [  'Image','Table','Media','Image' ],
+            toolbar: {
+            items: [
+              'heading',
+              '|',
+              'bold',
+              'italic',
+              '|',
+              'bulletedList',
+              'numberedList',
+              '|',
+              'undo',
+              'redo'
+            ]
+          },
+        } )
+        .then( editor => {
+                // console.log( editor );
+            const wordCountPlugin = editor.plugins.get( 'WordCount' );
+            const wordCountWrapper = document.getElementById( 'word-count' );
 
-        wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-    } )
-    .catch( error => {
+            wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
+        } )
+        .catch( error => {
             // console.error( error );
     } );
+})
 var list = document.getElementsByClassName('list1');
 for (i = 0; i < list.length; i++) {
     var anchor = list[i].getElementsByClassName('anchor');

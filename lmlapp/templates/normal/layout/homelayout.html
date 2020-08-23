@@ -10,13 +10,13 @@
 {#    <meta name="viewport" content="width=device-width, initial-scale=1.0" >#}
     <!-- CSS==================================================-->
 {#    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">#}
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="{% static 'assets/datatables/datatables.css' %}">
     <link rel="stylesheet" href="{% static 'assets/plugins/css/plugins.css' %}">
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
     <link rel="icon" href="{% static 'assets/img/avatar/icon.jpeg' %}" style="border-radius: 50%">
 {#    <link href="{% static 'assets/animision/animsition.min.css' %}" rel="stylesheet">#}
     <link type="text/css" rel="stylesheet" id="jssDefault" href="{% static 'assets/css/colors/blue.css' %}">
-    <script src="https://cdn.ckeditor.com/ckeditor5/21.0.0/classic/ckeditor.js"></script>
+    <script src="{% static 'assets/ckeditor/ckeditor.js' %}"></script>
     <link rel="stylesheet" href="{% static 'assets/login/style.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/preloader/css/style.css' %}">
     {% block links %}{% endblock %}
@@ -190,8 +190,11 @@
                                                 <h6 class="title"> Employer Pages</h6>
                                                 <div class="content">
                                                     <ul class="menu-col">
-                                                        <li><a href="{% url 'LML:companypricing' %}">Pricing</a></li>
                                                         <li><a href="{% url 'LML:employer_dash' %}">Dashboard</a></li>
+                                                        <li>
+                                                            <a target="_blank" class="message-txt" href="{% url 'Chat:employer_dash_message' %}">Message</a>
+                                                            <div data-toggle="tooltip" data-placement="bottom" title="New Message" style="left: -21px; top: -2px; display: none;" class="blob"></div>
+                                                        </li>
                                                         <li><a href="#cont">Contact Us</a></li>
                                                     </ul>
                                                 </div>
@@ -200,10 +203,6 @@
                                                 <h6 class="title"> Account </h6>
                                                 <div class="content">
                                                     <ul class="menu-col">
-                                                        <li>
-                                                            <a target="_blank" class="message-txt" href="{% url 'Chat:employer_dash_message' %}">Message</a>
-                                                            <div data-toggle="tooltip" data-placement="bottom" title="New Message" style="left: -21px; top: -2px; display: none;" class="blob"></div>
-                                                        </li>
                                                         <li><a href="{% url 'LML:employerdetails' %}">Account</a></li>
                                                         <li><a href="{% url 'LML:employersprofile' %}">View Profile</a></li>
                                                         <li><a href="{% url 'LML:employersprofile' %}">Edit Profile</a></li>
@@ -220,10 +219,11 @@
                                                 </div>
                                             </div>
                                             <div class="col-menu col-md-3">
-                                                <h6 class="title"> Subscription </h6>
+                                                <h6 class="title"> Payments </h6>
                                                 <div class="content">
                                                     <ul class="menu-col">
-                                                        <li><a href="create-company.html">Manage Subscription *</a></li>
+                                                       <li><a href="{% url 'LML:companypricing' %}">Pricing</a></li>
+                                                       <li><a href="{% url 'LML:employer_dash' %}#about">Payment History</a></li>
                                                        {% if request|confirm_company_reg_payment %}
                                                             <li >
                                                                 <a class="shake" style="color: #07c66f;" href="{% url 'LML:companypayment' %}">Registration-Payment *</a>
@@ -441,28 +441,24 @@
             </div>
         </div>
         <!-- Scripts==================================================-->
-
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.min.js' %}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+{#        <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="{% static 'assets/datatables/datatables.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/viewportchecker.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/bootstrap.min.js' %}"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/bootsnav.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/select2.min.js' %}"></script>
-{#        <script type="text/javascript" src="{% static 'assets/plugins/js/datedropper.min.js' %}"></script>#}
         <script type="text/javascript" src="{% static 'assets/plugins/js/dropzone.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/loader.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/owl.carousel.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/slick.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.easy-autocomplete.min.js' %}"></script>
-{#        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>#}
-{#        <script type="text/javascript" src="{% static 'assets/animision/animsition.min.js' %}"></script>#}
-        <script src="{% static 'assets/js/custom.js' %}"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+        <script src="{% static 'assets/js/custom.js' %}"></script>
         {% block script %}{% endblock script %}
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>

@@ -3,11 +3,6 @@
 {% load humanize %}
 {% load call_methods %}
 {% block links %}
-{#    <script type = "text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>#}
-{#    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">#}
-{#    <script src="//code.jquery.com/jquery-1.12.4.js"></script>#}
-{#    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
-    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
     <style>
         .customer{
             display: none;
@@ -41,16 +36,13 @@
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <link rel="stylesheet" href="{% static 'assets/css/chatpannel.css' %}">
+    <style>
+        .hidden{
+            display: none !important;
+        }
+    </style>
 {% endblock links %}
-{#{% block search %}#}
-{#        {% if request.user.is_authenticated %}#}
-{#            {% if request.user|logged_in_company %}#}
-{#                <li class="active" style="margin-right: 21px; position:relative;" >#}
-{#                   #}
-{#                </li>#}
-{#            {% endif %}#}
-{#        {% endif %}#}
-{#    {% endblock %}#}
+
 {% block content %}
     <!-- Title Header Start -->
     <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: white; ">
@@ -147,7 +139,7 @@
                             <div id="all" class="tab-pane fade-in active" style="height: 100%;">
                                 <div class="row " style="display:flex; justify-content: flex-start; align-items: center; padding-left: 10px; {% if customers|length > 0 %} visibility: visible; {% else %} visibility: hidden  {% endif %}">
                                     <div style="position: relative;">
-                                        <input data-search aria-label="lll" id="searchdashall" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
+                                        <input autocomplete="off" data-search aria-label="lll" id="searchdashall" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
                                     </div>
                                     <div class="col-sm-1" style="padding-right: 0;">
                                       <select id="sortselectall" class="form-control form-control-sm" style="">
@@ -196,22 +188,20 @@
                                                               </div>
                                                               <div class="form-group" >
                                                                 <label for="allcandidatetextarea{{ customer.id }}">Review Message</label>
-                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allcandidatetextarea{{ customer.customer.id }}" ></textarea>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control text-edit" name="message" id="allcandidatetextarea{{ customer.customer.id }}" ></textarea>
                                                                 <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
                                                               </div>
                                                               <div class="col-sm-12 row">
                                                                   <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
                                                               </div>
-                                                              <script>
-                                                                   CKEDITOR.replace( 'allcandidatetextarea{{ customer.customer.id }}' );
-                                                              </script>
+
                                                           </form>
     {#                                                      </div>#}
                                                       </div>
                                                     </div>
                                                   </div>
                                                 </div>
-                                                <div  data-parentorall="custm-{{ customer.customer.id }}" data-filter-item style="display: none;" data-sort="{{ customer.customer.first_name }}" data-filter-name="{{ customer.customer.first_name|lower }} {{ customer.customer.last_name|lower }}" class="c_all  paid-candidate-container">
+                                                <div  data-parentorall="custm-{{ customer.customer.id }}" data-filter-item data-sort="{{ customer.customer.first_name }}" data-filter-name="{{ customer.customer.first_name|lower }} {{ customer.customer.last_name|lower }}" style="display: none;"  class=" c_all paid-candidate-container">
                                                     <div class="paid-candidate-box card-custom-border">
                                                         {% if request.user.is_authenticated %}
                                                             {% if request.user|logged_in_company %}
@@ -226,12 +216,9 @@
                                                                         {% csrf_token %}
 
                                                                         <a data-idparent="custm-{{ customer.customer.id }}" id="custm-{{ customer.customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-                                                                        <a  data-customer="{{ customer.customer.username }}" id="kk{{ customer.customer.id }}" href="#">Chat</a>
+{#                                                                        <a  data-customer="{{ customer.customer.username }}" id="kk{{ customer.customer.id }}" href="#">Chat</a>#}
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#allcandidate{{ customer.customer.id }}">Review</a>
-
-
                                                                         <script>
-
                                                                             document.querySelector('#kk{{ customer.customer.id }}').onclick = function(e) {
                                                                                 var roomName = document.getElementById('kk{{ customer.customer.id }}').getAttribute('data-customer');
                                                                                 window.location.pathname = 'employerdash_message/' + roomName + '/';
@@ -317,50 +304,7 @@
                                              {% endfor %}
                                         </div>
                                     </article>
-                                <script>
 
-                                    $('[data-search]').on('keyup', function() {
-                                        var searchVal = $(this).val();
-                                        var filterItems = $('[data-filter-item]');
-
-                                        if ( searchVal != '' ) {
-                                            filterItems.addClass('hidden');
-                                            $('[data-filter-item][data-filter-name*="' + searchVal.toLowerCase() + '"]').removeClass('hidden');
-                                        } else {
-                                            filterItems.removeClass('hidden');
-                                        }
-                                    });
-                                    $('#sortselectall').change(function () {
-                                        var ascending = false;
-                                        if($(this).val().toLowerCase() === 'az'){
-                                            var sorted = $('.c_all').sort(function(a,b){
-                                                return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? 1 : -1;
-                                            });
-                                            ascending = ascending ? false : true;
-                                            $('#listall').html(sorted);
-                                        }else if ($(this).val().toLowerCase() === 'za'){
-                                            var sortedd = $('.c_all').sort(function(a,b){
-                                                return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? -1 : 1;
-                                            });
-                                            ascending = ascending ? true : false;
-                                            $('#listall').html(sortedd);
-                                        }
-                                    });
-                                    $(function () {
-                                        $(".c_all").slice(0, 4).show();
-                                        $("#loadall").on('click', function (e) {
-                                            e.preventDefault();
-                                            $(".c_all:hidden").slice(0, 4).slideDown(function () {
-
-                                            });
-                                            if ($(".c_all:hidden").length === 0) {
-                                                $("#loadall").fadeOut('slow');
-                                            }
-                                            $("#tabcont").animate({ scrollTop: $('#tabcont').prop("scrollHeight")}, 1500);
-                                            {##}
-                                        });
-                                    });
-                                 </script>
                                     {% if customers >= 4 %}
                                         <div class="row">
                                             <div class="col-md-12 col-sm-12">
@@ -380,10 +324,10 @@
                             <div id="basic2" class="tab-pane fade-in " style="height: 100%;">
                                 <div class="row " style="{% if basic_customers|length > 0 %} visibility: visible; {% else %} visibility: hidden; {% endif %} display:flex; justify-content: flex-start; align-items: center; padding-left: 10px;">
                                     <div style="position: relative;">
-                                        <input data-search2 aria-label="lll1" id="searchdashbasic" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
+                                        <input autocomplete="off" data-search2 aria-label="lll1" id="searchdashbasic" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
                                     </div>
                                     <div class="col-sm-1" style="padding-right: 0;">
-                                      <select id="sortselectbasic" class="form-control form-control-sm" style="">
+                                      <select aria-label="basic" id="sortselectbasic" class="form-control form-control-sm" style="">
                                           <option selected>Sort</option>
                                           <option value="az">A to Z</option>
                                           <option value="za">Z to A</option>
@@ -428,15 +372,13 @@
                                                               </div>
                                                               <div class="form-group" >
                                                                 <label for="allbasictextarea{{ customer.id }}">Review Message</label>
-                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allbasictextarea{{ customer.id }}" ></textarea>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control text-edit" name="message" id="allbasictextarea{{ customer.id }}" ></textarea>
                                                                 <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
                                                               </div>
                                                               <div class="col-sm-12 row">
                                                                   <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
                                                               </div>
-                                                              <script>
-                                                                   CKEDITOR.replace( 'allbasictextarea{{ customer.id }}' );
-                                                              </script>
+
                                                           </form>
     {#                                                      </div>#}
                                                       </div>
@@ -459,7 +401,7 @@
                                                                             {% csrf_token %}
 
                                                                             <a data-idparent="custm-{{ customer.id }}"  id="custm-{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-                                                                            <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
+{#                                                                            <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>#}
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#basic{{ customer.id }}">Review</a>
                                                                             <script>
 
@@ -549,49 +491,6 @@
                                              {% endfor %}
                                         </div>
                                     </article>
-                                       <script>
-                                        $('[data-search2]').on('keyup', function() {
-                                            var searchVal = $(this).val();
-                                            var filterItems = $('[data-filter-item2]');
-
-                                            if ( searchVal !== '' ) {
-                                                filterItems.addClass('hidden');
-                                                $('[data-filter-item2][data-filter-name2*="' + searchVal.toLowerCase() + '"]').removeClass('hidden');
-                                            } else {
-                                                filterItems.removeClass('hidden');
-                                            }
-                                        });
-                                        $('#sortselectbasic').change(function () {
-                                            var ascending = false;
-                                            if($(this).val().toLowerCase() === 'az'){
-                                                var sorted = $('.c_basic').sort(function(a,b){
-                                                    return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? 1 : -1;
-                                                });
-                                                ascending = ascending ? false : true;
-                                                $('#listbasic').html(sorted);
-                                            }else if ($(this).val().toLowerCase() === 'za'){
-                                                var sortedd = $('.c_basic').sort(function(a,b){
-                                                    return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? -1 : 1;
-                                                });
-                                                ascending = ascending ? true : false;
-                                                $('#listbasic').html(sortedd);
-                                            }
-                                        });
-                                        $(function () {
-                                            $(".c_basic").slice(0, 4).show();
-                                            $("#loadbasic").on('click', function (e) {
-                                                e.preventDefault();
-                                                $(".c_basic:hidden").slice(0, 4).slideDown(function () {
-
-                                                });
-                                                if ($(".c_basic:hidden").length === 0) {
-                                                    $("#loadbasic").fadeOut('slow');
-                                                }
-                                                $("#tabcont").animate({ scrollTop: $('#tabcont').prop("scrollHeight")}, 1500);
-                                                {##}
-                                            });
-                                        });
-                                     </script>
                                     {% if basic_customers.count >= 4 %}
                                         <div class="row">
                                         <div class="col-md-12 col-sm-12">
@@ -611,7 +510,7 @@
                             <div id="premium" class="tab-pane fade-in " style="height: 100%;">
                                   <div class="row " style="display:flex; justify-content: flex-start; align-items: center; padding-left: 10px; {% if premium_customers|length > 0 %} visibility: visible; {% else %} visibility: hidden; {% endif %}">
                                         <div style="position: relative;">
-                                            <input data-search3 aria-label="lll1" id="searchdashpremium" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
+                                            <input autocomplete="off" data-search3 aria-label="lll1" id="searchdashpremium" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
                                         </div>
                                         <div class="col-sm-1" style="padding-right: 0;">
                                           <select id="sortselectpremium" class="form-control form-control-sm" style="">
@@ -658,15 +557,12 @@
                                                               </div>
                                                               <div class="form-group" >
                                                                 <label for="allpremiumtextarea{{ customer.id }}">Review Message</label>
-                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allpremiumtextarea{{ customer.id }}" ></textarea>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control text-edit" name="message" id="allpremiumtextarea{{ customer.id }}" ></textarea>
                                                                 <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
                                                               </div>
                                                               <div class="col-sm-12 row">
                                                                   <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
                                                               </div>
-                                                              <script>
-                                                                   CKEDITOR.replace( 'allpremiumtextarea{{ customer.id }}' );
-                                                              </script>
                                                           </form>
     {#                                                      </div>#}
                                                       </div>
@@ -688,7 +584,7 @@
                                                                             {% csrf_token %}
 
                                                                             <a data-idparent="custm-{{ customer.id }}" id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-                                                                            <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
+{#                                                                            <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>#}
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#premium{{ customer.id }}">Review</a>
                                                                              <!-- Modal -->
 
@@ -781,47 +677,7 @@
                                         </div>
                                     </article>
                                     <script>
-                                        $('[data-search3]').on('keyup', function() {
-                                            var searchVal = $(this).val();
-                                            var filterItems = $('[data-filter-item3]');
 
-                                            if ( searchVal !== '' ) {
-                                                filterItems.addClass('hidden');
-                                                $('[data-filter-item3][data-filter-name3*="' + searchVal.toLowerCase() + '"]').removeClass('hidden');
-                                            } else {
-                                                filterItems.removeClass('hidden');
-                                            }
-                                        });
-                                        $('#sortselectpremium').change(function () {
-                                            var ascending = false;
-                                            if($(this).val().toLowerCase() === 'az'){
-                                                var sorted = $('.c_premium').sort(function(a,b){
-                                                    return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? 1 : -1;
-                                                });
-                                                ascending = ascending ? false : true;
-                                                $('#listpremium').html(sorted);
-                                            }else if ($(this).val().toLowerCase() === 'za'){
-                                                var sortedd = $('.c_premium').sort(function(a,b){
-                                                    return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? -1 : 1;
-                                                });
-                                                ascending = ascending ? true : false;
-                                                $('#listpremium').html(sortedd);
-                                            }
-                                        });
-                                        $(function () {
-                                            $(".c_premium").slice(0, 4).show();
-                                            $("#loadpremium").on('click', function (e) {
-                                                e.preventDefault();
-                                                $(".c_premium:hidden").slice(0, 4).slideDown(function () {
-
-                                                });
-                                                if ($(".c_premium:hidden").length === 0) {
-                                                    $("#loadpremium").fadeOut('slow');
-                                                }
-                                                $("#tabcont").animate({ scrollTop: $('#tabcont').prop("scrollHeight")}, 1500);
-                                                {##}
-                                            });
-                                        });
                                      </script>
 
 {#                                    {% if premium_customers.count >= 6 %}#}
@@ -843,7 +699,7 @@
                             <div id="ultimate" class="tab-pane fade-in " style="height: 100%;">
                                 <div class="row " style="display:flex; justify-content: flex-start; align-items: center; padding-left: 10px; {% if ultimate_customers|length > 0 %} visibility: visible; {% else %} visibility: hidden; {% endif %}">
                                     <div style="position: relative;">
-                                        <input data-search4 aria-label="lll1" id="searchdashultimate" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
+                                        <input autocomplete="off" data-search4 aria-label="lll1" id="searchdashultimate" style="background-color: white;z-index: 5; padding: 15px; width: 250px; border-radius: 6px; position:relative;" type="text" class="form-control whitee" placeholder="Search">
                                     </div>
                                     <div class="col-sm-1" style="padding-right: 0;">
                                       <select id="sortselectultimate" class="form-control form-control-sm" style="">
@@ -853,49 +709,7 @@
                                       </select>
                                     </div>
                                 </div>
-                                <script>
-                                        $('[data-search4]').on('keyup', function() {
-                                            var searchVal = $(this).val();
-                                            var filterItems = $('[data-filter-item4]');
 
-                                            if ( searchVal != '' ) {
-                                                filterItems.addClass('hidden');
-                                                $('[data-filter-item4][data-filter-name4*="' + searchVal.toLowerCase() + '"]').removeClass('hidden');
-                                            } else {
-                                                filterItems.removeClass('hidden');
-                                            }
-                                        });
-                                        $('#sortselectultimate').change(function () {
-                                            var ascending = false;
-                                            if($(this).val().toLowerCase() === 'az'){
-                                                var sorted = $('.c_ultimate').sort(function(a,b){
-                                                    return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? 1 : -1;
-                                                });
-                                                ascending = ascending ? false : true;
-                                                $('#listultimate').html(sorted);
-                                            }else if ($(this).val().toLowerCase() === 'za'){
-                                                var sortedd = $('.c_ultimate').sort(function(a,b){
-                                                    return (ascending === ($(a).data('sort').toLowerCase() < $(b).data('sort').toLowerCase())) ? -1 : 1;
-                                                });
-                                                ascending = ascending ? true : false;
-                                                $('#listultimate').html(sortedd);
-                                            }
-                                        });
-                                        $(function () {
-                                            $(".c_ultimate").slice(0, 4).show();
-                                            $("#loadultimate").on('click', function (e) {
-                                                e.preventDefault();
-                                                $(".c_ultimate:hidden").slice(0, 4).slideDown(function () {
-
-                                                });
-                                                if ($(".c_ultimate:hidden").length === 0) {
-                                                    $("#loadultimate").fadeOut('slow');
-                                                }
-                                                $("#tabcont").animate({ scrollTop: $('#tabcont').prop("scrollHeight")}, 1500);
-                                                {##}
-                                            });
-                                        });
-                                     </script>
                                 {% if  ultimate_customers|length > 0 %}
                                     <article class="advance-search-job">
                                         <div id="listultimate" class="row no-mrg"  style="display: flex; justify-content: center; flex-wrap: wrap;">
@@ -934,15 +748,12 @@
                                                               </div>
                                                               <div class="form-group" >
                                                                 <label for="allultimatetextarea{{ customer.id }}">Review Message</label>
-                                                                <textarea required rows="20" style="max-width: 100%" class="form-control" name="message" id="allultimatetextarea{{ customer.id }}" ></textarea>
+                                                                <textarea required rows="20" style="max-width: 100%" class="form-control text-edit" name="message" id="allultimatetextarea{{ customer.id }}" ></textarea>
                                                                 <small id="emailHelp" class="form-text text-muted">Thought about this candidate</small>
                                                               </div>
                                                               <div class="col-sm-12 row">
                                                                   <button type="submit" class="update-btn custom-button btn-sm" style="border-radius: 140px; margin: 0 auto; padding: 10px">Review</button>
                                                               </div>
-                                                              <script>
-                                                                   CKEDITOR.replace( 'allultimatetextarea{{ customer.id }}' );
-                                                              </script>
                                                           </form>
     {#                                                      </div>#}
                                                       </div>
@@ -965,7 +776,7 @@
                                                                         {% csrf_token %}
 
                                                                         <a data-idparent="custm-{{ customer.id }}" id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-                                                                        <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>
+{#                                                                        <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>#}
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#ultimate{{ customer.id }}">Review</a>
                                                                          <!-- Modal -->
 
@@ -1110,44 +921,44 @@
                                     {% if company_reg_pay %}
                                         <div class="col-sm-12" style="margin: 0 auto;">
                                             <table class="table table-hover" id="myTable">
-                                          <thead>
-                                            <tr>
-                                              <th scope="col">#</th>
-                                              <th scope="col">Gateway</th>
-                                              <th scope="col">Trans_id</th>
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Gateway</th>
+                                                  <th scope="col">Trans_id</th>
 
-                                              <th scope="col">Payer Email</th>
-                                              <th scope="col">User Reg No</th>
-                                              <th scope="col">Payer Name</th>
-                                              <th scope="col">Amount</th>
-                                              <th scope="col">Status</th>
-                                              <th scope="col">Date</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                          {% for k in company_reg_pay %}
-                                            <tr>
-                                              <th scope="row">{{ forloop.counter }}</th>
-                                              <td>{{ k.pay_method }}</td>
-                                              <td>{{ k.transaction_recipt_no }}</td>
-                                              <td>{{ k.payer_paying_email }}</td>
-                                              <td>{{ k.payer_reg_no }}</td>
-                                              <td>{{ k.payer_full_name }}</td>
-                                              <td>{{ k.amount }}</td>
-                                              <td>
-                                                  {{ k.payment_status }}
-                                                  {% if k.payment_status|lower == 'completed' %}
-                                                      <i style="color: limegreen;" class="fas fa-check-circle"></i>
-                                                      {% else %}
-                                                      <i style="color: red;" class="fas fa-exclamation-circle"></i>
-                                                  {% endif %}
-                                              </td>
-                                              <td>{{ k.created_at|naturaltime }}</td>
-                                            </tr>
-                                          {% endfor %}
+                                                  <th scope="col">Payer Email</th>
+                                                  <th scope="col">User Reg No</th>
+                                                  <th scope="col">Payer Name</th>
+                                                  <th scope="col">Amount</th>
+                                                  <th scope="col">Status</th>
+                                                  <th scope="col">Date</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                              {% for k in company_reg_pay %}
+                                                <tr>
+                                                  <th scope="row">{{ forloop.counter }}</th>
+                                                  <td>{{ k.pay_method }}</td>
+                                                  <td>{{ k.transaction_recipt_no }}</td>
+                                                  <td>{{ k.payer_paying_email }}</td>
+                                                  <td>{{ k.payer_reg_no }}</td>
+                                                  <td>{{ k.payer_full_name }}</td>
+                                                  <td>{{ k.amount }}</td>
+                                                  <td>
+                                                      {{ k.payment_status }}
+                                                      {% if k.payment_status|lower == 'completed' %}
+                                                          <i style="color: limegreen;" class="fas fa-check-circle"></i>
+                                                          {% else %}
+                                                          <i style="color: red;" class="fas fa-exclamation-circle"></i>
+                                                      {% endif %}
+                                                  </td>
+                                                  <td>{{ k.created_at|naturaltime }}</td>
+                                                </tr>
+                                              {% endfor %}
 
-                                          </tbody>
-                                        </table>
+                                              </tbody>
+                                            </table>
                                         </div>
                                     {% else %}
                                         <h3 style="text-align: center;">No Payment Made</h3>
@@ -1170,220 +981,9 @@
     <!-- ========== Begin: Brows job Category End ===============  -->
 {% endblock content %}
 {% block script %}
-
-
-     <script>
-        $(function(){
-            $(".customer").slice(0, 6).show(); // select the first ten
-            $("#load").click(function(e){ // click event for load more
-                e.preventDefault();
-                $(".customer:hidden").slice(0, 6).show(); // select next 10 hidden divs and show them
-                if($(".customer:hidden").length == 0){ // check if any hidden divs still exist
-                    spinner.hide();
-                    swal.fire({
-                        title: "Error!",
-                        text: "No more categories to load",
-                        type: "error",
-                        confirmButtonText: "Retry"
-                    });
-                }
-            });
-            {#$('a[href=#top]').click(function () {#}
-            {#    $('body,html').animate({#}
-            {#        scrollTop: 0#}
-            {#    }, 600);#}
-            {#    return false;#}
-            //});
-
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 50) {
-                    $('.totop a').fadeIn();
-                } else {
-                    $('.totop a').fadeOut();
-                }
-            });
-        });
-
-    </script>
-    <script>
-       $(document).ready(function(){
-
-            $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
-                console.log('yess');
-                localStorage.setItem('activeTab5', $(e.target).attr('href'));
-            });
-            let activeTab = localStorage.getItem('activeTab5');
-            if(activeTab){
-                $('#simple-design-tab1 a[href="' + activeTab + '"]').tab('show');
-            }
-        });
-       $(document).ready(function(){
-
-            $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
-                console.log('yess');
-                localStorage.setItem('activeTab6', $(e.target).attr('href'));
-            });
-            let activeTab = localStorage.getItem('activeTab6');
-            if(activeTab){
-                $('#simple-design2 a[href="' + activeTab + '"]').tab('show');
-            }
-        });
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-    <script>
-        $(document).load(function () {
-            getUsersData();
-        })
-
-        function getUsersData() {
-            var endpoint = '{% url 'LML:employee_shortlist_graph' %}';
-            var defaultData =  [];
-            var labels = [];
-            $.ajax({
-                method: "GET",
-                url : endpoint,
-                success : function (data) {
-                    labels = data.labels2;
-                    defaultData= data.defaultData2;
-                    setCustomerLine(labels, defaultData);
-                    setCustomerBar(labels, defaultData);
-                    // console.log(data);
-                },
-                error : function (error_data) {
-                    console.log(error);
-                    console.log(error_data);
-                },
-            });
-        }
-        getUsersData();
-        function setCustomerLine(x, y){
-            var ctx = document.getElementById('customers').getContext('2d');
-            var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: x,
-                datasets: [{
-                    label: 'Candidate Shortlist Line',
-                    data: y,
-                    backgroundColor: [
-                         'rgb(7, 177, 7, 50)',
-                        'rgba(255, 159, 64, 1)',
-
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgb(129,255,46)',
-                        'rgb(255,217,66)',
-                        'rgb(255,131,255)',
-                        'rgb(1,53,255)',
-                        'rgb(7, 177, 7)',
-                        'rgb(36,255,221)',
-                        'rgb(145,255,39)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 159, 64, 1)',
-                        'rgb(7, 177, 7, 50)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgb(129,255,46)',
-                        'rgb(255,217,66)',
-                        'rgb(255,131,255)',
-                        'rgb(1,53,255)',
-                        'rgb(7, 177, 7)',
-                        'rgb(36,255,221)',
-                        'rgb(145,255,39)',
-
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            stepSize: 1,
-                        }
-                    }]
-                }
-            }
-        });
-        }
-        function  setCustomerBar(x, y){
-             var ctx = document.getElementById('customers2').getContext('2d');
-            var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: x,
-                datasets: [{
-                    label: 'Candidate Shortlist Bar',
-                    data: y,
-                    backgroundColor: [
-                         'rgb(7, 177, 7, 50)',
-                        'rgba(255, 159, 64, 1)',
-
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgb(129,255,46)',
-                        'rgb(255,217,66)',
-                        'rgb(255,131,255)',
-                        'rgb(1,53,255)',
-                        'rgb(7, 177, 7)',
-                        'rgb(36,255,221)',
-                        'rgb(145,255,39)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 159, 64, 1)',
-                        'rgb(7, 177, 7, 50)',
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgb(129,255,46)',
-                        'rgb(255,217,66)',
-                        'rgb(255,131,255)',
-                        'rgb(1,53,255)',
-                        'rgb(7, 177, 7)',
-                        'rgb(36,255,221)',
-                        'rgb(145,255,39)',
-
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            stepSize: 1,
-                        }
-                    }]
-                }
-            }
-        });
-        }
+    <script type="text/javascript" src="{% static 'assets/company/dashjsscript.js' %}"></script>
 
 
-    </script>
-{#<div class="search_wrapper" id="search_wrapper">#}
-{#    <ul>#}
-{#        <li>#}
-{#            <a href=""> <span>Eugene</span> <i class="fa fa-caret-right"></i></a>#}
-{#        </li>#}
-{#         <li>#}
-{#            <a href=""> <span>Eugene</span> <i class="fa fa-caret-right"></i></a>#}
-{#        </li>#}
-{#    </ul>#}
-{#</div>#}
 
 {% endblock script %}

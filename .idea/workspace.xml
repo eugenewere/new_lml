@@ -20,33 +20,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lmlapp/decorators.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspayload2.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/paymentcanceled.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/paymentdone.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/ckeditor/ckeditor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/dashjsscript.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/datatables/datatables.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/datatables/datatables.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db6.json" beforeDir="false" afterPath="$PROJECT_DIR$/db6.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db7.json" beforeDir="false" afterPath="$PROJECT_DIR$/db5.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db8.json" beforeDir="false" afterPath="$PROJECT_DIR$/db4.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/employeedash.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/employeedash.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/animision/animsition.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/animision/animsition.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/empscriptbootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/empscriptbootstrap.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspayload.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspayload.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/jobdetails/employerdetails.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/jobdetails/employerdetails.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/companympesapayment.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/companympesapayment.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/employee/paymentdone.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/employee/paymentdone.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlproject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,10 +46,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="HTML File" />
-        <option value="JavaScript File" />
         <option value="Python Script" />
+        <option value="CSS File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -184,7 +171,7 @@
       <workItem from="1596656119590" duration="261347000" />
       <workItem from="1597411844125" duration="32956000" />
       <workItem from="1597515465120" duration="16132000" />
-      <workItem from="1597683150575" duration="131264000" />
+      <workItem from="1597683150575" duration="145203000" />
     </task>
     <servers />
   </component>
