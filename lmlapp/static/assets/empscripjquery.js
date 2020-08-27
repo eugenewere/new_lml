@@ -31,17 +31,11 @@ $(document).ready(function(){
                     }, 5000)
                 }
                 else {
-                    // {#console.log(response['form'])#}
-                    // console.log(JSON.stringify(response['form']))
-                    // console.log(JSON.parse(response['form']))
                     var resp = response['form']
                     let k = JSON.stringify(resp)
                     let str = JSON.parse(resp)
                     for (var key in str) {
                       if (str.hasOwnProperty(key)) {
-                        // console.log(key);
-                        // console.log(str[key][0]['message']);
-
                         $('#errorlist').append(
                             '<li class="text-capitalize">'+
                                '<span>'+ key +'</span>'+

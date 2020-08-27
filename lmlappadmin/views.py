@@ -306,11 +306,29 @@ def addcompanyPricing(request):
         price = request.POST.get('price')
         status = request.POST.get('status')
         description = request.POST.get('description')
-        CompanyPricingPlan.objects.create(
+
+        shortlist_access = request.POST.get('shortlist_access')
+        review_access = request.POST.get('review_access')
+        no_of_candidates = request.POST.get('no_of_candidates')
+        chat_with_candidates = request.POST.get('chat_with_candidates')
+        view_lml_cv = request.POST.get('view_lml_cv')
+        view_user_own_cv = request.POST.get('view_user_own_cv')
+        print(shortlist_access, review_access, no_of_candidates, chat_with_candidates, view_lml_cv, view_user_own_cv)
+        cpp = CompanyPricingPlan.objects.create(
             title=title.capitalize(),
             price=price,
             status=status.upper(),
             description=description
+        )
+        CompanyPricingDetails.objects.create(
+            pricing=cpp,
+            shortlist_access=shortlist_access,
+            review_access=review_access,
+            no_of_candidates=no_of_candidates,
+            chat_with_candidates=chat_with_candidates,
+            view_lml_cv=view_lml_cv,
+            view_user_own_cv=view_user_own_cv,
+
         )
         sweetify.success(request, 'Success', text='Price Added', persistent='Ok')
 
@@ -324,6 +342,13 @@ def editcompanyPricing(request, price_id):
         price = request.POST.get('price')
         status = request.POST.get('status')
         description = request.POST.get('description')
+
+        shortlist_access = request.POST.get('shortlist_access')
+        review_access = request.POST.get('review_access')
+        no_of_candidates = request.POST.get('no_of_candidates')
+        chat_with_candidates = request.POST.get('chat_with_candidates')
+        view_lml_cv = request.POST.get('view_lml_cv')
+        view_user_own_cv = request.POST.get('view_user_own_cv')
         pricing = CompanyPricingPlan.objects.filter(id=price_id).first()
         if pricing is not None:
             CompanyPricingPlan.objects.filter(id=pricing.id).update(
@@ -331,6 +356,15 @@ def editcompanyPricing(request, price_id):
                 price=price,
                 status=status.upper(),
                 description=description
+            )
+            CompanyPricingDetails.objects.filter(pricing=pricing).update(
+                shortlist_access=shortlist_access,
+                review_access=review_access,
+                no_of_candidates=no_of_candidates,
+                chat_with_candidates=chat_with_candidates,
+                view_lml_cv=view_lml_cv,
+                view_user_own_cv=view_user_own_cv,
+
             )
             sweetify.success(request, 'Success', text='Price Updated', persistent='Ok')
         else:
@@ -346,6 +380,17 @@ def deletecompanyPricing(request, price_id):
         sweetify.success(request, 'Success', text='Price Deleted', persistent='Ok')
     else:
         sweetify.error(request, 'Error', text='Price Not Deleted', persistent='Ok')
+
+    return redirect(request.META['HTTP_REFERER'])
+
+def deleteallcompanyPricing(request):
+    pricings = CompanyPricingPlan.objects.all()
+    if pricings is not None:
+        for pricing in pricings:
+            pricing.delete()
+        sweetify.success(request, 'Success', text='All Prices Deleted', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='All Prices Not Deleted', persistent='Ok')
 
     return redirect(request.META['HTTP_REFERER'])
 

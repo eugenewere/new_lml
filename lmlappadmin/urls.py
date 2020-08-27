@@ -41,6 +41,7 @@ urlpatterns = [
     path('companyPricing/',views.companyPricing, name='companyPricing'),
     path('addcompanyPricing/',views.addcompanyPricing, name='addcompanyPricing'),
     path('deletecompanyPricing/<int:price_id>',views.deletecompanyPricing, name='deletecompanyPricing'),
+    path('deleteallcompanyPricing/',views.deleteallcompanyPricing, name='deleteallcompanyPricing'),
     path('editcompanyPricing/<int:price_id>',views.editcompanyPricing, name='editcompanyPricing'),
     path('allcategories/',views.categories, name='categories'),
 

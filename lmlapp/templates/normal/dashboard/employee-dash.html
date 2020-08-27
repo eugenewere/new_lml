@@ -9,28 +9,14 @@
         }
     </style>
     <link rel="stylesheet" href="{% static 'assets/css/messagelayoutcss.css' %}">
-    <script src="{% static 'assets/js/../../../../chat/static/chat/js/js/reconnecting-websockets.js' %}"></script>
-
-
     <link rel="canonical" href="https://codepen.io/emilcarlsson/pen/ZOQZaV?limit=all&page=74&q=contact+" />
     <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
 
     <script src="https://use.typekit.net/hoy3lrg.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
-    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
 {% endblock links %}
-{#{% block search %}#}
-{#        {% if request.user.is_authenticated %}#}
-{#            {% if request.user|logged_in_company %}#}
-{#                <li class="active" style="margin-right: 21px;" >#}
-{#                    <input style="background-color: white; padding: 15px; border-radius: 20px;" type="text" class="form-control custom-button whitee" placeholder="Search">#}
-{#                </li>#}
-{#            {% endif %}#}
-{#        {% endif %}#}
-{#    {% endblock %}#}
 {% block content %}
     <!-- Title Header Start -->
     <section class="inner-header-page " style="background-image:url({% static 'assets/img/banner-10.jpg' %}); color: white; ">
@@ -104,12 +90,13 @@
                    <div class="deatil-tab-employ tool-tab container " style="background: white;" >
                         <ul class="nav simple nav-tabs" id="simple-design-tab">
                             <li class="active"><a data-toggle="pill" href="#about">Payment History</a></li>
+                            <li class=""><a data-toggle="pill" href="#docum">Documents</a></li>
                         </ul>
 
                           <!-- Start All Sec -->
                         <div class="tab-content" style="height: 500px;overflow-x: hidden; overflow-y: scroll;">
                             <div id="about" class="tab-pane fade in active" style="height: 100%;">
-                                <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">
+                                <div class="col-sm-12" style="padding: 9px 10px; height: 100%;display: flex; justify-content: center; ">
                                     {% if cust_reg_pay %}
                                         <div class="col-sm-12" style="margin: 0 auto;">
                                             <table class="table table-hover" id="myTable">
@@ -156,6 +143,122 @@
                                     {% endif %}
                                 </div>
                             </div>
+                            <div id="docum" class="tab-pane fade in " style="height: 100%;">
+
+                                <div class="modal fade" id="uploaddoc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content" style="padding-bottom: 0;">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Upload Files</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body" style="padding: 20px">
+                                          <form enctype="multipart/form-data" action="{% url 'LML:candidate_files_upload' %}"  data-doc  id="fileform" style="display: flex; flex-direction: column;">
+                                            {% csrf_token %}
+                                            <input aria-label="kkk" id="filed" type="text" hidden name="content-type">
+                                            <div class="form-group" style="display: flex; flex-direction: column;">
+                                                <label for="totle" class="animation a1 " style="margin-bottom: 3px;">Title</label>
+                                                <input required type="text" name="title" class="form-field animation a1 " style="margin-bottom: 3px;" id="totle" aria-describedby="emailHelp">
+                                                <small id="emailHelp" class="form-text text-muted animation a1 " style="margin-bottom: 3px;">Name of your document</small>
+                                            </div>
+                                              <label class="animation a2" for="">Upload a file</label>
+                                            <div class="input-group mb-3 animation a2" style="">
+
+                                              <div class="custom-file">
+                                                <input accept=".pdf, .doc, .docx" required name="filee" type="file" class="custom-file-input" id="inputGroupFile02">
+                                                <label id="rlabel" class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                                              </div>
+                                              <div class="input-group-append">
+                                                <span class="input-group-text" id="inputGroupFileAddon02">Upload</span>
+                                              </div><br>
+
+                                            </div>
+                                            <span class="animation a2">Only .pdf files and .doc or .docx files are allowed</span>
+                                            <span id="filestatus"></span>
+
+                                            <div class="input-group my-3" style="display: flex; flex-direction: column; padding-top: 20px">
+                                                <label for="brief_details" class="animation a3" style="width: 100%;">Details</label>
+                                                <textarea id="brief_details" name="details" style="max-width: 100%; width: 100%;" class="form-control textarea animation a3" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
+                                            </div>
+                                              <div class="col-sm-12" style="padding: 20px 0;">
+                                                  <div class="row" style="justify-content: flex-end">
+                                                        <button type="submit" class="custom-button btn btn-primary">Save changes</button>
+                                                  </div>
+                                              </div>
+
+                                          </form>
+                                      </div>
+
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="col-sm-12" style="padding: 20px 10px; height: 100%;display: flex; justify-content: center; align-items: center;">
+
+                                        <div class="col-sm-12" style="margin: 0 auto;">
+                                            <div class="filemanager" style="margin-top: 213px;">
+                                                <div class="filemanager--headerside">
+                                                    <h4 id="filecount">{{ custome_documents|length }} Files (0 Selected)</h4>
+                                                </div>
+                                                <div class="filemanager--headermain">
+                                                    <div class="filemanager--controls">
+                                                        <button type="button" class="view icon active" title="Grid View" data-view="grid"><span class="mdi mdi-view-grid"></span></button>
+                                                        <button type="button" class="view icon" title="List View" data-view="list"><span class="mdi mdi-view-sequential"></span></button>
+                                                    </div>
+                                                        <div class="filemanager--controls">
+                                                            <button type="button" class="danger hidden toggle" onclick="remove()"><span class="mdi mdi-delete"></span>Remove Selected</button>
+                                                            <button type="button" class="danger hidden toggle" onclick="clearAll()"><span class="mdi mdi-cancel"></span>Clear</button>
+                                                            <button type="button" class="primary hidden toggle" onclick="invert()"><span class="mdi mdi-swap-horizontal"></span>Invert</button>
+                                                            <button type="button" class="primary" onclick="selectAll()"><span class="mdi mdi-check"></span>Select All</button>
+                                                            <button type="button" class="primary" onclick="add()"><span class="mdi mdi-upload"></span>Add File</button>
+                                                            <a style="" href="" data-toggle="modal" data-target="#uploaddoc" class="custom-button btn btn-success"><i class="fas fa-file-upload mrg-r-5"></i>Upload</a>
+
+                                                        </div>
+                                                    </div>
+                                                <div class="filemanager--sidebar">
+                                                    <div class="filemanager--tabs">
+                                                        <ul>
+                                                            <li class="active"><a href="#" data-filter="*"><span class="fas fa-file-alt"></span> All</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="filemanager--main">
+                                                    <div class="filemanager--files">
+                                                     {% if custome_documents %}
+                                                        <ul>
+                                                            {% for filee in custome_documents %}
+                                                                <li class="filemanager--file">
+                                                                    <div class="filemanager--fileicon">
+                                                                        <span class="fas fa-file"></span>
+    {#                                                                    <i class="fas fa-file"></i>#}
+                                                                    </div>
+                                                                    <div class="filemanager--remove">&times;</div>
+                                                                    <div class="filemanager--fileinfo">
+                                                                        <div class="filemanager--filename">{{ filee.title|title }}</div>
+                                                                        <div class="filemanager--filesize">{{ filee.file.size|sizify}}</div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                     {% else %}
+                                                        <h3 style="text-align: center;">No Documents</h3>
+                                                     {% endif %}
+                                                    </div>
+                                                </div>
+                                                <div class="filemanager--info">
+                                                    <ul>
+                                                        <li><span style="font-weight: bolder;">Name: </span> Eugene</li>
+                                                        <li><span style="font-weight: bolder;">Size: </span> 30kb</li>
+                                                        <li><span style="font-weight: bolder;">Title: </span> Toka hapa</li>
+                                                        <li><span style="font-weight: bolder;">Details: </span> Toka hapa</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                </div>
+                            </div>
                             <!-- End About Sec -->
                         </div>
                           <!-- End Settings -->
@@ -167,5 +270,81 @@
     <!-- ========== Begin: Brows job Category End ===============  -->
 {% endblock content %}
 {% block script %}
+     <script src="{% static 'email/vendors/js/ajaxform.js' %}"></script>
+     <script>
+        $(document).ready(function () {
+
+            $('#inputGroupFile02').change(function(e){
+                $('#rlabel').text(e.target.files[0].name + '  (' + formatFileSize(e.target.files[0].size, 2) +')');
+                $('#filestatus').removeClass('text-danger text-success')
+                $('#filestatus').text('')
+                {#$('form').attr('data-doc', e.target.files[0].type);#}
+                $('#filed').val(e.target.files[0].type);
+
+                var fileext = ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/pdf"]
+                console.log(e.target.files[0].type)
+                if ( fileext.includes(e.target.files[0].type ) ) {
+                    console.log( 'It is validated!' , e.target.files[0].size)
+                     $('#filestatus').removeClass('text-danger')
+                     $('#filestatus').addClass('text-success')
+                     $('#filestatus').text('Valid Document')
+                }
+                else {
+                     $('#filestatus').removeClass('text-success')
+                     $('#filestatus').addClass('text-danger')
+                     $('#filestatus').text('InValid Document. Only .pdf files and .doc or .docx files are allowed')
+                    $('#inputGroupFile02').val('');
+                    $('#rlabel').text('Input was reset, please upload again a pdf or .doc, .docx');
+                    $('#rlabel').css('color','red')
+                }
+            });
+            function formatFileSize(bytes,decimalPoint) {
+               if(bytes === 0) return '0 Bytes';
+               var k = 1000,
+                   dm = decimalPoint || 2,
+                   sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                   i = Math.floor(Math.log(bytes) / Math.log(k));
+               return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
+
+
+        })
+
+        $('form#fileform').submit( function (event) {
+                event.preventDefault()
+
+                var formdata = $(this).serializeArray();
+                formdata.push({ name: "content-type", value: $('#fileform').attr('data-doc') });
+                formdata.push({ name: "filee", value: $('#fileform input[type="file"]').val() });
+
+                $('form#fileform').ajaxSubmit({
+                    type: "POST",
+                    url: $('form#fileform').attr('action'),
+                    success: function(result){
+                        if(result['success'] === 'success'){
+                             swal.fire({
+                                title: "Success!",
+                                text: result['msg'],
+                                type: "success",
+                                confirmButtonText: "Retry"
+                            });
+                             setTimeout(function () {
+                                 location.reload(true)
+                             },3000)
+                        }
+                        else {
+                             swal.fire({
+                                title: "Error!",
+                                text:  result['msg'],
+                                type: "error",
+                                confirmButtonText: "Retry"
+                            });
+                        }
+                    }
+                });
+            });
+
+    </script>
      <script src="{% static 'assets/company/employeedash.js' %}" type="text/javascript"></script>
+
 {% endblock script %}

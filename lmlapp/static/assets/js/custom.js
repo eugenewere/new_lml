@@ -307,7 +307,7 @@ $(window).load(function() {
 	}, 1000);
 
 });
-$('[data-toggle="tooltip"]').tooltip()
+$('[data-toggle="tooltip"]').tooltip({ boundary: 'window' })
 $(document).ready( function () {
 	if($('#myTable').length){
 		$('#myTable').DataTable();

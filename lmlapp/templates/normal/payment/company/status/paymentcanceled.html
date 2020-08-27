@@ -1,0 +1,63 @@
+{% extends 'normal/layout/homelayout.html' %}
+{% load static %}
+{% load humanize %}
+{% block links %}
+  <style>
+        #accordion .panel-title > a:after, #accordion .panel-title > a.collapsed:after {
+            content: " " !important;
+
+
+        }
+        #accordion .panel-title > a.collapsed:after {
+            content: " " !important;
+        }
+    </style>
+{% endblock links %}
+{% block content %}
+			
+        <!-- Title Header Start -->
+        <section  class="inner-header-title" style="background-image:url({% static 'assets/img/blog/banner-19.jpg' %});">
+            <div class="container">
+                <h3 class=" " style="color: white;">Package Subscription Payment Canceled!</h3>
+            </div>
+        </section>
+        <div class="clearfix"></div>
+        <!-- Title Header End -->
+         <!-- Accordion Design Start -->
+        <section class="accordion">
+            <div class="container" style="height: 70vh;">
+                <div class="col-md-12 col-sm-12">
+                    <div class="simple-tab">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div class="panel panel-default">
+                                <div class="panel-heading" role="tab" id="headingOne">
+                                    <h4 class="panel-title">
+                                        <a style="display: flex; justify-content: space-between;" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                           <span>Payment Success </span><i class="fas fa-caret-down"></i>
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                    <div class="panel-body" style="height: 500px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                        <img style="height:100px; object-fit: contain;filter: hue-rotate(366deg); margin: 28px;" src="{% static 'assets/img/gif/error.jpg' %}" alt="">
+                                        <h3 class="detail-title">Package Subscription Payment Canceled!</h3>
+                                        <p style="text-transform: capitalize;">Package Subscription Payment Has Been Canceled.</p>
+                                        <a href="{% url 'LML:companypricing' %}" class="btn btn-success"> Return To Pricing</a>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </section>
+
+
+        <!-- Accordion Design End -->
+{% endblock content %}
+{% block script %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{% static 'assets/js/js.js' %}" type="text/javascript"></script>
+{% endblock script %}
+			
+

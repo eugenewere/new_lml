@@ -131,12 +131,12 @@ class CompanyRegPrice(models.Model):
 
 class Customer(get_user_model()):
     profile_image = models.ImageField(max_length=200, upload_to='customerImages', null=True, blank=True)
-    regpayment = models.ForeignKey(CustomerPayments, on_delete=models.CASCADE, null=True, blank=True)
+    regpayment = models.ForeignKey(CustomerPayments, on_delete=models.SET_NULL, null=True)
     country = models.CharField(max_length=100, null=False, blank=False)
-    county = models.ForeignKey(County, on_delete=models.CASCADE, null=False, blank=False)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=False, blank=False)
+    county = models.ForeignKey(County, on_delete=models.SET_NULL, null=True)
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     gender = models.CharField(max_length=100, null=False, blank=False)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, max_length=200, null=False, blank=False)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     phone_number = models.CharField(max_length=20, null=False, blank=False)
     date_of_birth = models.DateField(default=datetime.datetime.now)
     landmark = models.CharField(max_length=100, null=True, blank=True)
@@ -243,6 +243,18 @@ class Customer(get_user_model()):
             return 'NO_REGNO_ON_THIS_GUY'
 
 
+
+class CustomerCvFiles(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='candidatecv')
+    title = models.CharField(max_length=100, null=False, blank=False)
+    description = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    def __str__(self):
+        return '%s %s' % (self.customer.first_name, self.file.size)
+
+
 class CustomerRegNo(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     personel_reg_no = models.CharField(max_length=100, null=False, blank=False, unique=True)
@@ -336,17 +348,17 @@ class CompanyRegistrationPayment(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s' % (self.recipt_no)
+        return '%s' % (self.payer_reg_no)
 
 
 class Company(get_user_model()):
     logo = models.ImageField(max_length=200, upload_to='employerlogo', null=True, blank=True)
-    regpayment = models.ForeignKey(CompanyRegistrationPayment, on_delete=models.CASCADE, null=True, blank=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, max_length=200, null=False, blank=False)
+    regpayment = models.ForeignKey(CompanyRegistrationPayment, on_delete=models.SET_NULL, null=True )
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True )
     company_name = models.CharField(max_length=200, null=False, blank=False)
     phone_number = models.CharField(max_length=200, null=False, blank=False, default='0700000000')
-    county = models.ForeignKey(County, on_delete=models.CASCADE, null=False, blank=False)
-    region = models.ForeignKey(Region, on_delete=models.CASCADE, null=False, blank=False)
+    county = models.ForeignKey(County, on_delete=models.SET_NULL, null=True )
+    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     landmark = models.CharField(max_length=100, null=False, blank=False)
     company_motto = models.CharField(max_length=100, null=False, blank=False)
     brief_details = models.TextField()
@@ -417,16 +429,69 @@ class CompanyRegNo(models.Model):
         return '%s %s' % (self.company.company_name, self.company_reg_no)
 
 
-class CompanyStatusPayment(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    recipt_no = models.CharField(max_length=200, null=False, blank=False)
-    amount = models.CharField(max_length=200, null=False, blank=False)
-    PAYMENT_STATUS = {
-        ('UNPAYED', 'Unpayed'),
-        ('PAYED', 'Payed'),
+class CompanyPricingPlan(models.Model):
+    title = models.CharField(max_length=200, null=False, blank=False)
+    price = models.IntegerField(null=False, blank=False)
+    description = models.TextField()
+    MONTHLY = 0
+    YEARLY = 1
+    TIME = {
+        (MONTHLY, 'Monthly'),
+        (YEARLY, 'Yearly'),
     }
-    payment_status = models.CharField(max_length=200, choices=PAYMENT_STATUS, default='UNPAYED', null=False,
-                                      blank=False)
+    status = models.CharField(max_length=200, null=True, blank=True, choices=TIME, default=MONTHLY)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+
+    def _str__(self):
+        return '%s  ' % (self.title)
+
+    def companyPD(self):
+        return CompanyPricingDetails.objects.filter(pricing_id=self.id).first()
+
+
+class CompanyPricingDetails(models.Model):
+    pricing = models.ForeignKey(CompanyPricingPlan, related_name="companypricingdetails", on_delete=models.CASCADE, null=False, blank=False)
+    shortlist_access = models.BooleanField(default=False,null=False, blank=False)
+    review_access = models.BooleanField(default=False,null=False, blank=False)
+    no_of_candidates = models.CharField(max_length=200, null=False, blank=False)
+    chat_with_candidates = models.BooleanField(default=False,null=False, blank=False)
+    view_lml_cv = models.BooleanField(default=False,null=False, blank=False)
+    view_user_own_cv = models.BooleanField(default=False,null=False, blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def _str__(self):
+       return '%s  ' % (self.pricing.title)
+
+
+class CompanyStatusPayment(models.Model):
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL , null=True)
+    cpp = models.ForeignKey(CompanyPricingPlan, on_delete=models.SET_NULL , null=True)
+    pay_method = models.CharField(max_length=200, null=False, blank=False)
+
+    payer_reg_no = models.CharField(max_length=200, null=True, blank=True)
+    payer_full_name = models.CharField(max_length=200, null=True, blank=True)
+    payer_paying_email = models.CharField(max_length=200, null=True, blank=True)
+    business_email_paid = models.CharField(max_length=200, null=True, blank=True)
+
+    country_code = models.CharField(max_length=200, null=True, blank=True)
+    amount = models.CharField(max_length=200, null=False, blank=False)
+
+    currency_amount = models.CharField(max_length=200, null=True, blank=True)
+    currency_code = models.CharField(max_length=200, null=True, blank=True)
+    currency_value = models.CharField(max_length=200, null=True, blank=True)
+
+    pay_recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    transaction_recipt_no = models.CharField(max_length=200, null=False, blank=False)
+    CUSTOMER_PAYMENT_STATUS = {
+        ('UNPAID', 'Unpaid'),
+        ('CANCELED', 'Canceled'),
+        ('COMPLETED', 'Completed'),
+        ('PARTIAL', 'Partial'),
+    }
+    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True, blank=True)
+    transaction_status = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -570,22 +635,8 @@ class ContactUsEmployee(models.Model):
         return '%s (%s) ' % (self.customer, (self.message))
 
 
-class CompanyPricingPlan(models.Model):
-    title = models.CharField(max_length=200, null=False, blank=False)
-    price = models.IntegerField(null=False, blank=False)
-    description = models.TextField()
-    MONTHLY = 0
-    YEARLY = 1
-    TIME = {
-        (MONTHLY, 'Monthly'),
-        (YEARLY, 'Yearly'),
-    }
-    status = models.CharField(max_length=200, null=True, blank=True, choices=TIME, default=MONTHLY)
-    created_at = models.DateTimeField(auto_now_add=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True)
 
-    def _str__(self):
-        return '%s  ' % (self.title)
+
 
 
 class Message(models.Model):

@@ -388,4 +388,10 @@ def get_if_its_reply(request, msg_id):
     else:
         return False
 
+@register.filter("to_int")
+def to_int(value):
+    return int(value)
 
+@register.filter("to_str")
+def to_str(value):
+    return str(value)

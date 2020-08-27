@@ -1,11 +1,30 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
+{% load call_methods %}
+{% load humanize %}
 {% block links %}
     <style>
         *::-webkit-scrollbar {
             width: 4px !important;
             background-color: #F5F5F5;
         }
+    .sub{
+        position: absolute;
+        top: -18px;
+        left: -24px;
+        z-index: 2;
+        padding: 21px;
+        background: green;
+        color: white;
+        border-radius: 50%;
+        font-size: 18px;
+    }
+    .sub_green{
+        background-color: #1DBF73;
+    }
+    .sub_blue{
+        background-color: #35434E;
+    }
     </style>
 {% endblock links %}
 {% block content %}
@@ -37,12 +56,15 @@
                                          {% for price in monthpricing %}
                                                 <div data-status="{{ price.status }}" class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
                                                 <div class="pr-table">
-                                                    <div class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+                                                    <div style="position: relative;" class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+                                                        {% if  paid_pac.cpp.id|to_int == price.id|to_int %}
+                                                        <i data-toggle="tooltip" data-placement="left" title="Active Package" style="" class="fas fa-hands-helping sub {% if forloop.counter|divisibleby:2 %} sub_green {% else %} sub_blue {% endif %}"></i>
+                                                        {% endif%}
                                                         <div class="pr-plan">
                                                             <h4>{{ price.title }}</h4>
                                                         </div>
                                                         <div class="pr-price">
-                                                            <h3><sup>Ksh.</sup>{{price.price}}<sub>/ {{ price.status }}</sub></h3>
+                                                            <h3 style="font-size: 50px;"><sup>Ksh.</sup>{{price.price|intcomma}}<sub>/ {{ price.status }}</sub></h3>
                                                         </div>
                                                     </div>
                                                     <div class="pr-features" style="height: 234px; overflow: auto;">
@@ -50,7 +72,15 @@
 
                                                     </div>
                                                     <div class="pr-buy-button" style="padding: 0;">
-                                                        <a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %} active {% endif %}" title="Price Button">select</a>
+                                                        {% if request.user.is_authenticated  %}
+                                                            {% if request.user|logged_in_company %}
+                                                                {% if not paid_pac.cpp.id|to_int == price.id|to_int %}
+                                                                    <a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %} active {% endif %}" title="Price Button">select</a>
+                                                                {% else %}
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Active Package" style=" color: white" href="javascript:void(0)" class="pr-btn {% if forloop.counter|divisibleby:2 %} sub_green {% else %} sub_blue {% endif %}" >Active Package  <i class="fas fa-hands-helping"></i></a>
+                                                                {% endif %}
+                                                            {% endif %}
+                                                        {% endif %}
                                                     </div>
                                                 </div>
                                             </div>
@@ -65,12 +95,15 @@
 
                                             <div data-status="{{ price.status }}" class="col-lg-4 col-xl-4 col-md-6 col-sm-12">
                                                 <div class="pr-table">
-                                                    <div class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+                                                    <div style="position: relative;" class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
+                                                        {% if  paid_pac.cpp.id|to_int == price.id|to_int %}
+                                                        <i data-toggle="tooltip" data-placement="left" title="Active Package" style="" class="fas fa-hands-helping sub {% if forloop.counter|divisibleby:2 %} sub_green {% else %} sub_blue {% endif %}"></i>
+                                                        {% endif%}
                                                         <div class="pr-plan">
                                                             <h4>{{ price.title }}</h4>
                                                         </div>
                                                         <div class="pr-price">
-                                                            <h3><sup>Ksh.</sup>{{price.price}}<sub>/ {{ price.status }}</sub></h3>
+                                                            <h3 style="font-size: 50px;"><sup>Ksh.</sup>{{price.price|intcomma}}<sub>/ {{ price.status }}</sub></h3>
                                                         </div>
                                                     </div>
                                                     <div class="pr-features" style="height: 234px; overflow: auto;">
@@ -78,7 +111,16 @@
 
                                                     </div>
                                                     <div class="pr-buy-button" style="padding: 0;">
-                                                        <a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %} active {% endif %}" title="Price Button">select</a>
+                                                         {% if request.user.is_authenticated  %}
+                                                             {% if request.user|logged_in_company %}
+                                                                {% if not paid_pac.cpp.id|to_int == price.id|to_int %}
+                                                                    <a href="{% url 'LML:companypaymentpackage' price.id  %}" class="pr-btn {% if forloop.counter|divisibleby:2 %} active {% endif %}" title="Price Button">select</a>
+                                                                {% else %}
+                                                                    <a data-toggle="tooltip" data-placement="top" title="Active Package" style=" color: white" href="javascript:void(0)" class="pr-btn {% if forloop.counter|divisibleby:2 %} sub_green {% else %} sub_blue {% endif %}" >Active Package  <i class="fas fa-hands-helping"></i></a>
+                                                                {% endif %}
+                                                             {% endif %}
+                                                         {% endif %}
+
                                                     </div>
                                                 </div>
                                             </div>

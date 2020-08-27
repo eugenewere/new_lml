@@ -1,6 +1,7 @@
 {% extends 'admin/layout.html' %}
 {% load static %}
 {% load humanize %}
+{% load call_methods %}
 {% block links %}
 <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
 {% endblock %}
@@ -38,6 +39,27 @@
                             <button type="button" class="btn btn-success " data-toggle="modal" data-target="#exampleModal">
                               Add Pricing
                             </button>
+                            {% if pricings %}
+                                <a href="#" data-toggle="modal" data-target="#deleteModalall" class="btn btn-danger">Delete all</a>
+                                <div class="modal fade" id="deleteModalall" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete All Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Are You Sure You Want To Delete All Pricing
+                                      <div class="row" style="padding: 15px;">
+                                          <a href="{% url 'LMLAdmin:deleteallcompanyPricing' %}" class="btn btn-danger">Delete</a>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            {% endif %}
                             <div class="card">
                                 <h5 class="card-header">Pricing</h5>
 
@@ -49,7 +71,7 @@
                                                 <th scope="col">Title</th>
                                                 <th scope="col">Pricing (Kshs)</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col">Description</th>
+{#                                                <th scope="col">Description</th>#}
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -60,7 +82,7 @@
                                                     <th  scope="row">{{ price.title|title }}</th>
                                                     <th scope="row">{{ price.price|intcomma }}</th>
                                                     <th scope="row">{{ price.status }}</th>
-                                                    <th scope="row">{{ price.description|safe|escape }}</th>
+{#                                                    <th scope="row">{{ price.description|safe|escape }}</th>#}
                                                     <th scope="row">
                                                         <a data-toggle="modal" data-target="#editModal{{ price.id }}" href="" class="btn btn-success rounded btn-sm" >Edit</a>
                                                         <a data-toggle="modal" data-target="#deleteModal-{{ price.id }}" href="" class="btn btn-danger rounded btn-sm">Delete</a>
@@ -113,16 +135,122 @@
                                     <label for="exampleInputEmail2">Price</label>
                                     <input value="{{ price.price }}" required name="price" type="number" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter Price">
                                 </div>
+                                <div class="col-sm-12 px-0 py-5">
+                                    <h3>Company Options</h3>
+                                    <div class="col-sm-12 p-0">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Number Of Candidates {{ price.companyPD.no_of_candidates }}</label>
+                                            <select name="no_of_candidates" class="form-control" id="exampleFormControlSelect1">
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 0 %} selected {% endif %} value="1">0</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 10 %} selected {% endif %} value="10">10</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 20%} selected {% endif %} value="20">20</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 30 %} selected {% endif %} value="30">30</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 40 %} selected {% endif %} value="40">40</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 50  %} selected {% endif %} value="50">50</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 60 %} selected {% endif %} value="60">60</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 70 %} selected {% endif %} value="70">70</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 80 %} selected {% endif %} value="80">80</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 90 %} selected {% endif %} value="90">90</option>
+                                              <option {% if price.companyPD.no_of_candidates|to_int == 100 %} selected {% endif %} value="100">100</option>
+                                              <option {% if price.companyPD.no_of_candidates ==  "Unlimited" %} selected {% endif %} value="Unlimited">Unlimited</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Shortlist Access </label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input {% if price.companyPD.shortlist_access|to_str == 'True' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="shortlist_access" id="exampleRadios1" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios1">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input {% if price.companyPD.shortlist_access|to_str == 'False' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="shortlist_access" id="exampleRadios2" value="False">
+                                                  <label class="form-check-label" for="exampleRadios2">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Review Access</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input {% if price.companyPD.review_access|to_str == 'True' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="review_access" id="exampleRadios33" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios33">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input {% if price.companyPD.review_access|to_str == 'False' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="review_access" id="exampleRadios44" value="False" >
+                                                  <label class="form-check-label" for="exampleRadios44">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Messaging With Candidates</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input {% if price.companyPD.chat_with_candidates|to_str == 'True' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="chat_with_candidates" id="exampleRadios55" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios55">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input {% if price.companyPD.chat_with_candidates|to_str == 'False' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="chat_with_candidates" id="exampleRadios66" value="False" >
+                                                  <label class="form-check-label" for="exampleRadios66">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Viewing Lml Auto Generated Cv</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input {% if price.companyPD.view_lml_cv|to_str == 'True' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="view_lml_cv" id="exampleRadios77" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios77">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input {% if price.companyPD.view_lml_cv|to_str == 'False' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="view_lml_cv" id="exampleRadios88" value="False" >
+                                                  <label class="form-check-label" for="exampleRadios88">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Viewing Candidate Uploaded Cv</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input {% if price.companyPD.view_user_own_cv|to_str == 'True' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="view_user_own_cv" id="exampleRadios99" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios99">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input {% if price.companyPD.view_user_own_cv|to_str == 'False' %}checked{% endif %} style="display: block !important;" class="form-check-input" type="radio" name="view_user_own_cv" id="exampleRadios100" value="False" >
+                                                  <label class="form-check-label" for="exampleRadios100">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <label for="exampleInputEmail3">Description</label>
-                                    <textarea required class="form-control" name="description{{ price.id }}" id="exampleInputEmail3" cols="30" rows="10">
+                                    <label for="exampleInputEmail3{{ price.id }}">Description</label>
+                                    <textarea required class="form-control text-edit" name="description" id="exampleInputEmail3{{ price.id }}" cols="30" rows="10">
                                         {{ price.description }}
                                     </textarea>
-                                    <script>
-                                        CKEDITOR.replace('description{{ price.id }}',{
-                                              removePlugins: [  'Image', ],
-                                         } );
-                                    </script>
+
                                 </div>
                               </div>
                               <div class="modal-footer">
@@ -189,9 +317,118 @@
                                     <label for="exampleInputEmail2">Price</label>
                                     <input required name="price" type="number" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter Price">
                                 </div>
+                                <div class="col-sm-12 px-0 py-5">
+                                    <h3>Company Options</h3>
+                                    <div class="col-sm-12 p-0">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlSelect1">Number Of Candidates</label>
+                                            <select name="no_of_candidates" class="form-control" id="exampleFormControlSelect1">
+                                              <option value="1">0</option>
+                                              <option value="10">10</option>
+                                              <option value="20">20</option>
+                                              <option value="30">30</option>
+                                              <option value="40">40</option>
+                                              <option value="50">50</option>
+                                              <option value="60">60</option>
+                                              <option value="70">70</option>
+                                              <option value="80">80</option>
+                                              <option value="90">90</option>
+                                              <option value="100">100</option>
+                                              <option value="Unlimited">Unlimited</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Shortlist Access</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="shortlist_access" id="exampleRadios1" value="True" checked>
+                                                  <label class="form-check-label" for="exampleRadios1">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="shortlist_access" id="exampleRadios2" value="False">
+                                                  <label class="form-check-label" for="exampleRadios2">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Review Access</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="review_access" id="exampleRadios33" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios33">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="review_access" id="exampleRadios44" value="False" checked>
+                                                  <label class="form-check-label" for="exampleRadios44">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Messaging With Candidates</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="chat_with_candidates" id="exampleRadios55" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios55">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="chat_with_candidates" id="exampleRadios66" value="False" checked>
+                                                  <label class="form-check-label" for="exampleRadios66">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Viewing Lml Auto Generated Cv</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="view_lml_cv" id="exampleRadios77" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios77">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="view_lml_cv" id="exampleRadios88" value="False" checked>
+                                                  <label class="form-check-label" for="exampleRadios88">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 p-4">
+                                            <label class="" for="">Viewing Candidate Uploaded Cv</label>
+                                            <div class="container" style="display: flex;">
+                                                <div class="form-check mx-2">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="view_user_own_cv" id="exampleRadios99" value="True" >
+                                                  <label class="form-check-label" for="exampleRadios99">
+                                                    Yess
+                                                  </label>
+                                                </div>
+                                                <div class="form-check">
+                                                  <input style="display: block !important;" class="form-check-input" type="radio" name="view_user_own_cv" id="exampleRadios100" value="False" checked>
+                                                  <label class="form-check-label" for="exampleRadios100">
+                                                    No
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail3">Description</label>
-                                    <textarea required class="form-control" name="description" id="exampleInputEmail3" cols="30" rows="10"></textarea>
+                                    <label for="exampleInputEmail3tr">Description</label>
+                                    <textarea required class="form-control text-edit" name="description" id="exampleInputEmail3tr" cols="30" rows="10"></textarea>
                                 </div>
                               </div>
                               <div class="modal-footer">
@@ -209,8 +446,12 @@
 {% endblock content %}
 {% block script %}
     <script>
-        CKEDITOR.replace('description',{
-              removePlugins: [  'Image', ],
-         } );
+        $(document).ready(function () {
+            $('.text-edit').each(function () {
+                CKEDITOR.replace( document.querySelector('#'+$(this).attr('id')),{
+                      removePlugins: [  'Image', ],
+                });
+            });
+        });
     </script>
 {% endblock script %}

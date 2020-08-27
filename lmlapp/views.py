@@ -804,10 +804,14 @@ def advancesearch(request):
 
 
 def companypricing(request):
+    comp = Company.objects.filter(user_ptr_id=request.user.id).first()
+    cpp = CompanyStatusPayment.objects.filter(company=comp).order_by('-created_at').first()
+
     context = {
         'title': 'Company Pricing',
         'monthpricing': CompanyPricingPlan.objects.filter(status='MONTHLY').order_by('price'),
         'yearpricing': CompanyPricingPlan.objects.filter(status='YEARLY').order_by('price'),
+        'paid_pac':cpp,
     }
     return render(request, 'normal/companypricing/companypricing.html', context)
 
@@ -915,7 +919,7 @@ def home_contact_us(request, source):
 
 @csrf_exempt
 def payment_done(request):
-    print(request.POST)
+    # print(request.POST)
     context = {
         'post': request.POST
     }
@@ -924,8 +928,22 @@ def payment_done(request):
 
 @csrf_exempt
 def payment_canceled(request):
-    print(request)
+    # print(request)
     return render(request, 'normal/payment/employee/paymentcanceled.html')
+
+@csrf_exempt
+def payment_company_status_done(request):
+    # print(request.POST)
+    context = {
+        'post': request.POST
+    }
+    return render(request, 'normal/payment/company/status/paymentdone.html', context)
+
+
+@csrf_exempt
+def payment_company_status_canceled(request):
+    # print(request)
+    return render(request, 'normal/payment/company/status/paymentcanceled.html')
 
 
 @login_required()
@@ -973,7 +991,7 @@ def companypayment(request):
 
 def companypaymentpackage(request, pricing_id):
     pricing = CompanyPricingPlan.objects.filter(id=pricing_id).first()
-    # CompanyRegNo
+
     context = {
         'pricing': pricing,
     }
@@ -1033,6 +1051,7 @@ def employee_dash(request):
     social = Social_account.objects.filter(customer=customer).first()
     # customers = CompanyShortlistCustomers.objects.filter(company=company)
     cust_reg_pay = CustomerPayments.objects.filter(payer_reg_no=customer.customer_reg_no).order_by('-created_at').all()
+    custome_documents = CustomerCvFiles.objects.all()
     companies_list = []
     userr = User.objects.filter(id=user).first()
     companies = Message.objects.filter(reciever=userr)
@@ -1046,6 +1065,7 @@ def employee_dash(request):
         'social': social,
         'msg_comapanies': msg_companies,
         'cust_reg_pay': cust_reg_pay,
+        'custome_documents':custome_documents,
 
     }
     return render(request, 'normal/dashboard/employee-dash.html', context)
@@ -1835,3 +1855,112 @@ def company_payment_done(request):
 def company_payment_canceled(request):
     print(request)
     return render(request, 'normal/payment/company/paymentcanceled.html')
+
+
+def company_price_details(request, price_id):
+    pricing = CompanyPricingPlan.objects.filter(id=price_id).first()
+    cur = CurrencyValue.objects.all().first()
+    context = {
+        'currency': cur.currency,
+        'reg_amount': pricing.price,
+    }
+    return JsonResponse(context)
+
+
+def company_price_details_record(request, price_id):
+    body = json.loads(request.body)
+    company = Company.objects.filter(user_ptr_id=request.user.id).first()
+    # company_reg_ammount = CompanyRegPrice.objects.filter(status='ACTIVE').first()
+    pricing = CompanyPricingPlan.objects.filter(id=int(price_id)).first()
+    curr = CurrencyValue.objects.first()
+    title = pricing.title
+    print(title)
+    pay_method = "PAYPAL"
+    payer_reg_no = company.companyregno
+    payer_paying_email = body['payer']['email_address']
+    business_email_paid = body['purchase_units'][0]['payee']['email_address']
+    country_code = body['payer']['address']['country_code']
+    payer_name = body['payer']['name']['given_name'] + ' ' + body['payer']['name']['surname']
+    amount = pricing.price
+    currency_amount = body['purchase_units'][0]['amount']['value']
+    currency_code = body['purchase_units'][0]['amount']['currency_code']
+    currency_value = curr.currency
+    pay_recipt_no = body['purchase_units'][0]['payments']['captures'][0]['id']
+    transaction_recipt_no = body['id']
+    transaction_status = body['status']
+
+    if transaction_status == 'COMPLETED':
+        payment_status = 'COMPLETED'
+    elif transaction_status == 'REVERSED':
+        payment_status = 'CANCELED'
+
+    if transaction_status == 'COMPLETED':
+        cp = CompanyStatusPayment.objects.create(
+            pay_method=pay_method,
+            payer_reg_no=payer_reg_no,
+            payer_full_name=payer_name,
+            payer_paying_email=payer_paying_email,
+            business_email_paid=business_email_paid,
+            country_code=country_code,
+            amount=amount,
+            currency_amount=currency_amount,
+            currency_code=currency_code,
+            currency_value=currency_value,
+            pay_recipt_no=pay_recipt_no,
+            transaction_recipt_no=transaction_recipt_no,
+            transaction_status=transaction_status,
+            payment_status=payment_status,
+            company=company,
+            cpp=pricing,
+        )
+        if cp:
+            Company.objects.filter(id=company.id).update(
+                rank_status=title.upper()
+            )
+            context = {
+                'status': 'success',
+                'payment': 'done',
+            }
+            return JsonResponse(context)
+    elif transaction_status == 'REVERSED':
+        context = {
+            'status': 'error',
+            'payment': 'reversed',
+        }
+        return JsonResponse(context)
+
+
+def candidate_files_upload(request):
+    print(request.POST)
+    candidate = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    con = request.POST.get('content-type')
+    title = request.POST.get('title')
+    details = request.POST.get('details')
+    filee = request.FILES.get('filee')
+    fileext = ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/pdf"]
+
+    if con in fileext:
+        if candidate is not None and con is not None and title is not None and details is not None and filee is not None:
+            CustomerCvFiles.objects.create(
+                customer=candidate,
+                title=title,
+                description=details,
+                file=filee,
+            )
+            context={
+                'success': 'success',
+                'msg': 'File Uploaded'
+            }
+            return JsonResponse(context)
+        else:
+            context = {
+                'error': 'error',
+                'msg': 'Error uploading , missing inputs.'
+            }
+            return JsonResponse(context)
+    else:
+        context={
+            'error':'error',
+            'msg':'Wrong File Format'
+        }
+    return JsonResponse(context)

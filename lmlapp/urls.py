@@ -116,4 +116,11 @@ urlpatterns = [
     path('company_payment-done/', views.company_payment_done, name='company_payment_done'),
     path('company_payment-cancelled/', views.company_payment_canceled, name='company_payment_cancelled'),
 
+    path('company_price_details/<int:price_id>', views.company_price_details, name='company_price_details'),
+    path('company_price_details_record/<int:price_id>', views.company_price_details_record, name='company_price_details_record'),
+    path('payment-status-done/', views.payment_company_status_done, name='payment_company-status_done'),
+    path('payment-status-cancelled/', views.payment_company_status_canceled, name='payment_company-status_cancelled'),
+
+    path('candidate_files_upload/', views.candidate_files_upload, name='candidate_files_upload'),
+
 ]
