@@ -36,6 +36,7 @@ import json
 import json
 
 from lmlapp.pdf_util import render_to_pdf
+from lmlapp.templatetags.call_methods import sizify
 
 
 def home(request):
@@ -1059,6 +1060,13 @@ def employee_dash(request):
         cmpn = Company.objects.filter(user_ptr_id=company.sender.id).first()
         companies_list.append(cmpn)
     msg_companies = list(set(companies_list))
+    size = []
+    for s in CustomerCvFiles.objects.filter(customer=customer).all():
+        size.append(s.file.size)
+    # print(sum(size))
+    perc = (sum(size)/20000000) * 100
+    # print()
+
 
     context = {
         'customer': customer,
@@ -1066,9 +1074,24 @@ def employee_dash(request):
         'msg_comapanies': msg_companies,
         'cust_reg_pay': cust_reg_pay,
         'custome_documents':custome_documents,
+        'file_size':sum(size),
+        'per': round(perc, 2),
 
     }
     return render(request, 'normal/dashboard/employee-dash.html', context)
+
+
+
+
+@login_required()
+def userviewpdf(request, cv_id):
+    customer_cv = CustomerCvFiles.objects.filter(id=cv_id).first()
+    cus = Customer.objects.filter(id = customer_cv.customer.id).first()
+    context = {
+        'title': customer_cv.title,
+        'customer_cv':customer_cv,
+    }
+    return render(request, 'normal/pdfviewer.html', context)
 
 @login_required()
 @has_user_paid_registration
@@ -1931,36 +1954,106 @@ def company_price_details_record(request, price_id):
 
 
 def candidate_files_upload(request):
-    print(request.POST)
+    # print(request.POST)
     candidate = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    size = []
+    for s in CustomerCvFiles.objects.filter(customer=candidate).all():
+        size.append(s.file.size)
+    print(sum(size))
+    perc = (sum(size) / 20000000) * 100
     con = request.POST.get('content-type')
     title = request.POST.get('title')
     details = request.POST.get('details')
     filee = request.FILES.get('filee')
-    fileext = ["application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/pdf"]
+    fileext = ["application/pdf", ]
 
-    if con in fileext:
-        if candidate is not None and con is not None and title is not None and details is not None and filee is not None:
-            CustomerCvFiles.objects.create(
-                customer=candidate,
-                title=title,
-                description=details,
-                file=filee,
-            )
+    if not int(sum(size)) > 19000000:
+        if con in fileext:
+            if candidate is not None and con is not None and title is not None and details is not None and filee is not None:
+                CustomerCvFiles.objects.create(
+                    customer=candidate,
+                    title=title,
+                    description=details,
+                    file=filee,
+                )
+                context={
+                    'success': 'success',
+                    'msg': 'File Uploaded'
+                }
+                return JsonResponse(context)
+            else:
+                context = {
+                    'error': 'error',
+                    'msg': 'Error uploading , missing inputs.'
+                }
+                return JsonResponse(context)
+        else:
             context={
+                'error':'error',
+                'msg':'Wrong File Format'
+            }
+            return JsonResponse(context)
+    else:
+        context = {
+            'error': 'error',
+            'msg': 'You Have reached your maxixmum file size limit. Delete some files to continue.'
+        }
+        return JsonResponse(context)
+
+
+def candidate_files_delete_single(request):
+    candidate = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    if request.method == 'POST':
+        file_id = request.POST.get('file_id')
+        file = CustomerCvFiles.objects.filter(customer=candidate, id=file_id).first()
+        # print(file_id, request.POST)
+        if file is not None:
+            file.file.delete()
+            file.delete()
+            size = []
+            for s in CustomerCvFiles.objects.filter(customer=candidate).all():
+                size.append(s.file.size)
+            # print(sum(size))
+            perc = (sum(size) / 20000000) * 100
+
+            context = {
                 'success': 'success',
-                'msg': 'File Uploaded'
+                'msg': 'File Successfuly deleted.',
+                'per': perc,
+                'size':sizify(sum(size)),
+                'files_count': CustomerCvFiles.objects.filter(customer=candidate).all().count()
             }
             return JsonResponse(context)
         else:
             context = {
                 'error': 'error',
-                'msg': 'Error uploading , missing inputs.'
+                'msg': 'File not found.'
             }
             return JsonResponse(context)
-    else:
-        context={
-            'error':'error',
-            'msg':'Wrong File Format'
+
+
+def candidate_files_delete_multiple_single(request):
+    candidate = Customer.objects.filter(user_ptr_id=request.user.id).first()
+    if request.method == 'POST':
+        file_ids = request.POST.getlist('file_ids[]')
+        print(file_ids, request.POST)
+        for file_id in file_ids:
+            file = CustomerCvFiles.objects.filter(customer=candidate, id=file_id).first()
+            print(file_id, file)
+            if file is not None:
+                file.file.delete()
+                file.delete()
+        size = []
+        for s in CustomerCvFiles.objects.filter(customer=candidate).all():
+            size.append(s.file.size)
+        perc = (sum(size) / 20000000) * 100
+
+        context = {
+            'success': 'success',
+            'msg': 'File Successfuly deleted.',
+            'per': perc,
+            'size': sizify(sum(size)),
+            'files_count': CustomerCvFiles.objects.filter(customer=candidate).all().count()
         }
-    return JsonResponse(context)
+        return JsonResponse(context)
+    pass

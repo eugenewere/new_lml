@@ -20,41 +20,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspaysubscribe.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/status/paymentcanceled.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/status/paymentdone.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020_1.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020_TI7aj7P.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020_X2Rw6fE.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspdf.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspdfworker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/pdfcss.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlapp/templates/normal/pdfviewer.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/candidatecv/2019_Corolla_Hatchback.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/candidatecv/A_Narrative_Literature_Review_and_E-Commerce_Websi.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/candidatecv/A_Narrative_Literature_Review_and_E-Commerce_Websi_PCmyEY6.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/candidatecv/pdf_4.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/candidatecv/pdf_4_11NNRtH.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db4.json" beforeDir="false" afterPath="$PROJECT_DIR$/db4.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db5.json" beforeDir="false" afterPath="$PROJECT_DIR$/db2.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db6.json" beforeDir="false" afterPath="$PROJECT_DIR$/db3.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/employeedash.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/employeedash.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/messagelayoutcss.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/messagelayoutcss.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/preloader/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/preloader/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/empscripjquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/empscripjquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/plugins/css/plugins.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/plugins/css/plugins.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/paymentdone.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/paymentdone.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/company/companypricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/company/companypricing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/documents/TYPES_OF_LEARNING.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/documents/entrepreneurs.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/documents/entrepreneurs_v3BtJdH.docx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ngrok.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020_1.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020_TI7aj7P.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/candidatecv/DBA_PRESENATATIONS_August_2020_X2Rw6fE.docx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,10 +57,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
-        <option value="JavaScript File" />
         <option value="CSS File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -98,7 +88,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/status" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lmlapp/templates/normal" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -120,11 +110,11 @@
       <recent name="C:\projects\LML\LMLprojo\lmlproject\lmlapp" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="J:\LMLL\lmlproject\lmlapp\templates\normal" />
       <recent name="J:\LMLL\lmlproject\lmlapp\templates\normal\payment\company\status" />
       <recent name="J:\LMLL\lmlproject\lmlapp\templates\normal\payment\company" />
       <recent name="J:\LMLL\lmlproject\lmlapp\static\assets\img\gif" />
       <recent name="J:\LMLL\lmlproject\chat\static\email" />
-      <recent name="J:\LMLL\lmlproject\chat\static\email\js\scripts\pages" />
     </key>
   </component>
   <component name="RunManager">
@@ -134,6 +124,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="lmlproject.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -192,7 +183,7 @@
       <workItem from="1596656119590" duration="261347000" />
       <workItem from="1597411844125" duration="32956000" />
       <workItem from="1597515465120" duration="16132000" />
-      <workItem from="1597683150575" duration="218566000" />
+      <workItem from="1597683150575" duration="308312000" />
     </task>
     <servers />
   </component>
@@ -231,6 +222,22 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="462" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1598260207904" />
+    <state width="1325" height="198" key="GridCell.Tab.0.bottom" timestamp="1598627094257">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1325" height="198" key="GridCell.Tab.0.bottom/0.30.1366.738@0.30.1366.738" timestamp="1598627094257" />
+    <state width="1325" height="198" key="GridCell.Tab.0.center" timestamp="1598627094255">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1325" height="198" key="GridCell.Tab.0.center/0.30.1366.738@0.30.1366.738" timestamp="1598627094255" />
+    <state width="1325" height="198" key="GridCell.Tab.0.left" timestamp="1598627094254">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1325" height="198" key="GridCell.Tab.0.left/0.30.1366.738@0.30.1366.738" timestamp="1598627094254" />
+    <state width="1325" height="198" key="GridCell.Tab.0.right" timestamp="1598627094255">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state width="1325" height="198" key="GridCell.Tab.0.right/0.30.1366.738@0.30.1366.738" timestamp="1598627094255" />
     <state x="186" y="60" key="SettingsEditor" timestamp="1598265193920">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
@@ -239,13 +246,13 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="523" y="30" width="291" height="252" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1598282117341" />
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598465666391">
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1598790907298">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1598465666391" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1597990596593">
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1598790907298" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1598629479680">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.30.1366.738@0.30.1366.738" timestamp="1597990596593" />
+    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.30.1366.738@0.30.1366.738" timestamp="1598629479680" />
   </component>
 </project>

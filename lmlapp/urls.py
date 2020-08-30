@@ -5,6 +5,7 @@ from . import views
 import random, string
 
 
+
 def id_generator(size=122, chars=string.ascii_lowercase + string.digits):
    return ''.join(random.choice(chars) for _ in range(size))
 
@@ -15,7 +16,6 @@ app_name = 'LML'
 
 urlpatterns = [
     path('', views.home, name="home"),
-
     # path('li/<str:room_name>/', views.room, name='room'),
     # re_path(r'^(?P<room_name>[^/]+)/$', views.room, name='room'),
     # re_path(r"^employerdash_message/(?P<username>[\w.@+-]+)/$", views.employer_dash_message),
@@ -71,6 +71,7 @@ urlpatterns = [
 
 
     path('candidatedash/',views.employee_dash, name='employee_dash'),
+    path('candidateviewpdf/<cv_id>',views.userviewpdf, name='userviewpdf'),
 
     # employeestatus
     path('allpremiumcandidates/',views.all_premium_employees, name = 'all_premium_employees'),
@@ -122,5 +123,9 @@ urlpatterns = [
     path('payment-status-cancelled/', views.payment_company_status_canceled, name='payment_company-status_cancelled'),
 
     path('candidate_files_upload/', views.candidate_files_upload, name='candidate_files_upload'),
+    path('candidate_files_delete/', views.candidate_files_delete_single, name='candidate_files_delete_single'),
+    path('candidate_files_delete_multiple/', views.candidate_files_delete_multiple_single, name='candidate_files_delete_multiple_single'),
+
+
 
 ]

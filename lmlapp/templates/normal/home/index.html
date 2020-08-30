@@ -84,7 +84,7 @@
                 <div class="all-features">
                     {% for offer in offers %}
 {#                        <a target="_blank" href="{% url 'LML:all_offer_employees' request|replacestring:offer.title %}">#}
-                            <div class="col-md-3 col-sm-6 small-padding">
+                            <div class="col-md-3 col-sm-6 col-xs-6 small-padding">
                                 <div class="job-feature">
                                     <div class="feature-icon"><i class="{{ offer.icon }}"></i></div>
                                     <div class="feature-caption">
@@ -246,7 +246,7 @@
                    </div>
                 </div>
                <div class="container-fluid" style="display: flex; flex-wrap: wrap;">
-                    <div class="col-md-6 col-sm-12 no-padd bl-dark "  style="border-radius: 5px;">
+                    <div class="col-md-6 col-sm-12 no-padd bl-dark "  style="border-radius: 5px; margin: 0 auto;">
                         <div class="call-to-act-caption" style="height: 100%; display: flex; flex-direction: column; justify-content: center;;">
                             <h2>LET EMPLOYERS VIEW YOUR PROFILE ANYWHERE ANYTIME</h2>
                             <h3>you might just find your next employer here today</h3>
@@ -431,7 +431,7 @@
                     </div>
                     </div>
                 </div>
-               <div class="row reversdivs" id="" style="display: flex;flex-wrap: wrap;">
+               <div class="row container-fluid reversdivs" id="" style="display: flex;flex-wrap: wrap;">
                     <div class="col-md-6 col-sm-12 no-padd h-100 gifs" style="display: flex; justify-content: center; align-items: center; padding: 84px;" >
                         <img style="object-fit: contain;" src="{% static 'assets/img/gif/accepted.gif' %}" alt="">
                     </div>

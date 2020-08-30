@@ -29,14 +29,21 @@ button.icon {
   font-size: 21px;
   padding: 6px 12px 5px 12px;
 }
-button.icon.active {
-  color: #fff;
-  border-color: #00a8ff;
-  background-color: #00a8ff;
-}
 button.icon span {
   margin: 0;
 }
+button.icon:not('.active'){
+   color: #2AC27B;
+}
+.fa-file-pdf{
+   color: #2AC27B;
+}
+button.icon.active {
+  color: #fff;
+  border-color: #1DBF73;
+  background-color: #1DBF73;
+}
+
 button span {
   margin: 0 5px 0 -5px;
 }
@@ -44,8 +51,8 @@ button.hidden {
   display: none;
 }
 button.primary {
-  border-color: #00a8ff;
-  background-color: #00a8ff;
+  border-color: #1DBF73;
+  background-color: #1DBF73;
 }
 button.danger {
   border-color: #fa424a;
@@ -59,7 +66,7 @@ button.danger {
 .filemanager {
   width: 100%;
   height: 80vh;
-  border: 2px solid #c8d6dd;
+  border: 2px solid #bbbbbb;
   border-radius: 5px;
   background: #fff;
   display: grid;
@@ -87,7 +94,7 @@ button.danger {
 }
 .filemanager .filemanager--headerside,
 .filemanager .filemanager--headermain {
-  border-bottom: 2px solid #c8d6dd;
+  border-bottom: 2px solid #bbbbbb;
   display: -webkit-box;
   display: flex;
   -webkit-box-align: center;
@@ -101,10 +108,10 @@ button.danger {
 }
 .filemanager .filemanager--headerside {
   grid-area: headleft;
-  border-right: 2px solid #c8d6dd;
+  border-right: 2px solid #bbbbbb;
 }
 .filemanager .filemanager--sidebar {
-  border-right: 2px solid #c8d6dd;
+  border-right: 2px solid #bbbbbb;
   grid-area: left;
 }
 .filemanager .filemanager--sidebar .filemanager--tabs {
@@ -125,6 +132,7 @@ button.danger {
 }
 .filemanager .filemanager--sidebar .filemanager--tabs li.active a {
   background-color: #e2e7ee;
+  color: #2AC27B;
 }
 .filemanager .filemanager--sidebar .filemanager--tabs li.active::before {
   position: absolute;
@@ -132,7 +140,7 @@ button.danger {
   top: 0;
   width: 3px;
   height: 100%;
-  background-color: #00a8ff;
+  background-color: #1DBF73;
   content: "";
 }
 .filemanager .filemanager--sidebar .filemanager--tabs a {
@@ -169,6 +177,7 @@ button.danger {
 }
 .filemanager .filemanager--main .filemanager--files.filemanager--list ul .filemanager--file .filemanager--fileicon span {
   font-size: 27px;
+   color: #2AC27B;
 }
 .filemanager .filemanager--main .filemanager--files.filemanager--list ul .filemanager--file .filemanager--fileinfo {
   display: -webkit-box;
@@ -197,9 +206,9 @@ button.danger {
   position: relative;
   width: 112px;
   height: 165px;
-  border: 2px solid #c8d6dd;
+  border: 2px solid #2AC27B;
   border-radius: 5px;
-  margin: 0 10px 10px 0;
+  margin: 7px 10px 7px 10px;
   display: -webkit-box;
   display: flex;
   -webkit-box-orient: vertical;
@@ -227,17 +236,17 @@ button.danger {
   cursor: pointer;
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selecting {
-  border-color: #00a8ff;
-  color: #00a8ff;
+  border-color: #1DBF73;
+  color: #1DBF73;
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selecting .filemanager--remove {
-  border-color: #00a8ff;
+  border-color: #1DBF73;
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selecting .filemanager--fileicon {
-  color: #00a8ff;
+  color: #1DBF73;
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selecting .filemanager--fileinfo .filemanager--filename {
-  color: #00a8ff;
+  color: #1DBF73;
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-unselecting {
   border-color: #fa424a;
@@ -252,9 +261,9 @@ button.danger {
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-unselecting .filemanager--fileinfo .filemanager--filename {
   color: #fa424a;
 }
-.filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selected {
-  border-color: #00a8ff;
-  background-color: #00a8ff;
+.filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selected, .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selected span.fa-file-pdf {
+  border-color: #1DBF73;
+  background-color: #1DBF73;
   color: #fff;
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file.ui-selected .filemanager--remove {
@@ -296,12 +305,24 @@ button.danger {
   font-size: 63px;
   display: -webkit-box;
   display: flex;
+  color: #2AC27B;
   width: 100%;
   -webkit-box-align: center;
           align-items: center;
   -webkit-box-pack: center;
           justify-content: center;
 }
+.filemanager--fileicon span {
+  font-size: 63px;
+  display: -webkit-box;
+  display: flex;
+  width: 100%;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file .filemanager--fileinfo {
   width: 100%;
   display: -webkit-box;
@@ -324,8 +345,10 @@ button.danger {
 .filemanager .filemanager--info {
   padding: 20px;
   color: #343434;
-  border-left: 2px solid #c8d6dd;
+  border-left: 2px solid #bbbbbb;
   grid-area: right;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 .filemanager .filemanager--info li {
   height: 50px;
@@ -345,4 +368,16 @@ button.danger {
     display: -webkit-box;
     display: flex;
   }
+}
+.ui-container .filemanager--list{
+  transition: all 2s;
+}
+.ui-container .filemanager--list ul li {
+  width: 100%;
+}
+.ui-selected span.fa-file-pdf{
+  color: #bbbbbb;
+}
+div.tooltip-inner {
+    max-width: 350px;
 }

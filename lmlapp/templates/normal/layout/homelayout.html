@@ -64,14 +64,14 @@
     <div class="wrapper">
         <nav class="navbar navbar-default navbar-fixed navbar-transparent white bootsnav" >
             <div  class="container">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i class="fa fa-bars"></i></button>
-                <div class="navbar-header" style="position: relative;">
-                    <a class="navbar-brand" href="{% url 'LML:home' %}">
+                <button style="z-index: 99;" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i class="fa fa-bars"></i></button>
+                <div class="navbar-header" >
+                    <a class="navbar-brand" href="{% url 'LML:home' %}" style="position: relative;">
                         <img style="width: 114px;height: 47px;" src="{% static 'assets/img/LML5.png' %}" class="logo logo-display" alt="">
                         <img style="width: 90px;height: 38px;" src="{% static 'assets/img/LML4.png' %}" class="logo logo-scrolled img-responsive" alt="" >
-
+                        <div data-toggle="tooltip" data-placement="right" title="New Message"  class="blob blob2"></div>
                     </a>
-                    <div data-toggle="tooltip" data-placement="right" title="New Message" style="right: -12px; top: 4px; display: none" class="blob"></div>
+
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-menu">
                     <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp" >
