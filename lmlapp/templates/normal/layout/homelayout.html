@@ -57,8 +57,7 @@
         }
     </style>
 </head>
-
-<body >
+<body>
     <div class="Loader-bg" style="display: flex; justify-content: center; align-items: center;">
          <img style="filter: hue-rotate(113deg);" src="{% static 'assets/img/avatar/ezgif-2-6d0b072c3d3f (1).gif' %}" alt="">
     </div>
@@ -75,10 +74,10 @@
 
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-menu">
-                    <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp" >
+                    <ul class="nav navbar-nav navbar-right" data-in="animate__flipInX" data-out="animate__flipOutX" >
                         <li style="position: relative;" class="dropdown megamenu-fw left-br">
                             {% if request.user.is_authenticated %}
-                                <a  href="#" target="_blank" data-toggle="dropdown" style="text-transform: none; font-size: 15px;" class="">Welcome {{ request.user.username }}</a>
+                                <a  href="#" target="_blank" data-toggle="dropdown" style="text-transform: none; font-size: 15px;" class="">{{ request.user.username }}</a>
                             {% else %}
                                  <a  href="#" target="_blank" data-toggle="dropdown" style="text-transform: none; font-size: 15px;" class=""> <i class="fa fa-user"></i></a>
                             {% endif %}
@@ -116,63 +115,61 @@
                             </ul>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav navbar-right" data-in="fadeInDown" data-out="fadeOutUp">
-                    {% block search %}{% endblock %}
-                        <li><a href="{% url 'LML:home' %}">Home</a></li>
-                    {% if request.user.is_authenticated %}
-                        {% if request.user|logged_in_company %}
-                            <li><a href="{% url 'LML:employer_dash' %}">Dashboard</a></li>
+                    <ul class="nav navbar-nav navbar-right" data-in="animate__flipInX" data-out="animate__flipOutX">
+                        {% block search %}{% endblock %}
+                            <li><a href="{% url 'LML:home' %}">Home</a></li>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user|logged_in_company %}
+                                <li><a href="{% url 'LML:employer_dash' %}">Dashboard</a></li>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                    {% if request.user.is_authenticated %}
-                        {% if request.user|logged_in_customer %}
-                            <li><a href="{% url 'LML:employee_dash' %}">Dashboard</a></li>
+                        {% if request.user.is_authenticated %}
+                            {% if request.user|logged_in_customer %}
+                                <li><a href="{% url 'LML:employee_dash' %}">Dashboard</a></li>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
-                    {% if request.user.is_authenticated %}
+                        {% if request.user.is_authenticated %}
                         <li class="dropdown megamenu-fw ">
                             <a href="#" class="" data-toggle="dropdown">Browse <i class="fas fa-caret-down mrg-l-5"></i></a>
                             <ul class="dropdown-menu megamenu-content " role="menu">
-
                                 <li>
                                     <div class="row">
-
                                         {% if request.user|logged_in_customer %}
-                                                <div class="col-menu col-md-3">
-                                                    <h6 class="title">Payments</h6>
-                                                    <div class="content">
-                                                        <ul class="menu-col">
-                                                            <li><a href="{% url 'LML:companypricing' %}">Company Pricing</a></li>
-                                                            {% if request|confirm_reg_payment %}
-                                                                <li ><a class="shake" style="color: #07c66f;" href="{%  url 'LML:payment' %}">Registration-Payment *</a></li>
-                                                            {% endif %}
-                                                        </ul>
-                                                    </div>
-                                                </div><!-- end col-3 -->
-                                                <div class="col-menu col-md-3">
-                                                    <h6 class="title">Account</h6>
-                                                    <div class="content">
-                                                        <ul class="menu-col">
-
-                                                            <li style="position:relative;">
-                                                                <a class="message-txt" target="_blank" href="{% url 'Chat:employee_dash_message'  %}">Messages </a>
-                                                                <div data-toggle="tooltip" data-placement="bottom" title="New Message" style="left: -21px; top: -2px; display: none;" class="blob"></div>
-                                                            </li>
-                                                            <li><a target="_blank" href="{% url 'LML:customer_resume_pdf' request.user.id %}">Your Resume</a></li>
-                                                            <li><a href="{% url 'LML:employee_dash' %}">Dashboard</a></li>
-                                                        </ul>
-                                                    </div>
-                                                </div><!-- end col-3 -->
-                                                <div class="col-menu col-md-3">
-                                                    <h6 class="title"> Terms and Conditions </h6>
-                                                    <div class="content">
-                                                        <ul class="menu-col">
-                                                            <li><a href="{% url 'LML:termsandconditons' %}">Terms</a></li>
-                                                            <li><a href="{% url 'LML:frequentaskedquestions' %}">FAQ</a></li>
-                                                        </ul>
-                                                    </div>
+                                            <div class="col-menu col-md-3">
+                                                <h6 class="title">Payments</h6>
+                                                <div class="content">
+                                                    <ul class="menu-col">
+                                                        <li><a href="{% url 'LML:companypricing' %}">Company Pricing</a></li>
+                                                        {% if request|confirm_reg_payment %}
+                                                            <li ><a class="shake" style="color: #07c66f;" href="{%  url 'LML:payment' %}">Registration-Payment *</a></li>
+                                                        {% endif %}
+                                                    </ul>
                                                 </div>
-                                                <div class="col-menu col-md-3">
+                                            </div><!-- end col-3 -->
+                                            <div class="col-menu col-md-3">
+                                                <h6 class="title">Account</h6>
+                                                <div class="content">
+                                                    <ul class="menu-col">
+
+                                                        <li style="position:relative;">
+                                                            <a class="message-txt" target="_blank" href="{% url 'Chat:employee_dash_message'  %}">Messages </a>
+                                                            <div data-toggle="tooltip" data-placement="bottom" title="New Message" style="left: -21px; top: -2px; display: none;" class="blob"></div>
+                                                        </li>
+                                                        <li><a target="_blank" href="{% url 'LML:customer_resume_pdf' request.user.id %}">Your Resume</a></li>
+                                                        <li><a href="{% url 'LML:employee_dash' %}">Dashboard</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div><!-- end col-3 -->
+                                            <div class="col-menu col-md-3">
+                                                <h6 class="title"> Terms and Conditions </h6>
+                                                <div class="content">
+                                                    <ul class="menu-col">
+                                                        <li><a href="{% url 'LML:termsandconditons' %}">Terms</a></li>
+                                                        <li><a href="{% url 'LML:frequentaskedquestions' %}">FAQ</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-menu col-md-3">
                                                     <h6 class="title">Actions</h6>
                                                     <div class="content">
                                                         <ul class="menu-col">
@@ -184,8 +181,6 @@
                                                     </div>
                                                 </div><!-- end col-3 -->
                                         {% endif %}
-
-
                                         {% if request.user|logged_in_company %}
                                             <div class="col-menu col-md-3">
                                                 <h6 class="title"> Employer Pages</h6>
@@ -233,7 +228,6 @@
                                                     </ul>
                                                 </div>
                                             </div>
-
                                         {% endif %}
                                     </div><!-- end row -->
                                 </li>

@@ -140,8 +140,8 @@ ClassicEditor
 
      });
 });
- $('#trmscond').change(function () {
-    if($(this).prop("checked", true)){
+ $('#trmscond').on('change',function () {
+    if($(this).prop("checked") === true){
         if($('input').hasClass('is-valid-custom')){
              $('#submitbutton').removeAttr('disabled');
         }else if ($('input').hasClass('is-invalid-custom')){
@@ -153,12 +153,11 @@ ClassicEditor
                 type: "error",
                 confirmButtonText: "Retry"
             });
-
+        }else {
+            $('#submitbutton').removeAttr('disabled');
         }
-
-
-    }else if($(this).prop("checked", false)){
-        $('#submitbutton').attr('disabled');
+    }else if($(this).prop("checked") === false){
+        $('#submitbutton').attr('disabled', 'disabled');
     }
 });
  $('#countyselectt').change(function () {

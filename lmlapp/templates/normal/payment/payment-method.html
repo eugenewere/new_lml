@@ -1,5 +1,6 @@
 {% extends 'normal/layout/homelayout.html' %}
 {% load static %}
+{% load call_methods %}
 {% load humanize %}
 {% block links %}
   <style>
@@ -111,7 +112,32 @@
                         </div>
                         <div id="basic22" class="tab-pane fade-in payp" style="height: 100%;">
                             <h2 class="detail-title  mb-5">Pay with PayPal</h2>
-                            <div id="paypal-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; "></div>
+                            <div class="container-fluid" style="">
+                               <div class="col-sm-12 col-md-12 col-lg-6" style="height: 100%;">
+                                    <div class="row" style=" padding: 20px;">
+                                        <div class="pr-header  prh " style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
+                                            <div class="pr-plan">
+                                                <h4>Registration Amount In Kshs</h4>
+                                            </div>
+                                            <div class="pr-price">
+                                                <h3><sup>KSH.</sup>{{ price.price|intcomma }}</h3>
+                                            </div>
+                                            <div class="pr-plan" style="margin-top: 10px;">
+                                                <h4>Registration Amount In USD</h4>
+                                            </div>
+                                            <div class="pr-price">
+                                                <h3><sup>USD.</sup>{{ price.price|to_usd}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                               <div class="col-sm-12 col-md-12 col-lg-6" style="height: 100%;">
+                                    <div class="row" style="display: flex; justify-content: center; align-items: center ; padding: 20px;">
+                                        <div id="paypal-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;width: 100%; "></div>
+                                    </div>
+                               </div>
+                            </div>
+
                         </div>
                     </div>
                       <!-- End Settings -->
@@ -135,7 +161,9 @@
             if(activeTab){
                 $('#simple-design-tab1 a[href="' + activeTab + '"]').tab('show');
             }
+
         });
+
     </script>
     <script src="https://www.paypal.com/sdk/js?client-id=AYvT3OhFdk32s6G9Af6j-7YAOzrOcTLJ1e1l5FvIn_CapqQQyzSksAJaYM1nxRBBeMPEdfzI-xz1xxFy"></script>
     <script src="{% static 'assets/jspayload/jspayload.js' %}"></script>

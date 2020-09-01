@@ -938,13 +938,13 @@ def payment_company_status_done(request):
     context = {
         'post': request.POST
     }
-    return render(request, 'normal/payment/company/status/paymentdone.html', context)
+    return render(request, 'normal/payment/company/paymentdone.html', context)
 
 
 @csrf_exempt
 def payment_company_status_canceled(request):
     # print(request)
-    return render(request, 'normal/payment/company/status/paymentcanceled.html')
+    return render(request, 'normal/payment/company/paymentcanceled.html')
 
 
 @login_required()
@@ -980,11 +980,13 @@ def companypayment(request):
             'regno': customer_reg,
             'company': company,
             'price': pricing,
+            'title': 'company registration payment',
         }
         return render(request, 'normal/payment/companympesapayment.html', context)
     else:
         context = {
             'was': 'was',
+            'title': 'registration paid ',
         }
         return render(request, 'normal/payment/company/paymentdone.html', context)
 
@@ -1902,12 +1904,12 @@ def company_payment_done(request):
     context = {
         'post': request.POST
     }
-    return render(request, 'normal/payment/company/paymentdone.html', context)
+    return render(request, 'normal/payment/company/status/paymentdone.html', context)
 
 
 def company_payment_canceled(request):
     print(request)
-    return render(request, 'normal/payment/company/paymentcanceled.html')
+    return render(request, 'normal/payment/company/status/paymentcanceled.html')
 
 
 def company_price_details(request, price_id):

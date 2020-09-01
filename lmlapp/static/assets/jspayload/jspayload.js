@@ -77,9 +77,21 @@ function loadPayp(d) {
         success: function(data){
             console.log(data)
             if (data['status'] === 'success' && data['payment'] === 'done' ){
+                swal.fire({
+                    title: "Success!",
+                    text: 'Payment Done',
+                    type: "success",
+                    confirmButtonText: "Ok"
+               });
                 window.location = window.location.origin+'/payment-done/';
             }
             else if(data['status'] === 'error' && data['payment'] === 'reversed' ){
+                 swal.fire({
+                        title: "Error",
+                        text: 'Payment was reversed',
+                        type: "error",
+                        confirmButtonText: "Ok"
+                   });
                 window.location = window.location.origin+'/payment-cancelled/';
             }
         },

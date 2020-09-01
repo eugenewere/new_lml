@@ -100,7 +100,31 @@
                         </div>
                         <div id="basic22" class="tab-pane fade-in payp" style="height: 100%;">
                             <h2 class="detail-title  mb-5">Pay with PayPal</h2>
-                            <div id="paypal-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center; "></div>
+                            <div class="container-fluid" style="">
+                               <div class="col-sm-12 col-md-12 col-lg-6" style="height: 100%;">
+                                    <div class="row" style=" padding: 20px;">
+                                        <div class="pr-header  prh " style="display: flex; flex-direction: column; justify-content: center;align-items: center; margin-bottom: 15px;">
+                                            <div class="pr-plan">
+                                                <h4>Registration Amount In Kshs</h4>
+                                            </div>
+                                            <div class="pr-price">
+                                                <h3><sup>KSH.</sup>{{ pricing.price|intcomma }}</h3>
+                                            </div>
+                                            <div class="pr-plan" style="margin-top: 10px;">
+                                                <h4>Registration Amount In USD</h4>
+                                            </div>
+                                            <div class="pr-price">
+                                                <h3><sup>USD.</sup>{{ pricing.price|to_usd|intcomma}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                               </div>
+                               <div class="col-sm-12 col-md-12 col-lg-6" style="height: 100%;">
+                                    <div class="row" style="display: flex; justify-content: center; align-items: center ; padding: 20px;">
+                                        <div id="paypal-button-container" style="display: flex; flex-direction: column; justify-content: flex-start; align-items: center;width: 100%; "></div>
+                                    </div>
+                               </div>
+                            </div>
                         </div>
                     </div>
                       <!-- End Settings -->

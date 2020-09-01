@@ -398,3 +398,13 @@ def to_int(value):
 def to_str(value):
     if value is not None:
         return str(value)
+
+@register.filter("to_usd")
+def to_usd(value):
+    if value is not None:
+        curre = CurrencyValue.objects.first()
+        v = int(value) / float(curre.currency)
+        usd = round(v, 2)
+        return usd
+    else:
+        return 0

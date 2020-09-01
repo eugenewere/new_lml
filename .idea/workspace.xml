@@ -20,27 +20,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/animated/animate.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/templates/normal/uploadedcvdir/cvfiles.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/candidatecv/RECEIPT-00009_EUNICE_1.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/employerlogo/IMG_20200727_133318.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/employerlogo/shoppytitlelogo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/employerlogo/w.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/messagelayoutcss.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/messagelayoutcss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/preloader/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/preloader/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/cmpscriptbootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/cmpscriptbootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspayload.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspayload.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/plugins/css/plugins.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/plugins/css/plugins.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/plugins/js/bootsnav.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/plugins/js/bootsnav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/all-candidates.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/all-candidates.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/shortlistgraph.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/pdfviewer.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/pdfviewer.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/status/paymentdone.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/status/paymentdone.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/companympesapayment.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/companympesapayment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -181,7 +176,7 @@
       <workItem from="1597411844125" duration="32956000" />
       <workItem from="1597515465120" duration="16132000" />
       <workItem from="1597683150575" duration="309645000" />
-      <workItem from="1598869905818" duration="39110000" />
+      <workItem from="1598869905818" duration="59597000" />
     </task>
     <servers />
   </component>
