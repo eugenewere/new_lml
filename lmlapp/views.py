@@ -40,8 +40,8 @@ from lmlapp.templatetags.call_methods import sizify
 
 
 def home(request):
-    customers = Customer.objects.order_by('-created_at')[:6]
-    all_customers = Customer.objects.all()
+    customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('-created_at')[:6]
+    all_customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
     loadCurrency()
     context = {
         'customers': customers,
@@ -50,7 +50,7 @@ def home(request):
         'counties': County.objects.all(),
         'categories': Category.objects.all(),
         'regions': Region.objects.all(),
-        'bannercustomercount': Customer.objects.filter(status='REGISTERED_CONFIRMED'),
+        'bannercustomercount': Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED'),
         'images': AdvertCarousel.objects.order_by('-created_at'),
         'offers': WhatWeOffer.objects.all()
     }
@@ -1052,7 +1052,7 @@ def employee_dash(request):
     social = Social_account.objects.filter(customer=customer).first()
     # customers = CompanyShortlistCustomers.objects.filter(company=company)
     cust_reg_pay = CustomerPayments.objects.filter(payer_reg_no=customer.customer_reg_no).order_by('-created_at').all()
-    custome_documents = CustomerCvFiles.objects.all()
+    custome_documents = CustomerCvFiles.objects.filter(customer=customer).all()
     companies_list = []
     userr = User.objects.filter(id=user).first()
     companies = Message.objects.filter(reciever=userr)
@@ -1086,7 +1086,7 @@ def employee_dash(request):
 @login_required()
 def userviewpdf(request, cv_id):
     customer_cv = CustomerCvFiles.objects.filter(id=cv_id).first()
-    cus = Customer.objects.filter(id = customer_cv.customer.id).first()
+    cus = Customer.objects.filter(id = customer_cv.customer.id, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').first()
     context = {
         'title': customer_cv.title,
         'customer_cv':customer_cv,
@@ -1102,11 +1102,10 @@ def premium_employee_details(request, customer_id):
     skills = Skills.objects.filter(customer=customer)
     socials = Social_account.objects.filter(customer=customer)
     reviews = CustomerReviews.objects.filter(customer=customer).order_by('-created_at')
-    all_customers = Customer.objects.filter(category_id=customer.category.id).exclude(id=customer.id)[:7]
-    other_customers = Customer.objects.filter(category__category__contains=customer.category.category).exclude(
-        id=customer.id)
-
-    print(other_customers)
+    all_customers = Customer.objects.filter(category_id=customer.category.id, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').exclude(id=customer.id)[:7]
+    other_customers = Customer.objects.filter(category__category__contains=customer.category.category, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').exclude(id=customer.id)
+    custome_documents = CustomerCvFiles.objects.filter(customer=customer).all()
+    # print(other_customers)
     context = {
         'title': customer.first_name.capitalize() + ' ' + customer.last_name.capitalize(),
         'customer': customer,
@@ -1117,6 +1116,8 @@ def premium_employee_details(request, customer_id):
         'reviews': reviews,
         'all_customers': all_customers,
         'other_customers': other_customers,
+        'custome_documents': custome_documents,
+
 
     }
 
@@ -1126,15 +1127,36 @@ def premium_employee_details(request, customer_id):
 @has_user_paid_registration
 def all_premium_employees(request):
     if request.method == 'POST':
-        county = request.POST['county']
-        region = request.POST['region']
-        category = request.POST['category']
-        cat = Category.objects.filter(id=int(category)).first()
-        reg = Region.objects.filter(id=int(region)).first()
-        count = County.objects.filter(id=int(county)).first()
-        customers = Customer.objects.filter(category=cat, region=reg, county=count)
+        county = request.POST.get('county')
+        region = request.POST.get('region')
+        category = request.POST.get('category')
+        if (category is not None) and (region is not None) and (county is not None):
+            cat = Category.objects.filter(id=int(category)).first()
+            reg = Region.objects.filter(id=int(region)).first()
+            count = County.objects.filter(id=int(county)).first()
+            customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id),
+                                                regpayment__isnull=False, regpayment__payment_status='COMPLETED',
+                                                regpayment__transaction_status='COMPLETED')
+        elif (category is not None):
+            cat = Category.objects.filter(id=int(category)).first()
+            customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False,
+                                                regpayment__payment_status='COMPLETED',
+                                                regpayment__transaction_status='COMPLETED')
+        elif (region is not None):
+            reg = Region.objects.filter(id=int(region)).first()
+            customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False,
+                                                regpayment__payment_status='COMPLETED',
+                                                regpayment__transaction_status='COMPLETED')
+        elif (county is not None):
+            count = County.objects.filter(id=int(county)).first()
+            customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False,
+                                                regpayment__payment_status='COMPLETED',
+                                                regpayment__transaction_status='COMPLETED')
+        else:
+            customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED',
+                                                regpayment__transaction_status='COMPLETED').order_by('?')
     else:
-        customers = Customer.objects.order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
 
     context = {
         'customers': customers,
@@ -1150,9 +1172,9 @@ def all_premium_employees(request):
 def all_category_employees(request, category_id):
     category = Category.objects.filter(id=category_id).first()
     if category is not None:
-        customers = Customer.objects.filter(category=category)
+        customers = Customer.objects.filter(category=category, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
     else:
-        customers = Customer.objects.order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
 
     context = {
         'customers': customers,
@@ -1188,61 +1210,84 @@ def all_offer_employees(request, offer):
 def shortlistcustomers(request):
     if request.method == 'POST':
         customer = request.POST.get('customer_id')
-        company = request.POST.get('company_id')
+        company = request.user.id
         print(customer, company)
-        customer_user = Customer.objects.filter(user_ptr_id=int(customer)).first()
-        company_user = Company.objects.filter(user_ptr_id=int(company)).first()
-        if not CompanyShortlistCustomers.objects.filter(customer=customer, company=company,
-                                                        payment_status='SHORTLISTED').exists():
-            CompanyShortlistCustomers.objects.create(
-                customer=customer_user,
-                company=company_user,
-                payment_status="SHORTLISTED"
-            )
-            data = {
-                'shortlisted': 'Successfully shortlisted',
-            }
-            if data['shortlisted']:
-                data[
-                    'success_message'] = 'Successfully Shortlisted ' + customer_user.first_name.upper() + ' ' + customer_user.last_name.upper() + '.'
-
+        customer_user = Customer.objects.filter(user_ptr_id=int(customer), regpayment__isnull=False).first()
+        company_user = Company.objects.filter(user_ptr_id=int(company),  regpayment__isnull=False).first()
+        print(customer_user)
+        if company_user is not None:
+            if customer_user is not None:
+                if not CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user, payment_status='SHORTLISTED').exists():
+                    CompanyShortlistCustomers.objects.create(
+                        customer=customer_user,
+                        company=company_user,
+                        payment_status="SHORTLISTED"
+                    )
+                    data = {
+                        'status':'shortlisted',
+                        'success':'success',
+                        'msg': 'Successfully Shortlisted ' + customer_user.first_name.upper() + ' ' + customer_user.last_name.upper() + '.'
+                    }
+                    return JsonResponse(data)
+                else:
+                    CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user).update(
+                        payment_status="UNSHORTLISTED"
+                    )
+                    data = {
+                        'status': 'unshortlisted',
+                        'success': 'success',
+                        'msg': 'Candidate Unshortlisted successfully',
+                    }
+                    return JsonResponse(data)
+            else:
+                cust = Customer.objects.filter(user_ptr_id=int(customer)).first()
+                gender = ''
+                if cust.gender.lower() == 'female':
+                    gender ='Her'
+                elif cust.gender.lower() == 'male':
+                    gender = 'Him'
+                data = {
+                    'error': 'error',
+                    'msg': 'This User Is Not Registered, You cant ShortList '+ gender,
+                }
+                return JsonResponse(data)
         else:
             data = {
-                'is_shortlisted': 'You have already shortlisted this user',
+                'error': 'error',
+                'msg': 'Please Register To Shortlist Candidates',
             }
-            if data['is_shortlisted']:
-                data['error_message'] = 'You have already shortlisted this user'
-
-        return JsonResponse(data)
+            return JsonResponse(data)
 
 
-def unshortlistcustomers(request):
-    if request.method == 'POST':
-        customer_id = request.POST.get('customer_id')
-        company_id = request.POST.get('company_id')
-        print(company_id, customer_id)
-        if CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).exists():
-            relation = CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).first()
-            customer = relation.customer.first_name + ' ' + relation.customer.last_name
-            CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).update(
-                payment_status='UNSHORTLISTED'
-            )
-            # relation.delete()
-            data = {
-                'shortlisted': customer.upper() + 'Unshortlisted Successfully',
-            }
-            if data['shortlisted']:
-                data['success_message'] = customer.upper() + ' Unshortlisted Successfully'
 
-        else:
 
-            data = {
-                'is_shortlisted': 'Error Deleting',
-            }
-            if data['is_shortlisted']:
-                data['error_message'] = 'Error Deleting'
-
-        return JsonResponse(data)
+# def unshortlistcustomers(request):
+#     if request.method == 'POST':
+#         customer_id = request.POST.get('customer_id')
+#         company_id = request.POST.get('company_id')
+#         print(company_id, customer_id)
+#         if CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).exists():
+#             relation = CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).first()
+#             customer = relation.customer.first_name + ' ' + relation.customer.last_name
+#             CompanyShortlistCustomers.objects.filter(customer_id=customer_id, company_id=company_id).update(
+#                 payment_status='UNSHORTLISTED'
+#             )
+#             # relation.delete()
+#             data = {
+#                 'shortlisted': customer.upper() + 'Unshortlisted Successfully',
+#             }
+#             if data['shortlisted']:
+#                 data['success_message'] = customer.upper() + ' Unshortlisted Successfully'
+#
+#         else:
+#
+#             data = {
+#                 'is_shortlisted': 'Error Deleting',
+#             }
+#             if data['is_shortlisted']:
+#                 data['error_message'] = 'Error Deleting'
+#
+#         return JsonResponse(data)
 
 @login_required()
 @has_user_paid_registration
@@ -1256,21 +1301,20 @@ def all_employees(request):
             cat = Category.objects.filter(id=int(category)).first()
             reg = Region.objects.filter(id=int(region)).first()
             count = County.objects.filter(id=int(county)).first()
-            customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id))
+            customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         elif (category is not None):
             cat = Category.objects.filter(id=int(category)).first()
-
-            customers = Customer.objects.filter(Q(category_id=cat.id))
+            customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         elif (region is not None):
             reg = Region.objects.filter(id=int(region)).first()
-            customers = Customer.objects.filter(Q(region_id=reg.id))
+            customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         elif (county is not None):
             count = County.objects.filter(id=int(county)).first()
-            customers = Customer.objects.filter(Q(county_id=count.id))
+            customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         else:
-            customers = Customer.objects.order_by('?')
+            customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
     else:
-        customers = Customer.objects.order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
 
     context = {
         'customers': customers,
@@ -1334,21 +1378,7 @@ def EmployerCustomerShortlist(request):
 
     return JsonResponse(context2)
 
-@login_required()
-@has_user_paid_registration
-def EmployerCustomerShortlistTemplate(request):
-    user = request.user.id
-    company = Company.objects.filter(user_ptr_id=user).first()
-    social = CompanySocialAccount.objects.filter(company=company).first()
-    customers = CompanyShortlistCustomers.objects.filter(company=company)
-    context = {
-        'title': 'Employee Shortlist Graph',
-        'company': company,
-        'social': social,
-        'customers': customers,
-    }
 
-    return render(request, 'normal/dashboard/shortlistgraph.html', context)
 
 @login_required()
 @has_user_paid_registration

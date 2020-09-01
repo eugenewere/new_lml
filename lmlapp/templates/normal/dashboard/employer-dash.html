@@ -213,73 +213,21 @@
                                                                 {% if request.user|logged_in_company %}
                                                                     <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                                     <div class="dropdown-menu pull-right animated flipInX">
-                                                                        {% csrf_token %}
-
-                                                                        <a data-idparent="custm-{{ customer.customer.id }}" id="custm-{{ customer.customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-{#                                                                        <a  data-customer="{{ customer.customer.username }}" id="kk{{ customer.customer.id }}" href="#">Chat</a>#}
+                                                                        <a class="shortlistcandidate3" data-candidate="{{ customer.customer.id }}"  href="">
+                                                                             UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                        </a>
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#allcandidate{{ customer.customer.id }}">Review</a>
-                                                                        <script>
-                                                                            document.querySelector('#kk{{ customer.customer.id }}').onclick = function(e) {
-                                                                                var roomName = document.getElementById('kk{{ customer.customer.id }}').getAttribute('data-customer');
-                                                                                window.location.pathname = 'employerdash_message/' + roomName + '/';
-                                                                            };
-                                                                            function unshortlist(me) {
-                                                                                var cust_id= me.id;
-                                                                                var data_parent= me.dataset.idparent;
-                                                                                var company = me.dataset.company;
-                                                                                var customer = me.dataset.customer;
-                                                                                console.log(company, customer);
-                                                                                $.ajax({
-                                                                                    type: "POST",
-                                                                                    url : "{% url 'LML:unshortlistemployees' %}",
-                                                                                    data:{
-                                                                                        'customer_id' : customer,
-                                                                                        'company_id' : company,
-                                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                                    },
-                                                                                    dataType:'json',
-                                                                                    success : function searchSuccess(data){
-                                                                                        console.log(data);
-                                                                                        if(data.is_shortlisted){
-                                                                                            errorshortlisting(data);
-                                                                                        }
-                                                                                        else if(data.shortlisted){
-                                                                                            console.log("[data-parentorall="+cust_id +"]")
-                                                                                            $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
-
-                                                                                           setTimeout(function () {
-                                                                                               shortlisted(data);
-                                                                                           }, 1200);
-                                                                                        }
-                                                                                    },
-
-                                                                                });
-                                                                                function shortlisted(k){
-
-                                                                                    swal.fire({
-                                                                                    title: "Success!",
-                                                                                    text: k.success_message,
-                                                                                    type: "success",
-                                                                                    confirmButtonText: "Continue"
-                                                                                   });
-                                                                                }
-                                                                                function errorshortlisting(k){
-                                                                                    swal.fire({
-                                                                                    title: "Error!",
-                                                                                    text: k.error_message,
-                                                                                    type: "error",
-                                                                                    confirmButtonText: "Continue"
-                                                                                   });
-                                                                                }
-                                                                            }
-                                                                        </script>
                                                                     </div>
                                                                 {% endif %}
                                                             </div>
                                                         </div>
 
                                                         <div class="paid-candidate-inner--box">
-                                                            <div class="paid-candidate-box-thumb" style="height: 131px !important;"><img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                            <div class="paid-candidate-box-thumb" style="height: 131px !important;">
+                                                                <img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                                                <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+
+                                                            </div>
                                                             <div class="paid-candidate-box-detail">
                                                                 <h4 class="text-capitalize">{{customer.customer.first_name}} {{customer.customer.last_name}}</h4>
                                                                 <span class="desination text-capitalize">{{customer.customer.category.category}}</span>
@@ -398,75 +346,20 @@
                                                                     {% if request.user|logged_in_company %}
                                                                         <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                                         <div class="dropdown-menu pull-right animated flipInX">
-                                                                            {% csrf_token %}
-
-                                                                            <a data-idparent="custm-{{ customer.id }}"  id="custm-{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-{#                                                                            <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>#}
+                                                                            <a class="shortlistcandidate3" data-candidate="{{ customer.id }}"  href="">
+                                                                                 UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                            </a>
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#basic{{ customer.id }}">Review</a>
-                                                                            <script>
-
-                                                                                document.querySelector('#kk{{ customer.id }}').onclick = function(e) {
-                                                                                    var roomName = document.getElementById('kk{{ customer.id }}').getAttribute('data-customer');
-                                                                                    window.location.pathname = 'employerdash_message/' + roomName + '/';
-                                                                                };
-                                                                                function unshortlist(me) {
-                                                                                    var cust_id= me.id;
-                                                                                    var data_parent= me.dataset.idparent;
-                                                                                    var company = me.dataset.company;
-                                                                                    var customer = me.dataset.customer;
-                                                                                    console.log(company, customer);
-                                                                                    $.ajax({
-                                                                                        type: "POST",
-                                                                                        url : "{% url 'LML:unshortlistemployees' %}",
-                                                                                        data:{
-                                                                                            'customer_id' : customer,
-                                                                                            'company_id' : company,
-                                                                                            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                                        },
-                                                                                        dataType:'json',
-                                                                                        success : function searchSuccess(data){
-                                                                                            console.log(data);
-                                                                                            if(data.is_shortlisted){
-                                                                                                errorshortlisting(data);
-
-                                                                                            }
-                                                                                            else if(data.shortlisted){
-                                                                                                $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
-
-                                                                                               setTimeout(function () {
-                                                                                                   shortlisted(data);
-                                                                                               }, 1200);
-                                                                                            }
-                                                                                        },
-
-                                                                                    });
-                                                                                    function shortlisted(k){
-
-                                                                                        swal.fire({
-                                                                                        title: "Success!",
-                                                                                        text: k.success_message,
-                                                                                        type: "success",
-                                                                                        confirmButtonText: "Continue"
-                                                                                       });
-                                                                                    }
-                                                                                     function errorshortlisting(k){
-                                                                                        swal.fire({
-                                                                                        title: "Error!",
-                                                                                        text: k.error_message,
-                                                                                        type: "error",
-                                                                                        confirmButtonText: "Continue"
-                                                                                       });
-                                                                                    }
-
-
-                                                                                }
-                                                                            </script>
                                                                         </div>
                                                                     {% endif %}
                                                                 </div>
                                                             </div>
                                                             <div class="paid-candidate-inner--box">
-                                                                <div class="paid-candidate-box-thumb" style="height: 131px !important;"><img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                                <div class="paid-candidate-box-thumb" style="height: 131px !important;">
+                                                                    <img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                                                    <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+
+                                                                </div>
                                                                 <div class="paid-candidate-box-detail">
                                                                     <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
                                                                     <span class="desination text-capitalize">{{customer.category.category}}</span>
@@ -581,77 +474,20 @@
                                                                     {% if request.user|logged_in_company %}
                                                                         <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                                         <div class="dropdown-menu pull-right animated flipInX">
-                                                                            {% csrf_token %}
-
-                                                                            <a data-idparent="custm-{{ customer.id }}" id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-{#                                                                            <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>#}
+                                                                            <a class="shortlistcandidate3" data-candidate="{{ customer.id }}"  href="">
+                                                                                 UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                            </a>
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#premium{{ customer.id }}">Review</a>
-                                                                             <!-- Modal -->
 
-                                                                            <script>
-
-                                                                                document.querySelector('#kk{{ customer.id }}').onclick = function(e) {
-                                                                                    var roomName = document.getElementById('kk{{ customer.id }}').getAttribute('data-customer');
-                                                                                    window.location.pathname = 'employerdash_message/' + roomName + '/';
-                                                                                };
-                                                                                function unshortlist(me) {
-                                                                                    var cust_id= me.id;
-                                                                                     var data_parent= me.dataset.idparent;
-                                                                                    var company = me.dataset.company;
-                                                                                    var customer = me.dataset.customer;
-                                                                                    console.log(company, customer);
-                                                                                    $.ajax({
-                                                                                        type: "POST",
-                                                                                        url : "{% url 'LML:unshortlistemployees' %}",
-                                                                                        data:{
-                                                                                            'customer_id' : customer,
-                                                                                            'company_id' : company,
-                                                                                            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                                        },
-                                                                                        dataType:'json',
-                                                                                        success : function searchSuccess(data){
-                                                                                            console.log(data);
-                                                                                            if(data.is_shortlisted){
-                                                                                                errorshortlisting(data);
-
-                                                                                            }
-                                                                                            else if(data.shortlisted){
-                                                                                                 $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
-
-                                                                                               setTimeout(function () {
-                                                                                                   shortlisted(data);
-                                                                                               }, 1200);
-                                                                                            }
-                                                                                        },
-
-                                                                                    });
-                                                                                    function shortlisted(k){
-
-                                                                                        swal.fire({
-                                                                                        title: "Success!",
-                                                                                        text: k.success_message,
-                                                                                        type: "success",
-                                                                                        confirmButtonText: "Continue"
-                                                                                       });
-                                                                                    }
-                                                                                     function errorshortlisting(k){
-                                                                                        swal.fire({
-                                                                                        title: "Error!",
-                                                                                        text: k.error_message,
-                                                                                        type: "error",
-                                                                                        confirmButtonText: "Continue"
-                                                                                       });
-                                                                                    }
-
-
-                                                                                }
-                                                                            </script>
                                                                         </div>
                                                                     {% endif %}
                                                                 </div>
                                                             </div>
                                                             <div class="paid-candidate-inner--box">
-                                                                <div class="paid-candidate-box-thumb" style="height: 131px !important;"><img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                                <div class="paid-candidate-box-thumb" style="height: 131px !important;">
+                                                                    <img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                                                    <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+                                                                </div>
                                                                 <div class="paid-candidate-box-detail">
                                                                     <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
                                                                     <span class="desination text-capitalize">{{customer.category.category}}</span>
@@ -773,77 +609,21 @@
                                                                 {% if request.user|logged_in_company %}
                                                                     <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                                     <div class="dropdown-menu pull-right animated flipInX">
-                                                                        {% csrf_token %}
-
-                                                                        <a data-idparent="custm-{{ customer.id }}" id="custm{{ customer.id }}" onclick="unshortlist(this);" data-customer="{{ customer.id }}" data-company="{{ request.user.id }}" href="javascript:void(0)">UnShortlisted</a>
-{#                                                                        <a  data-customer="{{ customer.username }}" id="kk{{ customer.id }}" href="#">Chat</a>#}
+                                                                        <a class="shortlistcandidate3" data-candidate="{{ customer.id }}"  href="">
+                                                                             UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                        </a>
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#ultimate{{ customer.id }}">Review</a>
                                                                          <!-- Modal -->
-
-                                                                        <script>
-
-                                                                            document.querySelector('#kk{{ customer.id }}').onclick = function(e) {
-                                                                                var roomName = document.getElementById('kk{{ customer.id }}').getAttribute('data-customer');
-                                                                                window.location.pathname = 'employerdash_message/' + roomName + '/';
-                                                                            };
-                                                                            function unshortlist(me) {
-                                                                                var cust_id= me.id;
-                                                                                var data_parent= me.dataset.idparent;
-                                                                                var company = me.dataset.company;
-                                                                                var customer = me.dataset.customer;
-                                                                                console.log(company, customer);
-                                                                                $.ajax({
-                                                                                    type: "POST",
-                                                                                    url : "{% url 'LML:unshortlistemployees' %}",
-                                                                                    data:{
-                                                                                        'customer_id' : customer,
-                                                                                        'company_id' : company,
-                                                                                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                                                                                    },
-                                                                                    dataType:'json',
-                                                                                    success : function searchSuccess(data){
-                                                                                        console.log(data);
-                                                                                        if(data.is_shortlisted){
-                                                                                            errorshortlisting(data);
-
-                                                                                        }
-                                                                                        else if(data.shortlisted){
-                                                                                            $( "[data-parentorall="+ data_parent +"]" ).fadeOut();
-
-                                                                                           setTimeout(function () {
-                                                                                               shortlisted(data);
-                                                                                           }, 1200);
-                                                                                        }
-                                                                                    },
-
-                                                                                });
-                                                                                function shortlisted(k){
-
-                                                                                    swal.fire({
-                                                                                    title: "Success!",
-                                                                                    text: k.success_message,
-                                                                                    type: "success",
-                                                                                    confirmButtonText: "Continue"
-                                                                                   });
-                                                                                }
-                                                                                 function errorshortlisting(k){
-                                                                                    swal.fire({
-                                                                                    title: "Error!",
-                                                                                    text: k.error_message,
-                                                                                    type: "error",
-                                                                                    confirmButtonText: "Continue"
-                                                                                   });
-                                                                                }
-
-
-                                                                            }
-                                                                        </script>
                                                                     </div>
                                                                 {% endif %}
                                                             </div>
                                                         </div>
                                                         <div class="paid-candidate-inner--box">
-                                                            <div class="paid-candidate-box-thumb" style="height: 131px !important;"><img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                            <div class="paid-candidate-box-thumb" style="height: 131px !important;">
+                                                                <img style="height: 100%; width: 100%; max-width: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                                                <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+
+                                                            </div>
                                                             <div class="paid-candidate-box-detail">
                                                                 <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
                                                                 <span class="desination text-capitalize">{{customer.category.category}}</span>

@@ -2959,7 +2959,7 @@ width:100%;
 height:42px;
 border-radius:2px;
 background: #263444;
-border-color: #324356;
+border-color: #324356 !important;
 color:#748898;
 }
 .footer-form textarea.form-control{
@@ -4328,7 +4328,7 @@ ul.trim-edu-list li:before {
 ul.trim-edu-list li:after {
     content: "";
     position: absolute;
-    left: -3.2em;
+    left: -2.2em;
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -6525,7 +6525,7 @@ div.datedropper.my-style.picker-lkd .pick-submit {
 	height:120px;
     margin: 0 auto 25px auto;
 	border-radius:50%;
-	overflow:hidden;
+	position: relative;
 	box-shadow: 0 0px 14px 0 rgba(0, 0, 0, 0.08);
 	-webkit-box-shadow: 0 0px 14px 0 rgba(0, 0, 0, 0.08);
 	-moz-box-shadow: 0 0px 14px 0 rgba(0, 0, 0, 0.08);
@@ -6780,6 +6780,10 @@ span.process-num {
     padding: 0 20px;
     line-height: 140px;
     float: left;
+}
+.inner-header-page .freelance-image:hover {
+   animation: heartBeat; /* referring directly to the animation's @keyframe declaration */
+  animation-duration: 2s; /* don't forget to set a duration! */
 }
 .inner-header-page .freelance-image img{
 	max-width:120px;

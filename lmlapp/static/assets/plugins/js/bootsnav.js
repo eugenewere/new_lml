@@ -7,6 +7,7 @@
             this.hoverDropdown();
             this.navbarSticky();
             this.navbarScrollspy();
+            this.checkNav();
         },
         event : function(){
             
@@ -193,9 +194,7 @@
             // Wrapper
             // ------------------------------------------------------------------------------ //
             $("body").wrapInner( "<div class='wrapper'></div>");
-        }, 
-        
-
+        },
         // ------------------------------------------------------------------------------ //
         // Change dropdown to hover on dekstop
         // ------------------------------------------------------------------------------ //
@@ -451,9 +450,7 @@
                     });
                 });
             }
-        },
-        
-        // ------------------------------------------------------------------------------ //
+        },        // ------------------------------------------------------------------------------ //
         // Navbar Sticky
         // ------------------------------------------------------------------------------ //
         navbarSticky : function(){  
@@ -478,7 +475,6 @@
                 });
             }   
         },
-        
         // ------------------------------------------------------------------------------ //
         // Navbar Scrollspy
         // ------------------------------------------------------------------------------ //
@@ -546,9 +542,24 @@
                     var resizeTimer = setTimeout(fixSpy, 200);
                 });
             }
-        }
+        },
+
+        checkNav: function(){
+            const scrollTopheight = $(window).scrollTop();
+            if(scrollTopheight > 0){
+                var $n = $('.wrapper .navbar');
+                if($($n).hasClass('navbar-transparent')){
+                    $($n).removeClass('navbar-transparent')
+                }
+            }
+            else if(scrollTopheight <= 0){
+                if(! $($n).hasClass('navbar-transparent')){
+                    $($n).addClass('navbar-transparent')
+                }
+            }
+        },
     };
-    
+
     // Initialize
     $(document).ready(function(){
         bootsnav.initialize();

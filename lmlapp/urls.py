@@ -20,7 +20,7 @@ urlpatterns = [
     # re_path(r'^(?P<room_name>[^/]+)/$', views.room, name='room'),
     # re_path(r"^employerdash_message/(?P<username>[\w.@+-]+)/$", views.employer_dash_message),
     path('candidateShortlistGraph/', views.EmployerCustomerShortlist, name='employee_shortlist_graph'),
-    path('candidateShortlistGraphtemplate/', views.EmployerCustomerShortlistTemplate, name='employee_shortlist_graph_template'),
+    # path('candidateShortlistGraphtemplate/', views.EmployerCustomerShortlistTemplate, name='employee_shortlist_graph_template'),
 
     path('signup', views.signup_initial, name="signup_initial"),
     path('signupcompany/', views.signup_company_initial, name="signup_company_initial"),
@@ -78,10 +78,10 @@ urlpatterns = [
     path('allcategorycandidates/<int:category_id>',views.all_category_employees, name = 'all_category_employees'),
     path('alloffercandidates/<str:offer>',views.all_offer_employees, name = 'all_offer_employees'),
     path('allcandidates/',views.all_employees, name = 'all_employees'),
-    path('premiumcandidatedetails/<int:customer_id>', views.premium_employee_details, name='premium_employee_detail'),
+    path('potentialcandidatedetails/<int:customer_id>', views.premium_employee_details, name='premium_employee_detail'),
 
     path('shortlist/', views.shortlistcustomers, name='shortlistemployees'),
-    path('unshortlist/', views.unshortlistcustomers, name='unshortlistemployees'),
+    # path('unshortlist/', views.unshortlistcustomers, name='unshortlistemployees'),
     path('categories/', views.categories, name='viewcategories'),
 
     path('dumb/', views.dumb, name='dumb'),

@@ -126,20 +126,28 @@
                                             {% if request.user|logged_in_company %}
                                                 <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                 <div class="dropdown-menu pull-right animated flipInX">
-                                                    {% csrf_token %}
-                                                    {% if request|shortlisted:customer.id %}
-                                                        <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                    {% else %}
-                                                        <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i></a>
-                                                    {% endif %}
+                                                    <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                        {% if request|shortlisted:customer.id %}
+                                                            Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                        {% else %}
+                                                            Shortlist
+                                                        {% endif %}
+                                                    </a>
                                                 </div>
                                             {% endif %}
                                         </div>
                                     </div>
                                     <div class="paid-candidate-inner--box">
-                                        <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                        <div class="paid-candidate-box-thumb" >
+                                            <img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                            {% if request|shortlisted:customer.id %}
+                                                <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+                                            {% endif %}
+                                        </div>
                                         <div class="paid-candidate-box-detail">
-                                        <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                        <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
+                                            <span class="desination text-capitalize">{{customer.category.category}}</span>
+                                        </div>
                                     </div>
                                     <div class="paid-candidate-box-extra">
                                         <ul style="height: 100px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
@@ -381,20 +389,28 @@
                                                     {% if request.user|logged_in_company %}
                                                         <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                         <div class="dropdown-menu pull-right animated flipInX">
-                                                            {% csrf_token %}
-                                                            {% if request|shortlisted:customer.id %}
-                                                                <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                            {% else %}
-                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
-                                                            {% endif %}
+                                                           <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                                {% if request|shortlisted:customer.id %}
+                                                                    Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                {% else %}
+                                                                    Shortlist
+                                                                {% endif %}
+                                                           </a>
                                                         </div>
                                                     {% endif %}
                                                 </div>
                                             </div>
                                             <div class="paid-candidate-inner--box">
-                                                <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                                <div class="paid-candidate-box-thumb">
+                                                    <img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                                    {% if request|shortlisted:customer.id %}
+                                                        <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+                                                    {% endif %}
+                                                </div>
                                                 <div class="paid-candidate-box-detail">
-                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
+                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
+                                                    <span class="desination text-capitalize">{{customer.category.category}}</span>
+                                                </div>
                                             </div>
                                             <div class="paid-candidate-box-extra">
                                                 <ul style="height: 100px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
@@ -450,106 +466,6 @@
 {% endblock content %}
 {% block script %}
     <script>
-            function shortlistmessage() {
-                swal.fire({
-                title: "Error!",
-                text: "You have already shortlisted this user",
-                type: "error",
-                confirmButtonText: "Continue"
-               });
-            }
-            function shortlist(shortlist){
 
-                var user = document.getElementById(shortlist.id);
-                var company = user.getAttribute('data-employer');
-
-                 $.ajax({
-                    type: "POST",
-                    url : "{% url 'LML:shortlistemployees' %}",
-                    data:{
-                        'customer_id' : user.id,
-                        'company_id' : company,
-                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                    },
-                    dataType:'json',
-                    success : function searchSuccess(data){
-                        if(data.is_shortlisted){
-                            errorshortlisting(data);
-                            console.log();
-                        }
-                        else if(data.shortlisted){
-                           shortlisted(data);
-                           var user = document.getElementById(shortlist.id);
-                           user.innerText='Shortlisted';
-                           user.style.color='green';
-                        }
-                    },
-
-                });
-                 function shortlisted(k){
-
-                    swal.fire({
-                    title: "Success!",
-                    text: k.success_message,
-                    type: "success",
-                    confirmButtonText: "Continue"
-                   });
-                }
-                 function errorshortlisting(k){
-                    swal.fire({
-                    title: "Error!",
-                    text: k.error_message,
-                    type: "error",
-                    confirmButtonText: "Continue"
-                   });
-                }
-
-            }
-            function shortlist2(shortlist){
-
-                var user = $(shortlist).attr('data-customer')
-                var company = $(shortlist).attr('data-employer')
-                console.log(user, company)
-
-                 $.ajax({
-                    type: "POST",
-                    url : "{% url 'LML:shortlistemployees' %}",
-                    data:{
-                        'customer_id' : Number(user),
-                        'company_id' : Number(company),
-                        'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-                    },
-                    dataType:'json',
-                    success : function searchSuccess(data){
-                        if(data.is_shortlisted){
-                            errorshortlisting(data);
-                            console.log();
-                        }
-                        else if(data.shortlisted){
-                           shortlisted(data);
-                           $('[data-shortlistbtn ]').fadeOut();
-                        }
-                    },
-
-                });
-                 function shortlisted(k){
-
-                    swal.fire({
-                    title: "Success!",
-                    text: k.success_message,
-                    type: "success",
-                    confirmButtonText: "Continue"
-                   });
-                }
-                 function errorshortlisting(k){
-                    swal.fire({
-                    title: "Error!",
-                    text: k.error_message,
-                    type: "error",
-                    confirmButtonText: "Continue"
-                   });
-                }
-
-            }
     </script>
 {% endblock script %}

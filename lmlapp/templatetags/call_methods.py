@@ -129,10 +129,10 @@ def confirm_company_reg_payment(request):
 @register.filter(name='shortlisted')
 def shortlisted(request, customer_id):
     customer = Customer.objects.filter(user_ptr_id=customer_id).first()
-    is_shortlisted = CompanyShortlistCustomers.objects.filter(customer_id=customer.id, company_id=request.user.id, payment_status='SHORTLISTED').exists()
+    is_shortlisted = CompanyShortlistCustomers.objects.filter(customer_id=customer.id, company_id=request.user.id, payment_status='SHORTLISTED').order_by('-created_at').first()
     if is_shortlisted:
-        return False
-    return True
+        return True
+    return False
 
 @register.filter(name='top_customer_categories')
 def top_customer_categories(request):
@@ -357,16 +357,17 @@ def get_filename(name):
 @register.filter(name='sizify')
 def sizify(value):
     # value = ing(value)
-    if value < 512000:
-        value = value / 1024.0
-        ext = 'kb'
-    elif value < 4194304000:
-        value = value / 1048576.0
-        ext = 'mb'
-    else:
-        value = value / 1073741824.0
-        ext = 'gb'
-    return '%s %s' % (str(round(value, 2)), ext.capitalize())
+    if value:
+        if value < 512000:
+            value = value / 1024.0
+            ext = 'kb'
+        elif value < 4194304000:
+            value = value / 1048576.0
+            ext = 'mb'
+        else:
+            value = value / 1073741824.0
+            ext = 'gb'
+        return '%s %s' % (str(round(value, 2)), ext.capitalize())
 
 @register.filter(name='get_user_msgstatus')
 def get_user_msgstatus(request, msg_id):
@@ -390,8 +391,10 @@ def get_if_its_reply(request, msg_id):
 
 @register.filter("to_int")
 def to_int(value):
-    return int(value)
+    if value is not None:
+        return int(value)
 
 @register.filter("to_str")
 def to_str(value):
-    return str(value)
+    if value is not None:
+        return str(value)

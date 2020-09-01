@@ -28,8 +28,8 @@
 					<!-- search filter -->
 					<div class="row extra-mrg">
 						<div class="wrap-search-filter">
-							<form action="" method="POST">
-                            {% csrf_token %}
+							<form action="{% url 'LML:all_premium_employees' %}" method="POST">
+                                {% csrf_token %}
 								<div class="col-md-3 col-sm-3">
 									<select required name="county" class="form-control" id="j-category">
                                         <option selected disabled class="text-muted"> Choose County</option>
@@ -118,18 +118,24 @@
                                                 {% if request.user|logged_in_company %}
                                                     <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                     <div class="dropdown-menu pull-right animated flipInX">
-                                                        {% csrf_token %}
-                                                        {% if request|shortlisted:customer.id %}
-                                                            <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                        {% else %}
-                                                            <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i></a>
-                                                        {% endif %}
+                                                       <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                            {% if request|shortlisted:customer.id %}
+                                                                Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                            {% else %}
+                                                                Shortlist
+                                                            {% endif %}
+                                                       </a>
                                                     </div>
                                                 {% endif %}
                                             </div>
                                         </div>
                                         <div class="paid-candidate-inner--box">
-                                            <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
+                                            <div class="paid-candidate-box-thumb">
+                                                <img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" />
+                                                {% if request|shortlisted:customer.id %}
+                                                    <i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>
+                                                {% endif %}
+                                            </div>
                                             <div class="paid-candidate-box-detail">
                                             <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
                                         </div>

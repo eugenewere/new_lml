@@ -38,7 +38,7 @@
             <div class="col-md-8">
                 <div class="left-side-container">
                     <div class="freelance-image">
-                        <a href="company-detail.html">
+                        <a href='{% url 'LML:employeedetails' %}'>
                             <img src="{{customer.profile_image.url}}" class="img-responsive " style="margin: 18px 0;width: 100%; object-fit: contain;" alt="">
                         </a>
                     </div>
@@ -158,7 +158,7 @@
                             </div>
                             <div id="docum" class="tab-pane fade in " style="height: 100%;">
 
-                                <div class="modal fade" id="uploaddoc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade animate__animated  animate__zoomInDown" id="uploaddoc" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                   <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content" style="padding-bottom: 0;">
                                       <div class="modal-header">
@@ -208,7 +208,6 @@
 
                                           </form>
                                       </div>
-
                                     </div>
                                   </div>
                                 </div>
@@ -228,7 +227,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="filemanager--controls">
-                                                            <div class="modal fade" id="filedeletemodalp" tabindex="-1" aria-labelledby="filedeletemodalp" aria-hidden="true">
+                                                            <div class="modal fade animate__animated  animate__zoomInDown" id="filedeletemodalp" tabindex="-1" aria-labelledby="filedeletemodalp" aria-hidden="true">
                                                               <div class="modal-dialog">
                                                                 <div class="modal-content" style="padding-bottom: 0;">
                                                                   <div class="modal-header">
@@ -271,9 +270,9 @@
                                                                     <input data-search style="height: 38px; width: 47%; margin-left: auto;" placeholder="Search File list" aria-label="searchfile" type="text" class="form-control" id="searchfile" >
                                                                 </div>
                                                             </div>
-                                                            <ul style="width: 100%; overflow-x: hidden; overflow-y: scroll; display: flex; {% if custome_documents|length < 4 %}justify-content: flex-start; {% else %} justify-content: center; {% endif %} flex-wrap: wrap;">
+                                                            <ul style="width: 100%; overflow-x: hidden; overflow-y: scroll; display: flex; justify-content: flex-start;  flex-wrap: wrap;">
                                                                 {% for filee in custome_documents %}
-                                                                    <div class="modal fade" id="filedeletemodal{{ filee.id }}" tabindex="-1" aria-labelledby="filedeletemodal{{ filee.id }}" aria-hidden="true">
+                                                                    <div class="modal fade animate__animated  animate__zoomInDown" id="filedeletemodal{{ filee.id }}" tabindex="-1" aria-labelledby="filedeletemodal{{ filee.id }}" aria-hidden="true">
                                                                       <div class="modal-dialog">
                                                                         <div class="modal-content" style="padding-bottom: 0;">
                                                                           <div class="modal-header">
@@ -294,7 +293,7 @@
                                                                       </div>
                                                                     </div>
 
-                                                                    <li data-toggle="tooltip" data-file="{{ filee.id }}" data-filter="{{ filee.title|lower }}" data-placement="top" title="{{ filee.file.url|get_filename }}" class="filemanager--file tta" data-filename="{{ filee.file.name|get_filename|truncatechars:20 }}" data-titlee="{{ filee.title|truncatechars:20 }}" data-desc="{{ filee.description }}" data-sizee="{{ filee.file.size|sizify}}">
+                                                                    <li data-toggle="tooltip" data-file="{{ filee.id }}" data-filter="{{ filee.title|lower }}" data-placement="top" title="{{ filee.file.url|get_filename }}" class="filemanager--file tta animate__animated animate__rubberBand animate__delay-2s" data-filename="{{ filee.file.name|get_filename|truncatechars:20 }}" data-titlee="{{ filee.title|truncatechars:20 }}" data-desc="{{ filee.description }}" data-sizee="{{ filee.file.size|sizify}}">
                                                                         <div class="filemanager--fileicon">
                                                                             <span class="fas fa-file-pdf"></span>
                                                                         </div>

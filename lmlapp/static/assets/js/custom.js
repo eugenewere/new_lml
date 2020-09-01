@@ -392,3 +392,195 @@ function executeOnHours(hours, callback) {
 executeOnHours([0, 12], function() {
   console.log('Something is done');
 });
+function getCookie(name) {
+	let cookieValue = null;
+	if (document.cookie && document.cookie !== '') {
+		const cookies = document.cookie.split(';');
+		for (let i = 0; i < cookies.length; i++) {
+			const cookie = cookies[i].trim();
+			// Does this cookie string begin with the name we want?
+			if (cookie.substring(0, name.length + 1) === (name + '=')) {
+				cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				break;
+			}
+		}
+	}
+	return cookieValue;
+}
+$('.shortlistcandidate').each(function () {
+	$(this).click(function (e) {
+		e.preventDefault();
+		let idd = $(this).attr('data-candidate')
+		const csrftoken = getCookie('csrftoken');
+		var $item = $(this);
+		var loc = window.location.origin + '/shortlist/'
+		$.ajax({
+			type: "POST",
+			url : loc,
+			data:{
+				'customer_id' :idd,
+			},
+			headers: {
+				'X-CSRFToken': csrftoken,
+			},
+			dataType:'json',
+			success : function(data){
+				if(data['success'] === 'success'){
+					if(data['status'] === 'shortlisted'){
+						swal.fire({
+							title: "Success!",
+							text: data['msg'],
+							type: "success",
+							confirmButtonText: "Ok"
+					   });
+					   $($item).text('');
+					   $($item).append(
+						   'Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>'
+					   )
+					   $($item).closest('.paid-candidate-box').find('.paid-candidate-box-thumb').append(
+						   '<i  class="fas fa-check-circle shortlist_noti_icon" data-toggle="tooltip" data-placement="right" title="You Have Shortlisted." style="color: #06D15B; position: absolute; left: 11px;top: 0; font-size: 19px;"></i>'
+					   );
+					   $('[data-toggle="tooltip"]').tooltip();
+					}
+					else if (data['status'] === 'unshortlisted'){
+						swal.fire({
+							title: "Success!",
+							text: data['msg'],
+							type: "success",
+							confirmButtonText: "Ok"
+					   });
+					   $($item).text('');
+					   $($item).append(
+						   'Shortlist'
+					   )
+					   $($item).closest('.paid-candidate-box').find('.shortlist_noti_icon').hide();
+					}
+				}
+				else if(data['error'] === 'error'){
+					 swal.fire({
+							title: "Error!",
+							text: data['msg'],
+							type: "error",
+							confirmButtonText: "Cancel"
+					   });
+
+				}
+			},
+			error:function (data) {
+				console.log(data);
+			}
+
+		});
+	});
+});
+$('.shortlistcandidate2').each(function () {
+	$(this).click(function (e) {
+		e.preventDefault();
+		let idd = $(this).attr('data-candidate')
+		const csrftoken = getCookie('csrftoken');
+		var $item = $(this);
+		var loc = window.location.origin + '/shortlist/'
+		$.ajax({
+			type: "POST",
+			url : loc,
+			data:{
+				'customer_id' :idd,
+			},
+			headers: {
+				'X-CSRFToken': csrftoken,
+			},
+			dataType:'json',
+			success : function(data){
+				if(data['success'] === 'success'){
+					if(data['status'] === 'shortlisted'){
+						swal.fire({
+							title: "Success!",
+							text: data['msg'],
+							type: "success",
+							confirmButtonText: "Ok"
+					   });
+					   $('.shortlistcandidate2').fadeOut();
+					}
+					else if (data['status'] === 'unshortlisted'){
+						swal.fire({
+							title: "Success!",
+							text: data['msg'],
+							type: "success",
+							confirmButtonText: "Ok"
+					   });
+					   $($item).text('');
+					   $($item).append(
+						   'Shortlist'
+					   )
+					   $($item).closest('.paid-candidate-box').find('.shortlist_noti_icon').hide();
+					}
+				}
+				else if(data['error'] === 'error'){
+					 swal.fire({
+							title: "Error!",
+							text: data['msg'],
+							type: "error",
+							confirmButtonText: "Cancel"
+					   });
+
+				}
+			},
+			error:function (data) {
+				console.log(data);
+			}
+
+		});
+	});
+});
+$('.shortlistcandidate3').each(function () {
+	$(this).click(function (e) {
+		e.preventDefault();
+		let idd = $(this).attr('data-candidate')
+		const csrftoken = getCookie('csrftoken');
+		var $item = $(this);
+		var loc = window.location.origin + '/shortlist/'
+		$.ajax({
+			type: "POST",
+			url : loc,
+			data:{
+				'customer_id' :idd,
+			},
+			headers: {
+				'X-CSRFToken': csrftoken,
+			},
+			dataType:'json',
+			success : function(data){
+				if(data['success'] === 'success'){
+					if (data['status'] === 'unshortlisted'){
+						swal.fire({
+							title: "Success!",
+							text: data['msg'],
+							type: "success",
+							confirmButtonText: "Ok"
+					   });
+
+
+					   setTimeout(function () {
+							$($item).closest('.paid-candidate-container[data-parentorall=custm-'+idd+']').fadeOut(function () {
+									$(this).remove();
+							});
+					   },1000);
+						// console.log($($item).closest('.paid-candidate-container'));
+					}
+				}
+				else if(data['error'] === 'error'){
+					 swal.fire({
+							title: "Error!",
+							text: data['msg'],
+							type: "error",
+							confirmButtonText: "Cancel"
+					   });
+				}
+			},
+			error:function (data) {
+				console.log(data);
+			}
+
+		});
+	});
+});
