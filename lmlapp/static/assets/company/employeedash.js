@@ -340,6 +340,36 @@ $(document).ready(function(){
             }
         });
     });
+      $('.pdf-btn').each(function () {
+        $(this).on('click', function () {
+            var file_name =  $(this).attr('data-tran');
+            var id = $(this).closest('.receipt').find('.pdf-wrapper').attr('id');
+            const element =document.getElementById(id);
+            var opt = {
+                margin:       0.21,
+                filename:     file_name,
+                image:        {type: 'jpeg', quality: 1},
+                html2canvas:  {
+                    scale: 7,
+                    quality: 4,
+                    imageTimeout:0,
+                    logging: true,
+                    letterRendering: true,
+                    useCORS: true
+                },
+                jsPDF:  { unit: 'in', format: 'a4', orientation: 'portrait', floatPrecision:'smart' }
+            };
+
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .toCanvas()
+                .toImg()
+                .toPdf()
+                .save();
+        });
+    });
 
 });
 

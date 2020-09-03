@@ -14,9 +14,11 @@
 
     <script src="https://use.typekit.net/hoy3lrg.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewer.js/0.11.1/crocodoc.viewer.min.css"/>
+{#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewer.js/0.11.1/crocodoc.viewer.min.css"/>#}
 
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <link rel="stylesheet" href="{% static 'assets/Receipt/recript.css' %}">
+
     <style>
         @media screen and (max-width: 940px){
             .filemanager .custom-button{
@@ -109,47 +111,350 @@
                           <!-- Start All Sec -->
                         <div class="tab-content" style="height: auto;overflow-x: hidden; overflow-y: scroll;">
                             <div id="about" class="tab-pane fade in active" style="height: 100%;">
+                                {% for k in cust_reg_pay %}
+                                    <div class="modal fade animate__animated  animate__zoomInDown " id="pay-reg{{ k.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog">
+                                        <div class="modal-content" style="padding-bottom: 0;">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Receipt</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                              <span aria-hidden="true">&times;</span>
+                                            </button>
+                                          </div>
+                                          <div class="modal-body receipt" >
+                                              <div class="container-fluid " style="display: flex; justify-content: flex-end;" >
+                                                  <button data-tran="{{ k.transaction_recipt_no }}" class="btn btn-sm btn-success custom-button pdf-btn" style="padding: 5px 8px;"><i class="fas fa-download"></i></button>
+{#                                                      <button  class="btn btn-sm btn-success custom-button expandbtn" style="padding: 5px 8px;"><i class="fas fa-expand-arrows-alt"></i></button>#}
+                                              </div>
+                                              <div class="pdf-wrapper" id="pdf-reg{{ k.id }}">
+                                                <!-- Header -->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                  <tr>
+                                                    <td height="20"></td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>
+                                                      <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+                                                        <tr class="hiddenMobile">
+                                                          <td height="40"></td>
+                                                        </tr>
+                                                        <tr class="visibleMobile">
+                                                          <td height="30"></td>
+                                                        </tr>
+
+                                                        <tr>
+                                                          <td>
+                                                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td>
+                                                                    <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                                                                      <tbody>
+                                                                        <tr>
+                                                                          <td align="left"> </td>
+                                                                        </tr>
+                                                                        <tr class="hiddenMobile">
+                                                                          <td height="40"></td>
+                                                                        </tr>
+                                                                        <tr class="visibleMobile">
+                                                                          <td height="20"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td style="font-size: 12px; color: #5b5b5b; line-height: 18px; vertical-align: top; text-align: left;">
+                                                                            Hello, {{ k.payer_full_name|title }}.
+                                                                            <br> Thank you for getting {{ k.typeofpay }}.
+                                                                          </td>
+                                                                        </tr>
+                                                                      </tbody>
+                                                                    </table>
+                                                                    <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                                                                      <tbody>
+                                                                        <tr class="visibleMobile">
+                                                                          <td height="20"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td height="5"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td style="font-size: 21px; color: #1DBF73; letter-spacing: -1px;  line-height: 1; vertical-align: top; text-align: right;">
+                                                                            Receipt
+                                                                          </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                        <tr class="hiddenMobile">
+                                                                          <td height="50"></td>
+                                                                        </tr>
+                                                                        <tr class="visibleMobile">
+                                                                          <td height="20"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td style="font-size: 12px; color: #5b5b5b;line-height: 18px; vertical-align: top; text-align: right;">
+                                                                            <small>ORDER: </small> {{ k.transaction_recipt_no }}<br />
+                                                                            <small>{{ k.created_at|date:'M-d-Y' }}</small>
+                                                                          </td>
+                                                                        </tr>
+                                                                      </tbody>
+                                                                    </table>
+                                                                  </td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                </table>
+                                                <!-- /Header -->
+                                                <!-- Order Details -->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>
+                                                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                          <tbody>
+                                                            <tr>
+                                                            <tr class="hiddenMobile">
+                                                              <td height="60"></td>
+                                                            </tr>
+                                                            <tr class="visibleMobile">
+                                                              <td height="40"></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>
+                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                                                        Item
+                                                                      </th>
+                                                                      <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+
+                                                                      </th>
+                                                                        <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                        Quantity
+                                                                      </th>
+                                                                      <th style="font-size: 12px; text-align: end;  color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                                                        Subtotal
+                                                                      </th>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td height="1" style="background: #bebebe;" colspan="4"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td height="10" colspan="4"></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td style="font-size: 12px;  color: #1DBF73;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
+                                                                        {{ k.typeofpay }}
+                                                                      </td>
+                                                                      <td style="font-size: 12px;  color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"></td>
+                                                                      <td style="font-size: 12px;  color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">1</td>
+                                                                      <td style="font-size: 12px;  color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right">{{ k.amount|intcomma }}/Ksh</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td height="1" colspan="4" style="border-bottom:1px solid #e4e4e4"></td>
+                                                                    </tr>
+
+                                                                  </tbody>
+                                                                </table>
+                                                              </td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td height="20"></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                                <!-- /Order Details -->
+                                                <!-- Total -->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>
+                                                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                          <tbody>
+                                                            <tr>
+                                                              <td>
+
+                                                                <!-- Table Total -->
+                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td style="font-size: 12px; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                        Subtotal
+                                                                      </td>
+                                                                      <td style="font-size: 12px; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80">
+                                                                        {{ k.amount|intcomma }} /Ksh
+                                                                      </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                      <td style="font-size: 12px; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                        <strong>Grand Total{% comment %} (Incl.Tax){% endcomment %}</strong>
+                                                                      </td>
+                                                                      <td style="font-size: 12px; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                        <strong>{{ k.amount|intcomma }} /Ksh</strong>
+                                                                      </td>
+                                                                    </tr>
+{#                                                                        <tr>#}
+{#                                                                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>TAX</small></td>#}
+{#                                                                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">#}
+{#                                                                            <small>$72.40</small>#}
+{#                                                                          </td>#}
+{#                                                                        </tr>#}
+                                                                  </tbody>
+                                                                </table>
+                                                                <!-- /Table Total -->
+
+                                                              </td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                                <!-- /Total -->
+                                                <!-- Information -->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                  <tbody>
+                                                    <tr>
+                                                      <td>
+                                                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                          <tbody>
+                                                            <tr>
+                                                            <tr class="hiddenMobile">
+                                                              <td height="60"></td>
+                                                            </tr>
+                                                            <tr class="visibleMobile">
+                                                              <td height="40"></td>
+                                                            </tr>
+                                                            <tr>
+                                                              <td>
+                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td>
+                                                                        <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                                                                          <tbody>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="20"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td style="font-size: 11px; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                                                                                <strong>PAYMENT METHOD</strong>
+                                                                              </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td width="100%" height="10"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td style="font-size: 12px; color: #5b5b5b; line-height: 20px; vertical-align: top; ">
+                                                                                 Gateway: {{ k.pay_method }}<br>
+                                                                                  Transaction ID: <a href="#" style="color: #1DBF73; text-decoration:underline;">{{ k.transaction_recipt_no }}</a><br>
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                              </td>
+                                                            </tr>
+
+                                                            <tr class="hiddenMobile">
+                                                              <td height="60"></td>
+                                                            </tr>
+                                                            <tr class="visibleMobile">
+                                                              <td height="30"></td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                                <!-- /Information -->
+                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+
+                                                  <tr>
+                                                    <td>
+                                                      <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+                                                        <tr>
+                                                          <td>
+                                                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td style="font-size: 12px; color: #5b5b5b;  line-height: 18px; vertical-align: top; text-align: left;">
+                                                                    Have a nice day.
+                                                                  </td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                        <tr class="spacer">
+                                                          <td height="50"></td>
+                                                        </tr>
+
+                                                      </table>
+                                                    </td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td height="20"></td>
+                                                  </tr>
+                                                </table>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                {% endfor %}
                                 <div class="col-sm-12" style="padding: 9px 10px; height: 100%;display: flex; justify-content: center; ">
                                     {% if cust_reg_pay %}
                                         <div class="col-sm-12" style="margin: 0 auto;">
                                             <table class="table table-hover" id="myTable">
-                                          <thead>
-                                            <tr>
-                                              <th scope="col">#</th>
-                                              <th scope="col">Gateway</th>
-                                              <th scope="col">Trans_id</th>
-                                              <th scope="col">Payer Email</th>
-                                              <th scope="col">User Reg No</th>
-                                              <th scope="col">Payer Name</th>
-                                              <th scope="col">Amount</th>
-                                              <th scope="col">Status</th>
-                                              <th scope="col">Date</th>
-                                            </tr>
-                                          </thead>
-                                          <tbody>
-                                          {% for k in cust_reg_pay %}
-                                            <tr>
-                                              <th scope="row">{{ forloop.counter }}</th>
-                                              <td>{{ k.pay_method }}</td>
-                                              <td>{{ k.transaction_recipt_no }}</td>
-                                              <td>{{ k.payer_paying_email }}</td>
-                                              <td>{{ k.payer_reg_no }}</td>
-                                              <td>{{ k.payer_full_name }}</td>
-                                              <td>{{ k.amount }}</td>
-                                              <td>
-                                                  {{ k.payment_status }}
-                                                  {% if k.payment_status|lower == 'completed' %}
-                                                      <i style="color: limegreen;" class="fas fa-check-circle"></i>
-                                                      {% else %}
-                                                      <i style="color: red;" class="fas fa-exclamation-circle"></i>
-                                                  {% endif %}
-                                              </td>
-                                              <td>{{ k.created_at|naturaltime }}</td>
-                                            </tr>
-                                          {% endfor %}
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Gateway</th>
+                                                  <th scope="col">For</th>
+                                                  <th scope="col">Trans_id</th>
+                                                  <th scope="col">Amount</th>
+                                                  <th scope="col">PayStatus</th>
+                                                  <th scope="col">Date</th>
+                                                  <th scope="col">View</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                              {% for k in cust_reg_pay %}
+                                                <tr>
+                                                      <th scope="row">{{ forloop.counter }}</th>
+                                                      <td>{{ k.pay_method }}</td>
+                                                      <td>{{ k.typeofpay }}</td>
+                                                      <td>{{ k.transaction_recipt_no }}</td>
+                                                      <td>{{ k.amount }}</td>
+                                                      <td>
+                                                          {{ k.payment_status }}
+                                                          {% if k.payment_status|lower == 'completed' %}
+                                                              <i style="color: limegreen;" class="fas fa-check-circle"></i>
+                                                              {% else %}
+                                                              <i style="color: red;" class="fas fa-exclamation-circle"></i>
+                                                          {% endif %}
+                                                      </td>
+                                                      <td>{{ k.created_at|date:'d-M-Y' }}</td>
+                                                      <td style="">
+                                                          <a data-toggle="modal" data-target="#pay-reg{{ k.id }}" style='margin: 0;padding: 6px 16px;' href="" class="btn btn-success custom-button">View</a>
+                                                      </td>
+                                                </tr>
+                                              {% endfor %}
 
-                                          </tbody>
-                                        </table>
+                                              </tbody>
+                                            </table>
                                         </div>
                                     {% else %}
                                         <h3 style="text-align: center;">No Payment Made</h3>
@@ -352,7 +657,10 @@
     <!-- ========== Begin: Brows job Category End ===============  -->
 {% endblock content %}
 {% block script %}
-     <script src="{% static 'email/vendors/js/ajaxform.js' %}"></script>
+    <script src="{% static 'email/vendors/js/ajaxform.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/html2pdf/jspdf.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/html2pdf/html2canvas.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/html2pdf/html2pdf.js' %}"></script>
 {#     <script src="https://cdnjs.cloudflare.com/ajax/libs/viewer.js/0.11.1/crocodoc.viewer.min.js"></script>#}
     <script src="{% static 'assets/company/employeedash.js' %}" type="text/javascript"></script>
 

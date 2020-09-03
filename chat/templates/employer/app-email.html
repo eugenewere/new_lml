@@ -69,15 +69,17 @@
                         </a>
                     </div>
                   <!-- compose button  -->
-                  <button type="button" class="btn btn-success btn-glow btn-block my-2 compose-btn">
+                   {% if request.user.id|company_messaging_with_candidates %}
+                  <button type="button" class="btn btn-success btn-glow btn-block my-2 compose-btn custom-btn-hover-active">
                     <i class="lni lni-comments-alt"></i>
                     Compose
                   </button>
+                   {% endif %}
                 </div>
                 <div class="sidebar-menu-list">
                   <!-- sidebar menu  -->
                   <div class="list-group list-group-messages tabt" >
-                    <a  onclick="openCity(event,this, 'All')" id="defaultOpen" class="tablinks list-group-item ">
+                    <a  onclick="openCity(event,this, 'All')" id="defaultOpen" class="tablinks list-group-item custom-btn-hover-active">
                       <div class="d-inline mr-25">
                         <i class="lni lni-grid-alt"></i>
                       </div>
@@ -87,14 +89,14 @@
                         <span data-toggle="tooltip" data-placement="bottom" title="AllUnread" class="badge inbox-unread-badge badge-danger badge-pill badge-round float-right">{{ messages_count }}</span>
                       {% endif %}
                     </a>
-                    <a onclick="openCity(event,this, 'Sent')" id="sentbtn" class="tablinks list-group-item">
+                    <a onclick="openCity(event,this, 'Sent')" id="sentbtn" class="tablinks list-group-item custom-btn-hover-active">
                       <div class="d-inline mr-25">
                         <i class="lni lni-play"></i>
                       </div>
                       Sent
                       <span data-toggle="tooltip" data-placement="top" title="All Sent Messages" class="badge badge-success badge-pill badge-round float-right">{{ sentmessages|length }}</span>
                     </a>
-                    <a onclick="openCity(event,this, 'Inbox')" id="inbbtn" class="tablinks list-group-item">
+                    <a onclick="openCity(event,this, 'Inbox')" id="inbbtn" class="tablinks list-group-item custom-btn-hover-active">
                       <div class="d-inline mr-25">
                         <i class="lni lni-inbox"></i>
                       </div>
@@ -105,14 +107,14 @@
                         <span data-toggle="tooltip" data-placement="bottom" title="Inbox Unread" class="badge inbox-unread-badge badge-danger badge-pill badge-round float-right">{{ messages_count }}</span>
                       {% endif %}
                     </a>
-                    <a onclick="openCity(event,this, 'Starred')" id="strbtn" class="tablinks list-group-item">
+                    <a onclick="openCity(event,this, 'Starred')" id="strbtn" class="tablinks list-group-item custom-btn-hover-active">
                       <div class="d-inline mr-25">
                         <i class="lni lni-star"></i>
                       </div>
                       Starred
                       <span data-toggle="tooltip" data-placement="top" title="All Favourite Messages" id="starredcount" class="badge badge-success badge-pill badge-round float-right">{{ starredmessages|length }}</span>
                     </a>
-                    <a onclick="openCity(event,this, 'Trash')" id="trashbtn" class="tablinks list-group-item">
+                    <a onclick="openCity(event,this, 'Trash')" id="trashbtn" class="tablinks list-group-item custom-btn-hover-active">
                       <div class="d-inline mr-25">
                         <i class="lni lni-trash"></i>
                       </div>
@@ -125,122 +127,109 @@
                   <!-- sidebar label start -->
                   <label class="sidebar-label">Labels</label>
                   <div class="list-group list-group-labels ">
-                    <a data-toggle="tooltip" data-placement="top" title="Product Messages" onclick="openCity(event,this, 'Product')" id="prodbtn" href="#" class="tablinks list-group-item d-flex justify-content-between align-items-center">
+                    <a data-toggle="tooltip" data-placement="top" title="Product Messages" onclick="openCity(event,this, 'Product')" id="prodbtn" href="#" class="custom-btn-hover-active tablinks list-group-item d-flex justify-content-between align-items-center">
                       Product ({{ product_label|length }})
                       <span class="bullet bullet-success bullet-sm"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Work Messages" onclick="openCity(event,this, 'Work')" id="workbtn" href="#" class="tablinks list-group-item d-flex justify-content-between align-items-center">
+                    <a data-toggle="tooltip" data-placement="top" title="Work Messages" onclick="openCity(event,this, 'Work')" id="workbtn" href="#" class="custom-btn-hover-active tablinks list-group-item d-flex justify-content-between align-items-center">
                       Work ({{ work_label|length }})
                       <span class="bullet bullet-primary bullet-sm"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Miscellaneous Messages" onclick="openCity(event,this, 'Misc')" id="miscbtn" href="#" class="tablinks list-group-item d-flex justify-content-between align-items-center">
+                    <a data-toggle="tooltip" data-placement="top" title="Miscellaneous Messages" onclick="openCity(event,this, 'Misc')" id="miscbtn" href="#" class="custom-btn-hover-active tablinks list-group-item d-flex justify-content-between align-items-center">
                       Misc ({{ misc_label|length }})
                       <span class="bullet bullet-warning bullet-sm"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Undefined Messages" onclick="openCity(event,this, 'Undefined')" id="undbtn" href="#" class="tablinks list-group-item d-flex justify-content-between align-items-center">
+                    <a data-toggle="tooltip" data-placement="top" title="Undefined Messages" onclick="openCity(event,this, 'Undefined')" id="undbtn" href="#" class="custom-btn-hover-active tablinks list-group-item d-flex justify-content-between align-items-center">
                       Undefined ({{ undefined_label|length }})
                       <span class="bullet bullet-secondary bullet-sm"></span>
                     </a>
 
                   </div>
-{#                   <label class="sidebar-label">Storage</label>#}
-{#                   <div class="list-group list-group-labels ">#}
-{##}
-{#                      <div class="progress">#}
-{#                          <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>#}
-{#                      </div>#}
-{#                   </div>#}
-
-
                   <!-- sidebar label end -->
                 </div>
               </div>
             </div>
-            <!-- User new mail right area -->
-            <div class="compose-new-mail-sidebar">
-              <div class="card mb-0 shadow-none quill-wrapper p-0"  >
-                <div class="card-header">
-                  <h3 class="card-title" id="emailCompose">New Message</h3>
-                  <button type="button" class="close close-icon">
-                   <i class="lni lni-close"></i>
-                  </button>
+             {% if request.user.id|company_messaging_with_candidates %}
+                <!-- User new mail right area -->
+                <div class="compose-new-mail-sidebar">
+                  <div class="card mb-0 shadow-none quill-wrapper p-0"  >
+                    <div class="card-header">
+                      <h3 class="card-title" id="emailCompose">New Message</h3>
+                      <button type="button" class="close close-icon">
+                       <i class="lni lni-close"></i>
+                      </button>
+                    </div>
+                    <!-- form start -->
+
+                        <form id="compose-form" method="POST" enctype="multipart/form-data" action="{% url 'Chat:messages' %}" >
+
+                          <div class="card-content">
+                            <div class="card-body pt-0">
+                                  <button type="reset" class="btn btn-danger cancel-btn mb-2 mr-1 custom-btn-hover-active">
+                                      <i class="lni lni-close mr-25"></i>
+                                      <span class="d-sm-inline d-none">Cancel</span>
+                                   </button>
+                                  <button type="submit" class="btn-send btn btn-success mb-2 custom-btn-hover-active ">
+                                      <i class='lni lni-play mr-25'></i>
+                                        <span class="d-sm-inline d-none">Send</span>
+                                  </button>
+                                  {% csrf_token %}
+                                  <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Choose Recipient</label>
+                                    <select required style="border-color: #6e6e6e" class="form-control js-example-basic-multiple" id="exampleFormControlSelect1" name="recievers" multiple="multiple">
+                                        {% for customer in customers %}
+                                          <option value="{{ customer.customer.id }}">{{ customer.customer.first_name|title }} {{ customer.customer.last_name|title }}</option>
+                                        {% endfor %}
+                                    </select>
+                                  </div>
+                                  <div class="form-group">
+                                    <label for="exampleFormControlSelect2">Label</label>
+                                    <select name="label" class="form-control js-example-basic-single" id="exampleFormControlSelect2">
+                                      <option selected value="UNDEFINED">Choose Label</option>
+                                      <option value="Product">Product</option>
+                                      <option value="Misc">Miscellaneous</option>
+                                      <option value="Work">Work</option>
+                                    </select>
+                                  </div>
+                                  <div class="form-label-group mb-1">
+                                       <label for="emailSubject">Subject</label>
+                                      <input type="text" id="emailSubject" class="form-control" name="subject" style="text-transform: uppercase;" placeholder="Subject">
+                                  </div>
+                                  <div class="form-group mt-2">
+                                    <label for="emailAttach">File</label>
+                                    <div class="custom-file">
+                                      <input name="filee" type="file" class="custom-file-inputt" id="customFile">
+                    {#                          <label class="custom-file-label" for="customFile">Choose file</label>#}
+                                    </div>
+                                  </div>
+                                  <div class="form-label-group mb-1" style="height: 120px; position:relative;">
+                                    <label for="editor">Message</label>
+                                    <textarea style="height: 100px;" id="editor" name="message" class="form-control" rows="20" placeholder="Message"></textarea>
+                                  </div>
+
+                            </div>
+                          </div>
+                        </form>
+                      <script>
+                          ClassicEditor
+                            .create( document.querySelector( '#editor' ) ,{
+                                removePlugins: [ 'Insert image', 'Insert table', 'Insert media' ],
+                                toolbar: ['heading','Paragraph', 'Highlight', 'bold', 'italic', ,'Indent','IndentBlock','undo', 'redo','link','bulletedList', 'numberedList'],
+
+                            })
+                            .catch( error => {
+                                console.error( error );
+                            } );
+                       </script>
+                    <!-- form start end-->
+                  </div>
                 </div>
-                <!-- form start -->
-
-                    <form id="compose-form" method="POST" enctype="multipart/form-data" action="{% url 'Chat:messages' %}" >
-
-                      <div class="card-content">
-                        <div class="card-body pt-0">
-                              <button type="reset" class="btn btn-danger cancel-btn mb-2 mr-1">
-                          <i class="lni lni-close mr-25"></i>
-                          <span class="d-sm-inline d-none">Cancel</span>
-                        </button>
-                              <button type="submit" class="btn-send btn btn-success mb-2 ">
-                                  <i class='lni lni-play mr-25'></i>
-                                    <span class="d-sm-inline d-none">Send</span>
-                              </button>
-                              {% csrf_token %}
-                              <div class="form-group">
-                                <label for="exampleFormControlSelect1">Choose Recipient</label>
-                                <select required style="border-color: #6e6e6e" class="form-control js-example-basic-multiple" id="exampleFormControlSelect1" name="recievers" multiple="multiple">
-                                    {% for customer in customers %}
-                                      <option value="{{ customer.customer.id }}">{{ customer.customer.first_name|title }} {{ customer.customer.last_name|title }}</option>
-                                    {% endfor %}
-                                </select>
-                              </div>
-                              <div class="form-group">
-                                <label for="exampleFormControlSelect2">Label</label>
-                                <select name="label" class="form-control js-example-basic-single" id="exampleFormControlSelect2">
-                                  <option selected value="UNDEFINED">Choose Label</option>
-                                  <option value="Product">Product</option>
-                                  <option value="Misc">Miscellaneous</option>
-                                  <option value="Work">Work</option>
-                                </select>
-                              </div>
-                              <div class="form-label-group mb-1">
-                                   <label for="emailSubject">Subject</label>
-                                  <input type="text" id="emailSubject" class="form-control" name="subject" style="text-transform: uppercase;" placeholder="Subject">
-                              </div>
-                              <div class="form-group mt-2">
-                                <label for="emailAttach">File</label>
-                                <div class="custom-file">
-                                  <input name="filee" type="file" class="custom-file-inputt" id="customFile">
-                {#                          <label class="custom-file-label" for="customFile">Choose file</label>#}
-                                </div>
-                              </div>
-                              <div class="form-label-group mb-1" style="height: 120px; position:relative;">
-                                <label for="editor">Message</label>
-                                <textarea style="height: 100px;" id="editor" name="message" class="form-control" rows="20" placeholder="Message"></textarea>
-                              </div>
-
-                        </div>
-                      </div>
-                    </form>
-                  <script>
-                      ClassicEditor
-                        .create( document.querySelector( '#editor' ) ,{
-                            removePlugins: [ 'Insert image', 'Insert table', 'Insert media' ],
-                            toolbar: ['heading','Paragraph', 'Highlight', 'bold', 'italic', ,'Indent','IndentBlock','undo', 'redo','link','bulletedList', 'numberedList'],
-
-                        })
-                        .catch( error => {
-                            console.error( error );
-                        } );
-                   </script>
-                <!-- form start end-->
-              </div>
-            </div>
-            <!--/ User Chat profile right area -->
+                <!--/ User Chat profile right area -->
+             {% endif %}
         </div>
       </div>
       <div style="height: 100%;" class="content-right">
         <div style="height: 100%;" class="content-overlay"></div>
-
-
-
-
-
-
 
         <div id="All"  style="height: 100%;" class="tabcontentt content-wrapper active show">
           <div class="content-header row"> </div>
@@ -4320,7 +4309,6 @@
 
           </div>
         </div>
-
       </div>
     </div>
     <!-- END: Content-->

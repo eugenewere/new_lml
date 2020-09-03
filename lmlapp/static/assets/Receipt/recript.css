@@ -1,0 +1,31 @@
+ @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+  body { margin: 0; padding: 0; background: #e1e1e1; }
+  .receipt div, .receipt p, .receipt a, .receipt li, .receipt td { -webkit-text-size-adjust: none; }
+  .receipt .ReadMsgBody { width: 100%; background-color: #ffffff; }
+  .receipt .ExternalClass { width: 100%; background-color: #ffffff; }
+
+  .receipt p { padding: 0 !important; margin-top: 0 !important; margin-right: 0 !important; margin-bottom: 0 !important; margin-left: 0 !important; }
+  .receipt .visibleMobile { display: none; }
+  .receipt .hiddenMobile { display: block; }
+
+  @media only screen and (max-width: 600px) {
+
+  .receipt table[class=fullTable] { width: 96% !important; clear: both; }
+  .receipt table[class=fullPadding] { width: 85% !important; clear: both; }
+  .receipt table[class=col] { width: 45% !important; }
+  .receipt .erase { display: none; }
+  }
+
+  @media only screen and (max-width: 420px) {
+  .receipt table[class=fullTable] { width: 100% !important; clear: both; }
+  .receipt table[class=fullPadding] { width: 85% !important; clear: both; }
+  .receipt table[class=col] { width: 100% !important; clear: both; }
+  .receipt table[class=col] td { text-align: left !important; }
+  .receipt .erase { display: none; font-size: 0; max-height: 0; line-height: 0; padding: 0; }
+  .receipt .visibleMobile { display: block !important; }
+  .receipt .hiddenMobile { display: none !important; }
+  }
+
+
+
+

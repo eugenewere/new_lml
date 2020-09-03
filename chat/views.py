@@ -11,7 +11,10 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.safestring import mark_safe
 from humanize import naturaltime
 
+from lmlapp.templatetags.call_methods import *
 from lmlappadmin.models import *
+
+
 @login_required()
 def employee_dash_message(request):
     user = request.user.id
@@ -72,87 +75,87 @@ def employee_dash_message(request):
 @login_required()
 def employer_dash_message(request):
     user = request.user.id
-    company = Company.objects.filter(user_ptr_id=user).first()
-    social = CompanySocialAccount.objects.filter(company=company).first()
-    customers = CompanyShortlistCustomers.objects.filter(company=company, payment_status='SHORTLISTED')
-    u = User.objects.filter(id=user).first()
-    # Message.objects.update(
-    #     readstatus='UNREAD'
-    # )
-    messages_count = Message.objects.filter(readstatus='UNREAD',reciever=u).exclude(sender=u).count()
-    if messages_count > 0:
-        username_of_user = request.user.first_name + "" + request.user.last_name + "("+ str(messages_count) +")"
+    if company_messaging_with_candidates(user):
+        company = Company.objects.filter(user_ptr_id=user).first()
+        social = CompanySocialAccount.objects.filter(company=company).first()
+        customers = CompanyShortlistCustomers.objects.filter(company=company, payment_status='SHORTLISTED')
+        u = User.objects.filter(id=user).first()
+        messages_count = Message.objects.filter(readstatus='UNREAD',reciever=u).exclude(sender=u).count()
+        if messages_count > 0:
+            username_of_user = company.company_name.upper() + " ("+ str(messages_count) +")"
+        else:
+            username_of_user = company.company_name.upper()
+        blocked = MsgStatus.objects.filter(Q(m_user=u) and (Q(delstar='DELETE') | Q(delstar='NORMAL'))).values_list('message_id', flat=True)
+        product_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='PRODUCT').exclude(id__in=blocked).order_by('-created_at').all()
+        misc_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='MISC').exclude(id__in=blocked).order_by('-created_at').all()
+        work_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='WORK').exclude(id__in=blocked).order_by('-created_at').all()
+        undefined_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='UNDEFINED').exclude(id__in=blocked).order_by('-created_at').all()
+        starreds=[]
+        starredmsgs = MsgStatus.objects.filter(m_user=u, delstar='STARRED').order_by('-created_at').all()
+        for stm in starredmsgs:
+            starreds.append(stm.message)
+        trashes=[]
+        trashedmsgs = MsgStatus.objects.filter(m_user=u, delstar='DELETE').order_by('-created_at').all()
+        for trm in trashedmsgs:
+            trashes.append(trm.message)
+
+
+        procuct_l = Message.objects.filter(sender=u).exclude(id__in=blocked).order_by('-created_at').all()
+        context={
+            # 'allmessages':procuct_l,
+            'allmessages': Message.objects.filter(Q(sender=u) | Q(reciever=u)).exclude(id__in=blocked).order_by('-created_at').all(),
+            'sentmessages': Message.objects.filter(sender=u).exclude(id__in=blocked).order_by('-created_at').all(),        #
+            'inboxmessages': Message.objects.filter(reciever=u).exclude(id__in=blocked).order_by('-created_at'),
+            'starredmessages': starreds,
+            'trashmessages':trashes,
+            'title': username_of_user,
+            'company': company,
+            'social': social,
+            'customers':customers,
+            'product_label':product_label,
+            'misc_label':misc_label,
+            'work_label':work_label,
+            'undefined_label':undefined_label,
+            'messages_count':messages_count,
+        }
+        return render(request, 'employer/app-email.html', context)
     else:
-        username_of_user = request.user.first_name + "" + request.user.last_name
-
-    blocked = MsgStatus.objects.filter(Q(m_user=u) and (Q(delstar='DELETE') | Q(delstar='NORMAL'))).values_list('message_id', flat=True)
-    product_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='PRODUCT').exclude(id__in=blocked).order_by('-created_at').all()
-    misc_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='MISC').exclude(id__in=blocked).order_by('-created_at').all()
-    work_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='WORK').exclude(id__in=blocked).order_by('-created_at').all()
-    undefined_label = Message.objects.filter(Q(sender=u) | Q(reciever=u), label='UNDEFINED').exclude(id__in=blocked).order_by('-created_at').all()
-    # print(product_label)
-    starreds=[]
-    starredmsgs = MsgStatus.objects.filter(m_user=u, delstar='STARRED').order_by('-created_at').all()
-    for stm in starredmsgs:
-        starreds.append(stm.message)
-    trashes=[]
-    trashedmsgs = MsgStatus.objects.filter(m_user=u, delstar='DELETE').order_by('-created_at').all()
-    for trm in trashedmsgs:
-        trashes.append(trm.message)
-
-
-
-    # print(blocked)
-    procuct_l = Message.objects.filter(sender=u).exclude(id__in=blocked).order_by('-created_at').all()
-    # print(procuct_l)
-    context={
-        # 'allmessages':procuct_l,
-        'allmessages': Message.objects.filter(Q(sender=u) | Q(reciever=u)).exclude(id__in=blocked).order_by('-created_at').all(),
-        'sentmessages': Message.objects.filter(sender=u).exclude(id__in=blocked).order_by('-created_at').all(),        #
-        'inboxmessages': Message.objects.filter(reciever=u).exclude(id__in=blocked).order_by('-created_at'),
-        'starredmessages': starreds,
-        'trashmessages':trashes,
-        'title': username_of_user,
-        'company': company,
-        'social': social,
-        'customers':customers,
-        'product_label':product_label,
-        'misc_label':misc_label,
-        'work_label':work_label,
-        'undefined_label':undefined_label,
-        'messages_count':messages_count,
-    }
-    return render(request, 'employer/app-email.html', context)
+        sweetify.error(request, 'Error', text='Your Subscription Package Does Not Allow', persistent='Ok')
+        pass
 
 @login_required()
 def messages(request):
-    if request.method == 'POST':
-        message = request.POST.get('message')
-        sender = request.user.id
-        recievers = request.POST.getlist('recievers')
-        subject = request.POST.get('subject')
-        label = request.POST.get('label')
-        file = request.FILES.get('filee')
-        mess = message
+    user = request.user.id
+    if company_messaging_with_candidates(user):
+        if request.method == 'POST':
+            message = request.POST.get('message')
+            sender = request.user.id
+            recievers = request.POST.getlist('recievers')
+            subject = request.POST.get('subject')
+            label = request.POST.get('label')
+            file = request.FILES.get('filee')
+            mess = message
 
 
-        user = User.objects.filter(id=sender).first()
-        if user is not None:
-            for reciever in recievers:
-                reciever_user = User.objects.filter(id=reciever).first()
-                message = Message.objects.create(
-                    msg_content=mess,
-                    sender=user,
-                    reciever=reciever_user,
-                    subject=subject,
-                    label=label.upper(),
-                    file=file,
-                    room=int(str(user.id) + str(reciever_user.id))
-                )
-        sweetify.success(request, 'Success', text='Message sent', persistent='Ok')
+            user = User.objects.filter(id=sender).first()
+            if user is not None:
+                for reciever in recievers:
+                    reciever_user = User.objects.filter(id=reciever).first()
+                    message = Message.objects.create(
+                        msg_content=mess,
+                        sender=user,
+                        reciever=reciever_user,
+                        subject=subject,
+                        label=label.upper(),
+                        file=file,
+                        room=int(str(user.id) + str(reciever_user.id))
+                    )
+                sweetify.success(request, 'Success', text='Message sent', persistent='Ok')
+                return redirect('Chat:employer_dash_message')
         return redirect('Chat:employer_dash_message')
-
-    return redirect('Chat:employer_dash_message')
+    else:
+        sweetify.error(request, 'Error', text='Your Subscription Package Does Not Allow', persistent='Ok')
+        pass
 
 @login_required()
 @csrf_exempt

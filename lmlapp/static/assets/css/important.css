@@ -1,0 +1,49 @@
+.img-circle{
+    height: 100%;
+     width: 100%;
+     object-fit: cover;
+}
+.tpc-status {
+    position: absolute;
+    left: 11px !important;
+    top: 8px !important;
+    background: #01c73d;
+    color: #ffffff;
+    text-transform: capitalize;
+    padding: 1px 15px !important;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 14px;
+}
+.ck-editor__editable {
+    min-height: 263px !important;
+}
+
+.grid-slide .grid-slide-box .paid-candidate-box{
+    min-height: 410px !important;
+    height: 410px !important;
+    overflow: hidden;
+}
+
+
+.grid-slide .grid-slide-box, .grid-slide-2 .grid-slide-box {
+    margin: 24px !important;
+}
+.hidden-mast{
+    display: none !important;
+}
+.tpc-status {
+    position: absolute;
+    left: 11px !important;
+    top: 8px !important;
+    background: #01c73d;
+    color: #ffffff;
+    text-transform: capitalize;
+    padding: 1px 15px !important;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 14px;
+}
+.hidden{
+    display: none !important;
+}

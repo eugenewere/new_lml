@@ -3,8 +3,15 @@
 {% load humanize %}
 {% load call_methods %}
 {% block links %}
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="{% static 'assets/css/chatpannel.css' %}">
     <style>
-        .customer{
+        .hidden{
+            display: none !important;
+        }
+    .customer{
             display: none;
         }
         .search_wrapper{
@@ -34,13 +41,7 @@
         }
 
     </style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <link rel="stylesheet" href="{% static 'assets/css/chatpannel.css' %}">
-    <style>
-        .hidden{
-            display: none !important;
-        }
-    </style>
+     <link rel="stylesheet" href="{% static 'assets/Receipt/recript.css' %}">
 {% endblock links %}
 
 {% block content %}
@@ -118,9 +119,13 @@
     <section class="brows-job-category gray-bg">
         <div class="container-fluid" style="padding: 60px 20px;">
             <div class="col-sm-12" >
-                <div class="row container" style="padding: 10px 5px; margin: 0 auto; display: flex !important; justify-content: flex-end; align-items: center; ">
-                    <a style=" margin-left: 3px; " href="{% url 'LML:employerdetails' %}" class="custom-button btn btn-success "><i class="fa fa-user mrg-r-5"></i>Details</a>
-                    <a style=" margin-left: 3px" target="_blank" href="{% url 'Chat:employer_dash_message' %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
+                <div class="row container " style="display: flex; justify-content: center; align-items: center; margin: 0 auto;">
+                    <div  class="deatil-tab-employ tool-tab col-sm-12" style="padding: 10px 5px; margin: 0 auto; display: flex !important; justify-content: flex-end; align-items: center; " >
+                        <a style=" margin-left: 3px; " href="{% url 'LML:employerdetails' %}" class="custom-button btn btn-success "><i class="fa fa-user mrg-r-5"></i>Profile Details</a>
+                        {% if request.user.id|company_messaging_with_candidates %}
+                            <a style=" margin-left: 3px" target="_blank" href="{% url 'Chat:employer_dash_message' %}" class="custom-button btn btn-info "><i class="fa fa-comment mrg-r-5"></i>Messages</a>
+                        {% endif %}
+                    </div>
                 </div>
                 <div class="row" style="display: flex; justify-content: center;">
                    <div  class="deatil-tab-employ tool-tab col-sm-12 col-md-12 col-lg-10 " style="background: white;" >
@@ -130,11 +135,9 @@
                             <li class=""><a data-toggle="pill" href="#premium">Premium Candidates ({{ premium_customers|length }})</a></li>
                             <li class=""><a data-toggle="pill" href="#ultimate">Ultimate Candidates ({{ ultimate_customers|length }})</a></li>
                             <li  class=""><a data-toggle="pill" href="#analystics">Analytics</a></li>
-                            <li class=""><a data-toggle="pill" href="#about">Payment History</a></li>
+                            <li id="paymenttab" class=""><a data-toggle="pill"  href="#about">Payment History</a></li>
                         </ul>
-
-
-                          <!-- Start All Sec -->
+                        <!-- Start All Sec -->
                         <div id="tabcont"  class="tab-content" style="height: 800px;overflow-x: hidden; overflow-y: scroll;">
                             <div id="all" class="tab-pane fade-in active" style="height: 100%;">
                                 <div class="row " style="display:flex; justify-content: flex-start; align-items: center; padding-left: 10px; {% if customers|length > 0 %} visibility: visible; {% else %} visibility: hidden  {% endif %}">
@@ -152,10 +155,11 @@
 
                               {% if customers %}
                                     <article class="advance-search-job">
-                                        <div id="listall" class="row no-mrg " style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                        <div id="listall" class="row no-mrg " style="display: flex; justify-content: flex-start; flex-wrap: wrap;">
                                              {% for customer in customers %}
                                                 <!-- Modal -->
-                                                <div class="modal fade" id="allcandidate{{ customer.customer.id }}" tabindex="-1" role="dialog" aria-labelledby="allcandidate{{ customer.customer.id }}" aria-hidden="true">
+                                                 {% if request.user.id|company_review_access_to_candidates %}
+                                                    <div class="modal fade" id="allcandidate{{ customer.customer.id }}" tabindex="-1" role="dialog" aria-labelledby="allcandidate{{ customer.customer.id }}" aria-hidden="true">
                                                   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content" style="padding-bottom: 0;">
                                                       <div class="modal-header">
@@ -201,6 +205,7 @@
                                                     </div>
                                                   </div>
                                                 </div>
+                                                 {% endif %}
                                                 <div  data-parentorall="custm-{{ customer.customer.id }}" data-filter-item data-sort="{{ customer.customer.first_name }}" data-filter-name="{{ customer.customer.first_name|lower }} {{ customer.customer.last_name|lower }}" style="display: none;"  class=" c_all paid-candidate-container">
                                                     <div class="paid-candidate-box card-custom-border">
                                                         {% if request.user.is_authenticated %}
@@ -216,7 +221,9 @@
                                                                         <a class="shortlistcandidate3" data-candidate="{{ customer.customer.id }}"  href="">
                                                                              UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
                                                                         </a>
+                                                                        {% if request.user.id|company_review_access_to_candidates %}
                                                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#allcandidate{{ customer.customer.id }}">Review</a>
+                                                                        {% endif %}
                                                                     </div>
                                                                 {% endif %}
                                                             </div>
@@ -284,10 +291,11 @@
                                 </div>
                                  {% if  basic_customers|length > 0 %}
                                     <article class="advance-search-job">
-                                        <div id="listbasic" class="row no-mrg"  style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                        <div id="listbasic" class="row no-mrg"  style="display: flex; justify-content: flex-start; flex-wrap: wrap;">
                                              {% for customer in basic_customers %}
                                                  <!-- Modal -->
-                                                <div class="modal fade" id="basic{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="basic{{ customer.id }}" aria-hidden="true">
+                                                {% if request.user.id|company_review_access_to_candidates %}
+                                                    <div class="modal fade" id="basic{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="basic{{ customer.id }}" aria-hidden="true">
                                                   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content" style="padding-bottom: 0;">
                                                       <div class="modal-header">
@@ -333,7 +341,7 @@
                                                     </div>
                                                   </div>
                                                 </div>
-
+                                                {% endif %}
                                                 <div data-parentorall="custm-{{ customer.id }}" data-filter-item2 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name2="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_basic paid-candidate-container">
                                                         <div class="paid-candidate-box card-custom-border">
                                                             {% if request.user.is_authenticated %}
@@ -349,7 +357,9 @@
                                                                             <a class="shortlistcandidate3" data-candidate="{{ customer.id }}"  href="">
                                                                                  UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
                                                                             </a>
+                                                                            {% if request.user.id|company_review_access_to_candidates %}
                                                                             <a href="javascript:void(0)" data-toggle="modal" data-target="#basic{{ customer.id }}">Review</a>
+                                                                            {% endif %}
                                                                         </div>
                                                                     {% endif %}
                                                                 </div>
@@ -415,9 +425,10 @@
                                     </div>
                                   {% if premium_customers|length > 0 %}
                                     <article class="advance-search-job">
-                                        <div id="listpremium" class="row no-mrg" style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                        <div id="listpremium" class="row no-mrg" style="display: flex; justify-content: flex-start; flex-wrap: wrap;">
                                              {% for customer in premium_customers %}
-                                                 <div class="modal fade" id="premium{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="premium{{ customer.id }}" aria-hidden="true">
+                                                 {% if request.user.id|company_review_access_to_candidates %}
+                                                     <div class="modal fade" id="premium{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="premium{{ customer.id }}" aria-hidden="true">
                                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content" style="padding-bottom: 0;">
                                                       <div class="modal-header">
@@ -462,6 +473,7 @@
                                                     </div>
                                                   </div>
                                                  </div>
+                                                 {% endif %}
                                                  <div data-parentorall="custm-{{ customer.id }}" data-filter-item3 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name3="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_premium paid-candidate-container">
                                                         <div class="paid-candidate-box card-custom-border">
                                                             {% if request.user.is_authenticated %}
@@ -477,8 +489,9 @@
                                                                             <a class="shortlistcandidate3" data-candidate="{{ customer.id }}"  href="">
                                                                                  UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
                                                                             </a>
-                                                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#premium{{ customer.id }}">Review</a>
-
+                                                                             {% if request.user.id|company_review_access_to_candidates %}
+                                                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#premium{{ customer.id }}">Review</a>
+                                                                             {% endif %}
                                                                         </div>
                                                                     {% endif %}
                                                                 </div>
@@ -548,10 +561,11 @@
 
                                 {% if  ultimate_customers|length > 0 %}
                                     <article class="advance-search-job">
-                                        <div id="listultimate" class="row no-mrg"  style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                        <div id="listultimate" class="row no-mrg"  style="display: flex; justify-content: flex-start; flex-wrap: wrap;">
 
                                              {% for customer in ultimate_customers %}
-                                               <div class="modal fade" id="ultimate{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="ultimate{{ customer.id }}" aria-hidden="true">
+                                                 {% if request.user.id|company_review_access_to_candidates %}
+                                                   <div class="modal fade" id="ultimate{{ customer.id }}" tabindex="-1" role="dialog" aria-labelledby="ultimate{{ customer.id }}" aria-hidden="true">
                                                   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                                                     <div class="modal-content" style="padding-bottom: 0;">
                                                       <div class="modal-header">
@@ -596,6 +610,7 @@
                                                     </div>
                                                   </div>
                                                 </div>
+                                                 {% endif %}
 
                                                 <div data-parentorall="custm-{{ customer.id }}" data-filter-item4 style="display: none;" data-sort="{{ customer.first_name }}" data-filter-name4="{{ customer.first_name|lower }} {{ customer.last_name|lower }}" class="c_ultimate paid-candidate-container">
                                                     <div class="paid-candidate-box card-custom-border">
@@ -612,7 +627,9 @@
                                                                         <a class="shortlistcandidate3" data-candidate="{{ customer.id }}"  href="">
                                                                              UnShortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
                                                                         </a>
-                                                                        <a href="javascript:void(0)" data-toggle="modal" data-target="#ultimate{{ customer.id }}">Review</a>
+                                                                         {% if request.user.id|company_review_access_to_candidates %}
+                                                                            <a href="javascript:void(0)" data-toggle="modal" data-target="#ultimate{{ customer.id }}">Review</a>
+                                                                         {% endif %}
                                                                          <!-- Modal -->
                                                                     </div>
                                                                 {% endif %}
@@ -697,57 +714,720 @@
                                 </div>
                             </div>
                             <div id="about" class="tab-pane fade-in " style="height: 100%;">
-                                <div class="col-sm-12" style="padding: 20px 10px;">
-                                    {% if company_reg_pay %}
-                                        <div class="col-sm-12" style="margin: 0 auto;">
-                                            <table class="table table-hover" id="myTable">
-                                              <thead>
-                                                <tr>
-                                                  <th scope="col">#</th>
-                                                  <th scope="col">Gateway</th>
-                                                  <th scope="col">Trans_id</th>
+                                <div class="col-sm-12" >
+                                    <ul class="nav simple nav-tabs" id="simple-design-tab33" style="display: flex; justify-content: center; flex-wrap: wrap;">
+                                        <li class="active lild"><a data-toggle="pill" href="#status">Status Payment</a></li>
+                                        <li class=""><a data-toggle="pill" href="#reg">Registration Payment</a></li>
 
-                                                  <th scope="col">Payer Email</th>
-                                                  <th scope="col">User Reg No</th>
-                                                  <th scope="col">Payer Name</th>
-                                                  <th scope="col">Amount</th>
-                                                  <th scope="col">Status</th>
-                                                  <th scope="col">Date</th>
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                              {% for k in company_reg_pay %}
-                                                <tr>
-                                                  <th scope="row">{{ forloop.counter }}</th>
-                                                  <td>{{ k.pay_method }}</td>
-                                                  <td>{{ k.transaction_recipt_no }}</td>
-                                                  <td>{{ k.payer_paying_email }}</td>
-                                                  <td>{{ k.payer_reg_no }}</td>
-                                                  <td>{{ k.payer_full_name }}</td>
-                                                  <td>{{ k.amount }}</td>
-                                                  <td>
-                                                      {{ k.payment_status }}
-                                                      {% if k.payment_status|lower == 'completed' %}
-                                                          <i style="color: limegreen;" class="fas fa-check-circle"></i>
-                                                          {% else %}
-                                                          <i style="color: red;" class="fas fa-exclamation-circle"></i>
-                                                      {% endif %}
-                                                  </td>
-                                                  <td>{{ k.created_at|naturaltime }}</td>
-                                                </tr>
-                                              {% endfor %}
+                                    </ul>
+                                    <div id="tabcont"  class="tab-content" style="height: 800px;overflow-x: hidden; overflow-y: scroll;padding: 0">
+                                       <div id="status" class="tab-pane fade-in active lild" style="height: 100%;">
+                                            {% if company_status_pay %}
+                                                <div class="col-sm-12 dtbl" style="margin: 16px auto;">
+                                                    <table class="table table-hover" id="myTable2">
+                                                      <thead>
+                                                        <tr>
+                                                          <th scope="col">#</th>
+                                                          <th scope="col">Gateway</th>
+                                                          <th scope="col">For</th>
+                                                          <th scope="col">Trans_id</th>
+                                                          <th scope="col">Amount</th>
+                                                          <th scope="col">PayStatus</th>
+                                                          <th scope="col">Date</th>
+                                                          <th scope="col">Expiry Date</th>
+                                                          <th scope="col">Days Remaining</th>
+                                                          <th scope="col">View</th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          {% for k in company_status_pay %}
+                                                              <tr>
+                                                                  <th scope="row">{{ forloop.counter }}</th>
+                                                                  <td>{{ k.pay_method }}</td>
+                                                                  <td>{{ k.typeofpay }}</td>
+                                                                  <td>{{ k.transaction_recipt_no }}</td>
+                                                                  <td>{{ k.amount|intcomma }}</td>
+                                                                  <td>
+                                                                      {{ k.payment_status }}
+                                                                      {% if k.payment_status|lower == 'completed' %}
+                                                                          <i style="color: limegreen;" class="fas fa-check-circle"></i>
+                                                                          {% else %}
+                                                                          <i style="color: red;" class="fas fa-exclamation-circle"></i>
+                                                                      {% endif %}
+                                                                  </td>
+                                                                  <td>{{ k.created_at|date:'d-M-Y'}}</td>
+                                                                  <td style="color: red;">{{ k.getexpiry|date:'d-M-Y' }}</td>
+                                                                  <td style="">{{ k.getexpiryremainingdays }}</td>
+                                                                  <td style="">
+                                                                      <a data-toggle="modal" data-target="#pay{{ k.id }}" style='margin: 0;padding: 6px 16px;' href="" class="btn btn-success custom-button">View</a>
+                                                                  </td>
+                                                            </tr>
 
-                                              </tbody>
-                                            </table>
+                                                          {% endfor %}
+                                                      </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <h3 style="text-align: center;">No Status Payment Made</h3>
+                                            {% endif %}
                                         </div>
-                                    {% else %}
-                                        <h3 style="text-align: center;">No Payment Made</h3>
-                                    {% endif %}
+                                       <div id="reg" class="tab-pane fade-in " style="height: 100%;">
+                                            {% if company_reg_pay %}
+                                                {% for k in company_reg_pay %}
+                                                    <div class="modal fade animate__animated  animate__zoomInDown " id="pay-reg{{ k.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                      <div class="modal-dialog">
+                                                        <div class="modal-content" style="padding-bottom: 0;">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Receipt</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body receipt" >
+                                                              <div class="container-fluid " style="display: flex; justify-content: flex-end;" >
+                                                                  <button data-tran="{{ k.transaction_recipt_no }}" class="btn btn-sm btn-success custom-button pdf-btn" style="padding: 5px 8px;"><i class="fas fa-download"></i></button>
+            {#                                                      <button  class="btn btn-sm btn-success custom-button expandbtn" style="padding: 5px 8px;"><i class="fas fa-expand-arrows-alt"></i></button>#}
+                                                              </div>
+                                                              <div class="pdf-wrapper" id="pdf-reg{{ k.id }}">
+                                                                <!-- Header -->
+                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                                  <tr>
+                                                                    <td height="20"></td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                    <td>
+                                                                      <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+                                                                        <tr class="hiddenMobile">
+                                                                          <td height="40"></td>
+                                                                        </tr>
+                                                                        <tr class="visibleMobile">
+                                                                          <td height="30"></td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                          <td>
+                                                                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                              <tbody>
+                                                                                <tr>
+                                                                                  <td>
+                                                                                    <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                                                                                      <tbody>
+                                                                                        <tr>
+                                                                                          <td align="left"> </td>
+                                                                                        </tr>
+                                                                                        <tr class="hiddenMobile">
+                                                                                          <td height="40"></td>
+                                                                                        </tr>
+                                                                                        <tr class="visibleMobile">
+                                                                                          <td height="20"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                          <td style="font-size: 12px; color: #5b5b5b; line-height: 18px; vertical-align: top; text-align: left;">
+                                                                                            Hello, {{ k.payer_full_name|title }}.
+                                                                                            <br> Thank you for getting {{ k.typeofpay }}.
+                                                                                          </td>
+                                                                                        </tr>
+                                                                                      </tbody>
+                                                                                    </table>
+                                                                                    <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                                                                                      <tbody>
+                                                                                        <tr class="visibleMobile">
+                                                                                          <td height="20"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                          <td height="5"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                          <td style="font-size: 21px; color: #1DBF73; letter-spacing: -1px;  line-height: 1; vertical-align: top; text-align: right;">
+                                                                                            Receipt
+                                                                                          </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                        <tr class="hiddenMobile">
+                                                                                          <td height="50"></td>
+                                                                                        </tr>
+                                                                                        <tr class="visibleMobile">
+                                                                                          <td height="20"></td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                          <td style="font-size: 12px; color: #5b5b5b;line-height: 18px; vertical-align: top; text-align: right;">
+                                                                                            <small>ORDER: </small> {{ k.transaction_recipt_no }}<br />
+                                                                                            <small>{{ k.created_at|date:'M-d-Y' }}</small>
+                                                                                          </td>
+                                                                                        </tr>
+                                                                                      </tbody>
+                                                                                    </table>
+                                                                                  </td>
+                                                                                </tr>
+                                                                              </tbody>
+                                                                            </table>
+                                                                          </td>
+                                                                        </tr>
+                                                                      </table>
+                                                                    </td>
+                                                                  </tr>
+                                                                </table>
+                                                                <!-- /Header -->
+                                                                <!-- Order Details -->
+                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td>
+                                                                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                            <tr class="hiddenMobile">
+                                                                              <td height="60"></td>
+                                                                            </tr>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="40"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td>
+                                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                                  <tbody>
+                                                                                    <tr>
+                                                                                      <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                                                                        Item
+                                                                                      </th>
+                                                                                      <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+
+                                                                                      </th>
+                                                                                        <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                                        Quantity
+                                                                                      </th>
+                                                                                      <th style="font-size: 12px; text-align: end;  color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                                                                        Subtotal
+                                                                                      </th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                      <td height="1" style="background: #bebebe;" colspan="4"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                      <td height="10" colspan="4"></td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                      <td style="font-size: 12px;  color: #1DBF73;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
+                                                                                        {{ k.typeofpay }}
+                                                                                      </td>
+                                                                                      <td style="font-size: 12px;  color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"></td>
+                                                                                      <td style="font-size: 12px;  color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">1</td>
+                                                                                      <td style="font-size: 12px;  color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right">{{ k.amount|intcomma }}/Ksh</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                      <td height="1" colspan="4" style="border-bottom:1px solid #e4e4e4"></td>
+                                                                                    </tr>
+
+                                                                                  </tbody>
+                                                                                </table>
+                                                                              </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td height="20"></td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!-- /Order Details -->
+                                                                <!-- Total -->
+                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td>
+                                                                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                              <td>
+
+                                                                                <!-- Table Total -->
+                                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                                  <tbody>
+                                                                                    <tr>
+                                                                                      <td style="font-size: 12px; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                        Subtotal
+                                                                                      </td>
+                                                                                      <td style="font-size: 12px; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80">
+                                                                                        {{ k.amount|intcomma }} /Ksh
+                                                                                      </td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                      <td style="font-size: 12px; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                        <strong>Grand Total{% comment %} (Incl.Tax){% endcomment %}</strong>
+                                                                                      </td>
+                                                                                      <td style="font-size: 12px; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                                        <strong>{{ k.amount|intcomma }} /Ksh</strong>
+                                                                                      </td>
+                                                                                    </tr>
+            {#                                                                        <tr>#}
+            {#                                                                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>TAX</small></td>#}
+            {#                                                                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">#}
+            {#                                                                            <small>$72.40</small>#}
+            {#                                                                          </td>#}
+            {#                                                                        </tr>#}
+                                                                                  </tbody>
+                                                                                </table>
+                                                                                <!-- /Table Total -->
+
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!-- /Total -->
+                                                                <!-- Information -->
+                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td>
+                                                                        <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                            <tr class="hiddenMobile">
+                                                                              <td height="60"></td>
+                                                                            </tr>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="40"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td>
+                                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                                  <tbody>
+                                                                                    <tr>
+                                                                                      <td>
+                                                                                        <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                                                                                          <tbody>
+                                                                                            <tr class="visibleMobile">
+                                                                                              <td height="20"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                              <td style="font-size: 11px; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                                                                                                <strong>PAYMENT METHOD</strong>
+                                                                                              </td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                              <td width="100%" height="10"></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                              <td style="font-size: 12px; color: #5b5b5b; line-height: 20px; vertical-align: top; ">
+                                                                                                 Gateway: {{ k.pay_method }}<br>
+                                                                                                  Transaction ID: <a href="#" style="color: #1DBF73; text-decoration:underline;">{{ k.transaction_recipt_no }}</a><br>
+                                                                                              </td>
+                                                                                            </tr>
+                                                                                          </tbody>
+                                                                                        </table>
+                                                                                      </td>
+                                                                                    </tr>
+                                                                                  </tbody>
+                                                                                </table>
+                                                                              </td>
+                                                                            </tr>
+
+                                                                            <tr class="hiddenMobile">
+                                                                              <td height="60"></td>
+                                                                            </tr>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="30"></td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                                <!-- /Information -->
+                                                                <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+
+                                                                  <tr>
+                                                                    <td>
+                                                                      <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+                                                                        <tr>
+                                                                          <td>
+                                                                            <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                              <tbody>
+                                                                                <tr>
+                                                                                  <td style="font-size: 12px; color: #5b5b5b;  line-height: 18px; vertical-align: top; text-align: left;">
+                                                                                    Have a nice day.
+                                                                                  </td>
+                                                                                </tr>
+                                                                              </tbody>
+                                                                            </table>
+                                                                          </td>
+                                                                        </tr>
+                                                                        <tr class="spacer">
+                                                                          <td height="50"></td>
+                                                                        </tr>
+
+                                                                      </table>
+                                                                    </td>
+                                                                  </tr>
+                                                                  <tr>
+                                                                    <td height="20"></td>
+                                                                  </tr>
+                                                                </table>
+                                                              </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="col-sm-12 dtbl" style="margin: 0 auto;">
+                                                    <table class="table table-hover" id="myTable">
+                                                      <thead>
+                                                        <tr>
+                                                          <th scope="col">#</th>
+                                                          <th scope="col">Gateway</th>
+                                                          <th scope="col">For</th>
+                                                          <th scope="col">Trans_id</th>
+                                                          <th scope="col">Amount</th>
+                                                          <th scope="col">PayStatus</th>
+                                                          <th scope="col">Date</th>
+                                                          <th scope="col">View</th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                          {% for k in company_reg_pay %}
+                                                            <tr>
+                                                                  <th scope="row">{{ forloop.counter }}</th>
+                                                                  <td>{{ k.pay_method }}</td>
+                                                                  <td>{{ k.typeofpay }}</td>
+                                                                  <td>{{ k.transaction_recipt_no }}</td>
+                                                                  <td>{{ k.amount }}</td>
+                                                                  <td>
+                                                                      {{ k.payment_status }}
+                                                                      {% if k.payment_status|lower == 'completed' %}
+                                                                          <i style="color: limegreen;" class="fas fa-check-circle"></i>
+                                                                          {% else %}
+                                                                          <i style="color: red;" class="fas fa-exclamation-circle"></i>
+                                                                      {% endif %}
+                                                                  </td>
+                                                                  <td>{{ k.created_at|date:'d-M-Y' }}</td>
+                                                                  <td style="">
+                                                                      <a data-toggle="modal" data-target="#pay-reg{{ k.id }}" style='margin: 0;padding: 6px 16px;' href="" class="btn btn-success custom-button">View</a>
+                                                                  </td>
+                                                            </tr>
+                                                          {% endfor %}
+                                                      </tbody>
+                                                    </table>
+                                                </div>
+                                            {% else %}
+                                                <h3 style="text-align: center;">No Registration Payment Made</h3>
+                                            {% endif %}
+                                        </div>
+                                       {% for k in company_status_pay %}
+                                        <div class="modal fade animate__animated  animate__zoomInDown " id="pay{{ k.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content" style="padding-bottom: 0;">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Receipt</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                  <span aria-hidden="true">&times;</span>
+                                                </button>
+                                              </div>
+                                              <div class="modal-body receipt" >
+                                                  <div class="container-fluid " style="display: flex; justify-content: flex-end;" >
+                                                      <button data-tran="{{ k.transaction_recipt_no }}" class="btn btn-sm btn-success custom-button pdf-btn" style="padding: 5px 8px;"><i class="fas fa-download"></i></button>
+{#                                                      <button  class="btn btn-sm btn-success custom-button expandbtn" style="padding: 5px 8px;"><i class="fas fa-expand-arrows-alt"></i></button>#}
+                                                  </div>
+                                                  <div class="pdf-wrapper" id="pdf{{ k.id }}">
+                                                    <!-- Header -->
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                      <tr>
+                                                        <td height="20"></td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td>
+                                                          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 10px 10px 0 0;">
+                                                            <tr class="hiddenMobile">
+                                                              <td height="40"></td>
+                                                            </tr>
+                                                            <tr class="visibleMobile">
+                                                              <td height="30"></td>
+                                                            </tr>
+
+                                                            <tr>
+                                                              <td>
+                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td>
+                                                                        <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                                                                          <tbody>
+                                                                            <tr>
+                                                                              <td align="left"> </td>
+                                                                            </tr>
+                                                                            <tr class="hiddenMobile">
+                                                                              <td height="40"></td>
+                                                                            </tr>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="20"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td style="font-size: 12px; color: #5b5b5b; line-height: 18px; vertical-align: top; text-align: left;">
+                                                                                Hello, {{ k.payer_full_name|title }}.
+                                                                                <br> Thank you for getting {{ k.typeofpay }}.
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                        <table width="220" border="0" cellpadding="0" cellspacing="0" align="right" class="col">
+                                                                          <tbody>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="20"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td height="5"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td style="font-size: 21px; color: #1DBF73; letter-spacing: -1px;  line-height: 1; vertical-align: top; text-align: right;">
+                                                                                Receipt
+                                                                              </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                            <tr class="hiddenMobile">
+                                                                              <td height="50"></td>
+                                                                            </tr>
+                                                                            <tr class="visibleMobile">
+                                                                              <td height="20"></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                              <td style="font-size: 12px; color: #5b5b5b;line-height: 18px; vertical-align: top; text-align: right;">
+                                                                                <small>ORDER: </small> {{ k.transaction_recipt_no }}<br />
+                                                                                <small>{{ k.created_at|date:'M-d-Y' }}</small>
+                                                                              </td>
+                                                                            </tr>
+                                                                          </tbody>
+                                                                        </table>
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                              </td>
+                                                            </tr>
+                                                          </table>
+                                                        </td>
+                                                      </tr>
+                                                    </table>
+                                                    <!-- /Header -->
+                                                    <!-- Order Details -->
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>
+                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                              <tbody>
+                                                                <tr>
+                                                                <tr class="hiddenMobile">
+                                                                  <td height="60"></td>
+                                                                </tr>
+                                                                <tr class="visibleMobile">
+                                                                  <td height="40"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td>
+                                                                    <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                      <tbody>
+                                                                        <tr>
+                                                                          <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                                                                            Item
+                                                                          </th>
+                                                                          <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+
+                                                                          </th>
+                                                                            <th style="font-size: 12px;  color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                                                                            Quantity
+                                                                          </th>
+                                                                          <th style="font-size: 12px; text-align: end;  color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                                                                            Subtotal
+                                                                          </th>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td height="1" style="background: #bebebe;" colspan="4"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td height="10" colspan="4"></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td style="font-size: 12px;  color: #1DBF73;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
+                                                                            {{ k.typeofpay }}
+                                                                          </td>
+                                                                          <td style="font-size: 12px;  color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center"></td>
+                                                                          <td style="font-size: 12px;  color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="center">1</td>
+                                                                          <td style="font-size: 12px;  color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right">{{ k.amount|intcomma }}/Ksh</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td height="1" colspan="4" style="border-bottom:1px solid #e4e4e4"></td>
+                                                                        </tr>
+
+                                                                      </tbody>
+                                                                    </table>
+                                                                  </td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td height="20"></td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                    <!-- /Order Details -->
+                                                    <!-- Total -->
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>
+                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td>
+
+                                                                    <!-- Table Total -->
+                                                                    <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                      <tbody>
+                                                                        <tr>
+                                                                          <td style="font-size: 12px; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                            Subtotal
+                                                                          </td>
+                                                                          <td style="font-size: 12px; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80">
+                                                                            {{ k.amount|intcomma }} /Ksh
+                                                                          </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                          <td style="font-size: 12px; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                            <strong>Grand Total{% comment %} (Incl.Tax){% endcomment %}</strong>
+                                                                          </td>
+                                                                          <td style="font-size: 12px; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                                                                            <strong>{{ k.amount|intcomma }} /Ksh</strong>
+                                                                          </td>
+                                                                        </tr>
+{#                                                                        <tr>#}
+{#                                                                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>TAX</small></td>#}
+{#                                                                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">#}
+{#                                                                            <small>$72.40</small>#}
+{#                                                                          </td>#}
+{#                                                                        </tr>#}
+                                                                      </tbody>
+                                                                    </table>
+                                                                    <!-- /Table Total -->
+
+                                                                  </td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                    <!-- /Total -->
+                                                    <!-- Information -->
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>
+                                                            <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+                                                              <tbody>
+                                                                <tr>
+                                                                <tr class="hiddenMobile">
+                                                                  <td height="60"></td>
+                                                                </tr>
+                                                                <tr class="visibleMobile">
+                                                                  <td height="40"></td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td>
+                                                                    <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                      <tbody>
+                                                                        <tr>
+                                                                          <td>
+                                                                            <table width="220" border="0" cellpadding="0" cellspacing="0" align="left" class="col">
+                                                                              <tbody>
+                                                                                <tr class="visibleMobile">
+                                                                                  <td height="20"></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                  <td style="font-size: 11px; color: #5b5b5b; line-height: 1; vertical-align: top; ">
+                                                                                    <strong>PAYMENT METHOD</strong>
+                                                                                  </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                  <td width="100%" height="10"></td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                  <td style="font-size: 12px; color: #5b5b5b; line-height: 20px; vertical-align: top; ">
+                                                                                     Gateway: {{ k.pay_method }}<br>
+                                                                                      Transaction ID: <a href="#" style="color: #1DBF73; text-decoration:underline;">{{ k.transaction_recipt_no }}</a><br>
+                                                                                  </td>
+                                                                                </tr>
+                                                                              </tbody>
+                                                                            </table>
+                                                                          </td>
+                                                                        </tr>
+                                                                      </tbody>
+                                                                    </table>
+                                                                  </td>
+                                                                </tr>
+
+                                                                <tr class="hiddenMobile">
+                                                                  <td height="60"></td>
+                                                                </tr>
+                                                                <tr class="visibleMobile">
+                                                                  <td height="30"></td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                    <!-- /Information -->
+                                                    <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+
+                                                      <tr>
+                                                        <td>
+                                                          <table width="600" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff" style="border-radius: 0 0 10px 10px;">
+                                                            <tr>
+                                                              <td>
+                                                                <table width="480" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                                                                  <tbody>
+                                                                    <tr>
+                                                                      <td style="font-size: 12px; color: #5b5b5b;  line-height: 18px; vertical-align: top; text-align: left;">
+                                                                        Have a nice day.
+                                                                      </td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                              </td>
+                                                            </tr>
+                                                            <tr class="spacer">
+                                                              <td height="50"></td>
+                                                            </tr>
+
+                                                          </table>
+                                                        </td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td height="20"></td>
+                                                      </tr>
+                                                    </table>
+                                                  </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                       {% endfor %}
+                                    </div>
                                 </div>
                             </div>
                             <!-- End About Sec -->
                         </div>
-                          <!-- End Settings -->
+                        <!-- End Settings -->
                    </div>
                 </div>
             </div>
@@ -761,9 +1441,9 @@
     <!-- ========== Begin: Brows job Category End ===============  -->
 {% endblock content %}
 {% block script %}
+    <script type="text/javascript" src="{% static 'assets/html2pdf/jspdf.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/html2pdf/html2canvas.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'assets/html2pdf/html2pdf.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script type="text/javascript" src="{% static 'assets/company/dashjsscript.js' %}"></script>
-
-
-
 {% endblock script %}

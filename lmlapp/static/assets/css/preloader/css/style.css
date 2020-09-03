@@ -107,6 +107,15 @@
   -webkit-animation: hover 1200ms linear 2 alternate;
   animation: hover 1200ms linear 2 alternate;
 }
+.custom-btn-hover-active:hover{
+    -webkit-animation: hover 1200ms linear 2 alternate;
+  animation: hover 1200ms linear 2 alternate;
+}
+.custom-btn-hover-active:active{
+  -webkit-animation: active 1200ms ease 1 alternate;
+  animation: active 1200ms ease 1 alternate;
+  background: #5F9BE0;
+}
 
 /* Active state animation applied here */
 .custom-button:active {

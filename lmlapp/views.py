@@ -36,7 +36,7 @@ import json
 import json
 
 from lmlapp.pdf_util import render_to_pdf
-from lmlapp.templatetags.call_methods import sizify
+from lmlapp.templatetags.call_methods import *
 
 
 def home(request):
@@ -1009,6 +1009,7 @@ def employer_dash(request):
     social = CompanySocialAccount.objects.filter(company=company).first()
     customers = CompanyShortlistCustomers.objects.filter(company=company, payment_status='SHORTLISTED')
     company_reg_pay = CompanyRegistrationPayment.objects.filter(payer_reg_no=company.companyregno).order_by('-created_at').all()
+    company_status_pay = CompanyStatusPayment.objects.filter(company=company).order_by('-created_at').all()
 
     basic_customers = []
     for customer in Customer.objects.filter(rank_status='BASIC'):
@@ -1029,7 +1030,7 @@ def employer_dash(request):
         for ccc3 in c_c3:
             ultimate_customers.append(ccc3.customer)
 
-    print(len(basic_customers))
+    # print(len(basic_customers))
 
     context = {
         'company': company,
@@ -1040,8 +1041,8 @@ def employer_dash(request):
         # 'premium_customers': Customer.objects.all(),
         'basic_customers': basic_customers,
         'ultimate_customers': ultimate_customers,
-        'company_reg_pay':company_reg_pay
-        # 'ultimate_customers': Customer.objects.all(),
+        'company_reg_pay':company_reg_pay,
+        'company_status_pay':company_status_pay,
     }
     return render(request, 'normal/dashboard/employer-dash.html', context)
 
@@ -1128,37 +1129,40 @@ def premium_employee_details(request, customer_id):
 @login_required()
 @has_user_paid_registration
 def all_premium_employees(request):
+    user = request.user.id
+    no_of_user = company_access_no_count(user)
     if request.method == 'POST':
         county = request.POST.get('county')
         region = request.POST.get('region')
         category = request.POST.get('category')
+
         if (category is not None) and (region is not None) and (county is not None):
             cat = Category.objects.filter(id=int(category)).first()
             reg = Region.objects.filter(id=int(region)).first()
             count = County.objects.filter(id=int(county)).first()
             customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id),
                                                 regpayment__isnull=False, regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
         elif (category is not None):
             cat = Category.objects.filter(id=int(category)).first()
             customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
         elif (region is not None):
             reg = Region.objects.filter(id=int(region)).first()
             customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
         elif (county is not None):
             count = County.objects.filter(id=int(county)).first()
             customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
         else:
             customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED').order_by('?')
+                                                regpayment__transaction_status='COMPLETED').order_by('?')[:no_of_user]
     else:
-        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')[:no_of_user]
 
     context = {
         'customers': customers,

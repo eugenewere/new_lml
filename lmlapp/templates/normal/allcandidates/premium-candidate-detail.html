@@ -184,21 +184,29 @@
                             {% endif %}
                         </div>
                     {% endif %}
-                    <div class="apply-job-detail">
-                        <h2 class="detail-title">Actions</h2>
-                        <div class="row" style="display: flex; flex-wrap: wrap;">
-                            {% if request.user|logged_in_company %}
-                                <a style="width: 100%; margin:9px; font-size: 16px;" target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn bt-1 btn-warning">View auto generated cv</a>
-                                {% if custome_documents|length > 0 %}
-                                    <a data-toggle="modal" data-target="#cvmodal" style="width: 100%; margin:9px; font-size: 16px;"  href="" class="btn bt-1 btn-success">Candidate Uploaded Cv</a>
-                                    <!-- Modal -->
+                    {% if request.user|logged_in_company %}
+                        <div class="apply-job-detail">
+                            <h2 class="detail-title">Actions</h2>
+                            <div class="row" style="display: flex; flex-wrap: wrap;">
+                                {% if request.user|logged_in_company %}
+                                    {% if request.user.id|company_view_candidate_lml_gen_cv %}
+                                        <a style="margin:9px; font-size: 16px; border-radius: 10px;" target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn bt-1 btn-warning">View auto generated cv</a>
+                                    {% endif %}
+                                    {% if custome_documents|length > 0 %}
+                                        {% if request.user.id|company_view_candidate_cv %}
+                                        <a data-toggle="modal" data-target="#cvmodal" style=" border-radius: 10px; margin:9px; font-size: 16px;"  href="" class="btn bt-1 btn-success">Candidate Uploaded Cv</a>
+                                        <!-- Modal -->
+                                            {% endif %}
+                                    {% endif %}
+                                    {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
+                                        {% if request.user.id|company_to_shortlist_candidate %}
+                                            <a  class="btn btn-info shortlistcandidate2" style=" border-radius: 10px; margin: 9px; font-size: 16px;"  data-candidate="{{ customer.id }}" href="">Shortlist</a>
+                                        {% endif %}
+                                    {% endif %}
                                 {% endif %}
-                                {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
-                                    <a  class="btn btn-info shortlistcandidate2" style="width: 100%; margin: 9px; font-size: 16px;"  data-candidate="{{ customer.id }}" href="">Shortlist</a>
-                                {% endif %}
-                            {% endif %}
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
 
                 </div>
 
@@ -395,12 +403,20 @@
 
                     </div>
                     {% if request.user|logged_in_company %}
-                            <a style="width: 100%; font-size: 16px;" target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn  bt-1 btn-warning">View auto generated cv</a>
-                        {% if custome_documents|length > 0 %}
-                            <a data-toggle="modal" data-target="#cvmodal" style="width: 100%; font-size: 16px;"  href="" class="btn  bt-1 btn-success">Candidate Uploaded Cv</a>
+                       {% if request.user.id|company_view_candidate_lml_gen_cv %}
+                            <a style="width: 100%; font-size: 16px; border-radius: 10px 10px 0 0;" target="_blank"  id="{{ customer.id }}" href="{% url 'LML:customer_resume_pdf' customer.id %}" class="btn  bt-1 btn-warning">View auto generated cv</a>
+                       {% endif %}
+                       {% if custome_documents|length > 0 %}
+                            {% if request.user.id|company_view_candidate_cv %}
+                                <a data-toggle="modal" data-target="#cvmodal" style="width: 100%; font-size: 16px; "  href="" class="btn  bt-1 btn-success">Candidate Uploaded Cv</a>
+                            {% endif %}
                         {% endif %}
                         {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
-                            <a class="btn bt-1 bg-info shortlistcandidate2" style="font-size: 16px; width: 100%; color: #fff;"  data-candidate="{{ customer.id }}"  href="" >Shortlist</a>
+                            {% if request.user.id|company_to_shortlist_candidate %}
+                                <a class="btn bt-1 bg-info shortlistcandidate2" style="font-size: 16px; width: 100%; color: #fff;  border-radius: 0 0 10px 10px;"  data-candidate="{{ customer.id }}"  href="" >
+                                    Shortlist
+                                </a>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                 </div>
@@ -414,79 +430,83 @@
                         </button>
                       </div>
                       <div class="modal-body" >
-                        <div class="container-fluid">
-                            <div class="col-sm-12" style="margin: 0 auto;">
-                                <div class="filemanager" style="">
-                                    <div class="filemanager--headerside">
-                                        <h5 id="filecount">{{ custome_documents|length }} Files </h5>
-                                    </div>
-                                    <div class="filemanager--headermain">
-                                            <div class="filemanager--controls">
-                                                <button type="button" id="gridview" class="view icon active custom-button" style="margin: 0;" title="Grid View" data-view="grid">
-                                                    <span class="fas fa-th-large"></span>
-                                                </button>
-                                                <button type="button" id="listview" class="view icon custom-button" style="margin: 0;" title="List View" data-view="list">
-                                                    <span class="fas fa-bars"></span>
-                                                </button>
-                                            </div>
-                                            <div class="filemanager--controls">
-                                                <button id="clearAll" type="button" class="custom-button btn btn-danger " style="display: none; padding: 10px; margin: 0 5px;"><span class="mdi mdi-cancel"></span>Clear Selection</button>
-                                            </div>
+                          <div class="wrpf">
+                            <div class="container-fluid" style="padding: 10px; display: flex; justify-content: flex-end; align-items: center">
+                                <button data-fulls data-toggle="tooltip" data-placement="top" title="" class="btn custom-button btn-success f1" style="padding: 7px;"><i class="fas fa-expand-arrows-alt"></i></button>
+                                <button data-ext data-toggle="tooltip" data-placement="top" title="" class="btn custom-button btn-success f2" style="display:none; padding: 7px;"><i class="fas fa-compress-arrows-alt"></i></button>
+                            </div>
+                            <div class="container-fluid">
+                                <div class="col-sm-12" style="margin: 0 auto;">
+                                    <div class="filemanager" style="">
+                                        <div class="filemanager--headerside">
+                                            <h5 id="filecount">{{ custome_documents|length }} Files </h5>
                                         </div>
-                                    <div class="filemanager--sidebar">
-                                        <div class="filemanager--tabs">
-                                            <ul>
-                                                <li class="active"><a href="javascript:void(0)" data-filter="*"><span class="fas fa-file-alt"></span> All</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="filemanager--main" style="position: relative;">
-                                        <div class="filemanager--files" style="width: 100%; ">
-                                         {% if custome_documents %}
-                                             <div>
-                                                 <div style="">
-                                                     <div class="form-group" >
-                                                        <input data-search style="height: 38px; width: 47%; margin:0 0 0 auto;" placeholder="Search File list" aria-label="searchfile" type="text" class="form-control" id="searchfile" >
-                                                    </div>
+                                        <div class="filemanager--headermain">
+                                                <div class="filemanager--controls">
+                                                    <button type="button" id="gridview" class="view icon active custom-button" style="margin: 0;" title="Grid View" data-view="grid">
+                                                        <span class="fas fa-th-large"></span>
+                                                    </button>
+                                                    <button type="button" id="listview" class="view icon custom-button" style="margin: 0;" title="List View" data-view="list">
+                                                        <span class="fas fa-bars"></span>
+                                                    </button>
                                                 </div>
-                                                 <ul style="width: 100%; overflow-x: hidden; overflow-y: scroll; display: flex;justify-content: flex-start; flex-wrap: wrap;">
-                                                    {% for filee in custome_documents %}
-
-                                                        <li data-toggle="tooltip" data-file="{{ filee.id }}" data-filter="{{ filee.title|lower }}" data-placement="top" title="{{ filee.file.url|get_filename }}" class="filemanager--file tta " data-filename="{{ filee.file.name|get_filename|truncatechars:20 }}" data-titlee="{{ filee.title|truncatechars:20 }}" data-desc="{{ filee.description }}" data-sizee="{{ filee.file.size|sizify}}">
-                                                            <div class="filemanager--fileicon">
-                                                                <span class="fas fa-file-pdf"></span>
-                                                            </div>
-                                                            <p hidden style="display: none;">{{ filee.description }}</p>
-                                                            <p hidden style="display: none;">{{ filee.file.url|get_filename }}</p>
-                                                            <div style="z-index: 55" id="dropdownMenuButton{{ filee.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="filemanager--remove ttb">
-                                                                <span><i class="fas fa-caret-down"></i></span>
-                                                            </div>
-                                                            <div style="z-index: 999; top: 20%; left: 40% !important;" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton{{ filee.id }}">
-                                                                <a target="_blank" class="dropdown-item" href="{% url 'LML:userviewpdf' filee.id %}">View</a>
-                                                            </div>
-                                                            <div class="filemanager--fileinfo">
-                                                                <div class="filemanager--filename">{{ filee.title|title }}</div>
-                                                                <div class="filemanager--filesize">{{ filee.file.size|sizify}}</div>
-                                                            </div>
-                                                        </li>
-                                                    {% endfor %}
+                                                <div class="filemanager--controls">
+                                                    <button id="clearAll" type="button" class="custom-button btn btn-danger " style="display: none; padding: 10px; margin: 0 5px;"><span class="mdi mdi-cancel"></span>Clear Selection</button>
+                                                </div>
+                                            </div>
+                                        <div class="filemanager--sidebar">
+                                            <div class="filemanager--tabs">
+                                                <ul>
+                                                    <li class="active"><a href="javascript:void(0)" data-filter="*"><span class="fas fa-file-alt"></span> All</a></li>
                                                 </ul>
-                                             </div>
-                                         {% else %}
-                                            <p style="text-align: center;">No Documents</p>
-                                         {% endif %}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="filemanager--info" style="flex-direction: column">
-                                        <h5 style="padding: 19px 0;font-weight: bolder;">No Details</h5>
+                                        <div class="filemanager--main" style="position: relative;">
+                                            <div class="filemanager--files" style="width: 100%; ">
+                                             {% if custome_documents %}
+                                                 <div>
+                                                     <div style="">
+                                                         <div class="form-group" >
+                                                            <input data-search style="height: 38px; width: 47%; margin:0 0 0 auto;" placeholder="Search File list" aria-label="searchfile" type="text" class="form-control" id="searchfile" >
+                                                        </div>
+                                                    </div>
+                                                     <ul style="width: 100%; overflow-x: hidden; overflow-y: scroll; display: flex;justify-content: flex-start; flex-wrap: wrap;">
+                                                        {% for filee in custome_documents %}
+
+                                                            <li data-toggle="tooltip" data-file="{{ filee.id }}" data-filter="{{ filee.title|lower }}" data-placement="top" title="{{ filee.file.url|get_filename }}" class="filemanager--file tta " data-filename="{{ filee.file.name|get_filename|truncatechars:20 }}" data-titlee="{{ filee.title|truncatechars:20 }}" data-desc="{{ filee.description }}" data-sizee="{{ filee.file.size|sizify}}">
+                                                                <div class="filemanager--fileicon">
+                                                                    <span class="fas fa-file-pdf"></span>
+                                                                </div>
+                                                                <p hidden style="display: none;">{{ filee.description }}</p>
+                                                                <p hidden style="display: none;">{{ filee.file.url|get_filename }}</p>
+                                                                <div style="z-index: 55" id="dropdownMenuButton{{ filee.id }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="filemanager--remove ttb">
+                                                                    <span><i class="fas fa-caret-down"></i></span>
+                                                                </div>
+                                                                <div style="z-index: 999; top: 20%; left: 40% !important;" class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton{{ filee.id }}">
+                                                                    <a target="_blank" class="dropdown-item" href="{% url 'LML:userviewpdf' filee.id %}">View</a>
+                                                                </div>
+                                                                <div class="filemanager--fileinfo">
+                                                                    <div class="filemanager--filename">{{ filee.title|title }}</div>
+                                                                    <div class="filemanager--filesize">{{ filee.file.size|sizify}}</div>
+                                                                </div>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                 </div>
+                                             {% else %}
+                                                <p style="text-align: center;">No Documents</p>
+                                             {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="filemanager--info" style="flex-direction: column">
+                                            <h5 style="padding: 19px 0;font-weight: bolder;">No Details</h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                          </div>
                       </div>
-                      <div class="modal-footer">
 
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -631,13 +651,16 @@
                                                     {% if request.user|logged_in_company %}
                                                         <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                         <div class="dropdown-menu pull-right animated flipInX">
-                                                            <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
-                                                                {% if request|shortlisted:customer.id %}
-                                                                    Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
-                                                                {% else %}
-                                                                    Shortlist
-                                                                {% endif %}
-                                                           </a>
+                                                            {% if request.user.id|company_to_shortlist_candidate %}
+                                                                <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                                    {% if request|shortlisted:customer.id %}
+                                                                        Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                    {% else %}
+                                                                        Shortlist
+                                                                    {% endif %}
+                                                               </a>
+                                                                <a href="{% url 'LML:premium_employee_detail' customer.id %}">View</a>
+                                                            {% endif %}
                                                         </div>
                                                     {% endif %}
                                                 </div>
@@ -683,107 +706,6 @@
 {% endblock content %}
 {% block script %}
     <script src="{% static 'assets/company/premiumcanddet.js' %}"></script>
-     <script>
-        $('#gridview').click( function () {
-    if(! $(this).hasClass('active')){
-        $('#listview').removeClass('active')
-        $(this).addClass('active')
-    }
-    if($(".filemanager--files").hasClass('ui-container filemanager--list')){
-         console.log('grid')
-        $('.filemanager--files').removeClass('ui-container filemanager--list')
-    }
-});
-        $('#listview').click(function () {
-            if(! $(this).hasClass('active')){
-                $('#gridview').removeClass('active')
-                $(this).addClass('active')
-
-            }
-            if(!$(".filemanager--files").hasClass('ui-container filemanager--list')){
-                console.log('list')
-                $('.filemanager--files').addClass('ui-container filemanager--list')
-            }
-        });
-
-        $('.filemanager--file').each(function () {
-    $(this).click(function () {
-        var fname =$(this).attr('data-filename');
-        var titlee =$(this).attr('data-titlee');
-        var desc =$(this).attr('data-desc');
-        var sizee =$(this).attr('data-sizee');
-
-        $('.filemanager--info').html('')
-        $('.filemanager--info').append(
-            '<h5 style="padding: 19px 0;font-weight: bolder;">File '+ titlee +' details</h5>'+
-            '<ul>'+
-               ' <li style="height: 95px;">'+
-                    '<div class="filemanager--fileicon">'+
-                       '<span style="color: #2AC27B;" class="fas fa-file-pdf"></span>'+
-                    '</div>'+
-                '</li>'+
-                '<li data-toggle2="tooltip" data-toggle="tooltip" data-placement="top" title="Name: '+ fname +'"><span style="font-weight: bolder;">Name: </span> '+ fname +'</li>'+
-                '<li data-toggle2="tooltip" data-toggle="tooltip" data-placement="top" title="Size: '+ sizee +'"><span style="font-weight: bolder;">Size: </span> '+ sizee +'</li>'+
-                '<li data-toggle2="tooltip" data-toggle="tooltip" data-placement="top" title="Title: '+ titlee +'"><span style="font-weight: bolder;">Title: </span> '+ titlee +'</li>'+
-                '<li data-toggle2="tooltip" data-toggle="tooltip" data-placement="top" title="Details: '+ desc +'"><span style="font-weight: bolder;">Details: </span></br> '+ desc +'</li>'+
-            '</ul>'
-        )
-        $('[data-toggle2="tooltip"]').tooltip()
-    });
-});
-        $('#selectAll').click(function () {
-    $('.filemanager--file').each(function () {
-        $(this).addClass('ui-selected');
-    });
-    $('#clearAll').fadeIn();
-    $('#detetemodal').fadeIn();
-});
-        $('#clearAll').click(function () {
-    if($('.filemanager--file').hasClass('ui-selected')){
-        $('.filemanager--file').removeClass('ui-selected');
-    }
-    if($('.ui-selected').length  === 0 ){
-        $(this).fadeOut();
-        $('#detetemodal').fadeOut();
-    }
-
-});
-        $('.filemanager--file').each(function(){
-    $(this).click(function (e) {
-        // console.log(e)
-        if(e.target.className.toLowerCase() !== 'filemanager--remove ttb' && e.target.className.toLowerCase() !== 'fas fa-caret-down'){
-
-            if($(this).hasClass('ui-selected')){
-                $(this).removeClass('ui-selected')
-            }else {
-                $(this).addClass('ui-selected');
-            }
-            if($('.ui-selected').length  === 0 ){
-               $('#clearAll').fadeOut();
-                $('#detetemodal').fadeOut();
-            }else {
-                $('#clearAll').fadeIn();
-            $('#detetemodal').fadeIn();
-            }
-        }
-
-
-    });
-});
-        $("[data-search]").on("keyup", function() {
-          var value = $(this).val().toLowerCase();
-
-          if(value !== '') {
-            $(".filemanager--file").filter(function() {
-              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-          } else {
-              $(".filemanager--file").show();
-          }
-        });
-
-
-    </script>
 {% endblock script %}
 
 

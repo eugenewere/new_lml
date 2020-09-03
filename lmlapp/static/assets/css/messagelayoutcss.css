@@ -204,7 +204,7 @@ button.danger {
 }
 .filemanager .filemanager--main .filemanager--files ul .filemanager--file {
   position: relative;
-  width: 110px;
+  width: 108px;
   height: 165px;
   border: 2px solid #2AC27B;
   border-radius: 5px;

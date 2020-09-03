@@ -6378,8 +6378,8 @@ div.datedropper.my-style.picker-lkd .pick-submit {
 }
 .tpc-status {
     position: absolute;
-    left:32px;
-    top: 25px;
+   left: 11px !important;
+    top: 8px !important;
     background:#01c73d;
     color: #ffffff;
 	text-transform:capitalize;

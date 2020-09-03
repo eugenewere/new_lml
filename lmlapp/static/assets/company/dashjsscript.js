@@ -27,10 +27,10 @@ $(document).ready(function(){
         // console.log('yess');
         localStorage.setItem('activeTab5', $(e.target).attr('href'));
     });
-    let activeTab2 = localStorage.getItem('activeTab5');
-    if(activeTab2){
-        $('#simple-design-tab1 a[href="' + activeTab2 + '"]').tab('show');
-    }
+        let activeTab2 = localStorage.getItem('activeTab5');
+        if(activeTab2){
+            $('#simple-design-tab1 a[href="' + activeTab2 + '"]').tab('show');
+        }
 
     $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
         // console.log('yess');
@@ -69,6 +69,9 @@ $(document).ready(function(){
     // console.error( error );
 } );
     });
+    setTimeout(function () {
+        $('.lild').addClass('active');
+    }, 3000)
     function getUsersData() {
             var endpoint = window.location.origin+'/candidateShortlistGraph/';
             var defaultData =  [];
@@ -378,5 +381,42 @@ $(document).ready(function(){
             });
         });
     //endultimate
+    $('.pdf-btn').each(function () {
+        $(this).on('click', function () {
+            var file_name =  $(this).attr('data-tran');
+            var id = $(this).closest('.receipt').find('.pdf-wrapper').attr('id');
+            const element =document.getElementById(id);
+            var opt = {
+                margin:       0.21,
+                filename:     file_name,
+                image:        {type: 'jpeg', quality: 1},
+                html2canvas:  {
+                    scale: 7,
+                    quality: 4,
+                    imageTimeout:0,
+                    logging: true,
+                    letterRendering: true,
+                    useCORS: true
+                },
+                jsPDF:  { unit: 'in', format: 'a4', orientation: 'portrait', floatPrecision:'smart' }
+            };
+
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .toContainer()
+                .toCanvas()
+                .toImg()
+                .toPdf()
+                .save();
+        });
+    });
+    $('#paymenttab').on('click ',function () {
+           setTimeout(function () {
+        $('.lild').addClass('active');
+    }, 500)
+        }
+    );
+
 });
 

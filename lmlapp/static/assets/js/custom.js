@@ -212,9 +212,7 @@ All custom js files contents are below
 	// --------- Job List --------
 	var options = {
 		url: "./assets/js/resources/joblist.json",
-
 		getValue: "name",
-
 		list: {
 			match: {
 				enabled: true
@@ -312,6 +310,9 @@ $(document).ready( function () {
 	if($('#myTable').length){
 		$('#myTable').DataTable();
 	}
+	if($('#myTable2').length){
+		$('#myTable2').DataTable();
+	}
 
 } );
 var pswd = document.getElementsByClassName('password')[0];
@@ -339,7 +340,7 @@ $('[data-login-email]').click(function () {
 		$('#logincontainer').show('fast');
 	});
 });
-var msgst = setInterval(getMessageStatus, 5000);
+var msgst = setInterval(getMessageStatus, 17000);
 function getMessageStatus() {
 	var location =  window.location.origin + "/ws/message_count/";
 	$.ajax({

@@ -3,8 +3,7 @@
 {% load call_methods %}
 {% block links %}
     <style>
-      {#.grid-slide-box.slick-slide.slick-current{#}
-      {#    width: 383px !important;#}
+
         @media only screen and (max-width: 991px){
             .gifs{
                 display: none !important;
@@ -126,13 +125,16 @@
                                             {% if request.user|logged_in_company %}
                                                 <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                 <div class="dropdown-menu pull-right animated flipInX">
-                                                    <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
-                                                        {% if request|shortlisted:customer.id %}
-                                                            Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
-                                                        {% else %}
-                                                            Shortlist
-                                                        {% endif %}
-                                                    </a>
+                                                    {% if request.user.id|company_to_shortlist_candidate %}
+                                                        <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                            {% if request|shortlisted:customer.id %}
+                                                                Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                            {% else %}
+                                                                Shortlist
+                                                            {% endif %}
+                                                        </a>
+                                                    {% endif %}
+                                                    <a href="{% url 'LML:premium_employee_detail' customer.id %}">View</a>
                                                 </div>
                                             {% endif %}
                                         </div>
@@ -283,96 +285,7 @@
                 </div>
                 <div class="row">
                     <div class="grid-slide">
-                        {% for customer in all_customers %}
-                            <!-- Single Freelancer -->
-                            <div class="grid-slide-box">
-                                <div class="top-candidate-wrap style-2">
-                                    <div style="margin: 0; width: 100% !important;" class="paid-candidate-container">
-                                        <div class="paid-candidate-box card-custom-border">
-                                            <div class="dropdown">
-                                                <div class="btn-group fl-right">
-                                                    {% if request.user|logged_in_company %}
-                                                        <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
-                                                        <div class="dropdown-menu pull-right animated flipInX">
-                                                            {% csrf_token %}
-                                                            {% if request|shortlisted:customer.id %}
-                                                                <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                            {% else %}
-                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i></a>
-                                                            {% endif %}
-                                                        </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="paid-candidate-inner--box">
-                                                <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
-                                                <div class="paid-candidate-box-detail">
-                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
-                                            </div>
-                                            <div class="paid-candidate-box-extra">
-                                                <ul style="height: 100px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
-                                                    {% for skill in customer.skillset %}
-                                                    <li style="height: 30px;">{{skill.skill|truncatechars:7}}</li>
-                                                    {% endfor %}
-                                                    {% if customer.skillcount %}
-                                                        <li style="height: 30px;" class="more-skill bg-primary">+{{customer.skillcount}}</li>
-                                                    {% endif %}
-                                                </ul>
-                                                 <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
-                                            </div>
-                                        </div>
-                                        {% if request.user|logged_in_company %}
-                                        <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                        {% for customer in all_customers %}
-                            <!-- Single Freelancer -->
-                            <div class="grid-slide-box">
-                                <div class="top-candidate-wrap style-2">
-                                    <div style="margin: 0; width: 100% !important;" class="paid-candidate-container">
-                                        <div class="paid-candidate-box card-custom-border">
-                                            <div class="dropdown">
-                                                <div class="btn-group fl-right">
-                                                    {% if request.user|logged_in_company %}
-                                                        <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
-                                                        <div class="dropdown-menu pull-right animated flipInX">
-                                                            {% csrf_token %}
-                                                            {% if request|shortlisted:customer.id %}
-                                                                <a onclick="shortlist(this);" data-employer="{{ request.user.id }}" id="{{ customer.id }}" href="javascript:void(0)">Shortlist</a>
-                                                            {% else %}
-                                                                <a onclick="shortlistmessage();" href="javascript:void(0)">Shortlisted</a>
-                                                            {% endif %}
-                                                        </div>
-                                                    {% endif %}
-                                                </div>
-                                            </div>
-                                            <div class="paid-candidate-inner--box">
-                                                <div class="paid-candidate-box-thumb"><img style="height: 100%;" src="{{customer.profile_image.url}}" class="img-responsive img-circle" alt="" /></div>
-                                                <div class="paid-candidate-box-detail">
-                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4><span class="desination text-capitalize">{{customer.category.category}}</span></div>
-                                            </div>
-                                            <div class="paid-candidate-box-extra">
-                                                <ul style="height: 100px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center;">
-                                                    {% for skill in customer.skillset %}
-                                                    <li style="height: 30px;">{{skill.skill|truncatechars:7}}</li>
-                                                    {% endfor %}
-                                                    {% if customer.skillcount %}
-                                                        <li style="height: 30px;" class="more-skill bg-primary">+{{customer.skillcount}}</li>
-                                                    {% endif %}
-                                                </ul>
-                                                 <div>{{customer.biography|safe|truncatechars_html:20}}.</div>
-                                            </div>
-                                        </div>
-                                        {% if request.user|logged_in_company %}
-                                        <a href="{% url 'LML:premium_employee_detail' customer.id %}" class="btn btn-paid-candidate bt-1">View Detail</a>
-                                        {% endif %}
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
+
                         {% for customer in all_customers %}
                             <!-- Single Freelancer -->
                             <div class="grid-slide-box">
@@ -389,13 +302,16 @@
                                                     {% if request.user|logged_in_company %}
                                                         <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                         <div class="dropdown-menu pull-right animated flipInX">
-                                                           <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
-                                                                {% if request|shortlisted:customer.id %}
-                                                                    Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
-                                                                {% else %}
-                                                                    Shortlist
-                                                                {% endif %}
-                                                           </a>
+                                                            {% if request.user.id|company_to_shortlist_candidate %}
+                                                               <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                                    {% if request|shortlisted:customer.id %}
+                                                                        Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                    {% else %}
+                                                                        Shortlist
+                                                                    {% endif %}
+                                                               </a>
+                                                           {% endif %}
+                                                           <a href="{% url 'LML:premium_employee_detail' customer.id %}">View</a>
                                                         </div>
                                                     {% endif %}
                                                 </div>

@@ -5,7 +5,10 @@
     <style>
         .img-circle{
             height: 100%;
+            width: 100%;
+            object-fit: contain;
         }
+
     </style>
 {% endblock links %}
 {% block content %}
@@ -121,13 +124,16 @@
                                                 {% if request.user|logged_in_company %}
                                                     <button type="button" class="btn-trans" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-gear"></i></button>
                                                     <div class="dropdown-menu pull-right animated flipInX">
-                                                        <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
-                                                            {% if request|shortlisted:customer.id %}
-                                                                Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
-                                                            {% else %}
-                                                                Shortlist
-                                                            {% endif %}
-                                                       </a>
+                                                        {% if request.user.id|company_to_shortlist_candidate %}
+                                                            <a class="shortlistcandidate" data-candidate="{{ customer.id }}" id="{{ customer.id }}" href="">
+                                                                {% if request|shortlisted:customer.id %}
+                                                                    Shortlisted  <i style="color: #06D15B; margin-left: auto" class="fas fa-check-circle"></i>
+                                                                {% else %}
+                                                                    Shortlist
+                                                                {% endif %}
+                                                           </a>
+                                                         {% endif %}
+                                                         <a href="{% url 'LML:premium_employee_detail' customer.id %}">View</a>
                                                     </div>
                                                 {% endif %}
                                             </div>

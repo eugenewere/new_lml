@@ -105,6 +105,10 @@ class CustomerPayments(models.Model):
     def __str__(self):
         return '%s' % (self.payer_reg_no)
 
+    @property
+    def typeofpay(self):
+        return 'Registration'
+
 class CandidateRegPrice(models.Model):
     price = models.IntegerField( null=False, blank=False)
     CANDREGPRICE = {
@@ -350,6 +354,10 @@ class CompanyRegistrationPayment(models.Model):
     def __str__(self):
         return '%s' % (self.payer_reg_no)
 
+    @property
+    def typeofpay(self):
+        return 'Registration'
+
 
 class Company(get_user_model()):
     logo = models.ImageField(max_length=200, upload_to='employerlogo', null=True, blank=True)
@@ -497,6 +505,52 @@ class CompanyStatusPayment(models.Model):
 
     def __str__(self):
         return '%s' % (self.company.company_name)
+
+    @property
+    def typeofpay(self):
+        p = self.cpp.title
+        return str(p)+' Package Subscription'
+
+    @property
+    def getexpiry(self):
+        monthh_days = 31
+        year_days = 365
+        exp = self.cpp.status
+        created_at = self.created_at
+        if exp.upper() == 'MONTHLY':
+            expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
+            return expiry_date
+        elif exp.upper() == 'YEARLY':
+            expiry_date = created_at.date() + datetime.timedelta(days=year_days)
+            return expiry_date
+
+    @property
+    def getexpiryremainingdays(self):
+        import datetime
+        monthh_days = 31
+        year_days = 365
+        exp = self.cpp.status
+        created_at = self.created_at
+        if exp.upper() == 'MONTHLY':
+            expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
+            start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
+            end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
+            diff = abs((end_date - start_date).days)
+            if diff > 0:
+                return str(diff) + ' Days remaining'
+            else:
+                return 'EXPIRED'
+        elif exp.upper() == 'YEARLY':
+            expiry_date = created_at.date() + datetime.timedelta(days=year_days)
+            start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
+            end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
+            diff = abs((end_date - start_date).days)
+            if diff > 0:
+                return str(diff) + ' Days remaining'
+            else:
+                return 'EXPIRED'
+
+
 
 
 class CompanyShortlistCustomers(models.Model):

@@ -23,14 +23,14 @@ $('#sortstatus').change(function (){
     $('.sortusers').each(function () {
          if(valuee.toLowerCase() === $(this).attr('data-status').toLowerCase()){
                $('#usernonemessage').hide();
-               $(this).show('slow');
+               $(this).removeClass('hidden-mast')
          }else {
-             $(this).hide('slow');
-             $('#usernonemessage').show();
+             $(this).addClass('hidden-mast');
+             $('#usernonemessage').show()
          }
          if (valuee.toLowerCase() === 'all'){
-             $('#usernonemessage').hide();
-             $(this).fadeIn();
+             $('#usernonemessage').hide()
+             $(this).removeClass('hidden-mast');
          }
     });
 });
@@ -65,117 +65,16 @@ $('#sortjobtype').change(function (){
     var valuee = $(this).val();
     $('.sortusers').each(function () {
          if(valuee.toLowerCase() === $(this).attr('data-jobtype').toLowerCase()){
-               $('#usernonemessage').hide();
-               $(this).show('slow');
+               $('#usernonemessage').hide()
+               $(this).removeClass('hidden-mast')
          }else {
-             $(this).hide('slow');
-             $('#usernonemessage').show();
+             $(this).addClass('hidden-mast');
+             $('#usernonemessage').show()
          }
          if (valuee.toLowerCase() === 'all'){
-             $('#usernonemessage').hide();
-             $(this).fadeIn();
+             $('#usernonemessage').hide()
+             $(this).removeClass('hidden-mast')
          }
     });
 });
 
-function shortlistmessage() {
-    swal.fire({
-    title: "Error!",
-    text: "You have already shortlisted this user",
-    type: "error",
-    confirmButtonText: "Continue"
-   });
-}
-function shortlist(shortlist){
-
-    var user = document.getElementById(shortlist.id);
-    var company = user.getAttribute('data-employer');
-
-     $.ajax({
-        type: "POST",
-        url : "{% url 'LML:shortlistemployees' %}",
-        data:{
-            'customer_id' : user.id,
-            'company_id' : company,
-            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-        },
-        dataType:'json',
-        success : function searchSuccess(data){
-            if(data.is_shortlisted){
-                errorshortlisting(data);
-                console.log();
-            }
-            else if(data.shortlisted){
-               shortlisted(data);
-               var user = document.getElementById(shortlist.id);
-               user.innerText='Shortlisted';
-               user.style.color='green';
-            }
-        },
-
-    });
-     function shortlisted(k){
-
-        swal.fire({
-        title: "Success!",
-        text: k.success_message,
-        type: "success",
-        confirmButtonText: "Continue"
-       });
-    }
-     function errorshortlisting(k){
-        swal.fire({
-        title: "Error!",
-        text: k.error_message,
-        type: "error",
-        confirmButtonText: "Continue"
-       });
-    }
-
-}
-function shortlist2(shortlist){
-
-    var user = $(shortlist).attr('data-customer')
-    var company = $(shortlist).attr('data-employer')
-    console.log(user, company)
-
-     $.ajax({
-        type: "POST",
-        url : "{% url 'LML:shortlistemployees' %}",
-        data:{
-            'customer_id' : Number(user),
-            'company_id' : Number(company),
-            'csrfmiddlewaretoken': $("input[name=csrfmiddlewaretoken]").val(),
-        },
-        dataType:'json',
-        success : function searchSuccess(data){
-            if(data.is_shortlisted){
-                errorshortlisting(data);
-                console.log();
-            }
-            else if(data.shortlisted){
-               shortlisted(data);
-               $('[data-shortlistbtn ]').fadeOut();
-            }
-        },
-
-    });
-     function shortlisted(k){
-
-        swal.fire({
-        title: "Success!",
-        text: k.success_message,
-        type: "success",
-        confirmButtonText: "Continue"
-       });
-    }
-     function errorshortlisting(k){
-        swal.fire({
-        title: "Error!",
-        text: k.error_message,
-        type: "error",
-        confirmButtonText: "Continue"
-       });
-    }
-
-}
