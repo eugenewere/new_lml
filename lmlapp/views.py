@@ -1130,39 +1130,37 @@ def premium_employee_details(request, customer_id):
 @has_user_paid_registration
 def all_premium_employees(request):
     user = request.user.id
-    no_of_user = company_access_no_count(user)
     if request.method == 'POST':
         county = request.POST.get('county')
         region = request.POST.get('region')
         category = request.POST.get('category')
-
         if (category is not None) and (region is not None) and (county is not None):
             cat = Category.objects.filter(id=int(category)).first()
             reg = Region.objects.filter(id=int(region)).first()
             count = County.objects.filter(id=int(county)).first()
             customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id),
                                                 regpayment__isnull=False, regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
+                                                regpayment__transaction_status='COMPLETED')
         elif (category is not None):
             cat = Category.objects.filter(id=int(category)).first()
             customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
+                                                regpayment__transaction_status='COMPLETED')
         elif (region is not None):
             reg = Region.objects.filter(id=int(region)).first()
             customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
+                                                regpayment__transaction_status='COMPLETED')
         elif (county is not None):
             count = County.objects.filter(id=int(county)).first()
             customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')[:no_of_user]
+                                                regpayment__transaction_status='COMPLETED')
         else:
             customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED').order_by('?')[:no_of_user]
+                                                regpayment__transaction_status='COMPLETED').order_by('?')
     else:
-        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')[:no_of_user]
+        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
 
     context = {
         'customers': customers,
@@ -1214,6 +1212,7 @@ def all_offer_employees(request, offer):
 @login_required()
 @has_user_paid_registration
 def shortlistcustomers(request):
+    no_of_user = company_access_no_count(request.user.id)
     if request.method == 'POST':
         customer = request.POST.get('customer_id')
         company = request.user.id
@@ -1221,28 +1220,36 @@ def shortlistcustomers(request):
         customer_user = Customer.objects.filter(user_ptr_id=int(customer), regpayment__isnull=False).first()
         company_user = Company.objects.filter(user_ptr_id=int(company),  regpayment__isnull=False).first()
         print(customer_user)
+        c = CompanyStatusPayment.objects.filter(company=company_user).order_by('-created_at').first()
         if company_user is not None:
             if customer_user is not None:
-                if not CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user, payment_status='SHORTLISTED').exists():
-                    CompanyShortlistCustomers.objects.create(
-                        customer=customer_user,
-                        company=company_user,
-                        payment_status="SHORTLISTED"
-                    )
-                    data = {
-                        'status':'shortlisted',
-                        'success':'success',
-                        'msg': 'Successfully Shortlisted ' + customer_user.first_name.upper() + ' ' + customer_user.last_name.upper() + '.'
-                    }
-                    return JsonResponse(data)
+                if CompanyShortlistCustomers.objects.filter(company=company_user).count() <= no_of_user:
+                    if not CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user, payment_status='SHORTLISTED').exists():
+                        CompanyShortlistCustomers.objects.create(
+                            customer=customer_user,
+                            company=company_user,
+                            payment_status="SHORTLISTED"
+                        )
+                        data = {
+                            'status':'shortlisted',
+                            'success':'success',
+                            'msg': 'Successfully Shortlisted ' + customer_user.first_name.upper() + ' ' + customer_user.last_name.upper() + '.'
+                        }
+                        return JsonResponse(data)
+                    else:
+                        CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user).update(
+                            payment_status="UNSHORTLISTED"
+                        )
+                        data = {
+                            'status': 'unshortlisted',
+                            'success': 'success',
+                            'msg': 'Candidate Unshortlisted successfully',
+                        }
+                        return JsonResponse(data)
                 else:
-                    CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user).update(
-                        payment_status="UNSHORTLISTED"
-                    )
                     data = {
-                        'status': 'unshortlisted',
-                        'success': 'success',
-                        'msg': 'Candidate Unshortlisted successfully',
+                        'error': 'error',
+                        'msg': 'You have reach your maximum candidate shortlist limit. Upgrade from '+ c.typeofpay + ' to be able to shortlist more candidates',
                     }
                     return JsonResponse(data)
             else:
@@ -1263,6 +1270,8 @@ def shortlistcustomers(request):
                 'msg': 'Please Register To Shortlist Candidates',
             }
             return JsonResponse(data)
+    else:
+        pass
 
 
 
@@ -1302,7 +1311,6 @@ def all_employees(request):
         county = request.POST.get('county')
         region = request.POST.get('region')
         category = request.POST.get('category')
-
         if (category is not None) and (region is not None) and (county is not None):
             cat = Category.objects.filter(id=int(category)).first()
             reg = Region.objects.filter(id=int(region)).first()

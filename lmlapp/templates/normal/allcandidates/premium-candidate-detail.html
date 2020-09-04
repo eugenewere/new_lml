@@ -99,39 +99,42 @@
                                 {% for skill in skills %}
                                     <li class="text-capitalize">{{ skill.skill }}</li>
                                 {% endfor %}
-
                             </ul>
 
                         </div>
-                        <div class="row-bottom">
-                            <div class="ext-mrg row third-progress">
-                                <ul class="trim-edu-list">
-                                    {% for skill in skills %}
-                                        <li style="display: none;" class="sortskill">
-                                            <div class="trim-edu">
-                                                <h4 class="trim-edu-title text-capitalize" style="text-decoration: underline;">{{ skill.skill}}</h4>
-                                                <div style="display: flex;">
-                                                    <strong style="margin-right: 5px !important;">Referee: </strong>
-                                                    <p style="margin-left: 4px !important;"> {{ skill.referee }}</p>
-                                                </div>
-                                                <div style="display: flex;">
-                                                    <strong style="margin-right: 5px !important;">Referee PhoneNumber: </strong>
-                                                    <p style="margin-left: 4px !important;"> {{ skill.referee_phonenumber }}</p>
-                                                </div>
+                        {% if request.user|logged_in_company %}
+                            {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
+                            <div class="row-bottom">
+                                <div class="ext-mrg row third-progress">
+                                    <ul class="trim-edu-list">
+                                        {% for skill in skills %}
+                                            <li style="display: none;" class="sortskill">
+                                                <div class="trim-edu">
+                                                    <h4 class="trim-edu-title text-capitalize" style="text-decoration: underline;">{{ skill.skill}}</h4>
+                                                    <div style="display: flex;">
+                                                        <strong style="margin-right: 5px !important;">Referee: </strong>
+                                                        <p style="margin-left: 4px !important;"> {{ skill.referee }}</p>
+                                                    </div>
+                                                    <div style="display: flex;">
+                                                        <strong style="margin-right: 5px !important;">Referee PhoneNumber: </strong>
+                                                        <p style="margin-left: 4px !important;"> {{ skill.referee_phonenumber }}</p>
+                                                    </div>
 
+                                                </div>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% if skills|length > 2 %}
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="text-center">
+                                                <a id="loadMore"  href="javascript:void (0)" class="btn shake" style="color: #07c66f;">Load More</a>
                                             </div>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                                {% if skills|length > 2 %}
-                                    <div class="col-md-12 col-sm-12">
-                                        <div class="text-center">
-                                            <a id="loadMore"  href="javascript:void (0)" class="btn shake" style="color: #07c66f;">Load More</a>
                                         </div>
-                                    </div>
-                                {% endif %}
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
+                            {% endif %}
+                        {% endif %}
                      {% endif %}
 
                     {% if educations|length > 0 %}
@@ -374,7 +377,7 @@
                             </script>
                         {% else %}
                             <div class="col-sm-12 w-100" style="display: flex; justify-content: center; align-items: center;">
-                                <h2>No Reviews Yet</h2>
+                                <h5>No Reviews Yet</h5>
                             </div>
                         {% endif %}
 
@@ -516,45 +519,38 @@
                     </div>
                     <div class="ur-detail-wrap-body">
                         <ul class="ove-detail-list">
-
+                            {% if customer.id|if_company_has_shortlisted_the_customer:request.user.id %}
                             <li>
                                 <i class="ti-email"></i>
                                 <h5>Email</h5>
-                                <span>{{request.user.email}}</span>
+                                <span>{{customer.email}}</span>
                             </li>
-
-                            <li>
-                                <i class="ti-location-pin"></i>
-                                <h5>County</h5>
-                                <span>{{customer.county.county}}</span>
-                            </li>
-
-                            <li>
-                                <i class="ti-location-arrow"></i>
-                                <h5>Region</h5>
-                                <span>{{customer.region.region}}->{{customer.region.ward}}</span>
-                            </li>
-
-                            <li>
-                                <i class="ti-user"></i>
-                                <h5>Gender</h5>
-                                <span>{{customer.gender}}</span>
-                            </li>
-
-                            <li>
-                                <i class="ti-view-grid"></i>
-                                <h5>Marital Status</h5>
-                                <span>{{customer.marital_status}}</span>
-                            </li>
-
-
-
                             <li>
                                 <i class="ti-mobile"></i>
                                 <h5>Phone Number</h5>
                                 <span>{{customer.phone_number}}</span>
                             </li>
-
+                            {% endif %}
+                            <li>
+                                <i class="ti-location-pin"></i>
+                                <h5>County</h5>
+                                <span>{{customer.county.county}}</span>
+                            </li>
+                            <li>
+                                <i class="ti-location-arrow"></i>
+                                <h5>Region</h5>
+                                <span>{{customer.region.region}}->{{customer.region.ward}}</span>
+                            </li>
+                            <li>
+                                <i class="ti-user"></i>
+                                <h5>Gender</h5>
+                                <span>{{customer.gender}}</span>
+                            </li>
+                            <li>
+                                <i class="ti-view-grid"></i>
+                                <h5>Marital Status</h5>
+                                <span>{{customer.marital_status}}</span>
+                            </li>
                             <li>
                                 <i class="ti-book"></i>
                                 <h5>Work Schedule</h5>

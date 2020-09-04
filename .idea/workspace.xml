@@ -20,40 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/Receipt/recript.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/important.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/html2pdf/html2canvas.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/html2pdf/html2pdf.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlapp/static/assets/html2pdf/jspdf.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/static/email/popups.css" beforeDir="false" afterPath="$PROJECT_DIR$/chat/static/email/popups.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/templates/employer/app-email.html" beforeDir="false" afterPath="$PROJECT_DIR$/chat/templates/employer/app-email.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/chat/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/allcand.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/allcand.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/dashjsscript.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/dashjsscript.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/employeedash.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/employeedash.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/premimcand.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/premimcand.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/company/premiumcanddet.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/company/premiumcanddet.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/messagelayoutcss.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/messagelayoutcss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/preloader/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/preloader/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/datatables/datatables.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/datatables/datatables.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/pdfcss.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/pdfcss.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/plugins/js/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/plugins/js/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/all-candidates.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/all-candidates.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/allcandidates/premium-candidate.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/companypricing.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employee-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/dashboard/employer-dash.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/paymentdone.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/company/paymentdone.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,7 +163,7 @@
       <workItem from="1597515465120" duration="16132000" />
       <workItem from="1597683150575" duration="309645000" />
       <workItem from="1598869905818" duration="79148000" />
-      <workItem from="1599065419543" duration="43833000" />
+      <workItem from="1599065419543" duration="50556000" />
     </task>
     <servers />
   </component>
@@ -206,7 +175,34 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
           </value>
         </entry>
       </map>
@@ -257,10 +253,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="523" y="30" width="291" height="252" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1598282117341" />
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1599139810603">
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1599214923064">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1599139810603" />
+    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1599214923064" />
     <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1598629479680">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
