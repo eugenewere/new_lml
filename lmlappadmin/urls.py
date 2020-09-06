@@ -85,7 +85,6 @@ urlpatterns = [
     path('allcompanydeleteregpricing/<int:price_id>/', views.companydeleteregpricing, name='companydeleteregpricing'),
     path('allcompanystatusregpricing/<int:price_id>/', views.companystatusregpricing, name='companystatusregpricing'),
 
-
-
+    path('analytics/', views.analytics, name='analytics'),
 
 ]

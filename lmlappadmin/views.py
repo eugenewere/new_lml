@@ -15,10 +15,13 @@ def home(request):
     one_week_ago = datetime.today() - timedelta(days=7)
     two_week_ago = datetime.today() - timedelta(days=14)
 
-    customer_count_this_week = Customer.objects.filter(created_at__gte=one_week_ago).count()
-    company_count_this_week = Company.objects.filter(created_at__gte=one_week_ago).count()
-    company_count_two_week_ago= Company.objects.filter(created_at__gte=two_week_ago).count()
-    customer_count_two_week_ago = Customer.objects.filter(created_at__gte=two_week_ago).count()
+    customer_reg_count = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').count()
+    customer_unreg_count = Customer.objects.filter(regpayment__isnull=True).count()
+
+    company_reg_count = Company.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').count()
+    company_unreg_count = Company.objects.filter(regpayment__isnull=True,).count()
+
+
     recent_companies = Company.objects.order_by('-created_at')
     recent_employees = Customer.objects.order_by('-created_at')
 
@@ -30,17 +33,17 @@ def home(request):
         'title': 'Dash',
         'customer_count':customer_count,
         'company_count':company_count,
-        'customer_count_this_week':customer_count_this_week,
-        'company_count_this_week':company_count_this_week,
-        'customer_count_two_week_ago':customer_count_two_week_ago,
-        'company_count_two_week_ago':company_count_two_week_ago,
+        'customer_reg_count':customer_reg_count,
+        'customer_unreg_count':customer_unreg_count,
+        'company_reg_count':company_reg_count,
+        'company_unreg_count':company_unreg_count,
         'recent_companies':recent_companies,
         'recent_employees': recent_employees,
         'commpany_messages_count':commpany_messages_count,
         'customer_messages_count':customer_messages_count,
         'random_messages':random_messages,
     }
-    return render(request,'admin/index.html', context)
+    return render(request, 'aanewadminportal/home/index2.html', context)
 
 @login_required()
 def employee_messages(request):
@@ -74,7 +77,7 @@ def employees(request):
         'title': 'Employees',
         'customers': employees,
     }
-    return render(request,'employee/allemployees.html', context)
+    return render(request,'aanewadminportal/candidates/allcandidates.html', context)
 
 @login_required()
 def premiumemployees(request):
@@ -83,7 +86,7 @@ def premiumemployees(request):
         'title': 'Premium Employees',
         'customers': employees,
     }
-    return render(request,'employee/premiumemployees.html', context)
+    return render(request,'aanewadminportal/candidates/premiumCandidates.html', context)
 @login_required()
 def basicemployees(request):
     employees = Customer.objects.filter(rank_status='BASIC').order_by('-created_at')
@@ -91,7 +94,7 @@ def basicemployees(request):
         'title': 'Basic Employees',
         'customers': employees,
     }
-    return render(request,'employee/basicemployees.html', context)
+    return render(request,'aanewadminportal/candidates/basicCandidates.html', context)
 @login_required()
 def ultimateemployees(request):
     employees = Customer.objects.filter(rank_status='ULTIMATE').order_by('-created_at')
@@ -99,7 +102,7 @@ def ultimateemployees(request):
         'title': 'Ultimate Employees',
         'customers': employees,
     }
-    return render(request,'employee/ultimateemployees.html', context)
+    return render(request,'aanewadminportal/candidates/ultimateCandidates.html', context)
 
 @login_required()
 def shortlistedemployees(request):
@@ -111,7 +114,7 @@ def shortlistedemployees(request):
         'title': 'ShortlistedEmployees',
         'customers': employ,
     }
-    return render(request,'employee/shortlistedemployies.html', context)
+    return render(request,'aanewadminportal/candidates/shortlistedCandidates.html', context)
 
 @login_required()
 def allshortlistedemployeeshistory(request):
@@ -131,7 +134,7 @@ def registeredemployees(request):
         'title': 'RegisteredEmployees',
         'customers': employ,
     }
-    return render(request,'employee/registeredemployees.html', context)
+    return render(request,'aanewadminportal/candidates/registeredCandidates.html', context)
 
 @login_required()
 def unregipayedemployees(request):
@@ -142,7 +145,7 @@ def unregipayedemployees(request):
         'title': 'RegisteredEmployees',
         'customers': employ,
     }
-    return render(request,'employee/unpaidregemployees.html', context)
+    return render(request,'aanewadminportal/candidates/unregisteredCandidates.html', context)
 
 @login_required()
 def deactivatedemployees(request):
@@ -152,7 +155,10 @@ def deactivatedemployees(request):
         'title': 'DeactivatedEmployees',
         'customers': employ,
     }
-    return render(request,'employee/deactivatedemployees.html', context)
+    return render(request,'aanewadminportal/candidates/deactivatedCandidates.html', context)
+
+
+
 
 
 
@@ -164,7 +170,7 @@ def companies(request):
         'title': 'Companies',
         'companies': company,
     }
-    return render(request, 'company/company.html', context)
+    return render(request, 'aanewadminportal/companies/allcompanies.html', context)
 
 
 @login_required()
@@ -189,7 +195,7 @@ def premiumcompanies(request):
         'title': 'Premium Companies',
         'companies': company,
     }
-    return render(request, 'company/premiumcompanies.html', context)
+    return render(request, 'aanewadminportal/companies/premium.html', context)
 
 @login_required()
 def platinumcompanies(request):
@@ -199,7 +205,7 @@ def platinumcompanies(request):
         'title': 'Platinum Companies',
         'companies': company,
     }
-    return render(request, 'company/platinumcompanies.html', context)
+    return render(request, 'aanewadminportal/companies/platinumcompany.html', context)
 
 @login_required()
 def basiccompanies(request):
@@ -209,7 +215,7 @@ def basiccompanies(request):
         'title': 'Basic Companies',
         'companies': company,
     }
-    return render(request, 'company/basiccompanies.html', context)
+    return render(request, 'aanewadminportal/companies/basic.html', context)
 
 @login_required()
 def probasiccompanies(request):
@@ -219,7 +225,7 @@ def probasiccompanies(request):
         'title': 'Probasic Companies',
         'companies': company,
     }
-    return render(request, 'company/probasiccompanies.html', context)
+    return render(request, 'aanewadminportal/companies/probasic.html', context)
 
 
 @login_required()
@@ -230,7 +236,7 @@ def proultimatecompanies(request):
         'title': 'Probasic Companies',
         'companies': company,
     }
-    return render(request, 'company/proultimatecompanies.html', context)
+    return render(request, 'aanewadminportal/companies/proultimate.html', context)
 
 @login_required()
 def ultimatecompanies(request):
@@ -240,7 +246,7 @@ def ultimatecompanies(request):
         'title': 'Ultimate Companies',
         'companies': company,
     }
-    return render(request, 'company/ultimatecompany.html', context)
+    return render(request, 'aanewadminportal/companies/ultimate.html', context)
 
 @login_required()
 def undefinedcompanies(request):
@@ -250,7 +256,7 @@ def undefinedcompanies(request):
         'title': 'Undefined Companies',
         'companies': company,
     }
-    return render(request, 'company/undefinedcompanies.html', context)
+    return render(request, 'aanewadminportal/companies/undefined.html', context)
 
 @login_required()
 def companiesregpayment(request):
@@ -260,7 +266,7 @@ def companiesregpayment(request):
         'title': 'Company Registration Payment',
         'companies': company,
     }
-    return render(request, 'company/registrationpayment.html', context)
+    return render(request, 'aanewadminportal/companies/regpay.html', context)
 
 @login_required()
 def companiesregunpayment(request):
@@ -270,7 +276,7 @@ def companiesregunpayment(request):
         'title': 'Company Registration UnPayed',
         'companies': company,
     }
-    return render(request, 'company/registrationunpaidpayment.html', context)
+    return render(request, 'aanewadminportal/companies/unregpay.html', context)
 
 
 
@@ -282,7 +288,7 @@ def deactivatedemployers(request):
         'title': 'Deactivated Company',
         'companies': company,
     }
-    return render(request, 'company/deactivatedcompanies.html', context)
+    return render(request, 'aanewadminportal/companies/deactivatedcompanies.html', context)
 
 
 
@@ -297,7 +303,7 @@ def companyPricing(request):
         'pricings': pricing
 
     }
-    return render(request, 'company/companypricing.html', context)
+    return render(request, 'aanewadminportal/companies/compnypricing.html', context)
 
 def addcompanyPricing(request):
     # pricing = CompanyPricingPlan.objects.all()
@@ -403,7 +409,7 @@ def categories(request):
         'title': 'Categories',
         'categories': categories,
     }
-    return render(request, 'categories/categories.html',context)
+    return render(request, 'aanewadminportal/categories/categories.html',context)
 
 
 def carouselImages(request):
@@ -423,7 +429,7 @@ def carouselImages(request):
         'title': 'Categories',
         'images': AdvertCarousel.objects.order_by('-created_at'),
     }
-    return render(request, 'advertimages/carouselimages.html', context)
+    return render(request, 'aanewadminportal/carousel/carousel.html', context)
 
 
 def customer_graph(request):
@@ -522,7 +528,7 @@ def whatweoffer(request):
     context={
         'whatweoffer':WhatWeOffer.objects.all()
     }
-    return render(request, 'whatweoffer/whatweoffer.html' , context)
+    return render(request, 'aanewadminportal/settings/whatweoffer.html' , context)
 
 
 def addwhatweoffer(request):
@@ -674,7 +680,7 @@ def candidateregpricing(request):
     context = {
         'pricings': p
     }
-    return render(request, 'employee/candregpricing.html', context)
+    return render(request, 'aanewadminportal/settings/canregprice.html', context)
 def candidateaddregpricing(request):
     if request.method == "POST":
         price= request.POST.get('price')
@@ -739,7 +745,7 @@ def companyregpricing(request):
     context = {
         'pricings': p
     }
-    return render(request, 'company/compregpricing.html', context)
+    return render(request, 'aanewadminportal/settings/compregprice.html', context)
 def companyaddregpricing(request):
     if request.method == "POST":
         price= request.POST.get('price')
@@ -798,3 +804,5 @@ def companystatusregpricing(request, price_id):
     return redirect('LMLAdmin:companyregpricing')
 
 
+def analytics(request):
+    return render(request, 'aanewadminportal/graphs/analytics.html')

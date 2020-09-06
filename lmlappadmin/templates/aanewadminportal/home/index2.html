@@ -1,0 +1,428 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+{% endblock links %}
+{% block content %}
+    <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-success text-white mr-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Dashboard </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-success align-middle"></i>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+            <div class="row">
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Candidates <i class="mdi mdi-chart-line mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{customer_count}}</h2>
+{#                    <h6 class="card-text">Increased by 60%</h6>#}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Total Companies <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ company_count }}</h2>
+{#                    <h6 class="card-text">Decreased by 10%</h6>#}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Revenue <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">0</h2>
+{#                    <h6 class="card-text">Increased by 5%</h6>#}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Exomesssages <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ random_messages }}</h2>
+{#                    <h6 class="card-text">Increased by 5%</h6>#}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Registered Customers<i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ customer_reg_count}}</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Unregistered Customers<i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{customer_unreg_count}}</h2>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Registered Company <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ company_reg_count }}</h2>
+{#                    <h6 class="card-text">Increased by 5%</h6>#}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 stretch-card grid-margin">
+                <div class="card bg-gradient-success card-img-holder text-white">
+                  <div class="card-body">
+                    <img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
+                    <h4 class="font-weight-normal mb-3">Unregistered Company <i class="mdi mdi-diamond mdi-24px float-right"></i>
+                    </h4>
+                    <h2 class="mb-5">{{ company_unreg_count}}</h2>
+{#                    <h6 class="card-text">Increased by 5%</h6>#}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Recent Companies</h4>
+                    <div class="table-responsive">
+                      <table class="table ">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Company Name</th>
+                            <th>Company RegNo</th>
+                            <th>Company Email</th>
+                            <th>Phone Number</th>
+                            <th>Category</th>
+                            <th>Region</th>
+                            <th>County</th>
+                            <th>Status</th>
+                            <th>Date Joined</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         {% for company in recent_companies %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>
+                                  <img src="{{company.logo.url}}" class="mr-2 object-fit-cover" alt="image"></td>
+                                <td> {{company.company_name|truncatechars:5|title}} </td>
+                                <td>{{company.companyregno}}</td>
+                                <td><a href="mailto:{{company.company_email}}">{{company.company_email|truncatechars:8}}</a></td>
+                                <td>{{company.phone_number}}</td>
+                                <td>{{company.category.category|truncatechars:5|title}}</td>
+                                <td>{{company.region.region|truncatechars:5|title}}</td>
+                                <td>{{company.county.county|truncatechars:5|title}}</td>
+                                <td>
+                                    {% if company.rank_status == 'UNDEFINED' %}
+                                        <span class="badge badge-gradient-danger">{{company.rank_status}}</span>
+                                    {% elif company.rank_status == 'BASIC' %}
+                                        <span class="badge badge-secondary">{{company.rank_status}}</span>
+                                    {% elif company.rank_status == 'PREMIUM' %}
+                                        <span class="badge badge-gradient-info">{{company.rank_status}}</span>
+                                    {% elif company.rank_status == 'ULTIMATE' %}
+                                        <span class="badge badge-gradient-primary">{{company.rank_status}}</span>
+                                    {% elif company.rank_status == 'PRO_BASIC' %}
+                                        <span class="badge badge-gradient-dark">{{company.rank_status}}</span>
+                                    {% elif company.rank_status == 'PRO_ULTIMATE' %}
+                                        <span class="badge badge-gradient-success">{{company.rank_status}}</span>
+                                     {% elif company.rank_status == 'PLATINUM' %}
+                                        <span class="badge badge-gradient-warning">{{company.rank_status}}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{company.created_at|naturaltime}}</td>
+
+
+                              </tr>
+                         {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Recent Candidates</h4>
+                    <div class="table-responsive">
+                      <table class="table ">
+                        <thead>
+                          <tr>
+                            <th>#</th>
+                            <th>Image</th>
+                            <th>Candidate Name</th>
+                            <th>Candidate RegNo</th>
+                            <th>Candidate Email</th>
+                            <th>Phone Number</th>
+                            <th>Category</th>
+                            <th>Region</th>
+                            <th>County</th>
+                            <th>Status</th>
+                            <th>Date Joined</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         {% for customer in recent_employees %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>
+                                  <img src="{{customer.profile_image.url}}" class="mr-2 object-fit-cover" alt="image">
+                                </td>
+                                <td>{{customer.first_name|title}} {{customer.last_name|title}} </td>
+                                <td>{{customer.customer_reg_no}}</td>
+                                <td><a href="mailto:{{customer.email}}">{{customer.email|truncatechars:8}}</a></td>
+                                <td>{{customer.phone_number}}</td>
+                                <td>{{customer.category.category|truncatechars:5|title}}</td>
+                                <td>{{customer.region.region|truncatechars:5|title}}</td>
+                                <td>{{customer.county.county|truncatechars:5|title}}</td>
+                                <td>
+                                    {% if customer.rank_status|upper == 'BASIC' %}
+                                        <span  class="badge badge-gradient-primary">{{customer.rank_status}}</span>
+                                    {% elif customer.rank_status|upper == 'PREMIUM' %}
+                                        <span  class="badge badge-gradient-success">{{customer.rank_status}}</span>
+                                    {% elif customer.rank_status|upper == 'ULTIMATE' %}
+                                        <span class="badge badge-gradient-warning">{{customer.rank_status}}</span>
+                                     {% elif customer.rank_status|upper == 'UNDEFINED' %}
+                                        <span  class="badge badge-gradient-danger">{{customer.rank_status}}</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{customer.created_at|naturaltime}}</td>
+                              </tr>
+                         {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+               <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <h4 class="card-header">Employee Join Chart By Month</h4>
+                        <div class="card-body">
+                            <canvas id="c3chart_category2" style="height: 420px;"></canvas>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+               <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <h4 class="card-header">Company Join Chart By Month</h4>
+                        <div class="card-body">
+                            <canvas id="morris_totalrevenue23" style="height: 420px;"></canvas>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+           </div>
+
+
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="https://www.bootstrapdash.com/" target="_blank">BootstrapDash</a>. All rights reserved.</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+{% endblock content %}
+ {% block scripts %}
+    <script>
+        $(document).ready(function () {
+                var endpoint2 = window.location.origin+'/lmladmin/company_graph/';
+                console.log(endpoint2)
+                var defaultData3 =  [];
+                var labels3 = [];
+                $.ajax({
+                    method: "GET",
+                    url : endpoint2,
+                    success : function (data) {
+
+                        labels3 = data.labels3;
+                        defaultData3= data.defaultData3;
+                        setCompanyBarGraph();
+                    },
+                    error : function (error_data) {
+
+                        console.log(error_data);
+                    },
+                });
+
+                var endpoint = window.location.origin+'/lmladmin/customer_graph/';
+                console.log(endpoint)
+                var defaultData =  [];
+                var labels = [];
+                $.ajax({
+                    method: "GET",
+                    url : endpoint,
+                    success : function (data) {
+                        labels = data.labels2;
+                        defaultData= data.defaultData2;
+                        setCustomerBarGraph(data);
+                    },
+                    error : function (error_data) {
+                        console.log(error);
+                        console.log(error_data);
+                    },
+                });
+                function setCustomerBarGraph(data) {
+                    var ctx = document.getElementById('c3chart_category2').getContext('2d');
+
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Customers ',
+                                data: defaultData,
+                                backgroundColor: [
+                                    'rgb(7, 177, 7, 50)',
+                                    'rgba(255, 159, 64, 1)',
+
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgb(129,255,46)',
+                                    'rgb(255,217,66)',
+                                    'rgb(255,131,255)',
+                                    'rgb(1,53,255)',
+                                    'rgb(7, 177, 7)',
+                                    'rgb(36,255,221)',
+                                    'rgb(145,255,39)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgb(7, 177, 7, 50)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgb(129,255,46)',
+                                    'rgb(255,217,66)',
+                                    'rgb(255,131,255)',
+                                    'rgb(1,53,255)',
+                                    'rgb(7, 177, 7)',
+                                    'rgb(36,255,221)',
+                                    'rgb(145,255,39)',
+
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        stepSize: 1
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+                function setCompanyBarGraph() {
+                var ctx = document.getElementById('morris_totalrevenue23').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels3,
+                        datasets: [{
+                            label: 'Company',
+                            data: defaultData3,
+                            backgroundColor: [
+                                'rgb(7, 177, 7, 50)',
+                                'rgba(255, 159, 64, 1)',
+
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgb(129,255,46)',
+                                'rgb(255,217,66)',
+                                'rgb(255,131,255)',
+                                'rgb(1,53,255)',
+                                'rgb(7, 177, 7)',
+                                'rgb(36,255,221)',
+                                'rgb(145,255,39)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 159, 64, 1)',
+                                'rgb(7, 177, 7, 50)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgb(129,255,46)',
+                                'rgb(255,217,66)',
+                                'rgb(255,131,255)',
+                                'rgb(1,53,255)',
+                                'rgb(7, 177, 7)',
+                                'rgb(36,255,221)',
+                                'rgb(145,255,39)',
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    stepSize:1
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+            });
+    </script>
+ {% endblock scripts %}

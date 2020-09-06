@@ -151,6 +151,20 @@ def comments(request):
         return contactushome
     return False
 
+@register.filter(name='contactuscompany')
+def contactuscompany(request):
+    contactuscompany = ContactUsCompany.objects.filter(status="UNREAD").order_by("-created_at")
+    if contactuscompany is not None:
+        return contactuscompany
+    return False
+
+@register.filter(name='contactusemployee')
+def contactusemployee(request):
+    contactusemployee = ContactUsEmployee.objects.filter(status="UNREAD").order_by("-created_at")
+    if contactusemployee is not None:
+        return contactusemployee
+    return False
+
 @register.filter(name='contactushomecount')
 def commentscount(request):
     contactushomecount = ContactUsHome.objects.count()

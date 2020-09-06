@@ -1,0 +1,110 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> All Deactivated Companies </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page"> All Deactivated Companies </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title"> All Deactivated Companies </h4>
+                    <div class="table-responsive">
+                       <table class="table ">
+                        <thead>
+                          <tr>
+                             <th scope="col">#</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Owner</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Business No</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">County</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for company in companies %}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>
+                                  <img src="{{ company.logo.url }}" class="mr-2 object-fit-cover" alt="image">
+                                </td>
+                                <td>{{company.company_name|title}}</td>
+                                <td>{{company.first_name|title}} {{company.last_name|title}}</td>
+                                <td><a href="mailto:{{company.email}}">{{company.email}}</a></td>
+                                <td>{{company.category|title}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                      <button class="btn btn-secondary
+                                        {% if  company.status == 'NEWBIE' %}
+                                         btn-gradient-info
+                                     {% elif  company.status == 'REGISTERED_CONFIRMED' %}
+                                        btn-gradient-warning
+                                     {% elif  company.status == 'DEACTIVATED' %}
+                                        btn-gradient-danger
+                                     {% endif %}
+                                       dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                          {{ company.status|truncatechars:10 }}
+                                      </button>
+                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                          {% if not company.status == 'NEWBIE' %}
+                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanytatustonewbee' company.id   %}">Newbie </a>
+                                          {% endif %}
+                                          {% if not company.status == 'REGISTERED_CONFIRMED' %}
+                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustoregi' company.id  %}">Registered</a>
+                                          {% endif %}
+                                          {% if not company.status == 'DEACTIVATED' %}
+                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustodeac' company.id    %}">Deactivated</a>
+                                          {% endif %}
+                                      </div>
+                                    </div>
+                                </td>
+                                <td>{{ company.bussiness_reg_no }}</td>
+{#                                                <td>{{ company.kra_number }}</td>#}
+                                <td>{{ company.bizness_entity_type|title }}</td>
+                                <td>{{ company.county|title }}</td>
+                                <td>{{company.created_at|date:'d-M-Y'}}</td>
+                                <td><a target="_blank" class="btn btn-success" href="{% url 'LMLAdmin:companydetails' company.id %}">View</a></td>
+                           </tr>
+                         {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}

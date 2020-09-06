@@ -1,0 +1,162 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title">Company Registration Pricing </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Company Registration Pricing</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                 <button type="button" class="btn btn-success " data-toggle="modal" data-target="#exampleModal">
+                  Add Pricing
+                </button>
+                  <div class="card-body">
+                    <h4 class="card-title">Company Registration Pricing</h4>
+                    <div class="table-responsive">
+                       <table class="table ">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Pricing (Kshs)</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Created At</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         {% for price in pricings %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <th scope="row">{{ price.price|intcomma }}</th>
+                                <th scope="row">{{ price.status }}</th>
+                                <th scope="row">{{ price.created_at|naturaltime }}</th>
+                                <th scope="row">
+                                    <a data-toggle="modal" data-target="#editModal{{ price.id }}" href="" class="btn btn-success rounded" >Edit</a>
+                                    <a data-toggle="modal" data-target="#deleteModal-{{ price.id }}" href="" class="btn btn-danger rounded">Delete</a>
+                                    <div class="btn-group">
+
+                                      <button type="button" class="btn {% if price.status == "ACTIVE" %}btn-warning{% else %}btn-info{% endif %} ">{{ price.status }}</button>
+                                      <button type="button" class="btn {% if price.status == "ACTIVE" %}btn-warning{% else %}btn-info{% endif %}  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                      </button>
+                                      <div class="dropdown-menu">
+                                          {% if price.status == 'ACTIVE' %}
+                                            <a class="dropdown-item" href="{% url 'LMLAdmin:companystatusregpricing' price.id %}">InActive</a>
+                                          {% endif %}
+                                          {% if price.status == 'INACTIVE' %}
+                                            <a class="dropdown-item" href="{% url 'LMLAdmin:companystatusregpricing' price.id %}">Active</a>
+                                          {% endif %}
+
+                                      </div>
+                                    </div>
+                                </th>
+
+                            </tr>
+                         {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      {% for price in pricings %}
+        <div  class="modal fade" id="editModal{{ price.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Pricing ({{ price.price }})</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+               <form method="post" action="{% url 'LMLAdmin:companyupdateregpricing' price.id %}" >
+                  {% csrf_token %}
+                  <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Price</label>
+                        <input required name="price" type="number" value="{{ price.price }}" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter Price">
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-success rounded">Save changes</button>
+                  </div>
+             </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal fade" id="deleteModal-{{ price.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete {{ price.title|title }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Are You Sure You Want To Delete
+                  <div class="row" style="padding: 15px;">
+                      <a href="{% url 'LMLAdmin:companydeleteregpricing' price.id %}" class="btn btn-danger">Delete</a>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+        <!-- ============================================================== -->
+        <!-- Modal -->
+      <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Pricing</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form method="post" action="{% url 'LMLAdmin:companyaddregpricing' %}" >
+                              {% csrf_token %}
+                              <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail2">Price</label>
+                                    <input required name="price" type="number" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Enter Price">
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="submit" class="btn btn-sm btn-success rounded">Save changes</button>
+                              </div>
+                         </form>
+                        </div>
+                      </div>
+                    </div>
+
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}

@@ -1,0 +1,168 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> What We Offer</h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page"> What We Offer</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                    <button class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Add New Offer</button>
+
+                  <div class="card-body">
+                    <h4 class="card-title"> What We Offer</h4>
+                    <div class="table-responsive">
+                       <table class="table ">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Icon</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date Created</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for offer in whatweoffer %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td><i style="    font-size: 34px; color: lawngreen;" class="{{ offer.icon }}"></i></td>
+                                <td>{{offer.title}}</td>
+                                <td>{{offer.description|capfirst}}</td>
+                                <td>{{offer.created_at|date:'d-M-Y'}}</td>
+                                <td>
+                                    <a href="" data-toggle="modal" data-target="#edit{{ offer.id }}"  class="btn btn-success btn-sm rounded">Edit</a>
+                                    <a href="#"  data-toggle="modal" data-target="#delete{{ offer.id }}" class="btn btn-danger btn-sm rounded">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+         {% for offer in whatweoffer %}
+            <div class="modal fade" id="edit{{ offer.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="{% url 'LMLAdmin:editwhatweoffer' offer.id %}" class="" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
+                          <div class="form-group">
+                            <label for="exampleInputEmail">Icon <i style="font-size: 34px; color: lawngreen;"  class="{{ offer.icon }}"></i></label>
+                            <input   type="text" value="{{ offer.icon }}" name="icon" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+                            <small id="emailHelp" class="form-text text-muted"> <a href="https://fontawesome.com/icons">Fontawsome icons.</a></small>
+                            <small id="emailHelp" class="form-text text-muted"> <a target="_blank" href="https://friconix.com/start/">Friconix icon</a></small>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Title</label>
+                            <input style="text-transform: capitalize;"  type="text" name="title" value="{{ offer.title }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp1">
+                            <small id="emailHelp1" class="form-text text-muted">Title.</small>
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Description</label>
+                            <input type="text" name="description" value="{{ offer.description }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp1">
+                            <small id="emailHelp1" class="form-text text-muted">Description.</small>
+                          </div>
+                          <button type="submit" class="btn btn-primary rounded ml-5">Submit</button>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+             <div class="modal fade" id="delete{{ offer.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                     <p>Are You sure you want to delete</p>
+                      <div class="row">
+                          <a href="{% url 'LMLAdmin:deletewhatweoffer' offer.id %}" class="btn btn-danger rounded ml-5">Delete</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+         {% endfor %}
+            <!-- ============================================================== -->
+            <!-- Modal -->
+         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Offer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                  <form action="{% url 'LMLAdmin:addwhatweoffer' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group">
+                        <label for="exampleInputEmail">Icon</label>
+                        <input type="text" name="icon" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+                        <small id="emailHelp" class="form-text text-muted"> <a href="https://fontawesome.com/icons">Fontawsome icons.</a></small>
+                        <small id="emailHelp" class="form-text text-muted"> <a target="_blank" href="https://friconix.com/start/">Friconix icon</a></small>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Title</label>
+                        <input style="text-transform: capitalize;" type="text" name="title" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp1">
+                        <small id="emailHelp1" class="form-text text-muted">Title.</small>
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Description</label>
+                        <input type="text" name="description" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp1">
+                        <small id="emailHelp1" class="form-text text-muted">Description.</small>
+                      </div>
+                      <button type="submit" class="btn btn-primary rounded">Submit</button>
+
+
+                  </form>
+              </div>
+            </div>
+          </div>
+         </div>
+
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}

@@ -1,0 +1,106 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title">All Premium Candidate </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Premium Candidate</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Premium Candidate</h4>
+                    <div class="table-responsive">
+                      <table class="table ">
+                        <thead>
+                          <tr>
+                             <th>#</th>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>RegNO</th>
+                            <th>Phone Number</th>
+                            <th>Emp_Status</th>
+                            <th>Rank</th>
+                            <th>Date Joined</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         {% for employee in customers%}
+                              <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>
+                                  <img src="{{ employee.profile_image.url }}" class="mr-2 object-fit-cover" alt="image">
+                                </td>
+                                <td>{{employee.first_name|title}} {{ employee.last_name|title }}</td>
+                                <td>{{employee.customer_reg_no}}</td>
+                                <td>{{employee.phone_number}}</td>
+                                <td> <div class="dropdown">
+                                  <button class="btn
+                                    {% if  employee.status == 'NEWBIE' %}
+                                     btn-gradient-info
+                                     {% elif  employee.status == 'REGISTERED_CONFIRMED' %}
+                                        btn-gradient-warning
+                                     {% elif  employee.status == 'DEACTIVATED' %}
+                                        btn-gradient-danger
+                                     {% endif %}
+                                       dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      {{ employee.status }}
+                                  </button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                      {% if not employee.status|upper == 'NEWBIE' %}
+                                        <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustonewbee' employee.id   %}">Newbie</a>
+                                      {% endif %}
+                                      {% if not employee.status|upper == 'REGISTERED_CONFIRMED' %}
+                                        <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustoregi' employee.id  %}">Registerd</a>
+                                      {% endif %}
+                                      {% if not employee.status|upper == 'DEACTIVATED' %}
+                                        <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustodeac' employee.id    %}">Deactivated</a>
+                                      {% endif %}
+
+                                  </div>
+                                </div>
+                                </td>
+                                <td>{{employee.rank_status}}</td>
+                                <td>{{employee.created_at|date:'d-M-Y'}}</td>
+                                <td>
+                                    <a target="_blank" href="{% url 'LMLAdmin:employeesdetails' employee.id %}" class="btn btn-success btn-sm rounded">View</a>
+
+                                </td>
+                              </tr>
+                         {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}

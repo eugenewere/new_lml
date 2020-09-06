@@ -43,7 +43,6 @@
                                                 <th scope="col">Category</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Business No</th>
-{#                                                <th scope="col">KRA NO</th>#}
                                                 <th scope="col">Type</th>
                                                 <th scope="col">County</th>
                                                 <th scope="col">Created At</th>
@@ -67,24 +66,24 @@
                                                     <div class="dropdown">
                                                       <button class="btn btn-secondary
                                                         {% if  company.status == 'NEWBIE' %}
-                                                         btn-secondary
+                                                         btn-gradient-info
                                                      {% elif  company.status == 'REGISTERED_CONFIRMED' %}
-                                                        btn-success
+                                                        btn-gradient-warning
                                                      {% elif  company.status == 'DEACTIVATED' %}
-                                                        btn-danger
+                                                        btn-gradient-danger
                                                      {% endif %}
                                                        dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                           {{ company.status|truncatechars:10 }}
                                                       </button>
                                                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                           {% if not company.status == 'NEWBIE' %}
-                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanytatustonewbee' company.id   %}">NEWBIE </a>
+                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanytatustonewbee' company.id   %}">Newbie </a>
                                                           {% endif %}
                                                           {% if not company.status == 'REGISTERED_CONFIRMED' %}
-                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustoregi' company.id  %}">REGISTERED</a>
+                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustoregi' company.id  %}">Registered</a>
                                                           {% endif %}
                                                           {% if not company.status == 'DEACTIVATED' %}
-                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustodeac' company.id    %}">DEACTIVATED</a>
+                                                            <a class="dropdown-item" href="{% url 'LMLAdmin:changecompanystatustodeac' company.id    %}">Deactivated</a>
                                                           {% endif %}
                                                       </div>
                                                     </div>

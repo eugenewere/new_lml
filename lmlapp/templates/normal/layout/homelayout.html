@@ -310,14 +310,35 @@
                         <div class="footer-widget">
                             <h3 class="widgettitle widget-title">Contact Us</h3>
                             <div class="textwidget">
-                                <form id="cont" class="footer-form" action="{% url 'LML:home_contact_us' request.path|make_safe %}" method="POST">
-                                    {% csrf_token %}
+                                {% if not request.user.is_authenticated %}
+                                    <form id="cont" class="footer-form" action="{% url 'LML:home_contact_us' request.path|make_safe %}" method="POST">
+                                        {% csrf_token %}
 
-                                    <input {% if request.user.is_authenticated %}value="{{ request.user.first_name }} {{ request.user.last_name }}" {% endif %} required autocomplete="off" name="name" type="text" class="form-control" placeholder="Your Name">
-                                    <input {% if request.user.is_authenticated %}value="{{ request.user.email }}" {% endif %} required autocomplete="off" name="email" type="email" class="form-control" placeholder="Email">
-                                    <textarea style="max-width: 100%;" required autocomplete="off" name="message" class="form-control" placeholder="Message"></textarea>
-                                    <button type="submit" class="btn btn-primary custom-button" style="margin-top: 10px;border-radius: 140px; margin-left: auto;">Submit message</button>
-                                </form>
+                                        <input {% if request.user.is_authenticated %}value="{{ request.user.first_name }} {{ request.user.last_name }}" {% endif %} required autocomplete="off" name="name" type="text" class="form-control" placeholder="Your Name">
+                                        <input {% if request.user.is_authenticated %}value="{{ request.user.email }}" {% endif %} required autocomplete="off" name="email" type="email" class="form-control" placeholder="Email">
+                                        <textarea style="max-width: 100%;" required autocomplete="off" name="message" class="form-control" placeholder="Message"></textarea>
+                                        <button type="submit" class="btn btn-primary custom-button" style="margin-top: 10px;border-radius: 140px; margin-left: auto;">Submit message</button>
+                                    </form>
+                                {% else %}
+                                    {% if request.user|logged_in_customer %}
+                                        <form class="footer-form"  action="{% url 'LML:customer_contact_us' %}" method="post">
+                                            {% csrf_token %}
+                                            <input autocomplete="off"  name="name" type="text" value="{{ request.user.first_name }} {{ request.user.last_name }}" class="form-control">
+                                            <input  autocomplete="off"  name="email" type="email" value="{{ request.user.email }}" class="form-control">
+                                            <textarea required name="message" class="form-control"></textarea>
+                                            <button type="submit" class="btn btn-primary custom-button" style="margin-top: 10px;border-radius: 140px; margin-left: auto;">Submit message</button>
+                                        </form>
+                                     {% endif %}
+                                    {% if request.user|logged_in_company %}
+                                        <form class="footer-form"  action="{% url 'LML:company_contact_us' %}" method="post">
+                                            {% csrf_token %}
+                                             <input autocomplete="off"  name="name" type="text" value="{{ request.user.first_name }} {{ request.user.last_name }}" class="form-control">
+                                            <input  autocomplete="off"  name="email" type="email" value="{{ request.user.email }}" class="form-control">
+                                            <textarea required name="message" class="form-control"></textarea>
+                                            <button type="submit" class="btn btn-primary custom-button" style="margin-top: 10px;border-radius: 140px; margin-left: auto;">Submit message</button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
                             </div>
                         </div>
                     </div>

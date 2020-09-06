@@ -519,10 +519,10 @@ class CompanyStatusPayment(models.Model):
         created_at = self.created_at
         if exp.upper() == 'MONTHLY':
             expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
-            return expiry_date
+            return expiry_date.strftime("%d-%m-%Y")
         elif exp.upper() == 'YEARLY':
             expiry_date = created_at.date() + datetime.timedelta(days=year_days)
-            return expiry_date
+            return expiry_date.strftime("%d-%m-%Y")
 
     @property
     def getexpiryremainingdays(self):
@@ -655,6 +655,12 @@ class ContactUsCompany(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    COMPANYMESSAGECHOICES = {
+        ('READ', 'Read'),
+        ('UNREAD', 'Unread'),
+        ('TRASH', 'Trash'),
+    }
+    status = models.CharField(max_length=200, null=True, blank=True, choices=COMPANYMESSAGECHOICES, default='UNREAD')
 
     def _str__(self):
         return '%s (%s) ' % (self.company.company_name, (self.message))
@@ -684,6 +690,12 @@ class ContactUsEmployee(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    EMPLOYEEMESSAGECHOICES = {
+        ('READ', 'Read'),
+        ('UNREAD', 'Unread'),
+        ('TRASH', 'Trash'),
+    }
+    status = models.CharField(max_length=200, null=True, blank=True, choices=EMPLOYEEMESSAGECHOICES, default='UNREAD')
 
     def _str__(self):
         return '%s (%s) ' % (self.customer, (self.message))

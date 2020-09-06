@@ -422,7 +422,7 @@ def employerdetails(request):
         'scompany': similar_company,
         'title': company.company_name + ' details'
     }
-    return render(request, 'normal/jobdetails/employerdetails.html', context)
+    return render(request, 'normal/account/employerdetails.html', context)
 
 
 @login_required()
@@ -873,10 +873,10 @@ def company_contact_us(request):
             message=message,
         )
         sweetify.success(request, 'Success', text='Message sent', persistent='Ok')
-        return redirect('LML:employerdetails')
+        return redirect(request.META['HTTP_REFERER'])
     else:
         sweetify.success(request, 'Error', text='Message not sent', persistent='Ok')
-    return redirect('LML:employerdetails')
+    return redirect(request.META['HTTP_REFERER'])
 
 
 def customer_contact_us(request):
@@ -893,10 +893,10 @@ def customer_contact_us(request):
             message=message,
         )
         sweetify.success(request, 'Success', text='Message sent', persistent='Ok')
-        return redirect('LML:employeedetails')
+        return redirect(request.META['HTTP_REFERER'])
     else:
         sweetify.success(request, 'Error', text='Message not sent', persistent='Ok')
-    return redirect('LML:employeedetails')
+    return redirect(request.META['HTTP_REFERER'])
 
 
 def home_contact_us(request, source):

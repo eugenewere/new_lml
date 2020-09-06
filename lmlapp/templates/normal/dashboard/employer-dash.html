@@ -79,8 +79,6 @@
                             {% if company.rank_status == "PLATINUM" %}
                                 <li ><div class="verified-action-gold"><i style="line-height: 25px; margin-right: 3px;" class="far fa-check-square"></i> {{ company.rank_status|title}}</div></li>
                             {% endif %}
-
-
                         </ul>
                     </div>
                 </div>
@@ -733,6 +731,7 @@
                                                           <th scope="col">Trans_id</th>
                                                           <th scope="col">Amount</th>
                                                           <th scope="col">PayStatus</th>
+                                                          <th scope="col">Status</th>
                                                           <th scope="col">Date</th>
                                                           <th scope="col">Expiry Date</th>
                                                           <th scope="col">Days Remaining</th>
@@ -755,8 +754,15 @@
                                                                           <i style="color: red;" class="fas fa-exclamation-circle"></i>
                                                                       {% endif %}
                                                                   </td>
+                                                                  <td>
+                                                                      {% if forloop.first %}
+                                                                          <span class="badge badge-pill bg-success">Active</span>
+                                                                      {% else %}
+                                                                          <span class="badge badge-pill badge-danger">InActive</span>
+                                                                      {% endif %}
+                                                                  </td>
                                                                   <td>{{ k.created_at|date:'d-M-Y'}}</td>
-                                                                  <td style="color: red;">{{ k.getexpiry|date:'d-M-Y' }}</td>
+                                                                  <td style="color: red;">{{ k.getexpiry }}</td>
                                                                   <td style="">{{ k.getexpiryremainingdays }}</td>
                                                                   <td style="">
                                                                       <a data-toggle="modal" data-target="#pay{{ k.id }}" style='margin: 0;padding: 6px 16px;' href="" class="btn btn-success custom-button">View</a>
@@ -1132,7 +1138,6 @@
                                               <div class="modal-body receipt" >
                                                   <div class="container-fluid " style="display: flex; justify-content: flex-end;" >
                                                       <button data-tran="{{ k.transaction_recipt_no }}" class="btn btn-sm btn-success custom-button pdf-btn" style="padding: 5px 8px;"><i class="fas fa-download"></i></button>
-{#                                                      <button  class="btn btn-sm btn-success custom-button expandbtn" style="padding: 5px 8px;"><i class="fas fa-expand-arrows-alt"></i></button>#}
                                                   </div>
                                                   <div class="pdf-wrapper" id="pdf{{ k.id }}">
                                                     <!-- Header -->

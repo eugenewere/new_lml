@@ -1,0 +1,231 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title">Analytics</h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Analytics </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+          <div class="col-12 grid-margin">
+            <div class="card">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 mx-auto">
+                        <ul class="nav nav-pills nav-pills-custom" id="pills-tab" role="tablist">
+                          <li class="nav-item">
+                            <a style="border-radius: 5px;" class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-energy0" role="tab" aria-controls="pills-contact" aria-selected="true"> Company Join </a>
+                          </li>
+                          <li class="nav-item">
+                            <a style="border-radius: 5px;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#pills-energy1" role="tab" aria-controls="pills-contact" aria-selected="true">Candidate Join </a>
+                          </li>
+                          <li class="nav-item">
+                            <a style="border-radius: 5px;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#pills-energy1" role="tab" aria-controls="pills-contact" aria-selected="true">Candidate </a>
+                          </li>
+
+                        </ul>
+                        <div class="tab-content tab-content-custom-pill" id="pills-tabContent">
+                          <div class="tab-pane fade active show" id="pills-energy0" role="tabpanel" aria-labelledby="pills-contact-tab">
+                            <div class="media">
+                              <div class="media-body">
+                                  <canvas id="morris_totalrevenue23" style="height: 420px;"></canvas>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane fade" id="pills-energy1" role="tabpanel" aria-labelledby="pills-contact-tab">
+                            <div class="media">
+                              <div class="media-body">
+                                  <canvas id="c3chart_category2" style="height: 420px;"></canvas>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+     <script>
+         $(document).ready(function () {
+                var endpoint2 = window.location.origin+'/lmladmin/company_graph/';
+                console.log(endpoint2)
+                var defaultData3 =  [];
+                var labels3 = [];
+                $.ajax({
+                    method: "GET",
+                    url : endpoint2,
+                    success : function (data) {
+
+                        labels3 = data.labels3;
+                        defaultData3= data.defaultData3;
+                        setCompanyBarGraph();
+                    },
+                    error : function (error_data) {
+                        console.log(error_data);
+                    },
+                });
+
+                var endpoint = window.location.origin+'/lmladmin/customer_graph/';
+                console.log(endpoint)
+                var defaultData =  [];
+                var labels = [];
+                $.ajax({
+                    method: "GET",
+                    url : endpoint,
+                    success : function (data) {
+                        labels = data.labels2;
+                        defaultData= data.defaultData2;
+                        setCustomerBarGraph(data);
+                    },
+                    error : function (error_data) {
+                        console.log(error_data);
+                    },
+                });
+                function setCustomerBarGraph(data) {
+                    var ctx = document.getElementById('c3chart_category2').getContext('2d');
+
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Customers ',
+                                data: defaultData,
+                                backgroundColor: [
+                                    'rgb(7, 177, 7, 50)',
+                                    'rgba(255, 159, 64, 1)',
+
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgb(129,255,46)',
+                                    'rgb(255,217,66)',
+                                    'rgb(255,131,255)',
+                                    'rgb(1,53,255)',
+                                    'rgb(7, 177, 7)',
+                                    'rgb(36,255,221)',
+                                    'rgb(145,255,39)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 159, 64, 1)',
+                                    'rgb(7, 177, 7, 50)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgb(129,255,46)',
+                                    'rgb(255,217,66)',
+                                    'rgb(255,131,255)',
+                                    'rgb(1,53,255)',
+                                    'rgb(7, 177, 7)',
+                                    'rgb(36,255,221)',
+                                    'rgb(145,255,39)',
+
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        stepSize: 1
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+                function setCompanyBarGraph() {
+                var ctx = document.getElementById('morris_totalrevenue23').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels3,
+                        datasets: [{
+                            label: 'Company',
+                            data: defaultData3,
+                            backgroundColor: [
+                                'rgb(7, 177, 7, 50)',
+                                'rgba(255, 159, 64, 1)',
+
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgb(129,255,46)',
+                                'rgb(255,217,66)',
+                                'rgb(255,131,255)',
+                                'rgb(1,53,255)',
+                                'rgb(7, 177, 7)',
+                                'rgb(36,255,221)',
+                                'rgb(145,255,39)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 159, 64, 1)',
+                                'rgb(7, 177, 7, 50)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgb(129,255,46)',
+                                'rgb(255,217,66)',
+                                'rgb(255,131,255)',
+                                'rgb(1,53,255)',
+                                'rgb(7, 177, 7)',
+                                'rgb(36,255,221)',
+                                'rgb(145,255,39)',
+
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    stepSize:1
+                                }
+                            }]
+                        }
+                    }
+                });
+            }
+            });
+    </script>
+
+{% endblock scripts %}

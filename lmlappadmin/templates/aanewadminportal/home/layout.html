@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+<html lang="en">
+  
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{ title|title }}</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'anewasset/assets/vendors/css/vendor.bundle.base.css' %}">
+    <link rel="stylesheet" href="{% static 'anewasset/assets/vendors/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'anewasset/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css' %}">
+    <link rel="stylesheet" href="{% static 'anewasset/assets/css/demo_1/style.css' %}">
+    <!-- End layout styles -->
+    <link rel="shortcut icon" href="{% static 'anewasset/assets/images/favicon.png' %}" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.9.95/css/materialdesignicons.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
+    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script src="https://kit.fontawesome.com/16d33ecbbb.js" ></script>
+    <link rel="stylesheet" href="{% static 'assets/animated/animate.css' %}">
+
+    <style>
+        .dropdown-divider{
+            border-top: 1px solid #b2ecac;
+        }
+        .object-fit-cover{
+            object-fit: cover;
+        }
+        .object-fit-contain{
+            object-fit: contain;
+        }
+         .dataTables_empty{
+            padding: 117px !important;
+        }
+        .modal-header {
+            cursor: move;
+        }
+        body, html, *:not(i){
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+    </style>
+
+
+    {% block links %}
+    {% endblock links %}
+  </head>
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <a class="navbar-brand brand-logo" href="layout.html"><img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/logo.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="layout.html"><img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/logo-mini.svg" alt="logo" /></a>
+        </div>
+        <div class="navbar-menu-wrapper d-flex align-items-stretch">
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-menu"></span>
+          </button>
+
+          <div class="search-field d-none d-md-block">
+            <form class="d-flex align-items-center h-100" action="#">
+              <div class="input-group">
+                <div class="input-group-prepend bg-transparent">
+                  <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                </div>
+                <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+              </div>
+            </form>
+          </div>
+
+          <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+              <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                <div class="nav-profile-img">
+                  <img src="{% static 'anewasset/assets/images/faces/Trend-Avatar-Facebook.jpg' %}" alt="image">
+                  <span class="availability-status online"></span>
+                </div>
+                <div class="nav-profile-text">
+                  <p class="mb-1 text-black">{{ request.user.username }}</p>
+                </div>
+              </a>
+              <div class="dropdown-menu navbar-dropdown animate__animated animate__rubberBand" aria-labelledby="profileDropdown">
+                <a class="dropdown-item" href="#">
+                  <i class="mdi mdi-nature-people mr-2 text-success"></i> Account </a>
+{#                <div class="dropdown-divider"></div>#}
+                <a class="dropdown-item" href="{% url 'LML:log_out_user' %}">
+                  <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
+              </div>
+            </li>
+            <li class="nav-item d-none d-lg-block full-screen-link">
+              <a class="nav-link">
+                <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
+              </a>
+            </li>
+
+            <li class="nav-item nav-settings d-none d-lg-block">
+              <a class="nav-link" href="#">
+                <i class="mdi mdi-email-outline"></i>
+                <span class="count-symbol bg-warning"></span>
+              </a>
+            </li>
+          </ul>
+          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+            <span class="mdi mdi-menu"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_settings-panel.html -->
+        <div id="settings-trigger"><i class="mdi mdi-settings"></i></div>
+
+
+
+
+
+        <div id="right-sidebar" class="settings-panel ">
+          <i class="settings-close mdi mdi-close"></i>
+          <ul class="nav nav-tabs bg-gradient-success" id="setting-panel" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link text-white active" id="todo-tab" data-toggle="tab" href="#randomm" role="tab" aria-controls="todo-section" aria-expanded="true">Random Message</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" id="chats-tab" data-toggle="tab" href="#chats-section_comp" role="tab" aria-controls="chats-section">Company Messages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-white" id="chats-tab" data-toggle="tab" href="#chats-section_cand" role="tab" aria-controls="chats-section">Candidate Messages</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="setting-content">
+            <div class="tab-pane animate__animated animate__flipInY  scroll-wrapper" id="chats-section_comp" role="tabpanel" aria-labelledby="todo-section">
+              <div class="d-flex align-items-center justify-content-between border-bottom">
+                <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Company Messages</p>
+                <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+              </div>
+              <ul class="chat-list">
+                  {% for comment in request|contactuscompany %}
+                    <li class="list active">
+                      <div class="profile"><img src="{{ comment.company.logo.url }}" alt="image"><span class="online"></span></div>
+                      <div class="info">
+                        <p>{{comment.name|title}}</p>
+                        <p>{{comment.message|title|truncatechars:20}}</p>
+                      </div>
+                      <small class="text-muted my-auto">{{comment.created_at|naturaltime}}</small>
+                    </li>
+                  {% endfor %}
+              </ul>
+            </div>
+            <!-- To do section tab ends -->
+            <div class="tab-pane animate__animated  animate__flipInY scroll-wrapper" id="chats-section_cand" role="tabpanel" aria-labelledby="chats-section">
+              <div class="d-flex align-items-center justify-content-between border-bottom">
+                <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Candidate Messages</p>
+                <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+              </div>
+              <ul class="chat-list">
+                    {% for comment in request|contactusemployee %}
+                        <li class="list active">
+                          <div class="profile"><img src="{{ comment.customer.profile_image.url }}" alt="image"><span class="online"></span></div>
+                          <div class="info">
+                            <p>{{comment.name|title}}</p>
+                            <p>{{comment.message|title|truncatechars:20}}</p>
+                          </div>
+                          <small class="text-muted my-auto">{{comment.created_at|naturaltime}}</small>
+                        </li>
+                   {% endfor %}
+              </ul>
+            </div>
+
+            <div class="tab-pane animate__animated  animate__flipInY show active scroll-wrapper" id="randomm" role="tabpanel" aria-labelledby="chats-section">
+              <div class="d-flex align-items-center justify-content-between border-bottom">
+                <p class="settings-heading border-top-0 mb-3 pl-3 pt-0 border-bottom-0 pb-0">Random Messages</p>
+                <a href="{% url 'LMLAdmin:C_messages' %}">
+                    <small class="settings-heading border-top-0 mb-3 pt-0 border-bottom-0 pb-0 pr-3 font-weight-normal">See All</small>
+                 </a>
+              </div>
+              <ul class="chat-list">
+                {% for comment in request|contactushome %}
+                    <li class="list active">
+                      <div class="profile"><img src="{% static 'anewasset/assets/images/faces/Trend-Avatar-Facebook.jpg' %}" alt="image"><span class="online"></span></div>
+                      <div class="info">
+                        <p>{{comment.name|title}}</p>
+                        <p>{{comment.message|title|truncatechars:20}}</p>
+                      </div>
+                      <small class="text-muted my-auto">{{comment.created_at|naturaltime}}</small>
+                    </li>
+               {% endfor %}
+              </ul>
+            </div>
+            <!-- chat tab ends -->
+          </div>
+        </div>
+
+
+
+
+
+
+        <div id="theme-settings" class="settings-panel">
+          <i style="background-color: #29CA6C !important;" class="settings-close  mdi mdi-close"></i>
+          <p class="settings-heading">Themes</p>
+          <div class="sidebar-bg-options selected" id="sidebar-default-theme">
+            <div class="img-ss rounded-circle bg-light border mr-3"></div>Default
+          </div>
+          <div class="sidebar-bg-options" id="sidebar-dark-theme">
+            <div class="img-ss rounded-circle bg-dark border mr-3"></div>Dark
+          </div>
+        </div>
+        <!-- partial -->
+        <!-- partial:partials/_sidebar.html -->
+        <nav class="sidebar sidebar-offcanvas" id="sidebar">
+          <ul class="nav">
+            <li class="nav-item nav-profile">
+              <a href="#" class="nav-link">
+                <div class="nav-profile-image">
+                  <img src="{% static 'anewasset/assets/images/faces/Trend-Avatar-Facebook.jpg' %}" alt="profile">
+                  <span class="login-status online"></span>
+                  <!--change to offline or busy as needed-->
+                </div>
+                <div class="nav-profile-text d-flex flex-column">
+                  <span class="font-weight-bold mb-2">{{ request.user.username }}</span>
+                  <span class="text-secondary text-small">Admin</span>
+                </div>
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'LMLAdmin:home' %}">
+                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-home menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
+                <span class="menu-title">Candidates</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-apps menu-icon"></i>
+              </a>
+              <div class="collapse" id="page-layouts">
+                <ul class="nav flex-column sub-menu">
+                   <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:employees' %}">All Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:premiumemployees' %}">Premium Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:basicemployees' %}">Basic Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:ultimateemployees' %}">Ultimate Candidates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:shortlistedemployees' %}">Shortlisted</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:registeredemployees' %}">Registristred</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:unregipayedemployees' %}">UnRegistristred</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:deactivatedemployees' %}">Deactivated Candidates</a>
+                    </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#apps" aria-expanded="false" aria-controls="apps">
+                <span class="menu-title">Company</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-cart-arrow-down menu-icon"></i>
+              </a>
+              <div class="collapse" id="apps">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:companies' %}">All Companies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:platinumcompanies' %}">Platinum Companies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:premiumcompanies' %}">Premium Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:ultimatecompanies' %}">Ultimate Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:proultimatecompanies' %}">Pro-ultimate Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:probasiccompanies' %}">Pro-basic Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:basiccompanies' %}">Basic Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:undefinedcompanies' %}">Undefined Company</a>
+                    </li>
+                   <li class="dropdown-divider" ></li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:companiesregpayment' %}">Registered</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:companiesregunpayment' %}">UnRegistered</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:deactivatedemployers' %}">Deactivated Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:companyPricing' %}">Company Pricing</a>
+                    </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'LMLAdmin:analytics' %}">
+                <span class="menu-title">Analytics</span>
+                <i class="mdi mdi-forum menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
+                <span class="menu-title">Payments</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-playlist-play menu-icon"></i>
+              </a>
+              <div class="collapse" id="sidebar-layouts">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/cards.html">Company</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/general.html">Employee</a>
+                    </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'LMLAdmin:categories' %}">
+                <span class="menu-title">Categories</span>
+                <i class="mdi mdi-forum menu-icon"></i>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'LMLAdmin:carouselImages' %}">
+                <span class="menu-title">Home Images </span>
+                <i class="mdi mdi-forum menu-icon"></i>
+              </a>
+            </li>
+             <li class="nav-item">
+              <a class="nav-link" href="">
+                <span class="menu-title">County ***</span>
+                <i class="mdi mdi-forum menu-icon"></i>
+              </a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="">
+                <span class="menu-title">Region ***</span>
+                <i class="mdi mdi-forum menu-icon"></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                <span class="menu-title">Messages</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:R_messages' %}">Other Home Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:E_messages' %}">Employee Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:C_messages' %}">Company Messages</a>
+                    </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
+                <span class="menu-title">Settings</span>
+                <i class="menu-arrow"></i>
+                <i class="mdi mdi-cards-variant menu-icon"></i>
+              </a>
+              <div class="collapse" id="ui-advanced">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:companyregpricing' %}">Company Reg Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:candidateregpricing' %}">Employee Reg Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'LMLAdmin:whatweoffer' %}">What We Offer</a>
+                    </li>
+                </ul>
+              </div>
+            </li>
+
+
+          </ul>
+        </nav>
+        <!-- partial -->
+        {% block content %}
+        {% endblock content %}
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="{% static 'anewasset/assets/vendors/js/vendor.bundle.base.js' %}"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page -->
+    <script src="{% static 'anewasset/assets/vendors/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'anewasset/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js' %}"></script>
+    <!-- End plugin js for this page -->
+    <!-- inject:js -->
+    <script src="{% static 'anewasset/assets/js/off-canvas.js' %}"></script>
+    <script src="{% static 'anewasset/assets/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'anewasset/assets/js/misc.js' %}"></script>
+    <script src="{% static 'anewasset/assets/js/settings.js' %}"></script>
+    <script src="{% static 'anewasset/assets/js/todolist.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <!-- endinject -->
+    <!-- Custom js for this page -->
+    <script src="{% static 'anewasset/assets/js/dashboard.js' %}"></script>
+    <script>
+        $(document).ready( function () {
+                $('.table').DataTable();
+            } );
+         $(document).ready(function () {
+            $('.text-edit').each(function () {
+                CKEDITOR.replace( document.querySelector('#'+$(this).attr('id')),{
+                      removePlugins: [  'Image', ],
+                });
+            });
+
+        });
+         function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('.blah')
+                        .attr('src', e.target.result);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+     {% block scripts %}
+    {% endblock scripts %}
+    <!-- End custom js for this page -->
+  </body>
+
+</html>
