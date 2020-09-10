@@ -37,7 +37,9 @@ import json
 
 from lmlapp.pdf_util import render_to_pdf
 from lmlapp.templatetags.call_methods import *
-
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
 
 def home(request):
     customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('-created_at')[:6]
@@ -1380,19 +1382,74 @@ def EmployerCustomerShortlist(request):
     labels2 = months_choices
     for z in range(1, 13):
         months_choices_int.append((datetime.date(2008, z, 1).strftime('%m')))
-    for months_choice in months_choices_int:
-        month_data.append(
-            CompanyShortlistCustomers.objects.filter(company_id=company.id, created_at__month=months_choice).count())
-    defaultData2 = month_data
-    context2 = {
-        'labels2': labels2,
-        'defaultData2': defaultData2,
 
-    }
+    if request.method == 'GET':
+        for months_choice in months_choices_int:
+            month_data.append(
+                CompanyShortlistCustomers.objects.filter(company_id=company.id, created_at__month=months_choice).count())
+        defaultData2 = month_data
+        context2 = {
+            'labels2': labels2,
+            'defaultData2': defaultData2,
 
-    return JsonResponse(context2)
+        }
 
+        return JsonResponse(context2)
+    elif request.method == 'POST':
+        value = request.POST.get('value')
+        if value.lower() == 'shotlisting':
+            for months_choice in months_choices_int:
+                month_data.append(
+                    CompanyShortlistCustomers.objects.filter(company_id=company.id,created_at__month=months_choice, payment_status='SHORTLISTED').count())
+            defaultData2 = month_data
+            context2 = {
+                'labels2': labels2,
+                'defaultData2': defaultData2,
 
+            }
+            return JsonResponse(context2)
+
+        elif value.lower() == 'unshotlisting':
+            for months_choice in months_choices_int:
+                month_data.append(
+                    CompanyShortlistCustomers.objects.filter(company_id=company.id, created_at__month=months_choice,  payment_status='UNSHORTLISTED').count())
+            defaultData2 = month_data
+            context2 = {
+                'labels2': labels2,
+                'defaultData2': defaultData2,
+
+            }
+
+            return JsonResponse(context2)
+
+def candidateShortlistGraphTime(request):
+    company_days_data = []
+    days_choices = []
+    user = request.user.id
+    company = Company.objects.filter(user_ptr_id=user).first()
+    if request.method == 'POST':
+        startdate = request.POST.get('shortliststartdate')
+        enddate = request.POST.get('shortlistenddate')
+        # CompanyRegistrationPayment.objects.filter(created_at__day=)
+        if startdate and enddate:
+            if enddate > startdate:
+                start_date = datetime.datetime.strptime(startdate, '%Y-%m-%d')
+                end_date = datetime.datetime.strptime(enddate, '%Y-%m-%d')
+                for single_date in daterange(start_date, end_date):
+                    days_choices.append(single_date.strftime("%B")[:3] + ' ' + str(single_date.strftime("%d")))
+                for single_date in daterange(start_date, end_date):
+                    company_days_data.append(CompanyShortlistCustomers.objects.filter(company_id=company.id, created_at__day=single_date.strftime("%d"), created_at__year=single_date.strftime("%Y"), created_at__month=single_date.strftime("%m")).count())
+
+                context = {
+                    'labels': days_choices,
+                    'companydata': company_days_data,
+
+                }
+                return JsonResponse(context)
+            else:
+                print('less')
+        else:
+            print('required')
 
 @login_required()
 @has_user_paid_registration

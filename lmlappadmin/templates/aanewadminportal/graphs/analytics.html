@@ -4,7 +4,14 @@
 {% load humanize %}
 {% block links %}
 
-
+    <style>
+        .chartjs-render-monitor {
+            width: 100% !important;
+        }
+        .chartjs-render-monitor canvas{
+            width: 100% !important;
+        }
+    </style>
 
 {% endblock links %}
 {% block content %}
@@ -27,28 +34,198 @@
                       <div class="col-sm-12 mx-auto">
                         <ul class="nav nav-pills nav-pills-custom" id="pills-tab" role="tablist">
                           <li class="nav-item">
-                            <a style="border-radius: 5px;" class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-energy0" role="tab" aria-controls="pills-contact" aria-selected="true"> Company Join </a>
+                            <a style="border-radius: 5px; padding: 3px 16px !important; margin-right:3px !important;" class="nav-link active" id="pills-contact-tab" data-toggle="pill" href="#pills-energy0" role="tab" aria-controls="pills-contact1" aria-selected="true"> Company Join </a>
                           </li>
                           <li class="nav-item">
-                            <a style="border-radius: 5px;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#pills-energy1" role="tab" aria-controls="pills-contact" aria-selected="true">Candidate Join </a>
+                            <a style="border-radius: 5px; padding: 3px 16px !important; margin-right:3px !important;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#pills-energy1" role="tab" aria-controls="pills-contact2" aria-selected="true">Candidate Join </a>
                           </li>
                           <li class="nav-item">
-                            <a style="border-radius: 5px;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#pills-energy1" role="tab" aria-controls="pills-contact" aria-selected="true">Candidate </a>
+                            <a style="border-radius: 5px; padding: 3px 16px !important; margin-right:3px !important;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#registration" role="tab" aria-controls="pills-contact3" aria-selected="true">Registration </a>
+                          </li>
+                          <li class="nav-item">
+                            <a style="border-radius: 5px; padding: 3px 16px !important; margin-right:3px !important;" class="nav-link " id="pills-contact-tab" data-toggle="pill" href="#statuspayment" role="tab" aria-controls="pills-contact3" aria-selected="true">Company Status Payment </a>
                           </li>
 
                         </ul>
                         <div class="tab-content tab-content-custom-pill" id="pills-tabContent">
-                          <div class="tab-pane fade active show" id="pills-energy0" role="tabpanel" aria-labelledby="pills-contact-tab">
+                          <div class="tab-pane fade active show" id="pills-energy0" role="tabpanel" aria-labelledby="pills-contact1-tab">
                             <div class="media">
                               <div class="media-body">
-                                  <canvas id="morris_totalrevenue23" style="height: 420px;"></canvas>
+                                  <div class="container ">
+                                      <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-2">
+                                              <div class="form-group ">
+                                                <label for="exampleFormControlSelect1">Choose a Chart</label>
+                                                <select id="companyjoinselect" style="border: 1px solid #b8b3b3 !important; color: #000000; padding: 9px; height: 34px;" class="form-control">
+                                                  <option selected value="bar">Bar</option>
+                                                  <option  value="line">Line</option>
+                                                </select>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-12 col-md-12 col-lg-6">
+                                              <div class="row" >
+                                                  <form class="d-flex" action="" id="formdata">
+                                                      {% csrf_token %}
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="companyjoinstartdate">Start Date</label>
+                                                        <input required name="companystartdate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="companyjoinstartdate" aria-describedby="emailHelp">
+        {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                      </div>
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="companyjoinenddate">End Date</label>
+                                                        <input required name="companyenddate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="companyjoinenddate" aria-describedby="emailHelp">
+        {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                      </div>
+                                                      <button type="button" class="btn btn-success" id="companyjoinreset" style="height: 48px; margin-left:6px; margin-top: 12px; display: none !important;">
+                                                          <span class="d-flex">
+                                                              <i class="mdi mdi-recycle"></i> Reset
+                                                          </span>
+                                                      </button>
+                                                  </form>
+
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="container" id="companyjoinchartwrapper" >
+                                      <canvas id="morris_totalrevenue23" style="height: 420px;"></canvas>
+                                  </div>
                               </div>
                             </div>
                           </div>
-                          <div class="tab-pane fade" id="pills-energy1" role="tabpanel" aria-labelledby="pills-contact-tab">
+                          <div class="tab-pane fade" id="pills-energy1" role="tabpanel" aria-labelledby="pills-contact2-tab">
                             <div class="media">
                               <div class="media-body">
-                                  <canvas id="c3chart_category2" style="height: 420px;"></canvas>
+                                  <div class="container ">
+                                      <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-2">
+                                              <div class="form-group ">
+                                                <label for="exampleFormControlSelect1">Choose a Chart</label>
+                                                <select id="candidatejoinselect" style="border: 1px solid #b8b3b3 !important; color: #000000; padding: 9px; height: 34px;" class="form-control">
+                                                  <option selected value="bar">Bar</option>
+                                                  <option  value="line">Line</option>
+                                                </select>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-12 col-md-12 col-lg-6">
+                                              <div class="row" >
+                                                  <form class="d-flex" action="" id="candformdata">
+                                                      {% csrf_token %}
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="candidatejoinstartdate">Start Date</label>
+                                                        <input required name="candidatestartdate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="candidatejoinstartdate" aria-describedby="emailHelp">
+        {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                      </div>
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="candidatejoinenddate">End Date</label>
+                                                        <input required name="candidateenddate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="candidatejoinenddate" aria-describedby="emailHelp">
+        {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                      </div>
+                                                      <button type="button" class="btn btn-success" id="candidatejoinreset" style="height: 48px; margin-left:6px; margin-top: 12px; display: none ">
+                                                          <span class="d-flex">
+                                                              <i class="mdi mdi-recycle"></i> Reset
+                                                          </span>
+                                                      </button>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="container" id="candidatejoinwrapper">
+                                      <canvas id="candidatejoinchart" style="height: 420px;"></canvas>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane fade" id="registration" role="tabpanel" aria-labelledby="pills-contact3-tab">
+                            <div class="media">
+                              <div class="media-body">
+                                  <div class="container">
+                                      <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-2">
+                                              <div class="form-group ">
+                                                <label for="exampleFormControlSelect1">Choose a Chart</label>
+                                                <select id="regchartselect" style="border: 1px solid !important; height: 34px;" class="form-control">
+                                                  <option value="bar">Bar</option>
+                                                  <option selected value="line">Line</option>
+                                                </select>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-12 col-md-12 col-lg-6">
+                                              <div class="row" >
+                                                  <form class="d-flex" action="" id="registrationformdata">
+                                                      {% csrf_token %}
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="registrationjoinstartdate">Start Date</label>
+                                                        <input required name="registrationstartdate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="registrationjoinstartdate" aria-describedby="emailHelp">
+        {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                      </div>
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="registrationjoinenddate">End Date</label>
+                                                        <input required name="registrationenddate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="registrationjoinenddate" aria-describedby="emailHelp">
+        {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                      </div>
+                                                      <button type="button" class="btn btn-success" id="registrationjoinreset" style="height: 48px; margin-left:6px; margin-top: 12px; display: none ">
+                                                          <span class="d-flex">
+                                                              <i class="mdi mdi-recycle"></i> Reset
+                                                          </span>
+                                                      </button>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="container" id="registrationchartwrapper">
+                                    <canvas id="registrationchart" style="height: 420px;"></canvas>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="tab-pane fade" id="statuspayment" role="tabpanel" aria-labelledby="pills-contact3-tab">
+                            <div class="media">
+                              <div class="media-body">
+                                  <div class="container">
+                                      <div class="row">
+                                          <div class="col-sm-12 col-md-12 col-lg-2">
+                                              <div class="form-group ">
+                                                <label for="statuspaychartselect">Choose a Chart</label>
+                                                <select id="statuspaychartselect" style="border: 1px solid #b8b3b3 !important; height: 34px;" class="form-control">
+                                                  <option selected  value="bar">Bar</option>
+                                                  <option value="line">Line</option>
+                                                </select>
+                                              </div>
+                                          </div>
+                                          <div class="col-sm-12 col-md-12 col-lg-2">
+                                              <div class="form-group">
+                                                <label for="stepsize">Step size (100,000+)</label>
+                                                <input type="number" min="100000" class="form-control" id="stepsize" aria-describedby="emailHelp" style="border: 1px solid #b8b3b3 !important; height: 34px;">
+                                              </div>
+                                          </div>
+                                           <div class="col-sm-12 col-md-12 col-lg-6">
+                                              <div class="row" >
+                                                  <form class="d-flex" action="" id="statuspaychartselectformdata">
+                                                      {% csrf_token %}
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="statuspaychartselectstartdate">Start Date</label>
+                                                        <input required name="statuspaychartselectstartdate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="statuspaychartselectstartdate" aria-describedby="emailHelp">
+                                                      </div>
+                                                      <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                        <label for="statuspaychartselectenddate">End Date</label>
+                                                        <input required name="statuspaychartselectenddate" style="border: 1px solid #b8b3b3 !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="statuspaychartselectenddate" aria-describedby="emailHelp">
+                                                      </div>
+                                                      <button type="button" class="btn btn-success" id="statuspaychartselectreset" style="height: 48px; margin-left:6px; margin-top: 12px; display: none ">
+                                                          <span class="d-flex">
+                                                              <i class="mdi mdi-recycle"></i> Reset
+                                                          </span>
+                                                      </button>
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="container" id="statuspaychartwrapper">
+                                    <canvas id="statuspaychart" style="height: 420px;"></canvas>
+                                  </div>
                               </div>
                             </div>
                           </div>
@@ -72,160 +249,6 @@
     </div>
 {% endblock content %}
 {% block scripts %}
-     <script>
-         $(document).ready(function () {
-                var endpoint2 = window.location.origin+'/lmladmin/company_graph/';
-                console.log(endpoint2)
-                var defaultData3 =  [];
-                var labels3 = [];
-                $.ajax({
-                    method: "GET",
-                    url : endpoint2,
-                    success : function (data) {
-
-                        labels3 = data.labels3;
-                        defaultData3= data.defaultData3;
-                        setCompanyBarGraph();
-                    },
-                    error : function (error_data) {
-                        console.log(error_data);
-                    },
-                });
-
-                var endpoint = window.location.origin+'/lmladmin/customer_graph/';
-                console.log(endpoint)
-                var defaultData =  [];
-                var labels = [];
-                $.ajax({
-                    method: "GET",
-                    url : endpoint,
-                    success : function (data) {
-                        labels = data.labels2;
-                        defaultData= data.defaultData2;
-                        setCustomerBarGraph(data);
-                    },
-                    error : function (error_data) {
-                        console.log(error_data);
-                    },
-                });
-                function setCustomerBarGraph(data) {
-                    var ctx = document.getElementById('c3chart_category2').getContext('2d');
-
-                    var myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Customers ',
-                                data: defaultData,
-                                backgroundColor: [
-                                    'rgb(7, 177, 7, 50)',
-                                    'rgba(255, 159, 64, 1)',
-
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgb(129,255,46)',
-                                    'rgb(255,217,66)',
-                                    'rgb(255,131,255)',
-                                    'rgb(1,53,255)',
-                                    'rgb(7, 177, 7)',
-                                    'rgb(36,255,221)',
-                                    'rgb(145,255,39)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 159, 64, 1)',
-                                    'rgb(7, 177, 7, 50)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(153, 102, 255, 1)',
-                                    'rgb(129,255,46)',
-                                    'rgb(255,217,66)',
-                                    'rgb(255,131,255)',
-                                    'rgb(1,53,255)',
-                                    'rgb(7, 177, 7)',
-                                    'rgb(36,255,221)',
-                                    'rgb(145,255,39)',
-
-                                ],
-                                borderWidth: 1
-                            }]
-                        },
-                        options: {
-                            scales: {
-                                yAxes: [{
-                                    ticks: {
-                                        beginAtZero: true,
-                                        stepSize: 1
-                                    }
-                                }]
-                            }
-                        }
-                    });
-                }
-                function setCompanyBarGraph() {
-                var ctx = document.getElementById('morris_totalrevenue23').getContext('2d');
-                var myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels3,
-                        datasets: [{
-                            label: 'Company',
-                            data: defaultData3,
-                            backgroundColor: [
-                                'rgb(7, 177, 7, 50)',
-                                'rgba(255, 159, 64, 1)',
-
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgb(129,255,46)',
-                                'rgb(255,217,66)',
-                                'rgb(255,131,255)',
-                                'rgb(1,53,255)',
-                                'rgb(7, 177, 7)',
-                                'rgb(36,255,221)',
-                                'rgb(145,255,39)',
-                            ],
-                            borderColor: [
-                                'rgba(255, 159, 64, 1)',
-                                'rgb(7, 177, 7, 50)',
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgb(129,255,46)',
-                                'rgb(255,217,66)',
-                                'rgb(255,131,255)',
-                                'rgb(1,53,255)',
-                                'rgb(7, 177, 7)',
-                                'rgb(36,255,221)',
-                                'rgb(145,255,39)',
-
-                            ],
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    stepSize:1
-                                }
-                            }]
-                        }
-                    }
-                });
-            }
-            });
-    </script>
+     <script type="text/javascript" src="{% static 'anewasset/assets/custom/chartjsin.js' %}"></script>
 
 {% endblock scripts %}

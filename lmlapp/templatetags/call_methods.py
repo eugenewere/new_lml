@@ -510,3 +510,9 @@ def company_access_no_count(cand_id):
         company_pricin_details = CompanyPricingDetails.objects.filter(pricing=comp_pricin).first()
         return int(company_pricin_details.no_of_candidates)
 
+@register.filter("countyname")
+def countyname(cand_id):
+    county = County.objects.filter(county_number=int(cand_id)).first()
+    if county:
+        return county.county
+

@@ -15,12 +15,14 @@
     <link rel="stylesheet" href="{% static 'anewasset/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css' %}">
     <link rel="stylesheet" href="{% static 'anewasset/assets/css/demo_1/style.css' %}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{% static 'anewasset/assets/images/favicon.png' %}" />
+{#    <link rel="shortcut icon" href="{% static 'anewasset/assets/images/favicon.png' %}" />#}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@4.9.95/css/materialdesignicons.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.20/datatables.min.css"/>
     <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
     <script defer src="https://friconix.com/cdn/friconix.js"> </script>
     <script src="https://kit.fontawesome.com/16d33ecbbb.js" ></script>
+    <link rel="shortcut icon" href="{% static 'assets/img/avatar/icon.jpeg' %}" style="border-radius: 50%">
+
     <link rel="stylesheet" href="{% static 'assets/animated/animate.css' %}">
 
     <style>
@@ -42,6 +44,15 @@
         body, html, *:not(i){
             font-family: 'Roboto Condensed', sans-serif;
         }
+        div.dataTables_wrapper div.dataTables_filter input {
+            border: 1px solid #a8a6a6 !important;
+        }
+        div.dataTables_wrapper div.dataTables_length select {
+            border: 1px solid #a8a6a6 !important;
+            padding: 0 28px !important;
+        }
+
+.d
     </style>
 
 
@@ -84,7 +95,7 @@
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown animate__animated animate__rubberBand" aria-labelledby="profileDropdown">
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{% url 'LMLAdmin:useradminaccount' %}">
                   <i class="mdi mdi-nature-people mr-2 text-success"></i> Account </a>
 {#                <div class="dropdown-divider"></div>#}
                 <a class="dropdown-item" href="{% url 'LML:log_out_user' %}">
@@ -353,14 +364,14 @@
               </a>
             </li>
              <li class="nav-item">
-              <a class="nav-link" href="">
-                <span class="menu-title">County ***</span>
+              <a class="nav-link" href="{% url 'LMLAdmin:county' %}">
+                <span class="menu-title">County </span>
                 <i class="mdi mdi-forum menu-icon"></i>
               </a>
             </li>
               <li class="nav-item">
-              <a class="nav-link" href="">
-                <span class="menu-title">Region ***</span>
+              <a class="nav-link" href="{% url 'LMLAdmin:region' %}">
+                <span class="menu-title">Region</span>
                 <i class="mdi mdi-forum menu-icon"></i>
               </a>
             </li>
@@ -461,6 +472,10 @@
     </script>
      {% block scripts %}
     {% endblock scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    {% load sweetify %}
+    {% sweetify %}
     <!-- End custom js for this page -->
   </body>
 

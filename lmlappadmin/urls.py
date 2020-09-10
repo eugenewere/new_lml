@@ -5,6 +5,7 @@ from django.urls import path
 app_name = 'LMLAdmin'
 urlpatterns = [
     path('',views.home,name='home'),
+    path('account/',views.useradminaccount,name='useradminaccount'),
     path('messages/employee/',views.employee_messages ,name='E_messages'),
     path('messages/random/',views.random_messages ,name='R_messages'),
     path('messages/company/',views.company_messages, name='C_messages'),
@@ -47,7 +48,13 @@ urlpatterns = [
 
     # graph
     path('customer_graph/', views.customer_graph, name='customer_graph'),
+    path('registration_graph/', views.registration_graph, name='registration_graph'),
+    path('registration_graph_time/', views.registration_graph_time, name='registration_graph_time'),
+    path('companystatuspaymentgraph/', views.companystatuspaymentgraph, name='companystatuspaymentgraph'),
+    path('companystatuspaymentgraphtime/', views.companystatuspaymentgraphtime, name='companystatuspaymentgraphtime'),
     path('company_graph/', views.company_graph, name='company_graph'),
+    path('company_graph_time_filter/', views.company_graph_time_filter, name='company_graph_time_filter'),
+    path('candidate_graph_time_filter/', views.candidate_graph_time_filter, name='candidate_graph_time_filter'),
     path('messages_graph/', views.messages_graph, name='messages_graph'),
 
     # emails
@@ -86,5 +93,9 @@ urlpatterns = [
     path('allcompanystatusregpricing/<int:price_id>/', views.companystatusregpricing, name='companystatusregpricing'),
 
     path('analytics/', views.analytics, name='analytics'),
+    path('admin/change_password', views.admin_change_password, name='admin_change_password'),
+    path('admin/edit_account', views.admin_edit_account, name='admin_edit_account'),
 
+    path('county/', views.county, name='county'),
+    path('region/', views.region, name='region'),
 ]

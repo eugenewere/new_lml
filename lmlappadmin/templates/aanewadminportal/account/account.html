@@ -1,0 +1,171 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> All Employees </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">All Employees </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Account </h4>
+                    <ul class="nav nav-pills nav-pills-success" id="pills-tab" role="tablist">
+                      <li class="nav-item">
+                        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Account</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Password</a>
+                      </li>
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                      <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="media">
+                          <div class="media-body">
+                            <form  action="{% url 'LMLAdmin:admin_edit_account' %}" method="POST">
+                                {% csrf_token %}
+                                <div class="col-sm-12 p-0" style="padding: 0; display: flex; flex-wrap: wrap;">
+                                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                                      <label for="validationCustom042">First Name</label>
+                                      <input required value="{{ user.first_name }}" style="position: relative; width: 100%; border: 1px solid #b8b6b6;" type="text" name="first_name" class="form-control" id="validationCustom042" placeholder="First Name" >
+                                        <small id="passwordHelpBlock" class="form-text text-muted">
+                                          First Name
+                                        </small>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                                      <label for="validationCustom043">Last Name</label>
+                                      <input required value="{{ user.last_name }}" style="position: relative; width: 100%; border: 1px solid #b8b6b6;" type="text" name="last_name" class="form-control" id="validationCustom043" placeholder="Last Name" >
+                                        <small id="passwordHelpBlock" class="form-text text-muted">
+                                          Last Name
+                                        </small>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                                      <label for="validationCustom041">Username</label>
+                                      <input value="{{ user.username }}" style="position: relative; width: 100%; border: 1px solid #b8b6b6;" type="text" name="username" class="form-control" id="validationCustom041" placeholder="Username" required>
+                                        <small id="passwordHelpBlock" class="form-text text-muted">
+                                          Username
+                                        </small>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+                                      <label for="validationCustom044">Email</label>
+                                      <input value="{{ user.email }}" style="position: relative; width: 100%; border: 1px solid #b8b6b6;" type="text" name="email" class="form-control" id="validationCustom044" placeholder="Email" >
+                                        <small id="passwordHelpBlock" class="form-text text-muted">
+                                          Email
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12" style="display: flex; justify-content: flex-end; align-items: center">
+                                    <button type="submit" class="btn btn-gradient-success" style="border-radius:140px;">Save</button>
+                               </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                        <div class="media">
+                          <div class="media-body">
+                                 <form  action="{% url 'LMLAdmin:admin_change_password' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="col-sm-12 py-5 d-flex flex-column">
+                                        <div class="col-md-12 mb-3" style="position:relative;">
+                                          <label for="validationCustom04"> Current Password</label>
+                                          <input style="position: relative; width: 100%; border: 1px solid #b8b6b6;" type="password" name="old_password" class="form-control" id="validationCustom04" placeholder=" Current Password" required>
+                                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                              Your password must be 8-20 characters long, contain letters and numbers.
+                                                <br>
+                                                {{ form.old_password.errors }}
+                                            </small>
+                                             <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                                <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                             </div>
+
+                                        </div>
+
+                                        <div class="col-md-12 mb-3" style="position: relative; width: 100%;">
+                                          <label for="validationCustom05">New Password</label>
+                                          <input style="border: 1px solid #b8b6b6;" name="new_password1" type="password" class="form-control" id="validationCustom05" placeholder="New Password" required>
+                                            <small id="passwordHelpBlock" class="form-text text-muted">
+                                              Your password must be 8-20 characters long, contain letters and numbers.
+                                                 <br>
+                                                {{ form.new_password1.errors }}
+                                            </small>
+                                            <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11"></i>
+                                                <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                             </div>
+
+                                        </div>
+
+                                        <div class="col-md-12 mb-3" style="position: relative; width: 100%;">
+                                          <label for="validationCustom05">Retype Password</label>
+                                          <input style="border: 1px solid #b8b6b6;" name="new_password2" type="password" class="form-control" id="validationCustom09" placeholder="Retype Your Password" required>
+                                            <small id="passwordHelpBlocks" class="form-text text-muted">
+                                              Your password must be 8-20 characters long, contain letters and numbers.
+                                                 <br>
+                                                {{ form.new_password2.errors }}
+                                            </small>
+                                            <div style="position: absolute;top: 42px;right: 34px;" class="password_checker">
+                                                <i onclick="changeToText(this);" class="fas fa-eye txt color animation k11 "></i>
+                                                <i style="display:none;" onclick="changeToPassowrd(this);" class="fas k12 fa-eye-slash psd color animation "></i>
+                                             </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="display: flex; justify-content: flex-end; align-items: center">
+                                        <button type="submit" class="btn btn-gradient-success" style="border-radius:140px;">Save</button>
+                                   </div>
+                                </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+    <script>
+        function changeToText(e) {
+            var input = $(e).parent().parent().find('input');
+            $(input).attr('type', 'text')
+            jQuery(e).hide('fast',function () {
+                jQuery(e).parent().find('.k12').show('fast');
+            })
+        }
+        function changeToPassowrd(e) {
+	var input = $(e).parent().parent().find('input');
+	$(input).attr('type', 'password')
+	jQuery(e).hide('fast',function () {
+		jQuery(e).parent().find('.k11').show('fast');
+	});
+
+}
+    </script>
+{% endblock scripts %}

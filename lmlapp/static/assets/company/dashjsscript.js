@@ -22,7 +22,6 @@ $(document).ready(function(){
         }
     });
 });
-    getUsersData();
     $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
         // console.log('yess');
         localStorage.setItem('activeTab5', $(e.target).attr('href'));
@@ -72,85 +71,42 @@ $(document).ready(function(){
     setTimeout(function () {
         $('.lild').addClass('active');
     }, 3000)
-    function getUsersData() {
-            var endpoint = window.location.origin+'/candidateShortlistGraph/';
-            var defaultData =  [];
-            var labels = [];
-            $.ajax({
-                method: "GET",
-                url : endpoint,
-                success : function (data) {
-                    labels = data.labels2;
-                    defaultData= data.defaultData2;
-                    setCustomerLine(labels, defaultData);
-                    setCustomerBar(labels, defaultData);
-                    // console.log(data);
-                },
-                error : function (error_data) {
-                    console.log(error);
-                    console.log(error_data);
-                },
-            });
-        }
-    getUsersData();
-    function setCustomerLine(x, y){
-        var ctx = document.getElementById('customers').getContext('2d');
-        var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: x,
-            datasets: [{
-                label: 'Candidate Shortlist Line',
-                data: y,
-                backgroundColor: [
-                     'rgb(7, 177, 7, 50)',
-                    'rgba(255, 159, 64, 1)',
-
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgb(129,255,46)',
-                    'rgb(255,217,66)',
-                    'rgb(255,131,255)',
-                    'rgb(1,53,255)',
-                    'rgb(7, 177, 7)',
-                    'rgb(36,255,221)',
-                    'rgb(145,255,39)',
-                ],
-                borderColor: [
-                    'rgba(255, 159, 64, 1)',
-                    'rgb(7, 177, 7, 50)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgb(129,255,46)',
-                    'rgb(255,217,66)',
-                    'rgb(255,131,255)',
-                    'rgb(1,53,255)',
-                    'rgb(7, 177, 7)',
-                    'rgb(36,255,221)',
-                    'rgb(145,255,39)',
-
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 1,
-                    }
-                }]
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
             }
         }
-    });
+        return cookieValue;
     }
+
+
+    var endpoint = window.location.origin+'/candidateShortlistGraph/';
+    var defaultData =  [];
+    var labels = [];
+    function initShortlistGraph() {
+        $.ajax({
+            method: "GET",
+            url: endpoint,
+            success: function (data) {
+                labels = data.labels2;
+                defaultData = data.defaultData2;
+                setCustomerBar(labels, defaultData);
+                // console.log(data);
+            },
+            error: function (error_data) {
+                console.log(error_data);
+            },
+        });
+    }
+    initShortlistGraph();
     function  setCustomerBar(x, y){
              var ctx = document.getElementById('customers2').getContext('2d');
             var myChart = new Chart(ctx, {
@@ -209,6 +165,155 @@ $(document).ready(function(){
             }
         });
         }
+    $('#statuspaychartselect').change(function () {
+        var valuee = $(this).val();
+        $('#customers2').remove(); // this is my <canvas> element
+        $('#graph-container').append('<canvas id="customers2"><canvas>');
+        var canvas = document.getElementById('customers2');
+        var ctx =canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (valuee.toLowerCase() === 'bar'){
+            var myChart = new Chart(ctx, {
+                type: valuee.toLowerCase(),
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Candidates',
+                            data: defaultData,
+                            backgroundColor: [
+                                 'rgb(7, 177, 7, 50)',
+                                'rgba(255, 159, 64, 1)',
+
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgb(129,255,46)',
+                                'rgb(255,217,66)',
+                                'rgb(255,131,255)',
+                                'rgb(1,53,255)',
+                                'rgb(7, 177, 7)',
+                                'rgb(36,255,221)',
+                                'rgb(145,255,39)',
+                            ],
+                            borderColor: [
+                                'rgba(255, 159, 64, 1)',
+                                'rgb(7, 177, 7, 50)',
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgb(129,255,46)',
+                                'rgb(255,217,66)',
+                                'rgb(255,131,255)',
+                                'rgb(1,53,255)',
+                                'rgb(7, 177, 7)',
+                                'rgb(36,255,221)',
+                                'rgb(145,255,39)',
+
+                            ],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false,
+                                stepSize:1
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+        else if (valuee.toLowerCase() === 'line'){
+            var myChart = new Chart(ctx, {
+                type: valuee.toLowerCase(),
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Candidates',
+                            data: defaultData,
+                            backgroundColor:'rgb(7, 177, 7, 50)',
+                            borderColor:  'rgb(7,16,40)',
+                            borderWidth: 1,
+                            pointBorderColor: "#cbb668",
+                            pointBackgroundColor: "#cbb668",
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false,
+                                stepSize:1
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    });
+    $('#shortlistformdata').change(function () {
+        // console.log($(this).serialize());
+        var registrationendpoint =window.location.origin+'/candidateShortlistGraphTime/';
+        $.ajax({
+            method: "POST",
+            url : registrationendpoint,
+            data: $(this).serialize(),
+            success : function (data) {
+                $('#shortlistreset').fadeIn();
+                $('#customers2').remove(); // this is my <canvas> element
+                $('#graph-container').append('<canvas id="customers2"><canvas>');
+                labels = data['labels'];
+                defaultData= data['companydata'];
+                setCustomerBar(labels, defaultData);
+            },
+            error : function (error_data) {
+                // console.log(error_data);
+            },
+        });
+    });
+    $('#shortlistreset').on('change', function () {
+         var value = $(this).val();
+         const csrftoken = getCookie('csrftoken');
+         $.ajax({
+            method: "POST",
+            url : endpoint,
+            data:{'value': value.toLowerCase()},
+            headers: {
+                'X-CSRFToken': csrftoken,  //for object property name, use quoted notation shown in second
+            },
+            dataType: 'json',
+            success : function (data) {
+                labels = data.labels2;
+                defaultData= data.defaultData2;
+                $('#customers2').remove(); // this is my <canvas> element
+                $('#graph-container').append('<canvas id="customers2"><canvas>');
+                setCustomerBar(labels, defaultData);
+                // console.log(data);
+            },
+            error : function (error_data) {
+                console.log(error_data);
+            },
+        });
+
+    })
+    $('#shortlistjoinreset').click(function () {
+        $(this).hide();
+        initShortlistGraph();
+    });
+
+
+
+
 
     //all
         $('[data-search]').on('keyup', function() {
@@ -381,42 +486,43 @@ $(document).ready(function(){
             });
         });
     //endultimate
-    $('.pdf-btn').each(function () {
-        $(this).on('click', function () {
-            var file_name =  $(this).attr('data-tran');
-            var id = $(this).closest('.receipt').find('.pdf-wrapper').attr('id');
-            const element =document.getElementById(id);
-            var opt = {
-                margin:       0.21,
-                filename:     file_name,
-                image:        {type: 'jpeg', quality: 1},
-                html2canvas:  {
-                    scale: 7,
-                    quality: 4,
-                    imageTimeout:0,
-                    logging: true,
-                    letterRendering: true,
-                    useCORS: true
-                },
-                jsPDF:  { unit: 'in', format: 'a4', orientation: 'portrait', floatPrecision:'smart' }
-            };
+        $('.pdf-btn').each(function () {
+            $(this).on('click', function () {
+                var file_name =  $(this).attr('data-tran');
+                var id = $(this).closest('.receipt').find('.pdf-wrapper').attr('id');
+                const element =document.getElementById(id);
+                var opt = {
+                    margin:       0.21,
+                    filename:     file_name,
+                    image:        {type: 'jpeg', quality: 1},
+                    html2canvas:  {
+                        scale: 7,
+                        quality: 4,
+                        imageTimeout:0,
+                        logging: true,
+                        letterRendering: true,
+                        useCORS: true
+                    },
+                    jsPDF:  { unit: 'in', format: 'a4', orientation: 'portrait', floatPrecision:'smart' }
+                };
 
-            html2pdf()
-                .set(opt)
-                .from(element)
-                .toContainer()
-                .toCanvas()
-                .toImg()
-                .toPdf()
-                .save();
+                html2pdf()
+                    .set(opt)
+                    .from(element)
+                    .toContainer()
+                    .toCanvas()
+                    .toImg()
+                    .toPdf()
+                    .save();
+            });
         });
-    });
-    $('#paymenttab').on('click ',function () {
+        $('#paymenttab').on('click ',function () {
            setTimeout(function () {
-        $('.lild').addClass('active');
-    }, 500)
-        }
-    );
+                $('.lild').addClass('active');
+                $('.lilid2').addClass('active');
+            }, 500)
+        });
+
 
 });
 

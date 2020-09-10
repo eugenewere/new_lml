@@ -1,9 +1,12 @@
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import sweetify
 # Create your views here.
 # from lmlappadmin.models import *
+from datetime import timedelta, date
 from lmlapp.forms import *
 from .models import *
 @login_required()
@@ -45,6 +48,12 @@ def home(request):
     }
     return render(request, 'aanewadminportal/home/index2.html', context)
 
+def useradminaccount(request):
+    context={
+        'title': request.user.username+ ' Account',
+        'user': User.objects.filter(id=request.user.id).first()
+    }
+    return render(request, 'aanewadminportal/account/account.html', context)
 @login_required()
 def employee_messages(request):
     context = {
@@ -453,6 +462,91 @@ def customer_graph(request):
 
     return JsonResponse(context2)
 
+def registration_graph(request):
+    company_month_data = []
+    candidate_month_data = []
+    months_choices = []
+    for i in range(1, 13):
+        months_choices.append((datetime.date(2008, i, 1).strftime('%B')[0:3]))
+
+    months_choices_int = []
+    for z in range(1, 13):
+        months_choices_int.append((datetime.date(2008, z, 1).strftime('%m')))
+
+    for months_choice in months_choices_int:
+        company_month_data.append(CompanyRegistrationPayment.objects.filter(created_at__month=months_choice).count())
+
+    for months_choice in months_choices_int:
+        candidate_month_data.append(CandidateRegPrice.objects.filter(created_at__month=months_choice).count())
+    context = {
+        'labels': months_choices,
+        'companydata': company_month_data,
+        'candidatedata': candidate_month_data,
+
+    }
+
+    return JsonResponse(context)
+
+def companystatuspaymentgraph(request):
+    company_month_data = []
+    months_choices = []
+    for i in range(1, 13):
+        months_choices.append((datetime.date(2008, i, 1).strftime('%B')[0:3]))
+
+    months_choices_int = []
+    for z in range(1, 13):
+        months_choices_int.append((datetime.date(2008, z, 1).strftime('%m')))
+
+    for months_choice in months_choices_int:
+        val=[]
+        for c in CompanyStatusPayment.objects.filter(created_at__month=months_choice).all():
+            val.append(int(c.amount))
+        company_month_data.append(sum(val))
+    context = {
+        'labels': months_choices,
+        'companydata': company_month_data,
+
+    }
+
+    return JsonResponse(context)
+
+def companystatuspaymentgraphtime(request):
+    company_days_data = []
+    days_choices = []
+    if request.method == 'POST':
+        startdate = request.POST.get('statuspaychartselectstartdate')
+        enddate = request.POST.get('statuspaychartselectenddate')
+        # CompanyRegistrationPayment.objects.filter(created_at__day=)
+        if startdate and enddate:
+            if enddate > startdate:
+                start_date = datetime.datetime.strptime(startdate, '%Y-%m-%d')
+                end_date = datetime.datetime.strptime(enddate, '%Y-%m-%d')
+                for single_date in daterange(start_date, end_date):
+                    days_choices.append(single_date.strftime("%B")[:3] + ' ' + str(single_date.strftime("%d")))
+                for single_date in daterange(start_date, end_date):
+                    val = []
+                    for c in CompanyStatusPayment.objects.filter(created_at__day=single_date.strftime("%d"),created_at__year=single_date.strftime("%Y"),created_at__month=single_date.strftime("%m")):
+                        val.append(int(c.amount))
+                    company_days_data.append(sum(val))
+                print(company_days_data)
+                context = {
+                    'labels': days_choices,
+                    'companydata': company_days_data,
+
+                }
+                return JsonResponse(context)
+            else:
+                print('less')
+        else:
+            print('required')
+
+
+
+
+
+
+
+
 
 def company_graph(request):
     month_data = []
@@ -473,6 +567,124 @@ def company_graph(request):
 
     }
     return JsonResponse(context2)
+
+def daterange(start_date, end_date):
+    for n in range(int((end_date - start_date).days)):
+        yield start_date + timedelta(n)
+
+
+def registration_graph_time(request):
+    company_days_data = []
+    candidate_days_data = []
+    days_choices = []
+    if request.method == 'POST':
+        startdate = request.POST.get('registrationstartdate')
+        enddate = request.POST.get('registrationenddate')
+        # CompanyRegistrationPayment.objects.filter(created_at__day=)
+        if startdate and enddate:
+            if enddate > startdate:
+                start_date = datetime.datetime.strptime(startdate, '%Y-%m-%d')
+                end_date = datetime.datetime.strptime(enddate, '%Y-%m-%d')
+                for single_date in daterange(start_date, end_date):
+                    days_choices.append(single_date.strftime("%B")[:3] + ' ' + str(single_date.strftime("%d")))
+                for single_date in daterange(start_date, end_date):
+                    company_days_data.append(CompanyRegistrationPayment.objects.filter(created_at__day=single_date.strftime("%d"), created_at__year=single_date.strftime("%Y"), created_at__month=single_date.strftime("%m")).count())
+                    candidate_days_data.append(CandidateRegPrice.objects.filter(created_at__day=single_date.strftime("%d"), created_at__year=single_date.strftime("%Y"), created_at__month=single_date.strftime("%m")).count())
+                context = {
+                    'labels': days_choices,
+                    'companydata': company_days_data,
+                    'candidatedata': candidate_days_data,
+
+                }
+                return JsonResponse(context)
+            else:
+                print('less')
+        else:
+            print('required')
+
+def company_graph_time_filter(request):
+    months_choice = []
+    days_data = []
+    days_choices = []
+    days_choices_int = []
+    if request.method == 'POST':
+        startdate = request.POST.get('companystartdate')
+        enddate = request.POST.get('companyenddate')
+        # CompanyRegistrationPayment.objects.filter(created_at__day=)
+        if startdate  and enddate:
+            if enddate > startdate:
+                # print(startdate, enddate)
+                #     s = datetime.datetime.strptime(startdate,'%Y-%m-%d').month
+                #     sd = datetime.datetime.strptime(startdate,'%Y-%m-%d').day
+                #     sy = datetime.datetime.strptime(startdate,'%Y-%m-%d').year
+                #
+                #     e = datetime.datetime.strptime(enddate,'%Y-%m-%d').month
+                #     ed = datetime.datetime.strptime(enddate,'%Y-%m-%d').day
+                #     # print(s)
+                #
+                #     for m in range(s, e):
+                #         print(m, s, e)
+                #         for i in range(sd, (ed+1)):
+                #             days_choices.append((datetime.date(sy, m, i).strftime('%B')[0:3]) + ' ' + str((datetime.date(sy, m, i).strftime('%d'))))
+                #     print(days_choices)
+                #
+                #     for z in range(sd, (ed+1)):
+                #         days_choices_int.append((datetime.date(sy, s, z).strftime('%d')))
+                #     print(days_choices_int)
+                start_date = datetime.datetime.strptime(startdate,'%Y-%m-%d')
+                end_date = datetime.datetime.strptime(enddate,'%Y-%m-%d')
+                for single_date in daterange(start_date, end_date):
+                    days_choices.append(single_date.strftime("%B")[:3] +' '+ str(single_date.strftime("%d")))
+
+                # print(days_choices)
+
+                for single_date in daterange(start_date, end_date):
+                    # print(single_date)
+                    # print(single_date.strftime("%Y-%m-%d"))
+                    days_data.append(Company.objects.filter(created_at__day=single_date.strftime("%d"), created_at__year=single_date.strftime("%Y"), created_at__month=single_date.strftime("%m")).count())
+
+                # print(days_data)
+                context2 = {
+                    'labels3': days_choices,
+                    'defaultData3': days_data,
+
+                }
+                # pass
+                return JsonResponse(context2)
+            else:
+                print('less')
+        else:
+            print('required')
+
+def candidate_graph_time_filter(request):
+    days_data = []
+    days_choices = []
+    if request.method == 'POST':
+        startdate = request.POST.get('candidatestartdate')
+        enddate = request.POST.get('candidateenddate')
+        if startdate  and enddate:
+            if enddate > startdate:
+                start_date = datetime.datetime.strptime(startdate,'%Y-%m-%d')
+                end_date = datetime.datetime.strptime(enddate,'%Y-%m-%d')
+                for single_date in daterange(start_date, end_date):
+                    days_choices.append(single_date.strftime("%B")[:3] +' '+ str(single_date.strftime("%d")))
+                for single_date in daterange(start_date, end_date):
+                    days_data.append(Customer.objects.filter(created_at__day=single_date.strftime("%d"), created_at__year=single_date.strftime("%Y"), created_at__month=single_date.strftime("%m")).count())
+
+                # print(days_data)
+                context2 = {
+                    'labels3': days_choices,
+                    'defaultData3': days_data,
+
+                }
+                # pass
+                return JsonResponse(context2)
+            else:
+                print('less')
+        else:
+            print('required')
+
+
 
 def messages_graph(request):
     month_data = []
@@ -803,6 +1015,65 @@ def companystatusregpricing(request, price_id):
         sweetify.success(request, 'Price Status Updated Successfully')
     return redirect('LMLAdmin:companyregpricing')
 
-
+@login_required()
 def analytics(request):
-    return render(request, 'aanewadminportal/graphs/analytics.html')
+    context = {
+        'title':'Analytics'
+    }
+    return render(request, 'aanewadminportal/graphs/analytics.html', context)
+
+
+@login_required()
+def admin_change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            sweetify.success(request, title='Success', text='Successfully Password Changed.', persistent='Continue')
+            return redirect("LMLAdmin:useradminaccount")
+        else:
+            form = PasswordChangeForm(request.user)
+            print(form.error_messages)
+            sweetify.error(request, 'Error', text='Password not Changed \n 1).Password did not match \n 2) Wrong Current Password' + str(form.errors), persistent='Retry')
+            return redirect("LMLAdmin:useradminaccount")
+    else:
+        return redirect("LMLAdmin:useradminaccount")
+
+@login_required()
+def admin_edit_account(request):
+    if request.method == 'POST':
+        user = User.objects.filter(id=request.user.id).first()
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        first_name = request.POST.get('first_name')
+        lastl_name = request.POST.get('last_name')
+        if user and user.is_superuser:
+            User.objects.filter(id=user.id).update(
+                email=email,
+                username=username,
+                first_name=first_name,
+                last_name=lastl_name,
+            )
+            sweetify.success(request, title='Success', text='Successfully Updated Your Account.', persistent='Continue')
+            return redirect("LMLAdmin:useradminaccount")
+        else:
+
+            sweetify.error(request, 'Error', text='User is none', persistent='Retry')
+            return redirect("LMLAdmin:useradminaccount")
+    else:
+        return redirect("LMLAdmin:useradminaccount")
+
+
+def county(request):
+    context={
+        'counties':County.objects.all()
+    }
+    return render(request, 'aanewadminportal/county/county.html', context)
+
+
+def region(request):
+    context = {
+        'regions': Region.objects.all()
+    }
+    return render(request, 'aanewadminportal/Region/region.html', context)

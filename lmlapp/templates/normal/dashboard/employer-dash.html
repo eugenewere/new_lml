@@ -39,7 +39,9 @@
             color: black;
 
         }
-
+        .chartjs-render-monitor {
+            height: 90% !important;
+        }
     </style>
      <link rel="stylesheet" href="{% static 'assets/Receipt/recript.css' %}">
 {% endblock links %}
@@ -683,29 +685,64 @@
                             <div id="analystics" class="tab-pane fade-in " style="height: 100%; overflow:hidden;">
                                 <div class="col-sm-12" style="height: 100%; overflow:hidden; padding: 0">
                                     <div class="deatil-tab-employ tool-tab col-sm-12 col-md-12 col-lg-10 " style="background: white; width: 100%; height: 100%; overflow:hidden;" >
-                                        <ul class="nav simple nav-tabs" id="simple-design2">
-                                            <li class=""><a  data-toggle="tab" href="#bargr">Bar Stats</a></li>
-                                            <li class="active"><a  data-toggle="tab" href="#linegr">Line Stats</a></li>
+                                        <ul class="nav simple nav-tabs" >
+                                            <li class="active ">
+                                                <a  data-toggle="tab" href="#bargr">Candidate Shortlist Activity</a>
+                                            </li>
+{#                                            <li class="active"><a  data-toggle="tab" href="#linegr">Line Stats</a></li>#}
                                         </ul>
                                         <div class="tab-content" style="height: 100%;">
-                                            <div id="bargr"  role="tabpanel" class="tab-pane fade " >
+                                            <div id="bargr"  role="tabpanel" class="tab-pane fade-in active " >
+                                                 <div class="container-fluid">
+                                                     <div class="col-sm-12 col-md-12 col-lg-3">
+                                                          <div class="form-group ">
+                                                            <label for="exampleFormControlSelect1">Choose a Chart</label>
+                                                            <select id="statuspaychartselect" style="border: 1px solid !important; height: 34px;" class="form-control">
+                                                              <option selected  value="bar">Bar</option>
+                                                              <option value="line">Line</option>
+                                                            </select>
+                                                          </div>
+                                                     </div>
+                                                     <div class="col-sm-12 col-md-12 col-lg-3">
+                                                          <div class="form-group ">
+                                                            <label for="exampleFormControlSelect1">Choose a activity</label>
+                                                            <select id="activityselect" style="border: 1px solid !important; height: 34px;" class="form-control">
+                                                              <option selected disabled>All</option>
+                                                              <option value="shotlisting">Shotlisting</option>
+                                                              <option value="unshotlisting">Unshotlisting</option>
+                                                            </select>
+                                                          </div>
+                                                     </div>
+                                                     <div class="col-sm-12 col-md-12 col-lg-6">
+                                                          <div class="row" >
+                                                              <form style="display: flex;" action="" id="shortlistformdata">
+                                                                  {% csrf_token %}
+                                                                  <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                                    <label for="candidatejoinstartdate">Start Date</label>
+                                                                    <input required name="shortliststartdate" style="border: 1px solid !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="candidatejoinstartdate" aria-describedby="emailHelp">
+                    {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                                  </div>
+                                                                  <div class="form-group col-sm-12 col-md-12 col-lg-6 p-0" style="padding: 0 3px !important;">
+                                                                    <label for="candidatejoinenddate">End Date</label>
+                                                                    <input required name="shortlistenddate" style="border: 1px solid !important; padding: 9px;  height: 34px;"  type="date" class="form-control" id="candidatejoinenddate" aria-describedby="emailHelp">
+                    {#                                                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>#}
+                                                                  </div>
+
+                                                              </form>
+                                                          </div>
+                                                     </div>
+
+                                                 </div>
                                                  <article class="advance-search-job" style="margin: 0; padding: 0;">
-                                                    <div class="row no-mrg" >
-                                                        <canvas class="col-sm-12" id="customers2" >
-
-                                                        </canvas>
+                                                     <button type="button" class="btn btn-success" id="shortlistreset" style="float:right; height: 48px; margin-left:6px; border-radius: 5px; margin-top: 12px;display: none !important; ">
+                                                          <span class="d-flex">
+                                                              <i class="fa fa-recycle"></i> Reset
+                                                          </span>
+                                                      </button>
+                                                    <div class="row no-mrg" id="graph-container">
+                                                        <canvas style="height: 100%;" class="col-sm-12" id="customers2"></canvas>
                                                     </div>
                                                 </article>
-                                            </div>
-                                            <div id="linegr"  role="tabpanel" class="tab-pane fade active" style="" >
-                                                 <article class="advance-search-job" style=" margin: 0; padding: 0;">
-                                                    <div class="row no-mrg">
-                                                        <canvas class="col-sm-12" id="customers">
-
-                                                        </canvas>
-                                                    </div>
-                                                </article>
-
                                             </div>
                                         </div>
                                     </div>

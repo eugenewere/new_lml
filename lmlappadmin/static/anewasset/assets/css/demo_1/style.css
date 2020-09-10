@@ -4148,31 +4148,31 @@ fieldset:disabled .wizard > .actions a,
 
 .btn-success {
   color: #212529;
-  background-color: #1bcfb4;
-  border-color: #1bcfb4; }
+  background-color: #60cf1b;
+  border-color: #60cf1b; }
   .btn-success:hover {
     color: #fff;
-    background-color: #17ad97;
-    border-color: #15a28d; }
+    background-color: #26ad17;
+    border-color: #1ea215; }
   .btn-success:focus, .btn-success.focus {
     color: #fff;
-    background-color: #17ad97;
-    border-color: #15a28d;
-    -webkit-box-shadow: 0 0 0 0.2rem rgba(28, 182, 159, 0.5);
-    box-shadow: 0 0 0 0.2rem rgba(28, 182, 159, 0.5); }
+    background-color: #2ead17;
+    border-color: #1ea215;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(74, 182, 28, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(28, 182, 31, 0.5); }
   .btn-success.disabled, .btn-success:disabled {
     color: #212529;
-    background-color: #1bcfb4;
-    border-color: #1bcfb4; }
+    background-color: #27cf1b;
+    border-color: #1bcf1e; }
   .btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,
   .show > .btn-success.dropdown-toggle {
     color: #fff;
-    background-color: #15a28d;
-    border-color: #149783; }
+    background-color: #15a217;
+    border-color: #149716; }
     .btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,
     .show > .btn-success.dropdown-toggle:focus {
-      -webkit-box-shadow: 0 0 0 0.2rem rgba(28, 182, 159, 0.5);
-      box-shadow: 0 0 0 0.2rem rgba(28, 182, 159, 0.5); }
+      -webkit-box-shadow: 0 0 0 0.2rem rgba(28, 182, 31, 0.5);
+      box-shadow: 0 0 0 0.2rem rgba(38, 182, 28, 0.5); }
 
 .btn-info {
   color: #fff;
@@ -10988,30 +10988,6 @@ input:focus {
   border-color: transparent;
   outline: none; }
 
-/* Fonts */
-@font-face {
-  font-family: 'ubuntu-light';
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Light.eot");
-  /* IE9 Compat Modes */
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Light.woff2") format("woff2"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Light.woff") format("woff"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Light.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'ubuntu-regular';
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Regular.eot");
-  /* IE9 Compat Modes */
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Regular.woff2") format("woff2"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Regular.woff") format("woff"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Regular.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'ubuntu-medium';
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Medium.eot");
-  /* IE9 Compat Modes */
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Medium.woff2") format("woff2"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Medium.woff") format("woff"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Medium.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'ubuntu-bold';
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Bold.eot");
-  /* IE9 Compat Modes */
-  src: url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Bold.woff2") format("woff2"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Bold.woff") format("woff"), url("https://www.bootstrapdash.com/demo/purple/jquery/template/assets/fonts/Ubuntu/Ubuntu-Bold.ttf") format("truetype"); }
 
 .text-twitter {
   color: #2caae1; }
@@ -12885,15 +12861,15 @@ code {
       color: #ffffff; }
 
 .btn-gradient-success {
-  background: -webkit-gradient(linear, left top, right top, from(#84d9d2), to(#07cdae));
-  background: linear-gradient(to right, #84d9d2, #07cdae);
+  background: -webkit-gradient(linear, left top, right top, from(#91d984), to(#32cd07));
+  background: linear-gradient(to right, #91d984, #4ccd07);
   border: 0;
   -webkit-transition: opacity 0.3s ease;
   transition: opacity 0.3s ease; }
   .btn-gradient-success:not([disabled]):not(.disabled):active, .btn-gradient-success:not([disabled]):not(.disabled).active,
   .show > .btn-gradient-success.dropdown-toggle {
-    background: -webkit-gradient(linear, left top, right top, from(#84d9d2), to(#07cdae));
-    background: linear-gradient(to right, #84d9d2, #07cdae); }
+    background: -webkit-gradient(linear, left top, right top, from(#94d984), to(#32cd07));
+    background: linear-gradient(to right, #96d984, #2bcd07); }
   .btn-gradient-success:hover {
     opacity: .8; }
   .btn-gradient-success:not(.btn-gradient-light) {
@@ -15221,10 +15197,10 @@ dl {
     background: linear-gradient(to right, #e7ebf0, #868e96); }
 
 .nav-pills-success .nav-link {
-  color: #1bcfb4; }
+  color: #42cf1b; }
   .nav-pills-success .nav-link.active {
-    background: -webkit-gradient(linear, left top, right top, from(#84d9d2), to(#07cdae));
-    background: linear-gradient(to right, #84d9d2, #07cdae); }
+    background: -webkit-gradient(linear, left top, right top, from(#91d984), to(#07cd11));
+    background: linear-gradient(to right, #94d984, #32cd07); }
 
 .nav-pills-info .nav-link {
   color: #198ae3; }
