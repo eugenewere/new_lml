@@ -51,8 +51,68 @@
             border: 1px solid #a8a6a6 !important;
             padding: 0 28px !important;
         }
+        table thead tr th{
+            font-weight: bolder !important;
+        }
+        table thead{
+            background-color: #dddddd !important;
+        }
+        .modal-content{
+            border-radius: 26px !important;
+        }
+        .search-wrapper{
+            position: absolute;
+            top: 100%;
+            background-color: #ffffff;
+            width: 100%;z-index: 99;
+            border-radius: 5px;
+            border: 1px solid #b9b6b6;
+            height: 370px;
+            overflow-y: auto;
+            display: none;
+            padding: 10px;
 
-.d
+            overflow-x: hidden;
+
+
+        }
+        .search-wrapper.active{
+            display: block;
+            animation: flipInX;
+            animation-duration: 0.5s;
+        }
+        .table-responsive{
+           animation: rubberBand;
+           animation-duration: 0.5s;
+        }
+        .detailsofitems{
+            display: flex;
+            flex-direction: column;
+        }
+        .detailsofitems a{
+            padding: 16px 21px;
+            border-bottom: 1px solid #b0b0b0;
+            color: #000000;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        .detailsofitems a:after{
+            position: absolute;
+            content: '\203A ';
+            font-size: 30px;
+            left: 98%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .detailsofitems img{
+            display: none;
+        }
+        .modal-body input, .modal-body select, .modal-body textarea{
+            border: 1px solid #8e8f8f;
+            border-radius: 5px;
+        }
     </style>
 
 
@@ -64,23 +124,28 @@
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo" href="layout.html"><img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/logo.svg" alt="logo" /></a>
-          <a class="navbar-brand brand-logo-mini" href="layout.html"><img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/logo-mini.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo" href="{% url 'LMLAdmin:home' %}"><img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/logo.svg" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="{% url 'LMLAdmin:home' %}"><img src="https://www.bootstrapdash.com/demo/purple/jquery/template/assets/images/logo-mini.svg" alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
           <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
           </button>
 
-          <div class="search-field d-none d-md-block">
-            <form class="d-flex align-items-center h-100" action="#">
+          <div class="search-field d-none d-md-block w-100 position-relative" >
+            <form class="d-flex align-items-center h-100">
               <div class="input-group">
                 <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                <input aria-label="menusearch" id="menusearch" type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
               </div>
             </form>
+            <div id="search-wrapper" class="search-wrapper">
+                <div class="detailsofitems">
+
+                </div>
+            </div>
           </div>
 
           <ul class="navbar-nav navbar-nav-right">
@@ -225,7 +290,7 @@
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
             <li class="nav-item nav-profile">
-              <a href="#" class="nav-link">
+              <a href="{% url 'LMLAdmin:home' %}" class="nav-link">
                 <div class="nav-profile-image">
                   <img src="{% static 'anewasset/assets/images/faces/Trend-Avatar-Facebook.jpg' %}" alt="profile">
                   <span class="login-status online"></span>
@@ -248,7 +313,7 @@
               <a class="nav-link" data-toggle="collapse" href="#page-layouts" aria-expanded="false" aria-controls="page-layouts">
                 <span class="menu-title">Candidates</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-apps menu-icon"></i>
+                <i class="mdi mdi-account-key menu-icon"></i>
               </a>
               <div class="collapse" id="page-layouts">
                 <ul class="nav flex-column sub-menu">
@@ -284,7 +349,7 @@
               <a class="nav-link" data-toggle="collapse" href="#apps" aria-expanded="false" aria-controls="apps">
                 <span class="menu-title">Company</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-cart-arrow-down menu-icon"></i>
+                <i class="mdi mdi-account-switch menu-icon"></i>
               </a>
               <div class="collapse" id="apps">
                 <ul class="nav flex-column sub-menu">
@@ -331,22 +396,22 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'LMLAdmin:analytics' %}">
                 <span class="menu-title">Analytics</span>
-                <i class="mdi mdi-forum menu-icon"></i>
+                <i class="mdi mdi-blur menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#sidebar-layouts" aria-expanded="false" aria-controls="sidebar-layouts">
                 <span class="menu-title">Payments</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-playlist-play menu-icon"></i>
+                <i class="mdi mdi-cash menu-icon"></i>
               </a>
               <div class="collapse" id="sidebar-layouts">
                 <ul class="nav flex-column sub-menu">
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/cards.html">Company</a>
+                        <a class="nav-link" href="{% url 'LMLAdmin:companypayments' %}">Company</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/general.html">Employee</a>
+                        <a class="nav-link" href="{% url 'LMLAdmin:candidatepayments' %}">Employee</a>
                     </li>
                 </ul>
               </div>
@@ -354,25 +419,25 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'LMLAdmin:categories' %}">
                 <span class="menu-title">Categories</span>
-                <i class="mdi mdi-forum menu-icon"></i>
+                <i class="mdi mdi-group menu-icon"></i>
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'LMLAdmin:carouselImages' %}">
                 <span class="menu-title">Home Images </span>
-                <i class="mdi mdi-forum menu-icon"></i>
+                <i class="mdi mdi-image-filter menu-icon"></i>
               </a>
             </li>
              <li class="nav-item">
               <a class="nav-link" href="{% url 'LMLAdmin:county' %}">
                 <span class="menu-title">County </span>
-                <i class="mdi mdi-forum menu-icon"></i>
+                <i class="mdi mdi-map-marker-multiple menu-icon"></i>
               </a>
             </li>
               <li class="nav-item">
               <a class="nav-link" href="{% url 'LMLAdmin:region' %}">
                 <span class="menu-title">Region</span>
-                <i class="mdi mdi-forum menu-icon"></i>
+                <i class="mdi  mdi-map-marker menu-icon"></i>
               </a>
             </li>
 
@@ -380,7 +445,7 @@
               <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                 <span class="menu-title">Messages</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                <i class="mdi mdi-message menu-icon"></i>
               </a>
               <div class="collapse" id="ui-basic">
                 <ul class="nav flex-column sub-menu">
@@ -400,7 +465,7 @@
               <a class="nav-link" data-toggle="collapse" href="#ui-advanced" aria-expanded="false" aria-controls="ui-advanced">
                 <span class="menu-title">Settings</span>
                 <i class="menu-arrow"></i>
-                <i class="mdi mdi-cards-variant menu-icon"></i>
+                <i class="mdi mdi-settings menu-icon"></i>
               </a>
               <div class="collapse" id="ui-advanced">
                 <ul class="nav flex-column sub-menu">
@@ -451,11 +516,30 @@
         $(document).ready( function () {
                 $('.table').DataTable();
             } );
-         $(document).ready(function () {
+        $(document).ready(function () {
             $('.text-edit').each(function () {
                 CKEDITOR.replace( document.querySelector('#'+$(this).attr('id')),{
                       removePlugins: [  'Image', ],
                 });
+            });
+            $('#menusearch').keyup(function () {
+                var val = $(this).val().toLowerCase();
+                var list = [];
+                if(val.length > 0){
+                    $('#search-wrapper').addClass('active');
+                    $("#sidebar").find('.nav-link').each(function () {
+                        if($(this).text().toLowerCase().indexOf(val) > -1){
+                            list.push($(this).closest('a').clone(true, true));
+                        }
+                    });
+                     $('#search-wrapper').find('.detailsofitems').html(' ');
+                    $('#search-wrapper').find('.detailsofitems').append(list);
+                }
+                else {
+                    $('#search-wrapper').removeClass('active');
+                    list=[];
+                }
+                list=[];
             });
 
         });

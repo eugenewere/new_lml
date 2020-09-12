@@ -11,19 +11,19 @@
 <div class="main-panel">
       <div class="content-wrapper">
         <div class="page-header">
-          <h3 class="page-title"> Home Adverts </h3>
+          <h3 class="page-title"> Home Carousel </h3>
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Home Adverts </li>
+              <li class="breadcrumb-item active" aria-current="page">Home Carousel </li>
             </ol>
           </nav>
         </div>
         <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-md" role="document">
+          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Advert Image</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Home Image</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -35,7 +35,7 @@
                         <div class="form-group w-100" style=" display:flex; padding: 20px; flex-direction: column; position: relative;">
                             <label for="exampleInputEmail1">Home Carousel</label>
                             <input  required id="vmimg" name="carousel_image" type="file" onchange="readURL(this);" style="position: absolute;width: 107px; top: 50%; transform: translate(-50%, -50%); left: 50%; z-index: 33;" />
-                            <img style="border-radius: 20px; width: 100%; height: 381px; position: relative" class="blah" id="blah" src="{% static 'assets/images/error-img.png' %}" alt="your image" />
+                            <img style="border-radius: 20px; width: 100%; height: 381px; position: relative; object-fit: cover" class="blah" id="blah" src="{% static 'assets/images/error-img.png' %}" alt="your image" />
                             <small id="emailHelp" class="form-text text-muted">Image Preferably .jpeg, .png, .jpg</small>
                         </div>
                     </div>
@@ -53,10 +53,10 @@
               <div class="col-12 grid-margin">
                 <div class="card">
                     <button type="button" class="btn btn-success " data-toggle="modal" data-target="#exampleModal">
-                      Add AdvertImage
+                      Add Home Image
                     </button>
                   <div class="card-body">
-                    <h4 class="card-title">All Employees </h4>
+                    <h4 class="card-title">All Home Images </h4>
                     <div class="table-responsive">
                        <table class="table ">
                         <thead>
@@ -78,11 +78,10 @@
                                 </td>
                                 <td>{{image.created_at|date:'d-M-Y'}}</td>
                                 <td>
-                                    <a href="" class="btn btn-success btn-sm" >Edit</a>
-                                    <a href="" class="btn btn-danger btn-sm" >Delete</a>
+                                    <a data-toggle="modal" data-target="#imagedelete{{ image.id }}" href="" class="btn btn-danger btn-sm" >Delete</a>
                                 </td>
                             </tr>
-                             {% endfor %}
+                          {% endfor %}
                         </tbody>
                       </table>
                     </div>
@@ -90,6 +89,27 @@
                 </div>
               </div>
             </div>
+            {% for image in images %}
+                <!-- Modal -->
+                <div class="modal fade" id="imagedelete{{ image.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Delete confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <p>Are you sure you want to delete.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <a href="{% url 'LMLAdmin:carouselImagesDelete' image.id %}" type="button" class="btn btn-primary">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            {% endfor %}
       </div>
       <!-- content-wrapper ends -->
       <!-- partial:../../partials/_footer.html -->

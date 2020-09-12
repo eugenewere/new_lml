@@ -22,6 +22,7 @@ urlpatterns = [
 
 
     path('carouselImages/',views.carouselImages, name='carouselImages'),
+    path('carouselImagesDelete/<int:carousel_id>/',views.carouselImagesDelete, name='carouselImagesDelete'),
 
 
     path('allcompanies/',views.companies, name='companies'),
@@ -98,4 +99,7 @@ urlpatterns = [
 
     path('county/', views.county, name='county'),
     path('region/', views.region, name='region'),
+
+    path('compayments/', views.payments, name='companypayments'),
+    path('candpayments/', views.candpayments, name='candidatepayments'),
 ]

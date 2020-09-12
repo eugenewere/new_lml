@@ -1,0 +1,110 @@
+{% extends 'aanewadminportal/home/layout.html' %}
+{% load static %}
+{% load call_methods %}
+{% load humanize %}
+{% block links %}
+
+
+
+{% endblock links %}
+{% block content %}
+<div class="main-panel">
+      <div class="content-wrapper">
+        <div class="page-header">
+          <h3 class="page-title"> Candidate Payments </h3>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Candidate Payments </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
+                  <div class="card-body">
+
+                    <div class="col-md-12">
+                        <ul class="nav nav-pills nav-pills-custom" id="pills-tab" role="tablist">
+{#                          <li class="nav-item">#}
+{#                            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-health" role="tab" aria-controls="pills-home" aria-selected="true"> Status Payment </a>#}
+{#                          </li>#}
+                          <li class="nav-item">
+                            <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-career" role="tab" aria-controls="pills-profile" aria-selected="false"> Registration </a>
+                          </li>
+                        </ul>
+                        <div class="tab-content tab-content-custom-pill" id="pills-tabContent">
+                          <div class="tab-pane fade show active" id="pills-career" role="tabpanel" aria-labelledby="pills-profile-tab">
+                            <div class="table-responsive">
+                               <h5 class="pt-3 pb-4">Total Amount: {{ reg_total|intcomma }} Kshs</h5>
+                               <table class="table ">
+                                    <thead>
+                                      <tr>
+                                        <th>#</th>
+                                        <th>Gateway</th>
+                                        <th>Pay Receipt</th>
+                                        <th>Trans Receipt</th>
+                                        <th>Reg No</th>
+                                        <th>Name</th>
+                                        <th>Payer Email</th>
+                                        <th>Amount</th>
+                                        <th>Currency Amnt</th>
+                                        <th>Currency code</th>
+                                        <th>Currency Value</th>
+                                        <th>Trans Status</th>
+                                        <th>Pay Status</th>
+                                        <th>Date</th>
+{#                                        <th>Action</th>#}
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for reg in candidateregistrations %}
+                                          <tr>
+                                            <td>{{forloop.counter}}</td>
+                                            <td>{{ reg.pay_method|upper }} </td>
+                                            <td>{{reg.pay_recipt_no}}</td>
+                                            <td>{{reg.transaction_recipt_no}}</td>
+                                            <td>{{ reg.payer_reg_no }}</td>
+                                            <td>{{reg.payer_full_name|title}}</td>
+                                            <td>{{reg.payer_paying_email}}</td>
+                                            <td>{{reg.amount|intcomma}}</td>
+                                            <td>{{reg.currency_amount|intcomma}}</td>
+                                            <td>{{reg.currency_code}}</td>
+                                            <td>{{reg.currency_value}}</td>
+
+                                            <td>{{reg.transaction_status}}</td>
+                                            <td>{{reg.payment_status}}</td>
+                                            <td>{{reg.created_at|naturalday}}</td>
+
+{#                                            <td>#}
+{#                                                <a target="_blank" href="" class="btn btn-success btn-sm rounded">View</a>#}
+{##}
+{#                                            </td>#}
+                                          </tr>
+                                    {% endfor %}
+                                </tbody>
+                               </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+      </div>
+
+
+      <!-- content-wrapper ends -->
+      <!-- partial:../../partials/_footer.html -->
+      <footer class="footer">
+        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+        </div>
+      </footer>
+      <!-- partial -->
+    </div>
+{% endblock content %}
+{% block scripts %}
+{% endblock scripts %}

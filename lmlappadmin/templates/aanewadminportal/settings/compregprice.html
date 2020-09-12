@@ -78,7 +78,7 @@
       </div>
       {% for price in pricings %}
         <div  class="modal fade" id="editModal{{ price.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-dialog modal-md" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Edit Pricing ({{ price.price }})</h5>
@@ -102,7 +102,7 @@
           </div>
         </div>
         <div class="modal fade" id="deleteModal-{{ price.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-md">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Delete {{ price.title|title }}</h5>
@@ -123,7 +123,7 @@
         <!-- ============================================================== -->
         <!-- Modal -->
       <div  class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog modal-lg" role="document">
+                      <div class="modal-dialog modal-md" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Pricing</h5>

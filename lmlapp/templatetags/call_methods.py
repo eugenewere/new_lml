@@ -516,3 +516,48 @@ def countyname(cand_id):
     if county:
         return county.county
 
+@register.filter("statustotalcount")
+def statustotalcount(compn_id):
+    company =  Company.objects.filter(id=compn_id).first()
+    statusPays = CompanyStatusPayment.objects.filter(company=company).all()
+    ammounts=[]
+    if company:
+        for pay in statusPays:
+            ammounts.append(int(pay.amount))
+        return sum(ammounts)
+    else:
+        return 0
+
+@register.filter("statustotalcount_currency")
+def statustotalcount_currency(compn_id):
+    company =  Company.objects.filter(id=compn_id).first()
+    statusPays = CompanyStatusPayment.objects.filter(company=company).all()
+    ammounts=[]
+    if company:
+        for pay in statusPays:
+            ammounts.append(float(pay.currency_amount))
+        return sum(ammounts)
+    else:
+        return 0
+
+
+
+# @register.filter("companystatustotalamount")
+# def companystatustotalamount(compn_id):
+#    company = Company.objects.filter(id=compn_id).first()
+#    if company:
+#        amounts=[]
+#        for amt in CompanyStatusPayment.objects.filter(company=company).all():
+#            amounts.append(int(amt.amount))
+#        return sum(amounts)
+
+
+@register.filter("companystatusdetails")
+def companystatusdetails(compn_id):
+    company = Company.objects.filter(id=compn_id).first()
+    if company:
+       return CompanyStatusPayment.objects.filter(company=company).all().order_by('-created_at')
+
+
+
+

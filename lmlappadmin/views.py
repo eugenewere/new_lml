@@ -428,17 +428,30 @@ def carouselImages(request):
             carousel_image=image
         )
         if img:
-            sweetify.success(request, 'Success', text='Advert Added Successfully', persistent='Ok')
+            sweetify.success(request, 'Success', text='Image Added Successfully', persistent='Ok')
             return redirect('LMLAdmin:carouselImages')
         else:
-            sweetify.error(request, 'Error', text='Error adding', persistent='Retry')
+            sweetify.error(request, 'Error', text='Error adding Image', persistent='Retry')
             return redirect('LMLAdmin:carouselImages')
 
     context = {
-        'title': 'Categories',
+        'title': 'Carousel',
         'images': AdvertCarousel.objects.order_by('-created_at'),
     }
     return render(request, 'aanewadminportal/carousel/carousel.html', context)
+
+
+def carouselImagesDelete(request,carousel_id):
+    img = AdvertCarousel.objects.filter(id=carousel_id).first()
+    if img:
+        img.carousel_image.delete()
+        img.delete()
+        sweetify.success(request, 'Success', text='Image Deleted Successfully', persistent='Ok')
+    else:
+        sweetify.error(request, 'Error', text='Error Deleting Image', persistent='Retry')
+        return redirect('LMLAdmin:carouselImages')
+
+    return redirect('LMLAdmin:carouselImages')
 
 
 def customer_graph(request):
@@ -1067,6 +1080,7 @@ def admin_edit_account(request):
 
 def county(request):
     context={
+        'title': 'County',
         'counties':County.objects.all()
     }
     return render(request, 'aanewadminportal/county/county.html', context)
@@ -1074,6 +1088,54 @@ def county(request):
 
 def region(request):
     context = {
+        'title': 'Region',
         'regions': Region.objects.all()
     }
     return render(request, 'aanewadminportal/Region/region.html', context)
+
+def payments(request):
+    regammount=[]
+    for pay in  CompanyRegistrationPayment.objects.all():
+        regammount.append(int(pay.amount))
+    statusammount=[]
+    for pay in  CompanyStatusPayment.objects.all():
+        statusammount.append(int(pay.amount))
+
+
+    payers =[]
+    for status_pay in CompanyStatusPayment.objects.all().order_by('-created_at'):
+        payers.append(status_pay.company.id)
+    compn=[]
+    for user in list(set(payers)):
+        compn.append(CompanyStatusPayment.objects.filter(company_id=int(user)).order_by('-created_at').first())
+
+
+    # print(payers)
+    # print(list(compn))
+    # print(set(compn))
+    # print(list(set(compn)))
+
+
+
+    context={
+        'companyregistrations': CompanyRegistrationPayment.objects.all().order_by('-created_at'),
+        'reg_total': sum(regammount),
+        'statusammount': sum(statusammount),
+        'title':'Company Payments',
+        'companystatuspayment':compn
+    }
+    return render(request, 'aanewadminportal/payments/companypayment.html', context)
+
+
+def candpayments(request):
+    regammount = []
+    for pay in CustomerPayments.objects.all():
+        regammount.append(int(pay.amount))
+
+
+    context = {
+        'candidateregistrations': CustomerPayments.objects.all().order_by('-created_at'),
+        'reg_total': sum(regammount),
+        'title': 'Candidates Payments',
+    }
+    return render(request, 'aanewadminportal/payments/candidatepayment.html', context)
