@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'sweetify',
+    'djcelery',
+    'django_celery_beat',
+    'django_celery_results',
 
 ]
 
@@ -186,3 +189,8 @@ EMAIL_USE_SSL: False
 # OPENEXCHANGERATES_API_KEY = '71501b20f84c42cfa79667487398fd93'
 PAYPAL_RECEIVER_EMAIL = "sb-mobfb2963036@business.example.com"
 PAYPAL_TEST = True
+
+
+# CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'

@@ -1954,6 +1954,7 @@ def comapny_payment_complete(request):
         if cp:
             Company.objects.filter(user_ptr_id=request.user.id).update(
                 regpayment=cp,
+                status='REGISTERED_CONFIRMED',
             )
             context = {
                 'status': 'success',

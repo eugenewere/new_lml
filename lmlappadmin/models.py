@@ -531,6 +531,7 @@ class CompanyStatusPayment(models.Model):
         year_days = 365
         exp = self.cpp.status
         created_at = self.created_at
+        # if self.company.
         if exp.upper() == 'MONTHLY':
             expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
             start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")

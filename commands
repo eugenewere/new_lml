@@ -1,0 +1,16 @@
+django snippets
+
+
+
+-celery -A lmlproject worker --loglevel=info --pool=solo
+
+-python manage.py dumpdata --exclude auth.permission --exclude contenttypes > db2.json
+-sudo systemctl restart gunicorn
+
+-sudo systemctl restart nginx
+-sudo systemctl daemon-reload
+-sudo systemctl restart gunicorn
+
+
+celery -A lmlproject beat --loglevel=info
+

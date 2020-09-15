@@ -20,19 +20,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/payments/candidatepayment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/payments/companypayment.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celerybeat-schedule.bak" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celerybeat-schedule.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/celerybeat-schedule.dir" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/commands" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0002_auto_20200914_1457.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0003_auto_20200915_2119.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lmlappadmin/tasks.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templatetags/call_methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/carousel/carousel.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/carousel/carousel.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/home/index2.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/home/index2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/home/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/home/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/settings/canregprice.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/settings/canregprice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/settings/compregprice.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/settings/compregprice.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/home_couresel/banner-24.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/celery.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/celery.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlproject/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,10 +47,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="CSS File" />
         <option value="JavaScript File" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -87,7 +89,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -98,11 +100,11 @@
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\aanewadminportal\carousel" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="J:\LMLL\lmlproject\lmlproject" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\aanewadminportal" />
       <recent name="J:\LMLL\lmlproject\lmlapp\templates\normal\account" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\aanewadminportal\home" />
       <recent name="J:\LMLL\lmlproject\lmlapp\static\assets" />
-      <recent name="J:\LMLL\lmlproject\chat\templates\employer" />
     </key>
   </component>
   <component name="RunManager">
@@ -174,7 +176,7 @@
       <workItem from="1597683150575" duration="309645000" />
       <workItem from="1598869905818" duration="79148000" />
       <workItem from="1599065419543" duration="174828000" />
-      <workItem from="1599737978937" duration="48493000" />
+      <workItem from="1599737978937" duration="80389000" />
     </task>
     <servers />
   </component>
@@ -232,6 +234,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="498" y="36" key="#app-email.html/0.30.1366.738@0.30.1366.738" timestamp="1597012122754" />
+    <state x="443" y="191" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600193417877">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="443" y="191" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1366.738@0.30.1366.738" timestamp="1600193417877" />
     <state x="413" y="148" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598909676214">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
@@ -256,10 +262,10 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state width="1325" height="198" key="GridCell.Tab.0.right/0.30.1366.738@0.30.1366.738" timestamp="1598627094255" />
-    <state x="186" y="60" key="SettingsEditor" timestamp="1598265193920">
+    <state x="186" y="60" key="SettingsEditor" timestamp="1600088422926">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="186" y="60" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1598265193920" />
+    <state x="186" y="60" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1600088422926" />
     <state x="523" y="30" width="291" height="252" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1599319306328">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
