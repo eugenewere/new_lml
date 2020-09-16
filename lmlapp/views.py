@@ -1218,14 +1218,14 @@ def shortlistcustomers(request):
     if request.method == 'POST':
         customer = request.POST.get('customer_id')
         company = request.user.id
-        print(customer, company)
+        # print(customer, company)
         customer_user = Customer.objects.filter(user_ptr_id=int(customer), regpayment__isnull=False).first()
         company_user = Company.objects.filter(user_ptr_id=int(company),  regpayment__isnull=False).first()
-        print(customer_user)
+        # print(customer_user)
         c = CompanyStatusPayment.objects.filter(company=company_user).order_by('-created_at').first()
         if company_user is not None:
             if customer_user is not None:
-                if CompanyShortlistCustomers.objects.filter(company=company_user).count() <= no_of_user:
+                if CompanyShortlistCustomers.objects.filter(company=company_user).count() <= no_of_user and not no_of_user == 0:
                     if not CompanyShortlistCustomers.objects.filter(customer=customer_user, company=company_user, payment_status='SHORTLISTED').exists():
                         CompanyShortlistCustomers.objects.create(
                             customer=customer_user,

@@ -16,6 +16,7 @@ from django.db.models import Count, Q
 from django.utils.safestring import mark_safe
 
 
+
 def compress(image):
     im = Image.open(image)
     if im.mode in ("RGBA", "P"):
@@ -506,6 +507,8 @@ class CompanyStatusPayment(models.Model):
     def __str__(self):
         return '%s' % (self.company.company_name)
 
+
+
     @property
     def typeofpay(self):
         p = self.cpp.title
@@ -513,16 +516,23 @@ class CompanyStatusPayment(models.Model):
 
     @property
     def getexpiry(self):
+
         monthh_days = 31
         year_days = 365
         exp = self.cpp.status
         created_at = self.created_at
-        if exp.upper() == 'MONTHLY':
-            expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
-            return expiry_date.strftime("%d-%m-%Y")
-        elif exp.upper() == 'YEARLY':
-            expiry_date = created_at.date() + datetime.timedelta(days=year_days)
-            return expiry_date.strftime("%d-%m-%Y")
+        id = CompanyStatusPayment.objects.filter(company=self.company).order_by('-created_at').first()
+        c = CompanyStatusPayment.objects.filter(company=self.company, id=self.id).order_by('-created_at').first()
+        if c.id == id.id:
+            if exp.upper() == 'MONTHLY':
+                expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
+                return expiry_date.strftime("%d-%m-%Y")
+            elif exp.upper() == 'YEARLY':
+                expiry_date = created_at.date() + datetime.timedelta(days=year_days)
+                return expiry_date.strftime("%d-%m-%Y")
+
+        else:
+            return 'Inactive'
 
     @property
     def getexpiryremainingdays(self):
@@ -531,25 +541,29 @@ class CompanyStatusPayment(models.Model):
         year_days = 365
         exp = self.cpp.status
         created_at = self.created_at
-        # if self.company.
-        if exp.upper() == 'MONTHLY':
-            expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
-            start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
-            end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
-            diff = abs((end_date - start_date).days)
-            if diff > 0:
-                return str(diff) + ' Days remaining'
-            else:
-                return 'EXPIRED'
-        elif exp.upper() == 'YEARLY':
-            expiry_date = created_at.date() + datetime.timedelta(days=year_days)
-            start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
-            end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
-            diff = abs((end_date - start_date).days)
-            if diff > 0:
-                return str(diff) + ' Days remaining'
-            else:
-                return 'EXPIRED'
+        id = CompanyStatusPayment.objects.filter(company=self.company).order_by('-created_at').first()
+        c = CompanyStatusPayment.objects.filter(company=self.company, id=self.id).order_by('-created_at').first()
+        if c.id == id.id:
+            if exp.upper() == 'MONTHLY':
+                expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
+                start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
+                end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
+                diff = abs((end_date - start_date).days)
+                if diff > 0:
+                    return str(diff) + ' Days remaining'
+                else:
+                    return 'EXPIRED'
+            elif exp.upper() == 'YEARLY':
+                expiry_date = created_at.date() + datetime.timedelta(days=year_days)
+                start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
+                end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
+                diff = abs((end_date - start_date).days)
+                if diff > 0:
+                    return str(diff) + ' Days remaining'
+                else:
+                    return 'EXPIRED'
+        else:
+            return 'Inactive'
 
 
 

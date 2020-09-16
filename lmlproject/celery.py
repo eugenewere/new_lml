@@ -16,7 +16,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'every-one-hour': {
         'task': 'lmladmin.tasks.checkforstatuspayexpiry',
-        'schedule': timedelta(seconds=10),
+        'schedule': timedelta(hours=1),
     },
 }
 # Load task modules from all registered Django app configs.
