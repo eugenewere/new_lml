@@ -26,8 +26,8 @@ $(document).ready(function(){
         // console.log('yess');
         localStorage.setItem('activeTab5', $(e.target).attr('href'));
     });
-        let activeTab2 = localStorage.getItem('activeTab5');
-        if(activeTab2){
+    let activeTab2 = localStorage.getItem('activeTab5');
+    if(activeTab2){
             $('#simple-design-tab1 a[href="' + activeTab2 + '"]').tab('show');
         }
 
@@ -281,7 +281,35 @@ $(document).ready(function(){
             },
         });
     });
-    $('#shortlistreset').on('change', function () {
+    // $('#activityselect').change(function () {
+    //     // console.log($(this).serialize());
+    //     var endpoint = window.location.origin+'/candidateShortlistGraph/';
+    //     var value = $(this).val();
+    //     const csrftoken = getCookie('csrftoken');
+    //      $.ajax({
+    //         method: "POST",
+    //         url : endpoint,
+    //         data:{'value': value.toLowerCase()},
+    //         headers: {
+    //             'X-CSRFToken': csrftoken,  //for object property name, use quoted notation shown in second
+    //         },
+    //         dataType: 'json',
+    //         success : function (data) {
+    //             labels = data.labels2;
+    //             defaultData= data.defaultData2;
+    //             $('#customers2').remove(); // this is my <canvas> element
+    //             $('#graph-container').append('<canvas id="customers2"><canvas>');
+    //             setCustomerBar(labels, defaultData);
+    //             $('#shortlistjoinreset').fadeIn();
+    //             // console.log(data);
+    //         },
+    //         error : function (error_data) {
+    //             console.log(error_data);
+    //         },
+    //     });
+    // });
+
+    $('#activityselect').on('change', function () {
          var value = $(this).val();
          const csrftoken = getCookie('csrftoken');
          $.ajax({
@@ -298,6 +326,7 @@ $(document).ready(function(){
                 $('#customers2').remove(); // this is my <canvas> element
                 $('#graph-container').append('<canvas id="customers2"><canvas>');
                 setCustomerBar(labels, defaultData);
+                $('#shortlistreset').fadeIn();
                 // console.log(data);
             },
             error : function (error_data) {
@@ -306,7 +335,7 @@ $(document).ready(function(){
         });
 
     })
-    $('#shortlistjoinreset').click(function () {
+    $('#shortlistreset').click(function () {
         $(this).hide();
         initShortlistGraph();
     });

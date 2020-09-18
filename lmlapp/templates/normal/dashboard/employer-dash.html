@@ -42,6 +42,12 @@
         .chartjs-render-monitor {
             height: 90% !important;
         }
+        .popover-body ul{
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
     </style>
      <link rel="stylesheet" href="{% static 'assets/Receipt/recript.css' %}">
 {% endblock links %}
@@ -60,26 +66,53 @@
                         <p>{{ company.company_motto }}</p>
                         <ul>
                             {% if company.rank_status == "UNDEFINED" %}
-                                <li  ><div class="verified-action-error"><i style="line-height: 25px; margin-right: 3px;" class="fas fa-ban"></i> {{ company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-error">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="fas fa-ban"></i> {{ company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if company.rank_status == "BASIC" %}
-                                <li><div class="verified-action-success"><i style="line-height: 25px; margin-right: 3px;" class="fas fa-check"></i> {{company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-success">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="fas fa-check"></i> {{company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if company.rank_status == "PRO_BASIC" %}
-                                <li ><div class="verified-action-success"><i style="line-height: 25px; margin-right: 3px;" class="fas fa-check-double"></i> {{ company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-success">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="fas fa-check-double"></i> {{ company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if company.rank_status == "PREMIUM" %}
-                                <li><div class="verified-action-info"><i style="line-height: 25px; margin-right: 3px;" class="fas fa-check-square"></i> {{company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-info">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="fas fa-check-square"></i> {{company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if company.rank_status == "ULTIMATE" %}
-                                <li ><div class="verified-action-primary"><i style="line-height: 25px; margin-right: 3px;" class="far fa-check-circle"></i> {{ company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-primary">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="far fa-check-circle"></i> {{ company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
-
                             {% if company.rank_status == "PRO_ULTIMATE" %}
-                                <li ><div class="verified-action-bronze"><i style="line-height: 25px; margin-right: 3px;" class="fas fa-check-circle"></i> {{ company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-bronze">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="fas fa-check-circle"></i> {{ company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
                             {% if company.rank_status == "PLATINUM" %}
-                                <li ><div class="verified-action-gold"><i style="line-height: 25px; margin-right: 3px;" class="far fa-check-square"></i> {{ company.rank_status|title}}</div></li>
+                                <li style="display:flex; align-items: center;">
+                                    <div class="verified-action-gold">
+                                        <i style="line-height: 25px; margin-right: 3px; margin: 0 4px;" class="far fa-check-square"></i> {{ company.rank_status|title}}
+                                    </div>
+                                </li>
                             {% endif %}
                         </ul>
                     </div>
@@ -687,9 +720,9 @@
                                     <div class="deatil-tab-employ tool-tab col-sm-12 col-md-12 col-lg-10 " style="background: white; width: 100%; height: 100%; overflow:hidden;" >
                                         <ul class="nav simple nav-tabs" >
                                             <li class="active ">
-                                                <a  data-toggle="tab" href="#bargr">Candidate Shortlist Activity</a>
+                                                <a  data-toggle="tab" href="#bargr">Candidate Shortlist Graph</a>
                                             </li>
-{#                                            <li class="active"><a  data-toggle="tab" href="#linegr">Line Stats</a></li>#}
+                                            <li class=""><a  data-toggle="tab" href="#linegr">Candidate Shortlist Table</a></li>
                                         </ul>
                                         <div class="tab-content" style="height: 100%;">
                                             <div id="bargr"  role="tabpanel" class="tab-pane fade-in active " >
@@ -743,6 +776,42 @@
                                                         <canvas style="height: 100%;" class="col-sm-12" id="customers2"></canvas>
                                                     </div>
                                                 </article>
+                                            </div>
+                                            <div id="linegr"  role="tabpanel" class="tab-pane fade-in" >
+                                                {% if shortlist_history %}
+                                                    <div class="col-sm-12 dtbl" style="margin: 16px auto;">
+                                                        <table class="table table-hover" id="myTable2">
+                                                          <thead>
+                                                            <tr style="text-align: right;">
+                                                              <th scope="col">#</th>
+                                                              <th scope="col">Candidate</th>
+                                                              <th scope="col">Regno</th>
+                                                              <th scope="col">Status</th>
+                                                              <th scope="col">Date Shortlisted</th>
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                              {% for k in shortlist_history %}
+                                                                  <tr style="text-align: right;">
+                                                                      <th scope="row">{{ forloop.counter }}</th>
+                                                                      <td>{{ k.customer.first_name|title }}  {{ k.customer.last_name|title }}</td>
+                                                                      <td>{{ k.customer.customer_reg_no}}</td>
+                                                                      <td
+                                                                        {% if k.payment_status|lower == 'shortlisted' %}
+                                                                            style="color: lawngreen"
+                                                                      {% else %}
+                                                                            style="color: red"
+                                                                      {% endif %}>{{ k.payment_status}}</td>
+
+                                                                      <td>{{ k.created_at|naturalday }}</td>
+                                                                 </tr>
+                                                              {% endfor %}
+                                                          </tbody>
+                                                        </table>
+                                                    </div>
+                                                {% else %}
+                                                    <h3 style="text-align: center;">No Shortlist History</h3>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -1488,4 +1557,9 @@
     <script type="text/javascript" src="{% static 'assets/html2pdf/html2pdf.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
     <script type="text/javascript" src="{% static 'assets/company/dashjsscript.js' %}"></script>
+{#    <script>#}
+{#    $(document).ready(function () {#}
+{#      #}
+{#    });#}
+{#    </script>#}
 {% endblock script %}

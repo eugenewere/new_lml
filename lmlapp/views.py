@@ -19,7 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from lmlapp.decorators import has_user_paid_registration
 from lmlapp.forms import *
-
+# from cel
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
 import json
@@ -1032,6 +1032,7 @@ def employer_dash(request):
         for ccc3 in c_c3:
             ultimate_customers.append(ccc3.customer)
 
+    shortlist_history = CompanyShortlistCustomers.objects.filter(company=company).order_by('-created_at')
     # print(len(basic_customers))
 
     context = {
@@ -1045,6 +1046,7 @@ def employer_dash(request):
         'ultimate_customers': ultimate_customers,
         'company_reg_pay':company_reg_pay,
         'company_status_pay':company_status_pay,
+        'shortlist_history':shortlist_history,
     }
     return render(request, 'normal/dashboard/employer-dash.html', context)
 
@@ -1422,6 +1424,9 @@ def EmployerCustomerShortlist(request):
 
             return JsonResponse(context2)
 
+
+# def candidateShortlistGraphStatusType(request):
+2
 def candidateShortlistGraphTime(request):
     company_days_data = []
     days_choices = []

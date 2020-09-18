@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 import sweetify
 # Create your views here.
 # from lmlappadmin.models import *
+from django_celery_beat.models import *
 from datetime import timedelta, date
 from lmlapp.forms import *
 from .models import *
@@ -23,7 +24,6 @@ def home(request):
 
     company_reg_count = Company.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').count()
     company_unreg_count = Company.objects.filter(regpayment__isnull=True,).count()
-
 
     recent_companies = Company.objects.order_by('-created_at')
     recent_employees = Customer.objects.order_by('-created_at')
@@ -59,7 +59,7 @@ def employee_messages(request):
     context = {
         'title': 'Messages',
     }
-    return render(request, 'messages/employee.html', context)
+    return render(request, 'aanewadminportal/messages/candidatemessages.html', context)
 
 @login_required()
 def random_messages(request):

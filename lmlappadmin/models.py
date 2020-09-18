@@ -427,6 +427,16 @@ class Company(get_user_model()):
             return reg_no.company_reg_no
         return 'N/A'
 
+    @property
+    def companystatuspaydetails(self):
+        d = self.rank_status.upper()
+        if not d == 'UNDEFINED':
+            pay = CompanyPricingPlan.objects.filter(title__contains=d).first()
+            return pay.description
+
+
+
+
 
 class CompanyRegNo(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)

@@ -21,6 +21,7 @@ urlpatterns = [
     # re_path(r"^employerdash_message/(?P<username>[\w.@+-]+)/$", views.employer_dash_message),
     path('candidateShortlistGraph/', views.EmployerCustomerShortlist, name='employee_shortlist_graph'),
     path('candidateShortlistGraphTime/', views.candidateShortlistGraphTime, name='candidateShortlistGraphTime'),
+    # path('candidateShortlistGraphStatusType/', views.candidateShortlistGraphStatusType, name='candidateShortlistGraphStatusType'),
 
     path('signup', views.signup_initial, name="signup_initial"),
     path('signupcompany/', views.signup_company_initial, name="signup_company_initial"),
