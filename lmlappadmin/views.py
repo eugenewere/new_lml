@@ -56,8 +56,12 @@ def useradminaccount(request):
     return render(request, 'aanewadminportal/account/account.html', context)
 @login_required()
 def employee_messages(request):
+    all_messages = ContactUsEmployee.objects.exclude(status='TRASH').order_by('-created_at')
+    trash_messages = ContactUsEmployee.objects.filter(status='TRASH').order_by('-created_at')
     context = {
         'title': 'Messages',
+        'all_messages':all_messages,
+        'trash_messages':trash_messages,
     }
     return render(request, 'aanewadminportal/messages/candidatemessages.html', context)
 

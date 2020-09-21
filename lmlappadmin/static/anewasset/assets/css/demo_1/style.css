@@ -4365,29 +4365,29 @@ fieldset:disabled .wizard > .actions a,
       box-shadow: 0 0 0 0.2rem rgba(195, 189, 189, 0.5); }
 
 .btn-outline-success, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit {
-  color: #1bcfb4;
-  border-color: #1bcfb4; }
+  color: #51cf1b;
+  border-color: #3ccf1b; }
   .btn-outline-success:hover, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:hover {
     color: #212529;
-    background-color: #1bcfb4;
-    border-color: #1bcfb4; }
+    background-color: #3ccf1b;
+    border-color: #51cf1b; }
   .btn-outline-success:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:focus, .btn-outline-success.focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .focus.editable-submit {
-    -webkit-box-shadow: 0 0 0 0.2rem rgba(27, 207, 180, 0.5);
-    box-shadow: 0 0 0 0.2rem rgba(27, 207, 180, 0.5); }
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(75, 207, 27, 0.5);
+    box-shadow: 0 0 0 0.2rem rgba(66, 207, 27, 0.5); }
   .btn-outline-success.disabled, .editable-container.editable-inline .editableform .control-group .editable-buttons .disabled.editable-submit, .btn-outline-success:disabled, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:disabled {
-    color: #1bcfb4;
+    color: #2dcf1b;
     background-color: transparent; }
   .btn-outline-success:not(:disabled):not(.disabled):active, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:not(:disabled):not(.disabled):active, .btn-outline-success:not(:disabled):not(.disabled).active, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:not(:disabled):not(.disabled).active,
   .show > .btn-outline-success.dropdown-toggle,
   .editable-container.editable-inline .editableform .control-group .editable-buttons .show > .dropdown-toggle.editable-submit {
     color: #212529;
-    background-color: #1bcfb4;
-    border-color: #1bcfb4; }
+    background-color: #3ccf1b;
+    border-color: #2dcf1b; }
     .btn-outline-success:not(:disabled):not(.disabled):active:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:not(:disabled):not(.disabled):active:focus, .btn-outline-success:not(:disabled):not(.disabled).active:focus, .editable-container.editable-inline .editableform .control-group .editable-buttons .editable-submit:not(:disabled):not(.disabled).active:focus,
     .show > .btn-outline-success.dropdown-toggle:focus,
     .editable-container.editable-inline .editableform .control-group .editable-buttons .show > .dropdown-toggle.editable-submit:focus {
-      -webkit-box-shadow: 0 0 0 0.2rem rgba(27, 207, 180, 0.5);
-      box-shadow: 0 0 0 0.2rem rgba(27, 207, 180, 0.5); }
+      -webkit-box-shadow: 0 0 0 0.2rem rgba(60, 207, 27, 0.5);
+      box-shadow: 0 0 0 0.2rem rgba(81, 207, 27, 0.5); }
 
 .btn-outline-info {
   color: #198ae3;
@@ -10610,10 +10610,10 @@ a.text-secondary:hover, .list-wrapper a.remove:hover, a.text-secondary:focus, .l
   color: #9f9595 !important; }
 
 .text-success {
-  color: #1bcfb4 !important; }
+  color: #3ccf1b !important; }
 
 a.text-success:hover, a.text-success:focus {
-  color: #128b79 !important; }
+  color: #1a8b12 !important; }
 
 .text-info {
   color: #198ae3 !important; }
@@ -13360,7 +13360,7 @@ code {
       width: 18px;
       height: 18px;
       border-radius: 2px;
-      border: solid #b66dff;
+      border: solid #0FCE5F;
       border-width: 2px;
       -webkit-transition: all;
       transition: all;
@@ -13383,8 +13383,8 @@ code {
       font-weight: bold;
       color: #ffffff; }
     .form-check .form-check-label input[type="checkbox"]:checked + .input-helper:before {
-      background: -webkit-gradient(linear, left top, right top, from(#da8cff), to(#9a55ff));
-      background: linear-gradient(to right, #da8cff, #9a55ff);
+      background: -webkit-gradient(linear, left top, right top, from(#62e599), to(#0FCE5F));
+      background: linear-gradient(to right, #62e599, #0FCE5F);
       border-width: 0; }
     .form-check .form-check-label input[type="checkbox"]:checked + .input-helper:after {
       width: 18px;
@@ -13403,7 +13403,7 @@ code {
       content: "";
       top: 0;
       left: 0;
-      border: solid #b66dff;
+      border: solid #0FCE5F;
       border-width: 2px;
       width: 20px;
       height: 20px;
@@ -13438,8 +13438,8 @@ code {
         left: auto;
         right: 6px; }
     .form-check .form-check-label input[type="radio"]:checked + .input-helper:before {
-      background: -webkit-gradient(linear, left top, right top, from(#da8cff), to(#9a55ff));
-      background: linear-gradient(to right, #da8cff, #9a55ff);
+       background: -webkit-gradient(linear, left top, right top, from(#62e599), to(#0FCE5F));
+      background: linear-gradient(to right, #62e599, #0FCE5F);
       border-width: 0; }
     .form-check .form-check-label input[type="radio"]:checked + .input-helper:after {
       opacity: 1;
@@ -13456,12 +13456,12 @@ code {
 
 .form-check-primary.form-check label input[type="checkbox"] + .input-helper:before,
 .form-check-primary.form-check label input[type="radio"] + .input-helper:before {
-  border-color: #b66dff; }
+  border-color: #0FCE5F; }
 
 .form-check-primary.form-check label input[type="checkbox"]:checked + .input-helper:before,
 .form-check-primary.form-check label input[type="radio"]:checked + .input-helper:before {
-  background: -webkit-gradient(linear, left top, right top, from(#da8cff), to(#9a55ff));
-  background: linear-gradient(to right, #da8cff, #9a55ff); }
+   background: -webkit-gradient(linear, left top, right top, from(#62e599), to(#0FCE5F));
+      background: linear-gradient(to right, #62e599, #0FCE5F); }
 
 .form-check-secondary.form-check label input[type="checkbox"] + .input-helper:before,
 .form-check-secondary.form-check label input[type="radio"] + .input-helper:before {
@@ -16039,10 +16039,10 @@ dl {
           font-size: 0.875rem;
           line-height: 1.5; }
       .email-wrapper .mail-sidebar .menu-bar .menu-items li.active {
-        background: #434a54;
+        background: #0FCE5F;
         border-radius: 4px; }
         .email-wrapper .mail-sidebar .menu-bar .menu-items li.active a {
-          color: #b66dff; }
+          color: #f7f6f8; }
       .email-wrapper .mail-sidebar .menu-bar .menu-items li.compose:hover {
         background: transparent; }
   .email-wrapper .mail-sidebar .menu-bar .online-status {
@@ -16129,6 +16129,7 @@ dl {
   .email-wrapper .mail-list-container .mail-list {
     border-bottom: 1px solid #ebedf2;
     display: -webkit-box;
+    height: max-content;
     display: -ms-flexbox;
     display: flex;
     -webkit-box-orient: horizontal;
@@ -16169,8 +16170,8 @@ dl {
         color: #ddd; }
         .email-wrapper .mail-list-container .mail-list .details i.favorite {
           color: #fed713; }
-    .email-wrapper .mail-list-container .mail-list.new_mail {
-      background: #434a54;
+    .email-wrapper .mail-list-container .mail-list.active {
+      background: #0FCE5F !important;
       color: #ffffff; }
       .email-wrapper .mail-list-container .mail-list.new_mail .details .date {
         color: #000000; }
