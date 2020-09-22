@@ -22,13 +22,7 @@
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/celerybeat-schedule.dat" beforeDir="false" afterPath="$PROJECT_DIR$/celerybeat-schedule.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celerybeat.pid" beforeDir="false" afterPath="$PROJECT_DIR$/celerybeat.pid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/static/anewasset/assets/css/demo_1/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/static/anewasset/assets/css/demo_1/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/home/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/home/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/messages/candidatemessages.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/messages/candidatemessages.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/pannelize2.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/aanewadminportal/pannelize2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlappadmin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +165,7 @@
       <workItem from="1598869905818" duration="79148000" />
       <workItem from="1599065419543" duration="174828000" />
       <workItem from="1599737978937" duration="122324000" />
-      <workItem from="1600441658193" duration="41375000" />
+      <workItem from="1600441658193" duration="43981000" />
     </task>
     <servers />
   </component>
