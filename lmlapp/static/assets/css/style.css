@@ -5902,9 +5902,10 @@ New Job Detail Style
     text-align: center;
 }
 .advance-detail.detail-desc-caption ul li {
-    width: 32%;
+    width: 14%;
     text-transform: capitalize;
     margin-top: 20px;
+
     text-align: center;
     display: inline-block;
 }

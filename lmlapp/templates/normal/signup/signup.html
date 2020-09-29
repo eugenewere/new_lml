@@ -26,7 +26,7 @@
         {% csrf_token %}
 {#        <! -- General Detail Start -->#}
         <div class="section detail-desc">
-           <div class="container">
+           <div class="container" style="padding: 0;">
                 <div class="ur-detail-wrap create-kit padd-bot-0">
 
                     <div class="row">
@@ -49,6 +49,10 @@
                     </div>
                 </div>
                 <div class="row bottom-mrg">
+                    <div class="col-sm-12">
+                        <h2 class="detail-title">Personal Information</h2>
+                        <p>Names and other details that will be used to identify you.</p>
+                    </div>
                     <div class="add-feild">
                         <div class="col-md-6 col-sm-6">
                             <div class="input-group " style="margin-bottom: 8px">
@@ -116,7 +120,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="input-group" style="margin-bottom: 0">
-                                <span class="input-group-addon orangebg"><i class="fa fa-calendar"></i> Date Of Birth</span>
+{#                                <span class="input-group-addon orangebg"><i class="fa fa-calendar"></i> Date Of Birth</span>#}
                                 <input data-age id="dateofbirth" required name="date_of_birth" style="margin-bottom:0" type="date" class="form-control">
                             </div>
                             <small data-answer-age id="dob" class="dob form-text text-muted" style="margin-bottom: 8px">
@@ -191,18 +195,21 @@
                 </div>
             </div>
         </div>
-
+ --
         <!-- General Detail End -->
     
         <!-- full detail SetionStart-->
         <section class="full-detail">
             <div class="container">
                 <div class="row bottom-mrg extra-mrg">
-                    <h2 class="detail-title">Location Information</h2>
+                    <div class="">
+                        <h2 class="detail-title">Location Information</h2>
+                        <p>Your location address for easy filtering candidate by location</p>
+                    </div>
                     <div class="row " style="display: flex; flex-wrap: wrap;">
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+{#                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>#}
                                 <select id="country" required name="country" class="form-control input-lg">
                                     <option >Choose Country</option>
                                     <option selected value="Kenya">Kenya</option>
@@ -214,7 +221,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6 " style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+{#                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>#}
                                 <input name="landmark" id="landmark" type="text" class="form-control"
                                        placeholder="Landmark">
 
@@ -225,7 +232,7 @@
                         </div>
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
-                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+{#                                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>#}
                                 <select id="countyselectt" name="county" required   class=" form-control input-lg">
                                     <option selected>County</option>
                                     {% for county in counties %}
@@ -240,7 +247,7 @@
 
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
-                                <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
+{#                                <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>#}
                                 <select data-region id="region" required name="region" class="form-control input-lg">
                                     <option selected disabled>Sub-County And Respective Ward</option>
                                     {% for region in regions %}
@@ -258,11 +265,12 @@
                 </div>
                 <div class="row bottom-mrg extra-mrg">
                     <h2 class="detail-title">Education</h2>
+                    <p>Choose you education qualification. </p>
                     <div class="extra-field-box">
                         <div class="multi-box" >
                             <div class="dublicat-box" >
                                 <div class="col-md-12 col-sm-12 row duplicate">
-                                    <h4 style="margin: 20px 0;" class="text-muted">Choose your qualification</h4>
+{#                                    <h4 style="margin: 20px 0;" class="text-muted">Choose your qualification</h4>#}
                                     <label for="0">Choose Education</label>
                                     <div class=" me" style="padding: 0;" >
                                          <select id="0" required name="qualifications" onchange="showEducation(this);" class=" qualifications qualistatus form-control input-lg">
@@ -367,8 +375,9 @@
                 </div>
 
                 <div class="row bottom-mrg extra-mrg">
-                    <h2 class="detail-title">Brief description about yourself</h2>
-                    <div class="col-md-12 col-sm-12">
+                    <h2 class="detail-title">Brief description </h2>
+                    <p>An account of yourself.</p>
+                    <div class="col-md-12 col-sm-12 " style="padding: 0;">
                         <label style="width: 100%;">
                             <textarea id="brief_details" name="biography" style="max-width: 100%; width: 100%;" class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
                         </label>
@@ -377,6 +386,7 @@
 
                 <div class="row bottom-mrg extra-mrg">
                     <h2 class="detail-title">Add Experience</h2>
+                    <p>A practical contact with and observation of facts or events of your self</p>
                     <div class="extra-field-boxmine">
                         <label>Have you ever been employed</label>
                         <div style="display: flex;">
@@ -460,13 +470,14 @@
 
                 <div class="row bottom-mrg extra-mrg">
                     <h2 class="detail-title">Add Skills</h2>
+                    <p>A knowledge used effectively and readily in execution or performance</p>
                     <div class="extra-field-box3 ">
                         <div class="multi-box2 " style="position:relative;">
                             <div class="dublicat-box2 co" style="height:100%; ">
-                                <div class="col-sm-12">
-                                    <div class="col-md-12 col-sm-12 " style="margin-bottom: 2px;">
+                                <div class="col-sm-12" style="padding: 0;">
+                                    <div class="col-md-12 col-sm-12 " style="margin-bottom: 2px; padding: 0;">
                                         <div class="input-group" style="margin-bottom: 2px;">
-                                            <span class="input-group-addon"><i class="fas fa-hand-paper"></i></span>
+{#                                            <span class="input-group-addon"><i class="fas fa-hand-paper"></i></span>#}
                                             <input required name="skill" type="text" class="form-control"
                                                    placeholder="Skills, e.g. Css, Html...">
                                         </div>
@@ -474,9 +485,9 @@
                                             eg Art and craft.
                                         </small>
                                     </div>
-                                    <div class="col-md-12 col-sm-12 ">
+                                    <div style="padding: 0;" class="col-md-12 col-sm-12 ">
                                         <div class="input-group" style="margin-bottom: 8px;">
-                                            <span class="input-group-addon"><i class="fas fa-user"></i></span>
+{#                                            <span class="input-group-addon"><i class="fas fa-user"></i></span>#}
                                             <input required name="referee" id="ref" type="text" class="form-control"
                                                    placeholder="Referee Name">
                                         </div>
@@ -484,16 +495,16 @@
                                             eg Referee Name.
                                         </small>
                                     </div>
-                                    <div class="col-md-12 col-sm-12 ">
-                                    <div class="input-group" style="margin-bottom: 8px;">
-                                        <span class="input-group-addon"><i class="fas fa-mobile-phone"></i></span>
-                                        <input required name="referee_phonenumber" id="refh" type="text"
-                                               class="form-control" placeholder="Referee Phone Number">
+                                    <div style="padding: 0;" class="col-md-12 col-sm-12 ">
+                                        <div class="input-group" style="margin-bottom: 8px;">
+    {#                                        <span class="input-group-addon"><i class="fas fa-mobile-phone"></i></span>#}
+                                            <input required name="referee_phonenumber" id="refh" type="text"
+                                                   class="form-control" placeholder="Referee Phone Number">
+                                        </div>
+                                        <small id="lastnamehh" class="form-text text-muted">
+                                            eg Referee Phone Number.
+                                        </small>
                                     </div>
-                                    <small id="lastnamehh" class="form-text text-muted">
-                                        eg Referee Phone Number.
-                                    </small>
-                                </div>
                                 </div>
                                 <button onclick="removeParent2(this)" type="button" class="btn remove-field2">Remove</button>
                                 <div class="clearfix"></div>
@@ -504,9 +515,10 @@
                 </div>
                 <div class="row bottom-mrg extra-mrg">
                     <h2 class="detail-title">Social Profile</h2>
-                    <div class="col-md-12 col-sm-12">
+                    <p>linkedin Social link</p>
+                    <div class="col-md-12 col-sm-12" style="padding: 0;">
                         <div class="input-group">
-                            <span title="Example: www.abc.com"  data-toggle="tooltip" data-placement="top" class="input-group-addon"><i class="fab fa-linkedin"></i></span>
+{#                            <span title="Example: www.abc.com"  data-toggle="tooltip" data-placement="top" class="input-group-addon"><i class="fab fa-linkedin"></i></span>#}
                             <input title="Example: www.abc.com"  data-toggle="tooltip" data-placement="top" data-url aria-label="social" autocomplete="off" name="account_url" type="text" class="form-control" placeholder="Linkedin Link">
                         </div>
                         <small data-answer-url1 id="lastname" class="form-text text-muted">

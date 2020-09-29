@@ -35,12 +35,17 @@
                             <div class="col-md-12 col-sm-12">
                                 <div class="advance-detail detail-desc-caption">
                                     <h4 class="text-capitalize">{{request.user.first_name}} {{request.user.last_name}}</h4>
-                                    <span class="designation text-capitalize">{% for skill in skills %}{{ skill }}, {% endfor %}</span>
-                                    <ul class="text-center">
-                                        <li><strong class="j-view">{{ shortlist_count }}</strong>Shortlisted Times</li>
-                                        <li><strong class="j-applied"></strong></li>
-                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>
-                                    </ul>
+                                    <span class="designation text-capitalize">{{ customer.category.category|title }}</span>
+{#                                    <span class="designation text-capitalize">{% for skill in skills %}{{ skill }}, {% endfor %}</span>#}
+{#                                    <ul class="text-center">#}
+{#                                        <li><strong class="j-view">{{ shortlist_count }}</strong>Actively Shortlisted </li>#}
+{#                                        <li><strong class="j-applied"></strong></li>#}
+{#                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>#}
+{#                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>#}
+{#                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>#}
+{#                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>#}
+{#                                        <li><strong class="j-shared">{{unreadMessages}}</strong>Unread Messages</li>#}
+{#                                    </ul>#}
                                 </div>
                             </div>
                         </div>

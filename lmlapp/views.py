@@ -460,7 +460,7 @@ def employeeprofile(request):
     socials = Social_account.objects.filter(customer=customer)
     userr = User.objects.filter(id=user).first()
 
-    emShortlist = CompanyShortlistCustomers.objects.filter(customer=customer).count()
+    emShortlist = CompanyShortlistCustomers.objects.filter(customer=customer, payment_status='SHORTLISTED').count()
     unreadMessages = Message.objects.filter(reciever=userr, readstatus='UNREAD').count()
     module_dir = os.path.dirname(__file__)  # get current directory
     file_path1 = os.path.join(module_dir, 'Bachelorcourses')
@@ -684,13 +684,22 @@ def employeedetails(request):
     experiences = Experience.objects.filter(customer=customer)
     skills = Skills.objects.filter(customer=customer)
     socials = Social_account.objects.filter(customer=customer)
+    emShortlist = CompanyShortlistCustomers.objects.filter(customer=customer, payment_status='SHORTLISTED').count()
+    reviews_count = CustomerReviews.objects.filter(customer=customer).count()
+    unreadMessages = Message.objects.filter(reciever=user, readstatus='UNREAD').count()
+
+
+
     context = {
+        'shortlist_count': emShortlist,
         'customer': customer,
         'skills': skills,
         'educations': educations,
+        'unreadMessages': unreadMessages,
         'experiences': experiences,
         'socials': socials,
-        'title': "Account Details"
+        'title': "Account Details",
+        'reviews_count':reviews_count,
     }
     return render(request, 'normal/account/candidate-detail.html', context)
 
