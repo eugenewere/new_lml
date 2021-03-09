@@ -167,7 +167,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'lmlapp/static'),
+    os.path.join(BASE_DIR, 'lmlappadmin/static'),
+    os.path.join(BASE_DIR, 'chat/static'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
