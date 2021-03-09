@@ -16,6 +16,7 @@ from django.contrib.humanize.templatetags.humanize import *
 # from rest_framework import status
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
+from django_daraja.mpesa.core import MpesaClient
 
 from lmlapp.decorators import has_user_paid_registration
 from lmlapp.forms import *
@@ -44,7 +45,11 @@ def daterange(start_date, end_date):
 def home(request):
     customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('-created_at')[:6]
     all_customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
-    loadCurrency()
+    try:
+        loadCurrency()
+    except:
+        print('loading error')
+
     context = {
         'customers': customers,
         'all_customers': all_customers,
@@ -1003,6 +1008,31 @@ def companypayment(request):
 
 
 
+def send_stk_push_callback(request):
+    if request.method == "POST":
+        # print(request.POST)
+        # print(request)
+        # print(request.body)
+        phone = request.POST.get('phone')
+        amount = request.POST.get('amount')
+        # print(phone, amount)
+        cl = MpesaClient()
+
+        phone_number = phone
+        amount = 1
+        account_reference = 'reference'
+        transaction_desc = 'Package pricing payment'
+        callback_url = request.build_absolute_uri('/daraja/stk-push/')
+        response = cl.stk_push(phone_number, amount, account_reference,transaction_desc, callback_url)
+        return HttpResponse(response.text)
+
+
+def mpesa_stk_push_callback(request):
+    data = request.body
+    print(data)
+    return HttpResponse(data)
+
+
 def companypaymentpackage(request, pricing_id):
     pricing = CompanyPricingPlan.objects.filter(id=pricing_id).first()
 
@@ -1435,7 +1465,6 @@ def EmployerCustomerShortlist(request):
 
 
 # def candidateShortlistGraphStatusType(request):
-2
 def candidateShortlistGraphTime(request):
     company_days_data = []
     days_choices = []

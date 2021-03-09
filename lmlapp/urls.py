@@ -67,7 +67,8 @@ urlpatterns = [
     path('payment/',views.payment, name='payment'),
     path('companypayment/',views.companypayment, name='companypayment'),
     path('companypaymentpackage/<int:pricing_id>',views.companypaymentpackage, name='companypaymentpackage'),
-
+    path('daraja/stk-push/', views.mpesa_stk_push_callback, name='mpesa_stk_push_callback'),
+    path('send_stk-push/', views.send_stk_push_callback, name='mpesa_send_stk_push_callback'),
     path('companydash/',views.employer_dash, name='employer_dash'),
 
 

@@ -20,17 +20,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celerybeat-schedule.dat" beforeDir="false" afterPath="$PROJECT_DIR$/celerybeat-schedule.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/celerybeat.pid" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/js/custom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-detail.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-detail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/account/candidate-profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/payment/payment-method.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/js/js.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/js/js.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspaysubscribe.js" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/static/assets/jspayload/jspaysubscribe.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/companypricing/subscribetoplan.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/layout/homelayout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/templates/categories/categories.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/templates/categories/categories.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlproject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +76,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="database.console.LAST_STATE" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="I:/DjangoProjects/itara/itaraproject" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -178,7 +180,16 @@
       <workItem from="1601156793916" duration="1156000" />
       <workItem from="1601238681756" duration="7030000" />
       <workItem from="1601296357708" duration="5258000" />
-      <workItem from="1601393048706" duration="3898000" />
+      <workItem from="1601393048706" duration="4870000" />
+      <workItem from="1605890934659" duration="7877000" />
+      <workItem from="1606066268308" duration="1557000" />
+      <workItem from="1606077778674" duration="660000" />
+      <workItem from="1606493977368" duration="694000" />
+      <workItem from="1606503499218" duration="16568000" />
+      <workItem from="1606740579035" duration="575000" />
+      <workItem from="1606823354885" duration="1095000" />
+      <workItem from="1612450986452" duration="24565000" />
+      <workItem from="1612644803011" duration="152000" />
     </task>
     <servers />
   </component>
@@ -228,61 +239,9 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="309" y="77" key="#Inspections" timestamp="1596645571943">
+    <state x="463" y="154" key="FileChooserDialogImpl" timestamp="1612644965843">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="309" y="77" key="#Inspections/0.30.1366.738@0.30.1366.738" timestamp="1596645571943" />
-    <state x="498" y="36" key="#app-email.html" timestamp="1597012122754">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="498" y="36" key="#app-email.html/0.30.1366.738@0.30.1366.738" timestamp="1597012122754" />
-    <state x="443" y="191" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1600622581473">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="443" y="191" key="#com.intellij.fileTypes.FileTypeChooser/0.30.1366.738@0.30.1366.738" timestamp="1600622581473" />
-    <state x="413" y="148" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1598909676214">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="413" y="148" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.30.1366.738@0.30.1366.738" timestamp="1598909676214" />
-    <state x="462" y="154" key="FileChooserDialogImpl" timestamp="1601227360632">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="462" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1601227360632" />
-    <state width="1325" height="198" key="GridCell.Tab.0.bottom" timestamp="1598627094257">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state width="1325" height="198" key="GridCell.Tab.0.bottom/0.30.1366.738@0.30.1366.738" timestamp="1598627094257" />
-    <state width="1325" height="198" key="GridCell.Tab.0.center" timestamp="1598627094255">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state width="1325" height="198" key="GridCell.Tab.0.center/0.30.1366.738@0.30.1366.738" timestamp="1598627094255" />
-    <state width="1325" height="198" key="GridCell.Tab.0.left" timestamp="1598627094254">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state width="1325" height="198" key="GridCell.Tab.0.left/0.30.1366.738@0.30.1366.738" timestamp="1598627094254" />
-    <state width="1325" height="198" key="GridCell.Tab.0.right" timestamp="1598627094255">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state width="1325" height="198" key="GridCell.Tab.0.right/0.30.1366.738@0.30.1366.738" timestamp="1598627094255" />
-    <state x="186" y="60" key="SettingsEditor" timestamp="1600088422926">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="186" y="60" key="SettingsEditor/0.30.1366.738@0.30.1366.738" timestamp="1600088422926" />
-    <state x="523" y="30" width="291" height="252" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1599319306328">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="523" y="30" width="291" height="252" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1599319306328" />
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1600619939337">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="416" y="30" width="705" height="738" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1600619939337" />
-    <state x="373" y="132" width="620" height="534" key="find.popup" timestamp="1599307984037">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="373" y="132" width="620" height="534" key="find.popup/0.30.1366.738@0.30.1366.738" timestamp="1599307984037" />
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1599405588289">
-      <screen x="0" y="30" width="1366" height="738" />
-    </state>
-    <state x="346" y="89" width="672" height="678" key="search.everywhere.popup/0.30.1366.738@0.30.1366.738" timestamp="1599405588289" />
+    <state x="463" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1612644965843" />
   </component>
 </project>

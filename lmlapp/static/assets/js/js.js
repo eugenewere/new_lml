@@ -21,7 +21,8 @@
                       'numberedList',
                       '|',
                       'undo',
-                      'redo'
+                      'redo',
+
                     ]
                   },
                 } )

@@ -445,7 +445,11 @@
         <script type="text/javascript" src="{% static 'assets/plugins/js/owl.carousel.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/slick.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.easy-autocomplete.min.js' %}"></script>
-
+        <script>
+            function goback() {
+                window.history.go(-1); return false;
+            }
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
         <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
         <script src="{% static 'assets/js/custom.js' %}"></script>

@@ -14,6 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import sweetify
+# from decouple import config
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'djcelery',
     'django_celery_beat',
     'django_celery_results',
+    'django_daraja',
 
 ]
 
@@ -194,3 +197,100 @@ PAYPAL_TEST = True
 # CELERY_BROKER_URL = 'amqp://localhost'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-cache'
+
+
+
+
+MPESA_ENVIRONMENT='sandbox'
+MPESA_CONSUMER_KEY='hAAktGjatKXAj9zAXDKLjooL799UM7bz'
+MPESA_CONSUMER_SECRET='xj4MmNm90E0b1W3A'
+
+MPESA_SHORTCODE=174379
+MPESA_EXPRESS_SHORTCODE=174379
+
+MPESA_SHORTCODE_TYPE='paybill'
+MPESA_PASSKEY='bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+MPESA_INITIATOR_USERNAME='Shortcode 1'
+MPESA_INITIATOR_SECURITY_CREDENTIAL='imUPsh/1KU0lE27PGlO0ug2snNCWiDLG0pgYZTnjyiphVLe/cr3E7tRSgygUUy1NdzX5T9xR1G99L5ztBBXFOmB2uWmOXgt52vgTo9/gQ7YcPQz/RK5KbRK7n7NIHSn8wtl3pKED4KOy0EBgw+mzDo2ildsrwnHURe1nYuyXJqSJzQN1NBW6T/qi2Eq6l9syE6EWBO62QN+MIPvKKeK2seykH4Df64qGbhJ23wEmuTs6eFRhwPX/FHfpqkMfR6nbW88jWlwxWf6l1zHVudTSC5aJ2aOlZkairFHhkp9FlsZxdx3mSkIXOqIU1DHllnPuc3iEx/5K8Q6gQyYlXsxHWA=='
+
+
+
+
+# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA
+...
+# Safaricom Configs
+
+# B2C (Bulk Payment) Configs
+# see https://developer.safaricom.co.ke/test_credentials
+# https://developer.safaricom.co.ke/b2c/apis/post/paymentrequest
+
+#Consumer Key
+                                              #MPESA_B2C_ACCESS_KEY = config('hAAktGjatKXAj9zAXDKLjooL799UM7bz')
+#Consumer Secret
+                                              #MPESA_B2C_CONSUMER_SECRET = config('xj4MmNm90E0b1W3A')
+# This is the encryption of the scurity Credentials I used the Developer site to encrypt it.
+                                              #B2C_SECURITY_TOKEN =  config('B2C_SECURITY_TOKEN')
+#InitiatorName
+                                              #B2C_INITIATOR_NAME = config('B2C_INITIATOR_NAME')
+# CommandID
+                                              #B2C_COMMAND_ID = config('B2C_COMMAND_ID')
+#PartyA
+                                              #B2C_SHORTCODE = config('B2C_SHORTCODE')
+# this is the url where Mpesa  will post in case of a time out. Replace http://mpesa.ngrok.io/  with your url ow here this app is running
+                                              #B2C_QUEUE_TIMEOUT_URL = config('B2C_QUEUE_TIMEOUT_URL')
+# this is the url where Mpesa will post the result. Replace http://mpesa.ngrok.io/  with your url ow here this app is running
+                                              #B2C_RESULT_URL = config('B2C_RESULT_URL')
+# this is the url where we post the B2C request to Mpesa. Replace this with the url you get from safaricom after you have passed the UATS
+                                              #MPESA_URL = config('MPESA_URL')
+
+# C2B (Paybill) Configs
+# See https://developer.safaricom.co.ke/c2b/apis/post/registerurl
+
+#Consumer Secret
+                   #MPESA_C2B_ACCESS_KEY = config('hAAktGjatKXAj9zAXDKLjooL799UM7bz')
+# Consumer Key
+                   #MPESA_C2B_CONSUMER_SECRET = config('xj4MmNm90E0b1W3A')
+# Url for registering your paybill replace it the url you get from safaricom after you have passed the UATS
+                   #C2B_REGISTER_URL = config('https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl')
+#ValidationURL
+# replace http://mpesa.ngrok.io/ with your url ow here this app is running
+                   #C2B_VALIDATE_URL = config('C2B_VALIDATE_URL')
+#ConfirmationURL
+# replace http://mpesa.ngrok.io/ with your url ow here this app is running
+                   #C2B_CONFIRMATION_URL = config('C2B_CONFIRMATION_URL')
+#ShortCode (Paybill)
+                   #C2B_SHORT_CODE = config('4047453')
+#ResponseType
+                   #C2B_RESPONSE_TYPE = config('C2B_RESPONSE_TYPE')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
