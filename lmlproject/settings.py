@@ -123,7 +123,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'lmldb',
-        'USER': 'lmluser',
+        'USER': 'lmldbuser',
         'PASSWORD': '*#*Johnte2536@lml',
         'HOST': 'localhost',
         'PORT': '',
