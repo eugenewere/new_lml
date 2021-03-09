@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 import sweetify
 # Create your views here.
 # from lmlappadmin.models import *
-from django_celery_beat.models import *
+# from django_celery_beat.models import *
 from datetime import timedelta, date
 from lmlapp.forms import *
 from .models import *

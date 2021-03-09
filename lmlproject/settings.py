@@ -31,7 +31,7 @@ SECRET_KEY = 'q%49#i*jdc@_g!q)le4ot79b9kdpa+aclq25832vrh18pg)4#='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', ]
 # 192.168.100.2
 
 # Application definition
@@ -49,9 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'sweetify',
-    'djcelery',
-    'django_celery_beat',
-    'django_celery_results',
+    # 'djcelery',
+    # 'django_celery_beat',
+    # 'django_celery_results',
     'django_daraja',
 
 ]
