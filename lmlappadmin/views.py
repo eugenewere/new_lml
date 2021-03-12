@@ -1044,9 +1044,13 @@ def analytics(request):
 def admin_change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
+        p0 = request.POST.get('old_password')
+        p1 = request.POST.get('new_password1')
+        p2 = request.POST.get('new_password2')
+        # print(p0,p1,p2)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request, user)  # Important!
+            update_session_auth_hash(request, request.user)  # Important!
             sweetify.success(request, title='Success', text='Successfully Password Changed.', persistent='Continue')
             return redirect("LMLAdmin:useradminaccount")
         else:

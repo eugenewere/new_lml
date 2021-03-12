@@ -185,6 +185,7 @@ def signup(request):
             }
             return JsonResponse(data, safe=False)
 
+
         else:
             print(form.errors)
 
@@ -316,12 +317,11 @@ def login_user(request, source):
         password = request.POST['password']
 
         def usernamel(email):
-            uz = User.objects.filter(email__exact=email).first()
-            # us = User.objects.filter(email=uz.email).values('username').first()
+            uz = User.objects.filter(Q(email__exact=email) or Q(username__exact=email) ).first()
             print(uz.email)
             print(uz.username)
 
-            if uz.email:
+            if uz:
                 return uz.username
             return None
 

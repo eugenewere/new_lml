@@ -21,6 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/home/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -180,7 +184,7 @@
       <workItem from="1612450986452" duration="24565000" />
       <workItem from="1612644803011" duration="152000" />
       <workItem from="1615300488084" duration="8019000" />
-      <workItem from="1615551877614" duration="11039000" />
+      <workItem from="1615551877614" duration="20146000" />
     </task>
     <servers />
   </component>
@@ -234,5 +238,9 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="463" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1615324891658" />
+    <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1615578494726">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1615578494726" />
   </component>
 </project>

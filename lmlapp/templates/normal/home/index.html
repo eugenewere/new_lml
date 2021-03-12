@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-lg-2 col-md-12 no-padd">
                                 <div class="input-group">
-                                    <button type="submit" class="btn btn-primary full-width">Search</button>
+                                    <button   {% if not request.user.is_authenticated %} data-toggle="modal" data-target="#signup" type="button" {% else %} type="submit"  {% endif %} class="btn btn-primary full-width">Search</button>
                                 </div>
                             </div>
                         </form>
@@ -147,7 +147,7 @@
                                             {% endif %}
                                         </div>
                                         <div class="paid-candidate-box-detail">
-                                        <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
+                                        <h4 class="text-capitalize"><a href="" {% if not request.user.is_authenticated %} data-toggle="modal" data-target="#signup" {% endif %}>{{customer.first_name}} {{customer.last_name}}</a></h4>
                                             <span class="desination text-capitalize">{{customer.category.category}}</span>
                                         </div>
                                     </div>
@@ -324,7 +324,7 @@
                                                     {% endif %}
                                                 </div>
                                                 <div class="paid-candidate-box-detail">
-                                                    <h4 class="text-capitalize">{{customer.first_name}} {{customer.last_name}}</h4>
+                                                    <h4 class="text-capitalize"><a href="" {% if not request.user.is_authenticated %} data-toggle="modal" data-target="#signup" {% endif %}>{{customer.first_name}} {{customer.last_name}}</a></h4>
                                                     <span class="desination text-capitalize">{{customer.category.category}}</span>
                                                 </div>
                                             </div>
