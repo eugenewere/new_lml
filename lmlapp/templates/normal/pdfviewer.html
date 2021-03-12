@@ -12,11 +12,11 @@
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="{% static 'assets/pdfcss.css' %}" />
+    <link rel="stylesheet" href="{% static 'lmlappassets/pdfcss.css' %}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <script src="{% static 'assets/jspdf.js' %}"></script>
-    <script src="{% static 'assets/jspdfworker.js' %}"></script>
+    <script src="{% static 'lmlappassets/jspdf.js' %}"></script>
+    <script src="{% static 'lmlappassets/jspdfworker.js' %}"></script>
 {#      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js" integrity="sha512-0DCQV6q4G4VIvwQQOTUbfuROoPElJcmTWUt3MjMzdyREzcOVREUYr2bFuzYC7tDh+tigVrm+X1wnu8SRTexJuw==" crossorigin="anonymous"></script>#}
 {#      <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.worker.min.js" integrity="sha512-CJgNSzxw+RvMRWwv5mKCH8Rtt2YfNCLjG4JCjz0wvKM8VE6aITj4a9sDEzS1OPjNgVxIqo17e4rk12/sG8Hbyw==" crossorigin="anonymous"></script>#}
     <title>{{ title|title }}</title>
@@ -39,14 +39,14 @@
     </div>
 
     <canvas style="width: 90%; height: 100%; zoom:0.95; margin: 0 5%;" id="pdf-render"></canvas>
-    <script type="text/javascript" src="{% static 'assets/plugins/js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lmlappassets/plugins/js/jquery.min.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
         {#$(document).ready(function () {#}
 
-            {#const url = "{% static 'assets/pdf(6).pdf' %}";#}
+            {#const url = "{% static 'lmlapplmlappassets/pdf(6).pdf' %}";#}
             const url = '{{ customer_cv.file.url }}';
             console.log(url);
             let pdfDoc = null,

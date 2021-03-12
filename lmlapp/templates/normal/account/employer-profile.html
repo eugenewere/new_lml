@@ -6,7 +6,7 @@
 {% block content %}
 
      <!-- Title Header Start -->
-        <section class="inner-header-title img-responsive" style="background-image:url({% static 'assets/img/blog/banner-24.jpg' %});">
+        <section class="inner-header-title img-responsive" style="background-image:url({% static 'lmlappassets/img/blog/banner-24.jpg' %});">
             <div class="container">
                 <h1>YOUR PROFILE</h1>
             </div>
@@ -25,7 +25,7 @@
                                 <img src="{{company.logo.url}}" class="img" alt="" />
                                 <a style="left: 43%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
                             {% else %}
-                                <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
+                                <img src="{% static 'lmlappassets/img/avatar/avatar2.png' %}" class="img" alt="" />
                                 <a style="left: 43%;" href="#" class="detail-edit custom-button" title="edit"><i class="fa fa-user fa-spin"></i></a>
                             {% endif %}
                         </div>
@@ -184,7 +184,7 @@
                                                             <input value="{{ company.logo }}" style="position: relative; visibility: hidden" onchange="readURL(this)" type="file" name="logo" id="upload-pic" class="inputfile" />
 
                                                         {% else %}
-                                                            <img src="{% static 'assets/img/avatar/avatar2.png' %}" class="img" alt="" />
+                                                            <img src="{% static 'lmlappassets/img/avatar/avatar2.png' %}" class="img" alt="" />
                                                             <a  style="max-width: 100%; position: absolute; top: -7px; bottom: -22px;" href="#" class="detail-edit" title="edit"><i class="fa fa-user fa-spin"></i></a>
                                                         {% endif %}
                                                     </div>

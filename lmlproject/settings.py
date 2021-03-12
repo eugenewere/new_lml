@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'q%49#i*jdc@_g!q)le4ot79b9kdpa+aclq25832vrh18pg)4#='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.146.141', ]
 # 192.168.100.2
@@ -166,12 +166,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'lmlapp/static'),
-    os.path.join(BASE_DIR, 'lmlappadmin/static'),
-    os.path.join(BASE_DIR, 'chat/static'),
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
