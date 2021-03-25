@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 
-
+ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.146.141', ]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -31,7 +31,7 @@ SECRET_KEY = 'q%49#i*jdc@_g!q)le4ot79b9kdpa+aclq25832vrh18pg)4#='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.146.141', ]
+
 # 192.168.100.2
 
 # Application definition
@@ -78,6 +78,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -160,15 +161,18 @@ USE_L10N = True
 
 USE_TZ = True
 
+# STATICFILES_FINDERS = (
+#     'django.contrib.staticfiles.finders.FileSystemFinder',
+#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+# )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+# print('This is exxxx ',BASE_DIR)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR,  'static'),
 ]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
