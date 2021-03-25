@@ -1680,7 +1680,7 @@ def deletesocial(request):
         social = Social_account.objects.filter(id=int(social_id)).first()
         print(social)
         if social:
-            # social.delete()
+            social.delete()
             data = {
                 'results': 'success',
                 'success': 'Social deleted'
@@ -2153,7 +2153,7 @@ def candidate_files_delete_single(request):
         file = CustomerCvFiles.objects.filter(customer=candidate, id=file_id).first()
         # print(file_id, request.POST)
         if file is not None:
-            file.file.delete()
+            # file.file.delete()
             file.delete()
             size = []
             for s in CustomerCvFiles.objects.filter(customer=candidate).all():
@@ -2186,7 +2186,7 @@ def candidate_files_delete_multiple_single(request):
             file = CustomerCvFiles.objects.filter(customer=candidate, id=file_id).first()
             print(file_id, file)
             if file is not None:
-                file.file.delete()
+                # file.file.delete()
                 file.delete()
         size = []
         for s in CustomerCvFiles.objects.filter(customer=candidate).all():

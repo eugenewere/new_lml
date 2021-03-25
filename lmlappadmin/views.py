@@ -448,7 +448,7 @@ def carouselImages(request):
 def carouselImagesDelete(request,carousel_id):
     img = AdvertCarousel.objects.filter(id=carousel_id).first()
     if img:
-        img.carousel_image.delete()
+        # img.carousel_image.delete()
         img.delete()
         sweetify.success(request, 'Success', text='Image Deleted Successfully', persistent='Ok')
     else:
@@ -800,7 +800,7 @@ def editwhatweoffer(request, offer_id):
 def deletewhatweoffer(request, offer_id):
     w = WhatWeOffer.objects.filter(id=offer_id).first()
     if w is not None:
-        # w.delete()
+        w.delete()
         sweetify.success(request, 'Success', text='Offer deleted', persistent='Ok')
     else:
         sweetify.error(request, 'Error', text='Error deleting the offer', persistent='Retry')

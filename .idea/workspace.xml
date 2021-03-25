@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="" />
+    <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -177,7 +179,8 @@
       <workItem from="1612450986452" duration="24565000" />
       <workItem from="1612644803011" duration="152000" />
       <workItem from="1615300488084" duration="8019000" />
-      <workItem from="1615551877614" duration="20458000" />
+      <workItem from="1615551877614" duration="22432000" />
+      <workItem from="1616188273741" duration="513000" />
     </task>
     <servers />
   </component>
@@ -227,10 +230,10 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="463" y="154" key="FileChooserDialogImpl" timestamp="1615324891658">
+    <state x="463" y="154" key="FileChooserDialogImpl" timestamp="1615622308983">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="463" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1615324891658" />
+    <state x="463" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1615622308983" />
     <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1615578494726">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
