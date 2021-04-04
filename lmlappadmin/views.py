@@ -856,7 +856,7 @@ def changecandidatestatustodeac(request,custom_id):
         Customer.objects.filter(id=custom.id).update(
             status="DEACTIVATED"
         )
-        sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
+        # sweetify.success(request, 'Success', text='Status changed', persistent='Ok')
     else:
         sweetify.success(request, 'Error', text='Status not changed', persistent='Ok')
     return redirect(request.META['HTTP_REFERER'])

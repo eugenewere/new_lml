@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.
 SECRET_KEY = 'q%49#i*jdc@_g!q)le4ot79b9kdpa+aclq25832vrh18pg)4#='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 # 192.168.100.2

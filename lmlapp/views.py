@@ -43,8 +43,11 @@ def daterange(start_date, end_date):
         yield start_date + timedelta(n)
 
 def home(request):
-    customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('-created_at')[:6]
-    all_customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
+    customers = Customer.objects.filter(regpayment__isnull=False,
+                                        regpayment__payment_status='COMPLETED',
+                                        regpayment__transaction_status='COMPLETED',
+                                        status='NEWBIE').order_by('-created_at')[:6]
+    all_customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED',status='NEWBIE').all()
     try:
         loadCurrency()
     except:
@@ -57,7 +60,7 @@ def home(request):
         'counties': County.objects.all(),
         'categories': Category.objects.all(),
         'regions': Region.objects.all(),
-        'bannercustomercount': Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED'),
+        'bannercustomercount': Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED',status='NEWBIE'),
         'images': AdvertCarousel.objects.order_by('-created_at'),
         'offers': WhatWeOffer.objects.all()
     }
@@ -806,10 +809,10 @@ def advancesearch(request):
         county = County.objects.filter(id=cou).first()
         region = Region.objects.filter(id=reg).first()
 
-        customers = Customer.objects.filter(category=category, county=county, region=region)
+        customers = Customer.objects.filter(category=category, county=county, region=region, status='NEWBIE')
         print(customers)
     else:
-        customers = Customer.objects.order_by('?')
+        customers = Customer.objects.filter(status='NEWBIE').order_by('?')
     context = {
         'title': "Advance search",
         'categories': Category.objects.all(),
@@ -1183,27 +1186,27 @@ def all_premium_employees(request):
             count = County.objects.filter(id=int(county)).first()
             customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id),
                                                 regpayment__isnull=False, regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED',status='NEWBIE')
         elif (category is not None):
             cat = Category.objects.filter(id=int(category)).first()
             customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED',status='NEWBIE')
         elif (region is not None):
             reg = Region.objects.filter(id=int(region)).first()
             customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED',status='NEWBIE')
         elif (county is not None):
             count = County.objects.filter(id=int(county)).first()
             customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False,
                                                 regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED')
+                                                regpayment__transaction_status='COMPLETED',status='NEWBIE')
         else:
             customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED',
-                                                regpayment__transaction_status='COMPLETED').order_by('?')
+                                                regpayment__transaction_status='COMPLETED',status='NEWBIE').order_by('?')
     else:
-        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED',status='NEWBIE').order_by('?')
 
     context = {
         'customers': customers,
@@ -1219,9 +1222,9 @@ def all_premium_employees(request):
 def all_category_employees(request, category_id):
     category = Category.objects.filter(id=category_id).first()
     if category is not None:
-        customers = Customer.objects.filter(category=category, regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
+        customers = Customer.objects.filter(category=category,status='NEWBIE', regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
     else:
-        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False,status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
 
     context = {
         'customers': customers,
@@ -1238,9 +1241,9 @@ def all_offer_employees(request, offer):
     category = Category.objects.filter(category__contains=offer).first()
     print(category)
     if category is not None:
-        customers = Customer.objects.filter(category=category)
+        customers = Customer.objects.filter(category=category, status='NEWBIE')
     else:
-        customers = Customer.objects.order_by('?')
+        customers = Customer.objects.filter(status='NEWBIE').order_by('?')
 
     context = {
         'customers': customers,
@@ -1358,20 +1361,20 @@ def all_employees(request):
             cat = Category.objects.filter(id=int(category)).first()
             reg = Region.objects.filter(id=int(region)).first()
             count = County.objects.filter(id=int(county)).first()
-            customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
+            customers = Customer.objects.filter(Q(category_id=cat.id), Q(region_id=reg.id), Q(county_id=count.id), regpayment__isnull=False, status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         elif (category is not None):
             cat = Category.objects.filter(id=int(category)).first()
-            customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
+            customers = Customer.objects.filter(Q(category_id=cat.id), regpayment__isnull=False, status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         elif (region is not None):
             reg = Region.objects.filter(id=int(region)).first()
-            customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
+            customers = Customer.objects.filter(Q(region_id=reg.id), regpayment__isnull=False, status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         elif (county is not None):
             count = County.objects.filter(id=int(county)).first()
-            customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
+            customers = Customer.objects.filter(Q(county_id=count.id), regpayment__isnull=False, status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED')
         else:
-            customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
+            customers = Customer.objects.filter(regpayment__isnull=False, status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
     else:
-        customers = Customer.objects.filter(regpayment__isnull=False, regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
+        customers = Customer.objects.filter(regpayment__isnull=False, status='NEWBIE', regpayment__payment_status='COMPLETED', regpayment__transaction_status='COMPLETED').order_by('?')
 
     context = {
         'customers': customers,

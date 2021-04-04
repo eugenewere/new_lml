@@ -27,7 +27,7 @@
                 <div class="container" >
                     <div class="intro-item fl-wrap">
                         <div class="caption text-center cl-white">
-                            <h2>Discover {% if not bannercustomercount|length > 1000 %} Thousands {% else %} {{ bannercustomercount|length }} {% endif %} employees </h2>
+                            <h2>Discover {% if not bannercustomercount|length > 1000 %} Thousands {% else %} {{ bannercustomercount|length }} {% endif %}of employees </h2>
                             <p></p>
                             <p>Explore top rated employees all over kenya</p>
                         </div>
@@ -74,12 +74,14 @@
         <div class="clearfix"></div>
         <section class="first-feature">
             <div class="container">
+                {% if offers %}
                  <div class="row">
                     <div class="main-heading">
                         <p>Our Offers</p>
                         <h2>Browse For Your What You Like</h2>
                     </div>
                 </div>
+                {% endif %}
                 <div class="all-features">
                     {% for offer in offers %}
 {#                        <a target="_blank" href="{% url 'LML:all_offer_employees' request|replacestring:offer.title %}">#}
@@ -102,6 +104,7 @@
         <div class="clearfix"></div>
         <section class="gray-bg">
             <div class="container" style="margin: 0 auto;" >
+                {% if customers %}
                 <div class="row">
                     <div class="col-md-12 col-sm-12">
                         <div class="main-heading">
@@ -110,6 +113,7 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center">
                     {% for customer in customers %}
 {#                        <div class="col-md-6 col-lg-3 col-sm-6">#}
@@ -266,15 +270,17 @@
                         </div>
 
                     </div>
-                   <div class="col-md-6 col-sm-12 no-padd gifs"  style="display: flex; justify-content: center; align-items: center;overflow: hidden; position:relative;">
-                        <img style="object-fit: contain; filter: hue-rotate(270deg); width: 100%;" src="{% static 'lmlappassets/img/gif/unnamed.gif' %}" alt="">
+                   <div class="col-md-6 col-sm-12 gifs"  style="display: flex; justify-content: center; align-items: center;overflow: hidden; position:relative;">
+                        <img style="object-fit: contain;  width: 100%;" src="{% static 'lmlappassets/img/gif/profiles.svg' %}" alt="">
                    </div>
                </div>
            </div>
         </section>
         <div class="clearfix"></div>
+     {% if all_customers %}
         <section class="">
             <div style="margin: 0 auto;" class="container">
+
                 <div class="row" data-aos="fade-up">
                     <div class="col-md-12">
                         <div class="main-heading">
@@ -283,6 +289,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="grid-slide">
 
@@ -352,6 +359,7 @@
                 </div>
             </div>
         </section>
+                {%  endif %}
         <div class="clearfix"></div>
         <section class="call-to-act gray-bg">
             <div  class="container " style="padding-bottom: 57px;  margin: 0 auto">
@@ -364,9 +372,9 @@
                     </div>
                 </div>
                <div class="row container-fluid reversdivs" id="" style="display: flex;flex-wrap: wrap;">
-                    <div class="col-md-6 col-sm-12 no-padd h-100 gifs" style="display: flex; justify-content: center; align-items: center; padding: 84px;" >
-                        <img style="object-fit: contain;" src="{% static 'lmlappassets/img/gif/accepted.gif' %}" alt="">
-                    </div>
+                    <div class="col-md-6 col-sm-12 gifs"  style="display: flex; justify-content: center; align-items: center;overflow: hidden; position:relative;">
+                        <img style="object-fit: contain;  width: 100%;" src="{% static 'lmlappassets/img/gif/cv.svg' %}" alt="">
+                   </div>
                     <div class="col-md-6 col-sm-12 no-padd gr-dark" style="border-radius: 5px;" >
                         <div class="call-to-act-caption" >
                             <h2>NO NEED TO CARRY YOUR RESUME FROM ONE OFFICE TO ANOTHER</h2>

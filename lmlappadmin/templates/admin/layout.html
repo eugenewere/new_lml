@@ -45,11 +45,11 @@
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
-    <div class="dashboard-main-wrapper">
+    <div class="dashboard-main-wrapper" style=" padding-top: 0 !important;">
         <!-- ============================================================== -->
         <!-- navbar -->
         <!-- ============================================================== -->
-        <div class="dashboard-header">
+        <div hidden style="display: none !important;" class="dashboard-header">
             <nav class="navbar navbar-expand-lg bg-white fixed-top">
                 <a class="navbar-brand" href="{% url 'LMLAdmin:home' %}"><img src="{% static 'lmlappassets/img/LML4.png' %}" alt=""></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -117,7 +117,7 @@
         <!-- ============================================================== -->
         <!-- left sidebar -->
         <!-- ============================================================== -->
-        <div class="nav-left-sidebar sidebar-dark" style="z-index: 999;">
+        <div hidden class="nav-left-sidebar sidebar-dark" style="z-index: 999; display:none !important;">
             <div class="menu-list">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <a class="d-xl-none d-lg-none" href="#">Dashboard</a>
@@ -285,7 +285,7 @@
         <!-- ============================================================== -->
         <!-- wrapper  -->
         <!-- ============================================================== -->
-        <div style="overflow: auto;" class="dashboard-wrapper">
+        <div style="overflow: auto; margin: 0 !important;" class="dashboard-wrapper">
             {% block content %}
 
 

@@ -135,7 +135,7 @@ class CompanyRegPrice(models.Model):
         return '%s' % (self.price)
 
 class Customer(get_user_model()):
-    profile_image = models.ImageField(max_length=200, upload_to='customerImages', null=True, blank=True)
+    profile_image = models.ImageField(max_length=200, upload_to='customerImages', default='noimage.jpg', null=True, blank=True)
     regpayment = models.ForeignKey(CustomerPayments, on_delete=models.SET_NULL, null=True)
     country = models.CharField(max_length=100, null=False, blank=False)
     county = models.ForeignKey(County, on_delete=models.SET_NULL, null=True)
@@ -361,7 +361,7 @@ class CompanyRegistrationPayment(models.Model):
 
 
 class Company(get_user_model()):
-    logo = models.ImageField(max_length=200, upload_to='employerlogo', null=True, blank=True)
+    logo = models.ImageField(max_length=200, upload_to='employerlogo', default='noimage.jpg', null=True, blank=True)
     regpayment = models.ForeignKey(CompanyRegistrationPayment, on_delete=models.SET_NULL, null=True )
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True )
     company_name = models.CharField(max_length=200, null=False, blank=False)
@@ -797,7 +797,7 @@ class Newsletter(models.Model):
 
 
 class AdvertCarousel(models.Model):
-    carousel_image = models.ImageField(upload_to='home_couresel', max_length=250, null=False,
+    carousel_image = models.ImageField(upload_to='home_couresel', default='noimage.jpg', max_length=250, null=False,
                                        blank=False)  # height_field=None, width_field=None,
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
