@@ -1,6 +1,9 @@
+import sys
+
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 import sweetify
@@ -59,7 +62,7 @@ def employee_messages(request):
     all_messages = ContactUsEmployee.objects.exclude(status='TRASH').order_by('-created_at')
     trash_messages = ContactUsEmployee.objects.filter(status='TRASH').order_by('-created_at')
     context = {
-        'title': 'Messages',
+        'title': 'Employee Messages',
         'all_messages':all_messages,
         'trash_messages':trash_messages,
     }
@@ -71,15 +74,19 @@ def random_messages(request):
     context = {
         'title': 'Random Messages',
         'messages':contactushome,
-        'messagecount':contactushome.count(),
+        # 'messagecount':contactushome.count(),
         'inboxcount': ContactUsHome.objects.filter(status="UNREAD").count()
     }
-    return render(request, 'messages/RandomMessages.html', context)
+    return render(request, 'aanewadminportal/messages/randommessage.html', context)
 
 @login_required()
 def company_messages(request):
+    all_messages = ContactUsCompany.objects.exclude(status='TRASH').order_by('-created_at')
+    trash_messages = ContactUsCompany.objects.filter(status='TRASH').order_by('-created_at')
     context = {
-        'title': 'Messages',
+        'title': 'Company Messages',
+        'all_messages': all_messages,
+        'trash_messages': trash_messages,
     }
     return render(request, 'messages/company.html', context)
 
@@ -751,6 +758,43 @@ def reply_to_random_messages_via_email(request, source):
         # messages.success(request, 'Emails sent')
         # return redirect('CCSBADMIN:newsLetter')
     return redirect(sourcez)
+
+
+def replyemail(request):
+    if request.method == "POST":
+        body = request.POST.get('body')
+        company = request.POST.get('company')
+        candidate = request.POST.get('candidate')
+        random = request.POST.get('random')
+        subject = request.POST.get('subject')
+        email = request.POST.get('email')
+        try:
+            if candidate:
+                send_mail(subject=subject,message=body, from_email=settings.EMAIL_HOST_USER,recipient_list=[email,])
+                ContactUsEmployee.objects.filter(id=candidate).update(
+                    status='READ'
+                )
+                sweetify.success(request, title='Success', text='Email Successfuly Sent', persistent='Ok', )
+                return redirect(request.META['HTTP_REFERER'])
+            if company:
+                send_mail(subject=subject,message=body, from_email=settings.EMAIL_HOST_USER,recipient_list=[email,])
+                ContactUsCompany.objects.filter(id=company).update(
+                    status='READ'
+                )
+                sweetify.success(request, title='Success', text='Email Successfuly Sent', persistent='Ok', )
+                return redirect(request.META['HTTP_REFERER'])
+            if random:
+                send_mail(subject=subject,message=body, from_email=settings.EMAIL_HOST_USER,recipient_list=[email,])
+                ContactUsHome.objects.filter(id=random).update(
+                    status='READ'
+                )
+                sweetify.success(request, title='Success', text='Email Successfuly Sent', persistent='Ok', )
+                return redirect(request.META['HTTP_REFERER'])
+        except Exception as e:
+            sweetify.error(request, title='Erro', text='Email Not Sent due to '+ str(e), persistent='Ok')
+            return redirect(request.META['HTTP_REFERER'])
+
+    return redirect(request.META['HTTP_REFERER'])
 
 
 def whatweoffer(request):

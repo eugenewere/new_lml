@@ -160,6 +160,7 @@
                             <th>Currency Value</th>
                             <th>Trans Status</th>
                             <th>Pay Status</th>
+                            <th>Duration</th>
                             <th>User Pay Status</th>
                             <th>Date Created</th>
                             <th>To Expiry Days</th>
@@ -171,8 +172,8 @@
                               <tr>
                                 <td>{{forloop.counter}}</td>
                                 <td>{{reg.company.company_name|upper}}</td>
-                                <td>{{ reg.payer_reg_no }}</td>
-                                <td>{{ reg.pay_method|upper }} </td>
+                                <td>{{reg.payer_reg_no }}</td>
+                                <td>{{reg.pay_method|upper }} </td>
                                 <td>{{reg.pay_recipt_no}}</td>
                                 <td>{{reg.transaction_recipt_no}}</td>
                                 <td>{{reg.payer_full_name|title}}</td>
@@ -183,6 +184,7 @@
                                 <td>{{reg.currency_value}}</td>
                                 <td>{{reg.transaction_status}}</td>
                                 <td>{{reg.payment_status}}</td>
+                                <td>{{reg.cpp.status}}</td>
                                 <td>{{reg.company.id|adminGetCompanyStatusPaymentStatus:reg.id}}</td>
                                 <td>{{reg.created_at|naturalday}}</td>
                                 <td>{{reg.getexpiryremainingdays}}</td>

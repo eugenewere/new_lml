@@ -25,7 +25,7 @@ urlpatterns = [
     path('ws/', include('chat.urls')),
     path('', include('lmlapp.urls')),
     path('api/', include('mpesa_api.urls')),
-    # path('mpesa/', include('mpesa_api.core.urls', 'mpesa')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_URL)
 if settings.DEBUG:

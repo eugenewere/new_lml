@@ -4,7 +4,7 @@ __pycache__/
 
 .DS_Store
 .DS_STORE
-
+.pyc
 # Database stuff
 *.sqlite3
 migrations/
@@ -12,6 +12,8 @@ db.sqlite3
 !media/templates
 !/media/templates
 db
+.cpython-38.pyc
+
 
 
 

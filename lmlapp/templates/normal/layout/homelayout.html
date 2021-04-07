@@ -35,7 +35,7 @@
     <div class="Loader-bg" style="display: flex; justify-content: center; align-items: center;">
          <img style="filter: hue-rotate(113deg);" src="{% static 'lmlappassets/img/avatar/ezgif-2-6d0b072c3d3f (1).gif' %}" alt="">
     </div>
-    <div class="wrapper">
+    <div class="wrapper ">
         <nav class="navbar navbar-default navbar-fixed navbar-transparent white bootsnav" >
             <div  class="container">
                 <button style="z-index: 99;" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-menu"><i class="fa fa-bars"></i></button>
@@ -416,7 +416,7 @@
 
 
                                       <p class="animation a5" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-                                          <a data-reset-password href="#">Forgot Password</a>
+                                          <a target="_blank" href="{% url 'LML:password_reset' %}">Forgot Password</a>
                                           <a href="{% url 'LML:signup_initial' %}">Do you have an account sign up here?</a>
                                       </p>
 

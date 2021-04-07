@@ -75,7 +75,7 @@
                           {% csrf_token %}
                           <div class="form-group">
                             <label for="exampleInputEmail">Icon <i style="font-size: 34px; color: lawngreen;"  class="{{ offer.icon }}"></i></label>
-                            <input   type="text" value="{{ offer.icon }}" name="icon" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+                            <input placeholder="eg: add a class name like this:  fas fa-user-md"   type="text" value="{{ offer.icon }}" name="icon" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
                             <small id="emailHelp" class="form-text text-muted"> <a href="https://fontawesome.com/icons">Fontawsome icons.</a></small>
                             <small id="emailHelp" class="form-text text-muted"> <a target="_blank" href="https://friconix.com/start/">Friconix icon</a></small>
                           </div>
@@ -130,7 +130,7 @@
                       {% csrf_token %}
                       <div class="form-group">
                         <label for="exampleInputEmail">Icon</label>
-                        <input type="text" name="icon" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
+                        <input placeholder="eg: add a class name like this:  fas fa-user-md" type="text" name="icon" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp">
                         <small id="emailHelp" class="form-text text-muted"> <a href="https://fontawesome.com/icons">Fontawsome icons.</a></small>
                         <small id="emailHelp" class="form-text text-muted"> <a target="_blank" href="https://friconix.com/start/">Friconix icon</a></small>
                       </div>

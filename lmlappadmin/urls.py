@@ -60,6 +60,7 @@ urlpatterns = [
 
     # emails
     path('replytorandommessagesviaemail/<str:source>', views.reply_to_random_messages_via_email, name='reply_to_random_messages_via_email'),
+    path('replyemail/', views.replyemail, name='replyemail'),
 
 
     # whatweoffer

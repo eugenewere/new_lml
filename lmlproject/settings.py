@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'sweetify',
+    'crispy_forms',
     # 'djcelery',
     # 'django_celery_beat',
     # 'django_celery_results',
@@ -88,54 +89,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lmlproject.wsgi.application'
 
-# ASGI_APPLICATION = "lmlproject.routing.application"
-# CHANNEL_LAYERS = {
-#     'default': {
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('127.0.0.1', 6379)],
-#         },
-#     },
-# }
-
-# ASGI_APPLICATION = 'lmlproject.routing.application'
-# CHANNEL_LAYERS = {
-#     'default': {
-#          # "BACKEND": "asgi_redis.RedisChannelLayer",
-#         'BACKEND': 'channels_redis.core.RedisChannelLayer',
-#         'CONFIG': {
-#             "hosts": [('127.0.0.1', 6379)],
-#             # "hosts": [('localhost', 6379)],
-#         },
-#     },
-#     },
-
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-# libpq-dev postgresql postgresql-contrib
-# if DEBUG:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-# else:
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'lmldb',
-#         'USER': 'lmldbuser',
-#         'PASSWORD': '*#*Johnte2536@lml',
-#         'HOST': 'localhost',
-#         'PORT': '',
-#     }
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
 
@@ -199,8 +158,8 @@ LOGIN_URL = "LML:home"
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'Climatechangebasicske@gmail.com'
-EMAIL_HOST_PASSWORD = 'Brandoxvilla7123'
+EMAIL_HOST_USER = 'lml.co.ke@gmail.com'
+EMAIL_HOST_PASSWORD = 'lmladmin@123'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL: False
@@ -228,7 +187,7 @@ MPESA_PASSKEY='bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
 MPESA_INITIATOR_USERNAME='Shortcode 1'
 MPESA_INITIATOR_SECURITY_CREDENTIAL='imUPsh/1KU0lE27PGlO0ug2snNCWiDLG0pgYZTnjyiphVLe/cr3E7tRSgygUUy1NdzX5T9xR1G99L5ztBBXFOmB2uWmOXgt52vgTo9/gQ7YcPQz/RK5KbRK7n7NIHSn8wtl3pKED4KOy0EBgw+mzDo2ildsrwnHURe1nYuyXJqSJzQN1NBW6T/qi2Eq6l9syE6EWBO62QN+MIPvKKeK2seykH4Df64qGbhJ23wEmuTs6eFRhwPX/FHfpqkMfR6nbW88jWlwxWf6l1zHVudTSC5aJ2aOlZkairFHhkp9FlsZxdx3mSkIXOqIU1DHllnPuc3iEx/5K8Q6gQyYlXsxHWA=='
 
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 
 # MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA# MPESA

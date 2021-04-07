@@ -501,17 +501,22 @@ def company_to_shortlist_candidate(cand_id):
     company = Company.objects.filter(user_ptr_id = cand_id).first()
     if company:
         company_status_pay = CompanyStatusPayment.objects.filter(company=company).order_by('-created_at').first()
-        if not company_status_pay.getexpiryremainingdays == 'EXPIRED' and not company_status_pay.getexpiryremainingdays == 'Inactive':
-            comp_pricin = CompanyPricingPlan.objects.filter(id=company_status_pay.cpp.id).first()
-            company_pricin_details = CompanyPricingDetails.objects.filter(pricing=comp_pricin).first()
-            if company_pricin_details.shortlist_access == True:
-                return True
-            elif company_pricin_details.shortlist_access == False:
-                return False
+        if company_status_pay:
+            if not company_status_pay.getexpiryremainingdays == 'EXPIRED' and not company_status_pay.getexpiryremainingdays == 'Inactive':
+                comp_pricin = CompanyPricingPlan.objects.filter(id=company_status_pay.cpp.id).first()
+                company_pricin_details = CompanyPricingDetails.objects.filter(pricing=comp_pricin).first()
+                if company_pricin_details.shortlist_access == True:
+                    return True
+                elif company_pricin_details.shortlist_access == False:
+                    return False
+                else:
+                    return False
             else:
                 return False
         else:
             return False
+    else:
+        return False
 
 
 @register.filter("company_messaging_with_candidates")
@@ -553,12 +558,18 @@ def company_access_no_count(cand_id):
     company = Company.objects.filter(user_ptr_id = cand_id).first()
     if company:
         company_status_pay = CompanyStatusPayment.objects.filter(company=company).order_by('-created_at').first()
-        if not company_status_pay.getexpiryremainingdays == 'EXPIRED' and not company_status_pay.getexpiryremainingdays == 'Inactive':
-            comp_pricin = CompanyPricingPlan.objects.filter(id=company_status_pay.cpp.id).first()
-            company_pricin_details = CompanyPricingDetails.objects.filter(pricing=comp_pricin).first()
-            return int(company_pricin_details.no_of_candidates)
+        if company_status_pay:
+            if not company_status_pay.getexpiryremainingdays == 'EXPIRED' and not company_status_pay.getexpiryremainingdays == 'Inactive':
+                comp_pricin = CompanyPricingPlan.objects.filter(id=company_status_pay.cpp.id).first()
+                company_pricin_details = CompanyPricingDetails.objects.filter(pricing=comp_pricin).first()
+                return int(company_pricin_details.no_of_candidates)
+            else:
+                return 0
         else:
-            return 0
+            return False
+    else:
+        return False
+
 
 @register.filter("countyname")
 def countyname(cand_id):
@@ -601,12 +612,44 @@ def statustotalcount_currency(compn_id):
 #            amounts.append(int(amt.amount))
 #        return sum(amounts)
 
-
 @register.filter("companystatusdetails")
 def companystatusdetails(compn_id):
     company = Company.objects.filter(id=compn_id).first()
     if company:
        return CompanyStatusPayment.objects.filter(company=company).all().order_by('-created_at')
+
+
+@register.filter("checkifcompanystatushasexpired")
+def checkifcompanystatushasexpired(request):
+    user = request.user
+    company = Company.objects.filter(user_ptr_id = user.id).first()
+    company_status_pay = CompanyStatusPayment.objects.filter(company=company).order_by('-created_at').first()
+    print(company_status_pay.getexpiryremainingdays)
+    if company:
+        if company_status_pay:
+            if company_status_pay.getexpiryremainingdays == 'EXPIRED':
+                if not company.rank_status == 'UNDEFINED':
+                    Company.objects.filter(id=company.id).update(
+                        rank_status='UNDEFINED'
+                    )
+                return company_status_pay.getexpiryremainingdays
+            else:
+                return company_status_pay.getexpiryremainingdays
+        else:
+            return False
+    return False
+
+
+@register.filter("companycurrentsubscription")
+def companycurrentsubscription(request):
+    user = request.user
+    company = Company.objects.filter(user_ptr_id = user.id).first()
+    company_status_pay = CompanyStatusPayment.objects.filter(company=company).order_by('-created_at').first()
+    if company_status_pay:
+        return company_status_pay.cpp.title
+    else:
+        return ''
+
 
 
 

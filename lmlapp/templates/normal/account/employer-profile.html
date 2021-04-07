@@ -1,4 +1,5 @@
 {% extends 'normal/layout/homelayout.html' %}
+{% load call_methods %}
 {% load static %}
 {% block links %}
 
@@ -46,6 +47,13 @@
                             </div>
                         </div>
                     </div>
+                 {% if request|checkifcompanystatushasexpired == 'EXPIRED' %}
+                        <div class="col-sm-12 " style="padding: 0; margin-top: 5px">
+                            <div class="alert alert-danger alert-dismissible">
+                                <span class=""> Your {{ request|companycurrentsubscription }} Subscription Has Expired</span>
+                            </div>
+                        </div>
+                    {% endif %}
 
                     <div class="row no-padd">
                         <div class="detail pannel-footer">
@@ -71,6 +79,7 @@
                             <div class="col-md-7 col-sm-7">
                                 <div class="detail-pannel-footer-btn pull-right" style="display: flex; justify-content: flex-end;">
                                     <a href="{% url 'LML:employerdetails' %}" data-toggle="tooltip"  class="footer-btn grn-btn custom-button" style=border-radius:140px;" title="">View Details</a>
+                                    <a href="{% url 'LML:employer_dash' %}" data-toggle="tooltip"  class="footer-btn btn-warning custom-button" style=border-radius:140px;" title="">Dashboard</a>
 {#                                    <a href="#" class="footer-btn blu-btn" title="">Save Draft</a>#}
                                 </div>
                             </div>

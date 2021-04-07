@@ -590,10 +590,12 @@ class CompanyStatusPayment(models.Model):
         if c.id == id.id:
             if exp.upper() == 'MONTHLY':
                 expiry_date = created_at.date() + datetime.timedelta(days=monthh_days)
+                # print('-from-',created_at , '-to-', expiry_date)
                 start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
                 end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
+                print('month',start_date, end_date)
                 diff = abs((end_date - start_date).days)
-                if diff > 0:
+                if start_date < end_date:
                     return str(diff) + ' Days remaining'
                 else:
                     return 'EXPIRED'
@@ -601,8 +603,9 @@ class CompanyStatusPayment(models.Model):
                 expiry_date = created_at.date() + datetime.timedelta(days=year_days)
                 start_date = datetime.datetime.strptime(str(datetime.datetime.now().date()), "%Y-%m-%d")
                 end_date = datetime.datetime.strptime(str(expiry_date), "%Y-%m-%d")
+                print('year', start_date, end_date)
                 diff = abs((end_date - start_date).days)
-                if diff > 0:
+                if start_date < end_date:
                     return str(diff) + ' Days remaining'
                 else:
                     return 'EXPIRED'

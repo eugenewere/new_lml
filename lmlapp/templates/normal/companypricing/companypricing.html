@@ -43,14 +43,22 @@
         <div class="container">
 
             <div class="deatil-tab-employ tool-tab container " style="background: white;" >
+
                     <h2 class="detail-title"> Choose Which Plan</h2>
                     <ul class="nav simple nav-tabs" id="simple-design-tab" style="display: flex;justify-content: center;">
                         <li class="active"><a data-toggle="pill" href="#about1">Monthly</a></li>
                         <li class=""><a data-toggle="pill" href="#about2">Yearly</a></li>
                     </ul>
-
+                    {% if request|checkifcompanystatushasexpired == 'EXPIRED' %}
+                        <div class="col-sm-12 " style="padding: 0; margin-top: 5px">
+                            <div class="alert alert-danger alert-dismissible">
+                                <span class=""> Your {{ request|companycurrentsubscription }} Subscription Has Expired</span>
+                            </div>
+                        </div>
+                    {% endif %}
                       <!-- Start All Sec -->
                     <div class="tab-content" style="height: 750px;overflow-x: hidden; overflow-y: scroll;">
+
                         <div id="about1" class="tab-pane animate__animated animate__backInLeft active" style="height: 100%;">
                             <div class="col-sm-12" style="padding: 20px 10px;">
                                 {% for price in monthpricing %}
@@ -58,7 +66,7 @@
                                         <div class="pr-table">
                                             <div style="position: relative;" class="pr-header {% if forloop.counter|divisibleby:2 %}active{% endif %} ">
                                                 {% if  paid_pac.cpp.id|to_int == price.id|to_int %}
-                                                <i data-toggle="tooltip" data-placement="left" title="Active Package" style="" class="fas fa-hands-helping sub {% if forloop.counter|divisibleby:2 %} sub_green {% else %} sub_blue {% endif %}"></i>
+                                                    <i data-toggle="tooltip" data-placement="left" title="Active Package" style="" class="fas fa-hands-helping sub {% if forloop.counter|divisibleby:2 %} sub_green {% else %} sub_blue {% endif %}"></i>
                                                 {% endif%}
                                                 <div class="pr-plan">
                                                     <h4>{{ price.title }}</h4>

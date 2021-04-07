@@ -150,8 +150,17 @@
     <!-- Title Header End -->
     <!-- ========== Begin: Brows job Category ===============  -->
     <section class="brows-job-category gray-bg">
+
         <div class="container-fluid" style="padding: 60px 20px;">
+
             <div class="col-sm-12" >
+                {% if request|checkifcompanystatushasexpired == 'EXPIRED' %}
+                        <div class="row container " style=" margin: 0 auto">
+                            <div class="alert alert-danger alert-dismissible">
+                                <span class=""> Your {{ request|companycurrentsubscription }} Subscription Has Expired</span>
+                            </div>
+                        </div>
+                    {% endif %}
                 <div class="row container " style="display: flex; justify-content: center; align-items: center; margin: 0 auto;">
                     <div  class="deatil-tab-employ tool-tab col-sm-12" style="padding: 10px 5px; margin: 0 auto; display: flex !important; justify-content: flex-end; align-items: center; " >
                         <a style=" margin-left: 3px; " href="{% url 'LML:employerdetails' %}" class="custom-button btn btn-success "><i class="fa fa-user mrg-r-5"></i>Profile Details</a>

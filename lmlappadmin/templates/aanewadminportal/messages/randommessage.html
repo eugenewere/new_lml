@@ -3,104 +3,221 @@
 {% load call_methods %}
 {% load humanize %}
 {% block links %}
-
+    <style>
+    .email-wrapper .mail-sidebar .menu-bar .menu-items {
+    padding: 0;
+    margin-bottom: 0;
+    height: auto;
+    list-style-type: none; }
+    .email-wrapper .mail-sidebar .menu-bar .menu-items li a {
+      padding: 10px 15px;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+        border: none;
+      position: relative;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      align-items: center;
+      -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+      justify-content: space-between; }
+      .email-wrapper .mail-sidebar .menu-bar .menu-items li a:hover {
+        background: rgba(240, 244, 249, 0.8); }
+      .email-wrapper .mail-sidebar .menu-bar .menu-items li a {
+        color: #4af529;
+        font-size: 0.875rem;
+        text-decoration: none; }
+        .email-wrapper .mail-sidebar .menu-bar .menu-items li a i {
+          margin-right: 8px;
+          font-size: 0.875rem;
+          line-height: 1.5; }
+      .email-wrapper .mail-sidebar .menu-bar .menu-items li a.active {
+        background: #0FCE5F;
+          color: #fff;
+        border-radius: 4px; }
+        .email-wrapper .mail-sidebar .menu-bar .menu-items li.active a {
+          color: #f7f6f8; }
+      .email-wrapper .mail-sidebar .menu-bar .menu-items li.compose:hover {
+        background: transparent; }
+    .mail-list-container a.active p.sender-name{
+      color: #f5f8f5 !important;
+        transition: all 1s ease-in-out;
+    }
+    .mail-list-container a p.sender-name{
+      color: #41e719 !important;
+        transition: all 1s ease-in-out;
+    }
+    </style>
 
 
 {% endblock links %}
 {% block content %}
-<div class="main-panel">
-      <div class="content-wrapper">
-        <div class="page-header">
-          <h3 class="page-title"> All Employees </h3>
-          <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{% url 'LMLAdmin:home' %}">Dashboard</a></li>
-              <li class="breadcrumb-item active" aria-current="page">All Employees </li>
-            </ol>
-          </nav>
-        </div>
-        <div class="row">
-              <div class="col-12 grid-margin">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">All Employees </h4>
-                    <div class="table-responsive">
-                       <table class="table ">
-                        <thead>
-                          <tr>
-                             <th>#</th>
-                            <th>Profile</th>
-                            <th>Name</th>
-                            <th>RegNO</th>
-                            <th>Phone Number</th>
-                            <th>Emp_Status</th>
-                            <th>Rank</th>
-                            <th>Date Joined</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                         {% for employee in customers %}
-                              <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td>
-                                  <img src="{{ employee.profile_image.url }}" class="mr-2 object-fit-cover" alt="image">
-                                </td>
-                                <td>{{employee.first_name|title}} {{ employee.last_name|title }}</td>
-                                <td>{{employee.customer_reg_no}}</td>
-                                <td>{{employee.phone_number}}</td>
-                                <td> <div class="dropdown">
-                                  <button class="btn
-                                    {% if  employee.status == 'NEWBIE' %}
-                                     btn-gradient-info
-                                     {% elif  employee.status == 'REGISTERED_CONFIRMED' %}
-                                        btn-gradient-warning
-                                     {% elif  employee.status == 'DEACTIVATED' %}
-                                        btn-gradient-danger
-                                     {% endif %}
-                                       dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                      {{ employee.status }}
-                                  </button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                      {% if not employee.status|upper == 'NEWBIE' %}
-                                        <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustonewbee' employee.id   %}">Newbie</a>
-                                      {% endif %}
-                                      {% if not employee.status|upper == 'REGISTERED_CONFIRMED' %}
-                                        <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustoregi' employee.id  %}">Registerd</a>
-                                      {% endif %}
-                                      {% if not employee.status|upper == 'DEACTIVATED' %}
-                                        <a class="dropdown-item" href="{% url 'LMLAdmin:changecandidatestatustodeac' employee.id    %}">Deactivated</a>
-                                      {% endif %}
+       <div class="main-panel">
 
-                                  </div>
-                                </div>
-                                </td>
-                                <td>{{employee.rank_status}}</td>
-                                <td>{{employee.created_at|date:'d-M-Y'}}</td>
-                                <td>
-                                    <a target="_blank" href="{% url 'LMLAdmin:employeesdetails' employee.id %}" class="btn btn-success btn-sm rounded">View</a>
+          <div class="content-wrapper px-3 pt-0 pb-0">
+            <div class="email-wrapper wrapper" style="height: 100%;">
+              <div class="row align-items-stretch" style="height: 100%;">
+                <div class="mail-sidebar d-none d-lg-block col-md-2 pt-3 bg-white">
+                  <div class="menu-bar">
 
-                                </td>
-                              </tr>
-                         {% endfor %}
-                        </tbody>
-                      </table>
-                    </div>
+                    <ul class="menu-items">
+                          <li class="compose mb-3">
+{#                              <button class="btn bg-gradient-primary btn-block text-white">Compose</button>#}
+                          </li>
+                      </ul>
+
+                    <ul class="nav nav-pills menu-items flex-column" id="v-pills-tab" role="tablist" >
+                      <li class="nav-item " >
+                          <a class="nav-link w-100 active" id="v-pills-home-inbox" data-toggle="tab" href="#v-pills-inbox" role="tab" aria-controls="v-pills-inbox" aria-selected="true" >
+                              <span>
+                                  <i class="mdi mdi-email-outline"></i>
+                                  Inbox
+                              </span>
+                              <span class="badge badge-pill badge-warning">{{ inboxcount }}</span>
+                          </a>
+                      </li>
+                    </ul>
+
                   </div>
                 </div>
+                <div class="col-sm-10 " style="padding: 0">
+                    <div class="tab-content" id="v-pills-tabContent" style="height:100%; padding: 0;">
+                        <div class="container-fluid mail-content-wrapper fade-in tab-pane  active" id="v-pills-inbox" role="tabpanel" aria-labelledby="v-pills-home-inbox" style="height:100%; padding: 0;">
+                            <div class="w-100 h-100 d-flex">
+                                <div class="mail-list-container col-md-3 col-lg-5 px-0 pt-4 pb-4 border-right bg-white" >
+                                    <div class="border-bottom  px-3">
+                                      <div class="form-group">
+                                        <input style="display: none;" class="form-control w-100" type="search" placeholder="Search mail" id="Mail-rearch">
+                                      </div>
+                                    </div>
+                                    <div id="v-pills-messages" role="tablist" class="container-fluid nav nav-pills" style="overflow-y: auto; height: 100%; display:flex; flex-direction: column; overflow-x: hidden">
+                                        {% if messages %}
+                                            {% for msg in messages %}
+                                               <a  {% if msg.status == 'UNREAD' %} style="font-weight: bolder;" {% else %} style="font-weight: lighter;" {% endif %} class="mail-list nav-link  {% if forloop.first %}active {% endif %}" id="v-pills-message-a1-inb-{{ msg.id }}" data-toggle="pill" href="#v-pills-message-list1-inb-{{ msg.id }}" role="tab" aria-controls="v-pills-home1" {% if forloop.first %} aria-selected="true" {% else %} aria-selected="false" {% endif %}  >
+                                                <div class="content">
+                                                  <p class="sender-name">{{ msg.name }} {% if msg.status == 'UNREAD' %} <span class="badge badge-pill badge-danger">Unread</span> {% else %} <span class="badge badge-pill badge-success">Read</span> {% endif %}</p>
+                                                  <p class="message_text">{{ msg.message|safe|escape|truncatechars_html:16|title }}</p>
+                                                </div>
+                                              </a>
+                                            {% endfor %}
+                                        {% else %}
+                                            <a href="#"> No Messages</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="tab-content mail-view d-none d-md-block col-md-9 col-lg-7 px-0 bg-white" id="v-pills-messagesContent" style="height: 100%; overflow-y: scroll; overflow-x: hidden">
+                                    {% if messages %}
+                                        {% for msg in messages %}
+                                              <div class="message-body tab-pane fade-in {% if forloop.first %}show active {% endif %}  " id="v-pills-message-list1-inb-{{ msg.id }}" role="tabpanel" aria-labelledby="v-pills-message-a1-inb-{{ msg.id }}">
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4 mt-4">
+                                                      <div class="btn-toolbar" style="    padding: 0 29px;">
+                                                        <div class="btn-group">
+                                                          <button data-toggle="modal" data-target="#exampleModal{{ msg.id }}" type="button" class="btn btn-sm btn-outline-success">
+                                                              <i class="mdi mdi-reply text-success"></i> Reply
+                                                          </button>
+                                                        </div>
+
+                                                      </div>
+                                                    </div>
+                                                </div>
+                                                <div class="sender-details">
+                                                  <img class="img-sm rounded-circle mr-3" src="{% static 'Noimage.jpg' %}" alt="">
+                                                  <div class="details">
+                                                    <p class="msg-subject"> {{ msg.created_at|naturaltime }} </p>
+                                                    <p class="sender-email"> {{ msg.customer.first_name|title }} {{ msg.customer.last_name|title }}<a href="mailto:{{ msg.email }}"> {{ msg.email }}</a></i>
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                                <div class="message-content">
+                                                  <p>{{ msg.message|safe|escape }}</p>
+                                                </div>
+                                              </div>
+                                              <div  class="modal fade" id="exampleModal{{ msg.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                  <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                      <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Reply</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                          <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                      </div>
+                                                      <form method="post" action="{% url 'LMLAdmin:replyemail' %}" enctype="multipart/form-data">
+                                                          {% csrf_token %}
+                                                          <div class="modal-body">
+                                                              <div class="col-sm-12 col-md-12 col-lg-12">
+                                                                  <div class="row">
+                                                                      <div class="media">
+                                                                          <img src="{% static 'Noimage.jpg' %}" style="width: 80px; height: 80px; overflow: hidden;" class="mr-3" alt="...">
+                                                                          <div class="media-body">
+                                                                            <h5 class="mt-0">{{msg.name}}</h5>
+                                                                                Reply to: {{msg.email}}
+                                                                          </div>
+                                                                      </div>
+                                                                      <div class="dropdown-divider"></div>
+                                                                      <div class="col-sm-12 col-md-12">
+                                                                          <input hidden type="text" name="random" value="{{ msg.id }}">
+                                                                          <div class="form-group">
+                                                                            <label for="exampleInputEmail12">TO</label>
+                                                                            <input name="email" placeholder="Recepient" readonly value="{{ msg.email }}" type="email" class="form-control" id="exampleInputEmail12" aria-describedby="emailHelp">
+                                                                          </div>
+                                                                          <div class="form-group">
+                                                                            <label for="exampleInputEmail1">Subject</label>
+                                                                            <input name="subject" placeholder="Subject" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                                                          </div>
+                                                                          <div class="form-group">
+                                                                             <label for="exampleFormControlTextarea{{ msg.id }}">Message</label>
+                                                                             <textarea style="min-height: 200px" name="body" placeholder="Message" class="form-control" id="exampleFormControlTextarea{{ msg.id }}" rows="3"></textarea>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-sm btn-success rounded">Send Mail</button>
+                                                          </div>
+                                                     </form>
+                                                    </div>
+                                                  </div>
+                                              </div>
+                                         {% endfor %}
+                                     {% else %}
+                                           <div class="w-100 height-100 text-center">
+                                              <p>No Message</p>
+                                           </div>
+                                     {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
               </div>
             </div>
-      </div>
-      <!-- content-wrapper ends -->
-      <!-- partial:../../partials/_footer.html -->
-      <footer class="footer">
-        <div class="d-sm-flex justify-content-center justify-content-sm-between">
-          <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
-          <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:../../partials/_footer.html -->
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright ©<script> var yr = new Date; document.write(yr.getFullYear());</script> <a href="" target="_blank">From BootstrapDash</a>. All rights reserved.</span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="mdi mdi-heart text-danger"></i></span>
+            </div>
+          </footer>
+          <!-- partial -->
         </div>
-      </footer>
-      <!-- partial -->
-    </div>
 {% endblock content %}
 {% block scripts %}
+    <script>
+        {#$(".nav.menu-items .nav-link").on("click", function(){#}
+        {#   $(".nav").find("li.active").removeClass("active");#}
+        {#   $(this).addClass("active");#}
+        {##}
+        {##}
+        {##}
+        {# });#}
+    </script>
 {% endblock scripts %}

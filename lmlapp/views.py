@@ -1051,26 +1051,23 @@ def employer_dash(request):
     user = request.user.id
     company = Company.objects.filter(user_ptr_id=user).first()
     social = CompanySocialAccount.objects.filter(company=company).first()
-    customers = CompanyShortlistCustomers.objects.filter(company=company, payment_status='SHORTLISTED')
+    customers = CompanyShortlistCustomers.objects.filter(company=company, payment_status='SHORTLISTED').exclude(customer__status='DEACTIVATED')
     company_reg_pay = CompanyRegistrationPayment.objects.filter(payer_reg_no=company.companyregno).order_by('-created_at').all()
     company_status_pay = CompanyStatusPayment.objects.filter(company=company).order_by('-created_at').all()
 
     basic_customers = []
-    for customer in Customer.objects.filter(rank_status='BASIC'):
-        c_c1 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer,
-                                                        payment_status='SHORTLISTED')
+    for customer in Customer.objects.filter(rank_status='BASIC').exclude(status='DEACTIVATED').all():
+        c_c1 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer,payment_status='SHORTLISTED')
         for ccc1 in c_c1:
             basic_customers.append(ccc1.customer)
     premium_customers = []
-    for customer in Customer.objects.filter(rank_status='PREMIUM'):
-        c_c2 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer,
-                                                        payment_status='SHORTLISTED')
+    for customer in Customer.objects.filter(rank_status='PREMIUM').exclude(status='DEACTIVATED').all():
+        c_c2 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer, payment_status='SHORTLISTED')
         for ccc2 in c_c2:
             premium_customers.append(ccc2.customer)
     ultimate_customers = []
-    for customer in Customer.objects.filter(rank_status='ULTIMATE'):
-        c_c3 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer,
-                                                        payment_status='SHORTLISTED')
+    for customer in Customer.objects.filter(rank_status='ULTIMATE').exclude(status='DEACTIVATED').all():
+        c_c3 = CompanyShortlistCustomers.objects.filter(company=company, customer=customer,payment_status='SHORTLISTED')
         for ccc3 in c_c3:
             ultimate_customers.append(ccc3.customer)
 
