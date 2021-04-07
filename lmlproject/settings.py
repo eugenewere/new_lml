@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.146.141', ]
+ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.146.141', '536095ee014f.ngrok.io']
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['localhost','127.0.0.1', 'www.lml.co.ke', 'lml.co.ke', '138.68.
 SECRET_KEY = 'q%49#i*jdc@_g!q)le4ot79b9kdpa+aclq25832vrh18pg)4#='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 # 192.168.100.2
@@ -37,7 +37,7 @@ DEBUG = False
 # Application definition
 
 INSTALLED_APPS = [
-
+    'mpesa_api.apps.MpesaApiConfig',
     'chat.apps.ChatConfig',
     'lmlappadmin.apps.LmlappadminConfig',
     'lmlapp.apps.LmlappConfig',
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     # 'djcelery',
     # 'django_celery_beat',
     # 'django_celery_results',
-    'django_daraja',
+    # 'django_daraja',
 
 ]
 

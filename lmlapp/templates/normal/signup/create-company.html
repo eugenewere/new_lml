@@ -95,7 +95,7 @@
                         <div class="row">
                             <label class="detail-pic js">
                                 <div class="box companybox">
-                                    <input accept=".jpg, .jpeg, .png" required style="position: relative;" onchange="readURL(this)" type="file"
+                                    <input accept=".jpg, .jpeg, .png"  style="position: relative;" onchange="readURL(this)" type="file"
                                            name="logo" id="upload-pic" class="inputfile"/>
                                     <label for="upload-pic" style="display: flex; flex-direction: column;align-items: center;">
                                         <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -307,7 +307,7 @@
                             <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                                 <div class="input-group" style="margin-bottom: 0;">
                                     <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>
-                                    <select data-region required name="region" id="choose-region" class="form-control input-lg">
+                                    <select data-region name="region" id="choose-region" class="form-control input-lg">
                                         <option selected disabled>Sub-County</option>
                                         {% for region in regions %}
                                         <option data-countyregion="{{ region.county_number }}" value="{{ region.id }}">{{ region.region }}->({{ region.ward }})</option>
@@ -381,7 +381,7 @@
                         <div class="row bottom-mrg extra-mrg">
                             <h2 class="detail-title">A Brief Detail</h2>
                             <div class="col-md-12 col-sm-12">
-                                <textarea aria-label="brief_details"  id="brief_details" name="brief_details" class="form-control textarea2" placeholder="About Company"></textarea>
+                                <textarea aria-label="brief_details" style="min-height: 200px;"  id="brief_details" name="brief_details" class="form-control textarea2" placeholder="About Company"></textarea>
                             </div>
                         </div>
 

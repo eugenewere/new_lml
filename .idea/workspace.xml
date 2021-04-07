@@ -19,7 +19,36 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="" />
+    <list default="true" id="a5d33360-66f0-41af-a714-f80d1afb194d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/db7.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/customerImages/117804.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/customerImages/noimage.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/employerlogo/noimage.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/admin.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/apps.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/migrations/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/models.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/mpesa_credentials.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/tests.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/urls.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mpesa_api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/create-company.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/templates/normal/signup/signup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlapp/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlapp/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlappadmin/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlappadmin/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlproject/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lmlproject/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/lmlproject/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/lmlappassets/cmpscriptbootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/lmlappassets/cmpscriptbootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/lmlappassets/empscriptbootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/lmlappassets/empscriptbootstrap.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/lmlappassets/js/js.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/lmlappassets/js/js.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,19 +105,19 @@
     <property name="settings.editor.selected.configurable" value="project.propDebugger" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\whatweoffer" />
-      <recent name="J:\LMLL\lmlproject\static" />
-      <recent name="J:\LMLL\lmlproject\static\lmlappadmin" />
-      <recent name="J:\LMLL\lmlproject\static\lmlapp" />
-      <recent name="J:\LMLL\lmlproject\chat\static\chat" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="J:\LMLL\lmlproject\media" />
       <recent name="J:\LMLL\lmlproject\static\lmlappassets\img\gif" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\aanewadminportal\payments" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\aanewadminportal\graphs" />
       <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\aanewadminportal\settings" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="J:\LMLL\lmlproject\lmlappadmin\migrations" />
+      <recent name="J:\LMLL\lmlproject\lmlappadmin\templates" />
+      <recent name="J:\LMLL\lmlproject\lmlappadmin\templates\whatweoffer" />
+      <recent name="J:\LMLL\lmlproject\static" />
+      <recent name="J:\LMLL\lmlproject\static\lmlappadmin" />
     </key>
   </component>
   <component name="RunManager">
@@ -181,7 +210,8 @@
       <workItem from="1616188273741" duration="513000" />
       <workItem from="1616675826983" duration="5533000" />
       <workItem from="1616785671452" duration="201000" />
-      <workItem from="1617550165911" duration="13625000" />
+      <workItem from="1617550165911" duration="15856000" />
+      <workItem from="1617609229824" duration="46431000" />
     </task>
     <servers />
   </component>
@@ -235,9 +265,13 @@
       <screen x="0" y="30" width="1366" height="738" />
     </state>
     <state x="463" y="154" key="FileChooserDialogImpl/0.30.1366.738@0.30.1366.738" timestamp="1616785873344" />
-    <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1615578494726">
+    <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1617624503593">
       <screen x="0" y="30" width="1366" height="738" />
     </state>
-    <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1615578494726" />
+    <state x="523" y="30" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.30.1366.738@0.30.1366.738" timestamp="1617624503593" />
+    <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1617649529759">
+      <screen x="0" y="30" width="1366" height="738" />
+    </state>
+    <state x="420" y="30" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.30.1366.738@0.30.1366.738" timestamp="1617649529759" />
   </component>
 </project>

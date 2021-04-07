@@ -19,4 +19,6 @@ admin.site.register(Reply)
 admin.site.register(Contacts)
 admin.site.register(CustomerPayments)
 admin.site.register(EmployerPayments)
+admin.site.register(MpesaCalls)
+admin.site.register(MpesaCallBacks)
 

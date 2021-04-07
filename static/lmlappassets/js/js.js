@@ -1,41 +1,14 @@
 
    $('.disability_choice').click(function () {
-        var html ='<div id="disbledtxtarea" class="col-md-12 col-sm-12" style="padding: 0;">' +
+        var html ='<div id="disbledtxtarea" class="col-md-12 col-sm-12 disbledtxtarea" style="padding: 0;">' +
                         '<label for="disability"></label>' +
                         '<textarea style="max-width: 100%;" required name="disability" id="disability" class="des form-control" placeholder="What type of disability"></textarea>' +
                  '</div>'
 
         if($(this).val().toLowerCase()==='disabled'){
-            $('#disabilityparent').append(html);
-            ClassicEditor
-                .create( document.querySelector( '#disability' ), {
-                      removePlugins: [  'Image','Table','Media','Image' ],
-                    toolbar: {
-                    items: [
-                      'heading',
-                      '|',
-                      'bold',
-                      'italic',
-                      '|',
-                      'bulletedList',
-                      'numberedList',
-                      '|',
-                      'undo',
-                      'redo',
-
-                    ]
-                  },
-                } )
-                .then( editor => {
-                        // console.log( editor );
-                    const wordCountPlugin = editor.plugins.get( 'WordCount' );
-                    const wordCountWrapper = document.getElementById( 'word-count' );
-
-                    wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-                } )
-                .catch( error => {
-                        // console.error( error );
-                } );
+            if($('.disbledtxtarea').length === 0){
+                 $('#disabilityparent').append(html);
+            }
 
         }else if($(this).val().toLowerCase()==='not_disabled'){
             if($('#disbledtxtarea:visible')){
@@ -116,13 +89,13 @@ function showEducation(data) {
 }
 
 
-
+// var experiencehtml = $('')
 $('.experinput').click(function () {
-    console.log($(this).val());
-    if($(this).val().toLowerCase() === 'one'){
+
+    if($(this).val().toLowerCase() === 'true'){
         $('.multi-boxmine').show()
     }
-    else if($(this).val().toLowerCase() === 'two'){
+    else if($(this).val().toLowerCase() === 'false'){
         $('.multi-boxmine').hide()
     }
 });

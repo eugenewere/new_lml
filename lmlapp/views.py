@@ -16,7 +16,7 @@ from django.contrib.humanize.templatetags.humanize import *
 # from rest_framework import status
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django_daraja.mpesa.core import MpesaClient
+# from django_daraja.mpesa.core import MpesaClient
 
 from lmlapp.decorators import has_user_paid_registration
 from lmlapp.forms import *
@@ -96,6 +96,7 @@ def signup(request):
         graduation_dates = request.POST.getlist('graduation_date')
         regnos = request.POST.getlist('reg_number')
 
+        experiencestatus = request.POST.get('experiencestatus')
         employer_names = request.POST.getlist('employer_name')
         company_names = request.POST.getlist('company_name')
         company_emails = request.POST.getlist('company_email')
@@ -160,21 +161,20 @@ def signup(request):
                     graduation_date=graduation_date,
                     reg_number=regno,
                 )
-
-            for employer_name, company_name, company_email, company_phone, position_held, date_from, date_to, experience in zip(
-                    employer_names, company_names, company_emails, company_phones, position_helds, date_froms, date_tos,
-                    experiences):
-                Experience.objects.create(
-                    customer=new_user,
-                    employer_name=employer_name,
-                    company_name=company_name,
-                    comapny_email=company_email,
-                    company_phone=company_phone,
-                    position_held=position_held,
-                    date_from=date_from,
-                    date_to=date_to,
-                    experience=experience,
-                )
+            if experiencestatus == 'true':
+                for employer_name, company_name, company_email, company_phone, position_held, date_from, date_to, experience in zip(
+                        employer_names, company_names, company_emails, company_phones, position_helds, date_froms, date_tos,experiences):
+                    Experience.objects.create(
+                        customer=new_user,
+                        employer_name=employer_name,
+                        company_name=company_name,
+                        comapny_email=company_email,
+                        company_phone=company_phone,
+                        position_held=position_held,
+                        date_from=date_from,
+                        date_to=date_to,
+                        experience=experience,
+                    )
 
             new_userrr = authenticate(username=username, password=password1)
             print(new_user)

@@ -1,31 +1,31 @@
-ClassicEditor
-    .create( document.querySelector( '#brief_details' ), {
-          removePlugins: [  'Image','Table','Media','Image' ],
-        toolbar: {
-        items: [
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          '|',
-          'bulletedList',
-          'numberedList',
-          '|',
-          'undo',
-          'redo'
-        ]
-      },
-    } )
-    .then( editor => {
-            // console.log( editor );
-        const wordCountPlugin = editor.plugins.get( 'WordCount' );
-        const wordCountWrapper = document.getElementById( 'word-count' );
-
-        wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
-    } )
-    .catch( error => {
-            // console.error( error );
-    } );
+// ClassicEditor
+//     .create( document.querySelector( '#brief_details' ), {
+//           removePlugins: [  'Image','Table','Media','Image' ],
+//         toolbar: {
+//         items: [
+//           'heading',
+//           '|',
+//           'bold',
+//           'italic',
+//           '|',
+//           'bulletedList',
+//           'numberedList',
+//           '|',
+//           'undo',
+//           'redo'
+//         ]
+//       },
+//     } )
+//     .then( editor => {
+//             // console.log( editor );
+//         const wordCountPlugin = editor.plugins.get( 'WordCount' );
+//         const wordCountWrapper = document.getElementById( 'word-count' );
+//
+//         wordCountWrapper.appendChild( wordCountPlugin.wordCountContainer );
+//     } )
+//     .catch( error => {
+//             // console.error( error );
+//     } );
  $(document).ready(function() {
              // City Select
              $('.choose-city').select2();

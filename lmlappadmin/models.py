@@ -16,7 +16,6 @@ from django.db.models import Count, Q
 from django.utils.safestring import mark_safe
 
 
-
 def compress(image):
     im = Image.open(image)
     if im.mode in ("RGBA", "P"):
@@ -69,11 +68,35 @@ class Category(models.Model):
 
         return list(set(categories))
 
-    # @property
-    # def customer_categories(self):
-    #     category = Customer.objects.filter(category=self).annotate(itemcount=Count('id')).order_by('-itemcount')
-    #     return category.category.category
 
+class BaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+
+
+class MpesaCalls(BaseModel):
+    ip_address = models.TextField()
+    caller = models.TextField()
+    conversation_id = models.TextField()
+    content = models.TextField()
+
+    class Meta:
+        verbose_name = 'Mpesa Call'
+        verbose_name_plural = 'Mpesa Calls'
+
+
+class MpesaCallBacks(BaseModel):
+    ip_address = models.TextField()
+    caller = models.TextField()
+    conversation_id = models.TextField()
+    content = models.TextField()
+
+    class Meta:
+        verbose_name = 'Mpesa Call Back'
+        verbose_name_plural = 'Mpesa Call Backs'
 
 class CustomerPayments(models.Model):
     pay_method = models.CharField(max_length=200, null=False, blank=False)
@@ -98,8 +121,16 @@ class CustomerPayments(models.Model):
         ('COMPLETED', 'Completed'),
         ('PARTIAL', 'Partial'),
     }
-    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True, blank=True)
+    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True,
+                                      blank=True)
     transaction_status = models.CharField(max_length=200, null=True, blank=True)
+
+    description = models.TextField(null=True, blank=True)
+    type = models.TextField(null=True, blank=True)
+    reference = models.TextField(null=True, blank=True)
+
+    phone_number = models.TextField(null=True, blank=True)
+    organization_balance = models.DecimalField(max_digits=10,null=True, blank=True, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -110,8 +141,9 @@ class CustomerPayments(models.Model):
     def typeofpay(self):
         return 'Registration'
 
+
 class CandidateRegPrice(models.Model):
-    price = models.IntegerField( null=False, blank=False)
+    price = models.IntegerField(null=False, blank=False)
     CANDREGPRICE = {
         ('ACTIVE', 'Active'),
         ('INACTIVE', 'InActive'),
@@ -119,11 +151,13 @@ class CandidateRegPrice(models.Model):
     status = models.CharField(choices=CANDREGPRICE, default='INACTIVE', max_length=200, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return '%s' % (self.price)
 
+
 class CompanyRegPrice(models.Model):
-    price = models.IntegerField( null=False, blank=False)
+    price = models.IntegerField(null=False, blank=False)
     COMPREGPRICE = {
         ('ACTIVE', 'Active'),
         ('INACTIVE', 'InActive'),
@@ -131,11 +165,14 @@ class CompanyRegPrice(models.Model):
     status = models.CharField(choices=COMPREGPRICE, default='INACTIVE', max_length=200, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return '%s' % (self.price)
 
+
 class Customer(get_user_model()):
-    profile_image = models.ImageField(max_length=200, upload_to='customerImages', default='noimage.jpg', null=True, blank=True)
+    profile_image = models.ImageField(max_length=200, upload_to='customerImages', default='noimage.jpg', null=True,
+                                      blank=True)
     regpayment = models.ForeignKey(CustomerPayments, on_delete=models.SET_NULL, null=True)
     country = models.CharField(max_length=100, null=False, blank=False)
     county = models.ForeignKey(County, on_delete=models.SET_NULL, null=True)
@@ -248,7 +285,6 @@ class Customer(get_user_model()):
             return 'NO_REGNO_ON_THIS_GUY'
 
 
-
 class CustomerCvFiles(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     file = models.FileField(upload_to='candidatecv')
@@ -256,6 +292,7 @@ class CustomerCvFiles(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self):
         return '%s %s' % (self.customer.first_name, self.file.size)
 
@@ -362,11 +399,11 @@ class CompanyRegistrationPayment(models.Model):
 
 class Company(get_user_model()):
     logo = models.ImageField(max_length=200, upload_to='employerlogo', default='noimage.jpg', null=True, blank=True)
-    regpayment = models.ForeignKey(CompanyRegistrationPayment, on_delete=models.SET_NULL, null=True )
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True )
+    regpayment = models.ForeignKey(CompanyRegistrationPayment, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     company_name = models.CharField(max_length=200, null=False, blank=False)
     phone_number = models.CharField(max_length=200, null=False, blank=False, default='0700000000')
-    county = models.ForeignKey(County, on_delete=models.SET_NULL, null=True )
+    county = models.ForeignKey(County, on_delete=models.SET_NULL, null=True)
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True)
     landmark = models.CharField(max_length=100, null=False, blank=False)
     company_motto = models.CharField(max_length=100, null=False, blank=False)
@@ -435,9 +472,6 @@ class Company(get_user_model()):
             return pay.description
 
 
-
-
-
 class CompanyRegNo(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     company_reg_no = models.CharField(max_length=100, null=False, blank=False, unique=True)
@@ -470,23 +504,24 @@ class CompanyPricingPlan(models.Model):
 
 
 class CompanyPricingDetails(models.Model):
-    pricing = models.ForeignKey(CompanyPricingPlan, related_name="companypricingdetails", on_delete=models.CASCADE, null=False, blank=False)
-    shortlist_access = models.BooleanField(default=False,null=False, blank=False)
-    review_access = models.BooleanField(default=False,null=False, blank=False)
+    pricing = models.ForeignKey(CompanyPricingPlan, related_name="companypricingdetails", on_delete=models.CASCADE,
+                                null=False, blank=False)
+    shortlist_access = models.BooleanField(default=False, null=False, blank=False)
+    review_access = models.BooleanField(default=False, null=False, blank=False)
     no_of_candidates = models.CharField(max_length=200, null=False, blank=False)
-    chat_with_candidates = models.BooleanField(default=False,null=False, blank=False)
-    view_lml_cv = models.BooleanField(default=False,null=False, blank=False)
-    view_user_own_cv = models.BooleanField(default=False,null=False, blank=False)
+    chat_with_candidates = models.BooleanField(default=False, null=False, blank=False)
+    view_lml_cv = models.BooleanField(default=False, null=False, blank=False)
+    view_user_own_cv = models.BooleanField(default=False, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def _str__(self):
-       return '%s  ' % (self.pricing.title)
+        return '%s  ' % (self.pricing.title)
 
 
 class CompanyStatusPayment(models.Model):
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL , null=True)
-    cpp = models.ForeignKey(CompanyPricingPlan, on_delete=models.SET_NULL , null=True)
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
+    cpp = models.ForeignKey(CompanyPricingPlan, on_delete=models.SET_NULL, null=True)
     pay_method = models.CharField(max_length=200, null=False, blank=False)
 
     payer_reg_no = models.CharField(max_length=200, null=True, blank=True)
@@ -509,7 +544,8 @@ class CompanyStatusPayment(models.Model):
         ('COMPLETED', 'Completed'),
         ('PARTIAL', 'Partial'),
     }
-    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True, blank=True)
+    payment_status = models.CharField(max_length=200, choices=CUSTOMER_PAYMENT_STATUS, default='UNPAYED', null=True,
+                                      blank=True)
     transaction_status = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -517,12 +553,10 @@ class CompanyStatusPayment(models.Model):
     def __str__(self):
         return '%s' % (self.company.company_name)
 
-
-
     @property
     def typeofpay(self):
         p = self.cpp.title
-        return str(p)+' Package Subscription'
+        return str(p) + ' Package Subscription'
 
     @property
     def getexpiry(self):
@@ -574,8 +608,6 @@ class CompanyStatusPayment(models.Model):
                     return 'EXPIRED'
         else:
             return 'Inactive'
-
-
 
 
 class CompanyShortlistCustomers(models.Model):
@@ -726,10 +758,6 @@ class ContactUsEmployee(models.Model):
         return '%s (%s) ' % (self.customer, (self.message))
 
 
-
-
-
-
 class Message(models.Model):
     sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE, null=False, blank=False)
     reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE, null=False, blank=False)
@@ -828,8 +856,9 @@ class ShortCode(models.Model):
     def __str__(self):
         return '%s' % (self.short_code)
 
+
 class CurrencyValue(models.Model):
-    currency =  models.CharField(max_length=100, null=False, blank=False)
+    currency = models.CharField(max_length=100, null=False, blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

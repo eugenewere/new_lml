@@ -182,6 +182,9 @@ function removeParent(e) {
     if ($('.expduplicat').length > 1){
        $(e).parent().remove();
     }
+    else {
+        $('#customRadioxx').click();
+    }
 }
 function removeParent2(e) {
     if ($('.dublicat-box2').length > 1){
@@ -241,10 +244,11 @@ $('[data-age]').change(function () {
 });
 $('#countyselectt').change(function () {
     let value = $(this).find('option:selected').attr('data-countynumber');
-    console.log(value, this.value);
-    if (value){
-        $('[data-region]').find('option').each(function () {
 
+    if (value){
+        // $('[data-region]').val(' ');
+        $('[data-region]').prop('selectedIndex',0);
+        $('[data-region]').find('option').each(function () {
             if ($(this).attr('data-countyregion') === value){
                 $(this).show();
             }else {

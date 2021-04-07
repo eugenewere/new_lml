@@ -32,7 +32,7 @@
                     <div class="row">
                         <label class="detail-pic js">
                             <div class="box companybox">
-                                <input required style="position: relative;" onchange="readURL(this)" type="file"
+                                <input  style="position: relative;" onchange="readURL(this)" type="file"
                                        name="profile_image" id="upload-pic" class="inputfile"/>
                                 <label for="upload-pic" style="display: flex; flex-direction: column;align-items: center;">
                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
@@ -181,7 +181,7 @@
                                     <label class="custom-control-label" for="customRadio">Yes</label>
                                 </div>
                                 <div class="custom-control custom-radio custom-control-inline">
-                                    <input  type="radio" class="disability_choice custom-control-input"
+                                    <input checked type="radio" class="disability_choice custom-control-input"
                                            id="customRadio2" name="disability_status" value="NOT_DISABLED">
                                     <label class="custom-control-label" for="customRadio2">No</label>
                                 </div>
@@ -248,7 +248,7 @@
                         <div class="col-md-6 col-sm-6" style="margin-bottom: 8px;">
                             <div class="input-group" style="margin-bottom: 0;">
 {#                                <span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>#}
-                                <select data-region id="region" required name="region" class="form-control input-lg">
+                                <select data-region id="region"  name="region" class="form-control input-lg">
                                     <option selected disabled>Sub-County And Respective Ward</option>
                                     {% for region in regions %}
                                         <option data-countyregion="{{ region.county_number }}" value="{{ region.id }}">{{ region.region }}->({{ region.ward }})
@@ -283,8 +283,8 @@
                                         </select>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="uni col-md-12 col-sm-12">
                                             <div class="input-group" style="display: flex !important;">
-                                                <span class="input-group-addon"><i class="fa fa-university"></i></span>
-                                                <select style="height: 51px;display: flex; justify-content: center; align-items: center;" name="school" class="school choose-university form-control input-lg">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon"><i class="fa fa-university"></i></span>
+                                                <select style="width: auto; height: 51px;display: flex; justify-content: center; align-items: center;" name="school" class="school choose-university form-control input-lg">
                                                     <option selected disabled="disabled">School</option>
                                                     {% for university in unis %}
                                                         <option value="{{ university }}">{{ university }}</option>
@@ -294,8 +294,8 @@
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="phd col-md-12 col-sm-12">
                                             <div class="input-group col-md-4 col-sm-12">
-                                                <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                                <select name="course" class="course choose-phd form-control input-lg">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                <select style="width: auto; " name="course" class="course choose-phd form-control input-lg">
                                                     <option selected disabled="disabled">Qualification, e.g. Phd in Arts</option>
                                                     {% for phd in phds %}
                                                         <option value="{{ phd }}">{{ phd }}</option>
@@ -305,8 +305,8 @@
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="masters col-md-12 col-sm-12">
                                             <div class="input-group col-md-4 col-sm-12">
-                                                <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                                <select name="course" class="course masters choose-masters form-control input-lg">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                <select style="width: auto; " name="course" class="course masters choose-masters form-control input-lg">
                                                     <option selected disabled="disabled">Qualification, e.g. Masters in
                                                         Arts
                                                     </option>
@@ -318,8 +318,8 @@
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="bachelor col-md-12 col-sm-12">
                                             <div class="input-group col-md-4 col-sm-12">
-                                                <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                                <select name="course" class="course choose-bachelor form-control input-lg">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                <select style="width: auto; " name="course" class="course choose-bachelor form-control input-lg">
                                                     <option selected disabled="disabled">Qualification, e.g. Bachelor in
                                                         Arts
                                                     </option>
@@ -331,8 +331,8 @@
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="diploma col-md-12 col-sm-12">
                                             <div class="input-group col-md-4 col-sm-12">
-                                                <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                                <select name="course" class="course choose-diploma form-control input-lg">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                <select  style="width: auto; " name="course" class="course choose-diploma form-control input-lg">
                                                     <option selected disabled="disabled">Qualification, e.g. Diploma in
                                                         Arts
                                                     </option>
@@ -344,8 +344,8 @@
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="certificate col-md-12 col-sm-12">
                                             <div class="input-group col-md-4 col-sm-12">
-                                                <span class="input-group-addon"><i class="fa fa-book"></i></span>
-                                                <select name="course" class="course choose-certificate form-control input-lg">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon"><i class="fa fa-book"></i></span>
+                                                <select  style="width: auto; " name="course" class="course choose-certificate form-control input-lg">
                                                     <option selected disabled="disabled">Qualification, e.g. Certificate in Arts </option>
                                                     {% for cert in certificates %}
                                                         <option value="{{ cert }}">{{ cert }}</option>
@@ -355,14 +355,14 @@
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="date col-md-12 col-sm-12">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Year of graduation</span>
-                                                <input name="graduation_date" type="date" class="form-control edu-start">
+                                                <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon">Year of graduation</span>
+                                                <input  style="width: auto; " name="graduation_date" type="date" class="form-control edu-start">
                                             </div>
                                         </div>
                                          <div style=" display:none; padding: 0; margin-top: 10px; " class="reg_no col-md-12 col-sm-12">
                                                  <div class="input-group">
-                                                    <span class="input-group-addon">Registration number</span>
-                                                    <input name="reg_number" type="text" class="form-control regno">
+                                                    <span style="width: auto; display: flex;align-items: center;justify-content: center" class="input-group-addon">Registration number</span>
+                                                    <input  style="width: auto; " name="reg_number" type="text" class="form-control regno">
                                                  </div>
                                              </div>
                                     </div>
@@ -375,11 +375,11 @@
                 </div>
 
                 <div class="row bottom-mrg extra-mrg">
-                    <h2 class="detail-title">Brief description </h2>
+                    <h2 class="detail-title">Brief description  <sup style="color:red">*</sup> </h2>
                     <p>An account of yourself.</p>
                     <div class="col-md-12 col-sm-12 " style="padding: 0;">
                         <label style="width: 100%;">
-                            <textarea id="brief_details" name="biography" style="max-width: 100%; width: 100%;" class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
+                            <textarea id="" name="biography" style="max-width: 100%; width: 100%;" class="form-control textarea" maxlength="2000" rows="30" placeholder="About Yourself"></textarea>
                         </label>
                     </div>
                 </div>
@@ -392,17 +392,17 @@
                         <div style="display: flex;">
                             <div class="custom-control custom-radio custom-control-inline"
                                  style="margin-right: 20px;">
-                                <input  type="radio" class="custom-control-input experinput" id="customRadiozz" name="example" value="one">
+                                <input  type="radio" class="custom-control-input experinput" id="customRadiozz" name="experiencestatus" value="true">
                                 <label class="custom-control-label" for="customRadiozz">Yes</label>
                             </div>
                             <div class="custom-control custom-radio custom-control-inline">
-                                <input  type="radio" class="custom-control-input experinput" id="customRadioxx" name="example" value="two">
-                                <label class="custom-control-label" for="customRadio2xx">No</label>
+                                <input  type="radio" class="custom-control-input experinput" id="customRadioxx" name="experiencestatus" value="false">
+                                <label class="custom-control-label" for="customRadioxx">No</label>
                             </div>
                         </div>
                         <div class="multi-boxmine" style="display: none;">
-                            <div class="dublicat-boxmine expduplicat" >
-                                <div class="col-md-12 col-sm-12 in1" style="margin-top: 51px;">
+                            <div class="dublicat-boxmine expduplicat" id="exp" >
+                                <div class="col-md-12 col-sm-12 in1" style="margin-top: 24px; padding: 0!important;">
                                     <div style="margin-top:8px;" id="employer"
                                          class="employerwrapper col-md-12 col-sm-12">
                                         <label for="emplo">Company Employer Name</label>
@@ -443,16 +443,16 @@
                                         <h4>Date</h4>
                                         <div class="col-md-6 col-sm-6"  style="margin-top:8px;">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Date From</span>
-                                                <input name="date_from" type="date" id="exp-start" class="exp-start form-control">
+                                                <span style="width: auto !important; display: flex; align-items: center; justify-content: center;" class="input-group-addon">Date From</span>
+                                                <input style="width: auto !important;" name="date_from" type="date" id="exp-start" class="exp-start form-control">
                                             </div>
                                         </div>
 
                                         <div class="employerwrapper col-md-6 col-sm-6"
                                              style="margin-top:8px; ">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Date To</span>
-                                                <input name="date_to" type="date" id="exp-end" class="exp-end form-control">
+                                                <span style="width: auto !important; display: flex; align-items: center; justify-content: center;" class="input-group-addon">Date To</span>
+                                                <input style="width: auto !important;" name="date_to" type="date" id="exp-end" class="exp-end form-control">
                                             </div>
                                         </div>
                                     </div>
@@ -469,7 +469,7 @@
                 </div>
 
                 <div class="row bottom-mrg extra-mrg">
-                    <h2 class="detail-title">Add Skills</h2>
+                    <h2 class="detail-title">Add Skills <sup style="color:red">*</sup></h2>
                     <p>A knowledge used effectively and readily in execution or performance</p>
                     <div class="extra-field-box3 ">
                         <div class="multi-box2 " style="position:relative;">
@@ -576,7 +576,7 @@
                 </div>
                 <div class="row bottom-mrg extra-mrg">
                     <div class="col-md-12">
-                        <div class="row " style="display: flex; justify-content: center; align-items: center;">
+                        <div class="row  form-group" style="display: flex; justify-content: center; align-items: center;">
                             <div class="custom-control custom-radio custom-control-inline" style="margin-right: 20px;">
                                 <label  class="" id="termsclicked" for="termscheck">
                                     <input type="checkbox" class=" customRadio termsclicked" id="termscheck"  name="terms" value="">
