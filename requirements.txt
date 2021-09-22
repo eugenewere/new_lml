@@ -29,7 +29,7 @@ cssselect2==0.3.0
 daphne==2.3.0
 decorator==4.4.2
 defusedxml==0.6.0
-Django==3.1
+Django==3.1.13
 django-admin-rangefilter==0.6.4
 django-allauth==0.39.1
 django-crispy-forms==1.11.2
