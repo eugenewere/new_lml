@@ -96,7 +96,7 @@ pylint-django==2.0.9
 pylint-plugin-utils==0.5
 pyOpenSSL==19.1.0
 pyparsing==2.4.7
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 Pyphen==0.9.5
 pyrsistent==0.15.3
 python-card-me==0.9.3
