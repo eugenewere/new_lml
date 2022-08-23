@@ -74,7 +74,7 @@ mistune==0.8.4
 msg==0.7.8
 msgpack==1.0.0
 msgpack-python==0.5.6
-nbconvert==5.6.1
+nbconvert==6.5.1
 nbformat==5.0.7
 notebook==6.0.3
 oauthlib==3.1.0
